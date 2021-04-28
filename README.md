@@ -1,2 +1,2 @@
 # RR
-Codebase for Renaissance Robotics by Thomas Bewley
+Codebase for Renaissance Robotics, by Thomas Bewley
