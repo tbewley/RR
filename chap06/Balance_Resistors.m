@@ -21,3 +21,4 @@ for i=1:8
 end
 Ra, scale, Vmon_max
 % Maximum power (in watts) used by resistors in upper part of circuit.
+Max_Power=I_nom^2*max(Ra)
