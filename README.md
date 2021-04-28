@@ -5,8 +5,7 @@ The various codes and text files in this repository are broken out by chapters. 
 
 PART 1: TECHNOLOGY
 
-<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a>
-
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a><BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap02">Chapter 2: Embedded programming</a>
 
 <a href="https://github.com/tbewley/RR/tree/main/chap03">Chapter 3: Communication</a>
