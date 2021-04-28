@@ -1,7 +1,7 @@
 # Renaissance Robotics
 This repository is associated with the text Renaissance Robotics, by Thomas Bewley
 
-The codes and text files in this repository are broken out by chapters.  I am currently working on Chapters 1-6.
+The various codes and text files in this repository are broken out by chapters.  I am currently working on Chapters 1-6.
 
 PART 1: TECHNOLOGY
 
