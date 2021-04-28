@@ -3,7 +3,7 @@ This repository is associated with the text Renaissance Robotics, by Thomas Bewl
 
 The codes and text files in this repository are broken out by chapters:
 
-PART 1
+PART 1: TECHNOLOGY
 
 Chapter 1: Cybernetics
 
@@ -16,3 +16,19 @@ Chapter 4: Connector standards
 Chapter 5: Sensors, actuators, and interfaces 
 
 Chapter 6: Berets
+
+PART 2: THEORETICAL FOUNDATIONS
+
+Chapter 7: Linear Error-Correcting Codes
+
+Chapter 8: Robot Kinematics & Dynamics
+
+Chapter 9: ODE Simulation
+
+Chapter 10: Signals & Systems
+
+Chapter 11: Circuits
+
+Chapter 12: Classical Control
+
+Chapter 13: Motion Planning
