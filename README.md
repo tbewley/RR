@@ -1,2 +1,2 @@
 # Renaissance Robotics
-This repository is associated the text Renaissance Robotics, by Thomas Bewley
+This repository is associated with the text Renaissance Robotics, by Thomas Bewley
