@@ -7,15 +7,15 @@ PART 1: TECHNOLOGY
 
 <a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a>
 
-Chapter 2: Embedded programming
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 2: Embedded programming</a>
 
-Chapter 3: Communication
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 3: Communication</a>
 
-Chapter 4: Connector standards
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 4: Connector standards</a>
 
-Chapter 5: Sensors, actuators, and interfaces 
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 5: Sensors, actuators, and interfaces</a>
 
-Chapter 6: Berets
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 6: Berets</a>
 
 PART 2: THEORETICAL FOUNDATIONS
 
