@@ -1,2 +1,4 @@
 These files are associated with
-Renaissance Robotics Chapter 1: Cybernetics
+Chapter 1: Cybernetics
+of the text
+Renaissance Robotics: 
