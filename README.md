@@ -19,16 +19,16 @@ PART 1: TECHNOLOGY
 
 PART 2: THEORETICAL FOUNDATIONS
 
-Chapter 7: Linear Error-Correcting Codes
+<a href="https://github.com/tbewley/RR/tree/main/chap07">Chapter 7: Linear Error-Correcting Codes</a>
 
-Chapter 8: Robot Kinematics & Dynamics
+<a href="https://github.com/tbewley/RR/tree/main/chap08">Chapter 8: Robot Kinematics & Dynamics</a>
 
-Chapter 9: ODE Simulation
+<a href="https://github.com/tbewley/RR/tree/main/chap09">Chapter 9: ODE Simulation</a>
 
-Chapter 10: Signals & Systems
+<a href="https://github.com/tbewley/RR/tree/main/chap10">Chapter 10: Signals & Systems</a>
 
-Chapter 11: Circuits
+<a href="https://github.com/tbewley/RR/tree/main/chap11">Chapter 11: Circuits</a>
 
-Chapter 12: Classical Control
+<a href="https://github.com/tbewley/RR/tree/main/chap12">Chapter 12: Classical Control</a>
 
-Chapter 13: Motion Planning
+<a href="https://github.com/tbewley/RR/tree/main/chap13">Chapter 13: Motion Planning</a>
