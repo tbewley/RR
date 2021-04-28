@@ -7,5 +7,5 @@ Chapter 1: Cybernetics
 Chapter 2: Embedded programming
 Chapter 3: Communication
 Chapter 4: Connector standards
-Chapter 5: Sensors, actuators, and interfaces
+Chapter 5: Sensors, actuators, and interfaces 
 Chapter 6: Berets
