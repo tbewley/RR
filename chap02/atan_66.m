@@ -1,3 +1,6 @@
+% atan_66.m 
+% from the Renaissance Robotics codebase, by Thomas Bewley
+
 function [out]=atan_66(x)
 if     x<0, out=-atan_66(-x);
 elseif 1<x, out=pi/2-atan_66(1/x);
