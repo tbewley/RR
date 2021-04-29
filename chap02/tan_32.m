@@ -1,3 +1,6 @@
+% tan_32.m 
+% from the Renaissance Robotics codebase, by Thomas Bewley
+
 function [out]=tan_32(x)
 twopi=2*pi;
 c=floor(x/(twopi)); if c==0, y=x; else, y=x-twopi*c; end, o=floor(y/(pi/4)),
