@@ -1,3 +1,6 @@
+% cos_73.m 
+% from the Renaissance Robotics codebase, by Thomas Bewley
+
 function [out]=cos_73(x)
 c=floor(x/(2*pi)); if c==0, y=x; else, y=x-2*pi*c; end, q=floor(y/(pi/2));
 switch q
