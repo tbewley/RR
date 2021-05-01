@@ -1,4 +1,4 @@
-# Renaissance Robotics
+# Renaissance Robotics codebase
 This repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
 The various codes and text files in this repository are broken out by chapters.  I am currently working on Chapters 1-6.
 
