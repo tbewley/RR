@@ -1,25 +1,28 @@
 % script RR_path_init
-% Initialize the path environment for using the Renaissance Robotics codebase.
-% Tip: set up a symbolic link in a convenient place to make it easy to call this script
-% when firing up Matlab or Octave.  This can be done, e.g., using Matlab in MacOS as follows:
-%   ln -s /usr/local/lib/RR/RRpathsetup.m ~/Documents/MATLAB/startup.m
-% Be sure to modify "base" appropriately below if the RR library is not in /usr/local/lib
-% See the preface of Renaissance Robotics for further discussion.
+% Initialize the path environment for using the Renaissance Robotics (RR) codebase.
+% You can check your path in Matlab at any time by typing "path".
+% PRO TIP: call this init code automatically when firing up Matlab or Octave by appending
+% to the startup.m file in your Matlab or Octave installation as follows:
+%   /bin/zsh
+%     set RRbase "~/RR/"  
+%     echo "cd" $RRbase"; RR_path_init" >> ~/Documents/MATLAB/startup.m
+%   exit
+% IMPORTANT: modify the definition of RRbase in the above zsh script as needed.
+% Renaissance Robotics codebase, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
-% Here are some examples of where you might put the RR codebase:
-% base='/usr/local/lib/RR/';
-base='~/RR/';
-base='~/Renaissance_Robotics/RR/';
-
-format compact, clc, close all, cd ~
-addpath(strcat(base,'chap01'),strcat(base,'chap02'),strcat(base,'chap03'), ...
-        strcat(base,'chap04'),strcat(base,'chap05'),strcat(base,'chap06'), ...
-        strcat(base,'chap07'),strcat(base,'chap08'),strcat(base,'chap09'), ...
-        strcat(base,'chap10'),strcat(base,'chap11'),strcat(base,'chap12'), ...
-        strcat(base,'chap13'),strcat(base,'chap14'),strcat(base,'chap15'), ...
-        strcat(base,'chap16'),strcat(base,'chap17'),strcat(base,'chap18'),base)
-disp(['  Path set for using Renaissance Robotics codebase; ' ...
-         'please use  .' char(10)])
-     
-     
-% end script NRCpathsetup
+format compact, clear all; close all, cd ~
+% IMPORTANT: modify the definition of RRbase as needed:
+RRbase='~/RR/';
+addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03'), ...
+        strcat(RRbase,'/chap04'),strcat(RRbase,'/chap05'),strcat(RRbase,'/chap06'), ...
+        strcat(RRbase,'/chap07'),strcat(RRbase,'/chap08'),strcat(RRbase,'/chap09'), ...
+        strcat(RRbase,'/chap10'),strcat(RRbase,'/chap11'),strcat(RRbase,'/chap12'), ...
+        strcat(RRbase,'/chap13'),strcat(RRbase,'/chap14'),strcat(RRbase,'/chap15'), ...
+        strcat(RRbase,'/chap16'),strcat(RRbase,'/chap17'),strcat(RRbase,'/chap18'),RRbase)
+disp(newline+"Path set for using the Renaissance Robotics codebase.")
+disp("Note: please use GitHub Desktop to keep your local directory at ")
+disp("           "+RRbase)
+disp("in sync with the official Renaissance Robotics codebase repository at")
+disp("           https://github.com/tbewley/RR")
+disp("See section 2.6 of the Renaissance Robotics text for further info."+newline)
