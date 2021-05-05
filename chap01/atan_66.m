@@ -1,4 +1,5 @@
 function [out]=atan_66(x)
+% function [out]=atan_66(x)
 % INPUT:  any real x
 % OUTPUT: atan(x), with about 6.6 digits of precision
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
