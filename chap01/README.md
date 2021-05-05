@@ -1,2 +1,3 @@
 # Chapter 1: Cybernetics
 These files are associated with Chapter 1 of the text Renaissance Robotics, by Thomas Bewley
+All files Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.

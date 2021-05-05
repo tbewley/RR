@@ -1,6 +1,7 @@
 # Renaissance Robotics codebase
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
 The various codes and text files in this repository are broken out by chapters.  I am currently working on Chapters 1-6.
+All files Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 PART 1: TECHNOLOGY<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a><BR>
@@ -18,3 +19,10 @@ PART 2: THEORETICAL FOUNDATIONS<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap11">Chapter 11: Circuits</a><BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap12">Chapter 12: Classical Control</a><BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap13">Chapter 13: Motion Planning</a><BR>
+<BR>
+PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap14">Chapter 14: Open vs Proprietary Development Models</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap15">Chapter 15: Crowd Funding vs Venture Capital</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap16">Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM)</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap17">Chapter 17: Design Paradigms</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap18">Chapter 18: Case study: eduMIP</a><BR>
