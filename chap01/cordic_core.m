@@ -23,19 +23,19 @@ function v = cordic_core(v,n,rot,mode,cordic_tables)
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 switch rot  % Initialize {mu,fac,ang} for different types of rotations 
-  case 1, mu= 1; fac=1;   ang=cordic_tables.ang(1,1);  % Circular rotations
-  case 2, mu=-1; fac=1/2; ang=cordic_tables.ang(2,1);  % Hyperbolic rotations
-  case 3, mu= 0; fac=1;   ang=1/2;                     % Linear rotations
+  case 1, mu= 1; f=1;   ang=cordic_tables.ang(1,1); % Circular rotations
+  case 2, mu=-1; f=1/2; ang=cordic_tables.ang(2,1); % Hyperbolic rotations
+  case 3, mu= 0; f=1;   ang=1/2;                    % Linear rotations
 end        
-for j=1:n                                       % perform n iterations
-  switch mode                                   % compute sign of next rotation:
-    case 1, if v(3)<0, sig=-1; else, sig=1; end % Rotation  mode (drive z->0)
-    case 2, if v(2)<0, sig=-1; else, sig=1; end % Vectoring mode (drive y->0)
+for j=1:n                                           % perform n iterations
+  switch mode                                       % compute sign of next rotation:
+    case 1, if v(3)<0, sigma=-1; else, sigma=1; end % Rotation  mode (drive z->0)
+    case 2, if v(2)<0, sigma=-1; else, sigma=1; end % Vectoring mode (drive y->0)
   end
   
   %%%% BELOW IS THE HEART OF THE CORDIC ALGORITHM %%%%
-  v(1:2)=[1 -mu*sig*fac; sig*fac 1]*v(1:2); % generalized rotation of v(1:2) by fac
-  v(3)  =v(3)-sig*ang;                      % update v(3)
+  v(1:2)=[1 -mu*sigma*f; sigma*f 1]*v(1:2);   % generalized rotation of v(1:2) by f
+  v(3)  =v(3)-sigma*ang;                      % update v(3)
   
   % update fac (divide by 2) [iterations {4,13,40} repeated in hyperbolic case]
   if mu>-1 || ((j~=4) && (j~=14) && (j~=42)), fac=fac/2; end
