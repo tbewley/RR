@@ -23,6 +23,6 @@ addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03
 disp(newline+"Path set for using the Renaissance Robotics codebase.")
 disp("Note: please use GitHub Desktop to keep your local directory at ")
 disp("           "+RRbase)
-disp("in sync with the official Renaissance Robotics codebase repository at")
+disp("in sync with the base branch of the Renaissance Robotics codebase repository at")
 disp("           https://github.com/tbewley/RR")
 disp("See section 2.6 of the Renaissance Robotics text for further info."+newline)
