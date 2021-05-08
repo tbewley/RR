@@ -35,7 +35,7 @@ for j=1:n                                           % perform n iterations
   v(1:2)=[1 -mu*sigma*f; sigma*f 1]*v(1:2);   % generalized rotation of v(1:2) by f
   v(3)  =v(3)-sigma*ang;                      % increment v(3)
   
-  % update f (divide by 2) [factors {1/2^4,1/2^13,1/2^40} repeated in hyperbolic case]
+  % update f (divide by 2) [factors {1/2^4, 1/2^13, 1/2^40} repeated in hyperbolic case]
   if mu>-1 || ((j~=4) && (j~=14) && (j~=42)), f=f/2; end
   % update ang from tables, or divide by 2
   if j+1<=cordic_tables.N && rot<3, ang=cordic_tables.ang(rot,j+1); else, ang=ang/2; end

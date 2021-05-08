@@ -16,7 +16,7 @@ switch func
     % out(1,2)->[cos(in); sin(in)]
     % out(3)=angle error
     % Example: cordic('cos_sin',1.0,30,cordic_tables)
-    rot=1; mode=1; in=RangeReduce1(in)
+    rot=1; mode=1; [in,sign]=RangeReduce1(in)
     v=[sign*cordic_tables.K(1,min(n,cordic_tables.N)); 0; in];
   case 'Givens'
     % in=[x,y,z] where z=angle (any real number)
@@ -30,14 +30,14 @@ switch func
     % out(1,2)->[cosh(x); sinh(x); angle error]
     % Example: cordic('cosh_sinh',1.0,30,cordic_tables)
     rot=2; mode=1;
-    v=[1/cordic_tables.K(2,min(n,cordic_tables.N)); 0; in];
+    v=[cordic_tables.K(2,min(n,cordic_tables.N)); 0; in];
   otherwise
     disp('Error: case not implemented.')
 end
 out=cordic_core(v,n,rot,mode,cordic_tables);
 end
 %%%%%%%%%%%%%
-function t=RangeReduce1(t)
+function [t,sign]=RangeReduce1(t)
 twopi=2*pi;                % Range reduction to 0<=t<2*pi
 c=floor(t/twopi); if c~=0, t=t-twopi*c; end
 q=1+floor(t/(pi/2));       % Further range reduction to -pi/2<=t<pi/2

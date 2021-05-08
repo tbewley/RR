@@ -9,11 +9,12 @@ function cordic_tables=cordic_init
 
 N=26;
 % Generate data for the circular cordic routines.
-K  (1,:) = cumprod(1./abs(1+i*2.^(-(0:N-1))));  % NOTE: i=sqrt(-1)
+Kbar = 1./sqrt(1+2.^(-(0:N-1)*2))
+K  (1,:) = cumprod(Kbar);
 ang(1,:) = atan(2.^-(0:N-1))
 % Generate data for the hyperbolic cordic routines.
-t = sqrt(1-2.^(-(1:N-2)*2));       % NOTE: iterations {4,13} are repeated
-K  (2,:) = cumprod([t(1:4) t(4) t(5:13) t(13) t(14:end)])
+Kbar = 1./sqrt(1-2.^(-(1:N-2)*2))       % NOTE: iterations {4,13} are repeated
+K  (2,:) = cumprod([Kbar(1:4) Kbar(4) Kbar(5:13) Kbar(13) Kbar(14:end)])
 t = atanh(2.^-(1:24));
 ang(2,:) = [t(1:4) t(4) t(5:13) t(13) t(14:end)];
 % Print tables to the screen (so you can copy them to your MCU)
