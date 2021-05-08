@@ -2,7 +2,7 @@
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
 The various codes and text files in this repository are broken out by chapters.<BR>
 I am currently working on Chapters 1-6, and usually update this repository once a day.<BR>
-If you are interested in using these codes, please clone the repository using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
+If you are interested in using these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a> using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
 and fetch updates from the main branch relatively often.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
 please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>
