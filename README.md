@@ -6,6 +6,7 @@ If you are interested in using these codes, please clone <a href="https://github
 and fetch updates from its main branch relatively often.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
 please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>
+To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
 All files Copyright 2021 by Thomas Bewley, distributed under the Modified BSD License.
 
