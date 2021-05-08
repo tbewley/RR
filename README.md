@@ -5,7 +5,7 @@ I am currently working on Chapters 1-6, and usually update this repository once 
 If you are interested in using these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a> using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
 and fetch updates from its main branch relatively often.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
-please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a><BR>
+please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>.<BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
 All files Copyright 2021 by Thomas Bewley, distributed under the Modified BSD License.
