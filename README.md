@@ -5,7 +5,7 @@ I am currently working on Chapters 1-6, and usually update this repository once 
 If you are interested in using these codes, please clone the repository using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
 and fetch updates from the main branch relatively often.
   
-All files Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+All files Copyright 2021 by Thomas Bewley, distributed under the Modified BSD License.
 
 PART 1: TECHNOLOGY<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a><BR>
