@@ -1,6 +1,10 @@
 # Renaissance Robotics codebase
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
-The various codes and text files in this repository are broken out by chapters.  I am currently working on Chapters 1-6.
+The various codes and text files in this repository are broken out by chapters.<BR>
+I am currently working on Chapters 1-6, and usually update this repository once a day.<BR>
+If you are interested in using these codes, please clone the repository using <a href="https://desktop.github.com/">GitHub Desktop,<BR>
+and fetch updates from the main branch relatively often.
+  
 All files Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 PART 1: TECHNOLOGY<BR>
