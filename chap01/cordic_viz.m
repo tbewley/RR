@@ -84,7 +84,7 @@ for i=1:6
     quiver(0,0,v(1),v(2),0,'b-','LineWidth',width(i))
     text(R*v(1),R*v(2),int2str(i))
     sigma=-sign(v(2)); 
-    v=[1,                0; ...
+    v=[1,          0; ...
        sigma*f(i), 1]*v;
 end
 print -depsc CORDIC6.eps
