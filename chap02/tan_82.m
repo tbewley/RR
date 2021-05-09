@@ -1,4 +1,5 @@
 function [out]=tan_82(x)
+% function [out]=tan_82(x)
 % INPUT:  any real x [note: tan(x) diverges near x=pi/2+n*pi for integer n]
 % OUTPUT: cos(x), with about 8.2 digits of precision
 % This routine precalculates the various tables used by the cordic routines.

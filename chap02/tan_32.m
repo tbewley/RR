@@ -1,4 +1,5 @@
 function [out]=tan_32(x)
+% function [out]=tan_32(x)
 % INPUT:  any real x [note: tan(x) diverges near x=pi/2+n*pi for integer n]
 % OUTPUT: cos(x), with about 3.2 digits of precision
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR

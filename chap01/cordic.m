@@ -1,12 +1,13 @@
 function out = cordic(func,in,n,cordic_tables)
 % function out = cordic(func,in,n,cordic_tables)
 % Performs range reduction and calls cordic_core to calculate various functions.
-% NOTE:   initialize code by calling cordic_tables=cordic_init (just once)
-% INPUTS: func={'cos_sin','cosh_sinh','Givens',...}
+% NOTE:   initialize cordic_tables by calling cordic_init script (just once)
+% INPUT:  func={'cos_sin','cosh_sinh','Givens',...}
 %         in=input data (as defined for each case in comments of main code below)
 %         n=number of iterations (with increased precision for larger n; try n<40)
 %         cordic_tables=tables of values initialized using cordic_init
 % OUTPUT: v, modified by n shift/add iterations of the generalized CORDIC algorithm,
+% EXAMPLE CALL: (see examples for each special case in the code below)
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
@@ -15,7 +16,7 @@ switch func
     % in=angle (any real number)
     % out(1,2)->[cos(in); sin(in)]
     % out(3)=angle error
-    % Example: cordic('cos_sin',1.0,30,cordic_tables)
+    % EXAMPLE CALL: cordic('cos_sin',1.0,30,cordic_tables)
     rot=1; mode=1; [in,sign]=RangeReduce1(in)
     v=[sign*cordic_tables.K(1,min(n,cordic_tables.N)); 0; in];
   case 'Givens'

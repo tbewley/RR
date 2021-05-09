@@ -28,7 +28,7 @@ switch rot  % Initialize {mu,f,ang} for different types of rotations
 end        
 for j=1:n                                           % perform n iterations
   % Compute sign of next rotation (mode=1 for "rotation", mode=2 for "vectoring")
-  if mode==1, sigma=sign(v(3)), else, sigma=sign(v(2)), end  
+  if mode==1, sigma=sign(v(3)); else, sigma=sign(v(2)); end  
   
   %%%% BELOW IS THE HEART OF THE CORDIC ALGORITHM %%%%
   v(1:2)=[1 -mu*sigma*f; sigma*f 1]*v(1:2);   % generalized rotation of v(1:2) by f
