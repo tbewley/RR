@@ -17,8 +17,7 @@ function v = cordic_core(v,n,rot,mode,cordic_tables)
 %           ={3,2}:  [x;z] -> [x; z+y/x]
 % Note that z=v(3)->0 for mode=1 ("rotation"), and y=v(2)->0 for mode=2 ("vectoring")
 % See cordic.m for how to set up the input v, and how to process the output v,
-% to approximate various specific functions.  NOTE: the scaling of v by K,
-% where necessary, is done over in cordic.m, not in this code.
+% to approximate various specific functions.
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
@@ -40,4 +39,5 @@ for j=1:n                                           % perform n iterations
   % update ang from tables, or divide by 2
   if j+1<=cordic_tables.N && rot<3, ang=cordic_tables.ang(rot,j+1); else, ang=ang/2; end
 end
+% NOTE: the scaling of v by K, if necessary, is done in cordic.m, not in this code.
 end

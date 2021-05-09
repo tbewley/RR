@@ -11,7 +11,7 @@
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
-format compact, clear all; close all, cd ~
+format compact, close all, cd ~
 % IMPORTANT: modify the definition of RRbase as needed:
 RRbase='~/RR/';
 addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03'), ...
