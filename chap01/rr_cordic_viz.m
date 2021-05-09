@@ -1,4 +1,7 @@
-% script cordic_illustration
+% script rr_cordic_viz
+% Just draws some pretty pictures illustrating CORDIC at work.
+% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 R=1.05; width=[2 1 1 1 1 2];
 
