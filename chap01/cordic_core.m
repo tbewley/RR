@@ -12,7 +12,7 @@ function v = cordic_core(v,n,rot,mode,cordic_tables)
 % {rot,mode}={1,1}:  [x;y] -> K1*G*[x;y] with G=[cos(z) -sin(z); sin(z) cos(z)]
 %           ={1,2}:  [x;z] -> [K1*sqrt(x^2+y^2); z+atan(y/x)]
 %           ={2,1}:  [x;y] -> K2*F*[x;y] with F=[cosh(z) -sinh(z); sinh(z) cosh(z)]
-%           ={2,2}:  [x;z] -> [K2*sqrt(x^2-y^2); z+atanh(y/x)]
+%           ={2,2}:  [x;z] -> [K2*(x^2-y^2); z+atanh(y/x)]
 %           ={3,1}:  [x;y] -> [x; y+x*z] 
 %           ={3,2}:  [x;z] -> [x; z+y/x]
 % Note that z=v(3)->0 for mode=1 ("rotation"), and y=v(2)->0 for mode=2 ("vectoring")
@@ -28,7 +28,7 @@ switch rot  % Initialize {mu,f,ang} for different types of rotations
 end        
 for j=1:n                                           % perform n iterations
   % Compute sign of next rotation (mode=1 for "rotation", mode=2 for "vectoring")
-  if mode==1, sigma=sign(v(3)); else, sigma=sign(v(2)); end  
+  if mode==1, sigma=sign(v(3)); else, sigma=-sign(v(2)); end  
   
   %%%% BELOW IS THE HEART OF THE CORDIC ALGORITHM %%%%
   v(1:2)=[1 -mu*sigma*f; sigma*f 1]*v(1:2);   % generalized rotation of v(1:2) by f

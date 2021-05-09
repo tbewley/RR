@@ -17,23 +17,61 @@ switch func
     % out(1,2)->[cos(in); sin(in)]
     % out(3)=angle error
     % EXAMPLE CALL: cordic('cos_sin',1.0,30,cordic_tables)
-    rot=1; mode=1; [in,sign]=RangeReduce1(in)
+    rot=1; mode=1; [in,sign]=RangeReduce1(in);
     v=[sign*cordic_tables.K(1,min(n,cordic_tables.N)); 0; in];
   case 'Givens'
     % in=[x,y,z] where z=angle (any real number)
     % out(1,2)->G*[x;y] with G=[cos(z) -sin(z); sin(z) cos(z)]
     % out(3)=angle error
-    % Example: cordic('Givens',[1.0 2.0 3.0],30,cordic_tables)
-    rot=1; mode=1; in(3)=RangeReduce1(in(3))
-    v=[sign*cordic_tables.K(1,min(n,cordic_tables.N)); 0; in];
-   case 'cosh_sinh'
-    % in=input angle (?<in<?)
-    % out(1,2)->[cosh(x); sinh(x); angle error]
+    % EXAMPLE CALL: cordic('Givens',[1.0; 2.0; 1.0],30,cordic_tables)
+    rot=1; mode=1; [in(3),sign]=RangeReduce1(in(3));
+    v=[sign*cordic_tables.K(1,min(n,cordic_tables.N))*[in(1); in(2)]; in(3)];
+  case 'mod_atan'
+    % in=[x,y,z] 
+    % out(1)->sqrt(x^2+y^2)
+    % out(2)=error in y
+    % out(3)->z+atan(y/x)
+    % EXAMPLE CALL: cordic('mod_atan',[1.0; 2.0; 3.0],30,cordic_tables)
+    rot=1; mode=2;
+    v=[cordic_tables.K(1,min(n,cordic_tables.N))*[in(1); in(2)]; in(3)];    
+  case 'cosh_sinh'
+    % in=input angle (NOTE! Only works for -1.118173<in<1.118173)
+    % out(1,2)->[cosh(in); sinh(in)]
+    % out(3)=angle error
     % Example: cordic('cosh_sinh',1.0,30,cordic_tables)
     rot=2; mode=1;
     v=[cordic_tables.K(2,min(n,cordic_tables.N)); 0; in];
+  case 'GivensH'
+    % in=[x,y,z] (NOTE! Only works for -1.118173<z<1.118173)
+    % out(1,2)->H*[x;y] with H=[cosh(z) sinh(z); sinh(z) cosh(z)]
+    % out(3)=angle error
+    % EXAMPLE CALL: cordic('GivensH',[1.0; 0.2; 1.0],30,cordic_tables)
+    rot=2; mode=1;
+    v=[cordic_tables.K(2,min(n,cordic_tables.N))*[in(1); in(2)]; in(3)];
+  case 'modh_atanh'
+    % in=[x,y,z] (NOTE! Only works for -1.118173<atanh(y/x)<1.118173)
+    % out(1)->sqrt(x^2-y^2)
+    % out(2)=error in y
+    % out(3)->z+atanh(y/x)
+    % EXAMPLE CALL: cordic('modh_atanh',[1; 0.2; 3.0],30,cordic_tables)
+    rot=2; mode=2;
+    v=[cordic_tables.K(2,min(n,cordic_tables.N))*[in(1); in(2)]; in(3)];    
+  case 'MAC' % (Multiply / Accumulate)
+    % in=[x,y,z] (NOTE! Only works for -2<z*x<2)
+    % out(1)=x
+    % out(2)->y+(z*x)*2
+    % out(3)=angle error
+    % EXAMPLE CALL: x=1.1; y=0.1; z=0.6; cordic('MAC',[x;y;z],30,cordic_tables), y+(z*x)*2
+    rot=3; mode=1; v=in;
+  case 'DAC'  % (Divide / Accumulate)
+    % in=[x,y,z] (NOTE! Only works for -2<z*x<2)
+    % out(1)=x
+    % out(2)=error in y
+    % out(3)->z+(y/x)/2
+    % EXAMPLE CALL: x=1.1; y=0.1; z=0.6; cordic('DAC',[x;y;z],30,cordic_tables), z+(y/x)/2
+    rot=3; mode=2; v=in;
   otherwise
-    disp('Error: case not implemented.')
+    disp('Error: case not yet implemented.')
 end
 out=cordic_core(v,n,rot,mode,cordic_tables);
 end
