@@ -1,8 +1,8 @@
-% script cordic_init
+% script RR_cordic_init
 % This routine calculates cordic_tables, as used by the cordic routines.
 % INPUT: (none)
 % OUTPUT: cordic_tables.{K,ang,N}
-% See cordic.m and cordic_core.m for how these tables are used.
+% See RR_cordic.m and RR_cordic_core.m for how these tables are used.
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
