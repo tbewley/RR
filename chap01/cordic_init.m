@@ -1,6 +1,5 @@
-function cordic_tables=cordic_init
-% function cordic_tables=cordic_init
-% This routine calculates the tables used by the cordic routines.
+% script cordic_init
+% This routine calculates cordic_tables, as used by the cordic routines.
 % INPUT: (none)
 % OUTPUT: cordic_tables.{K,ang,N}
 % See cordic.m and cordic_core.m for how these tables are used.
@@ -21,3 +20,4 @@ ang(2,:) = [t(1:4) t(4) t(5:13) t(13) t(14:end)];
 format long, K, ang, format short  
 % Package tables for easy integration by Matlab subroutines.
 cordic_tables.K = K;  cordic_tables.ang = ang;  cordic_tables.N = N;
+clear N K Kbar ang t ans

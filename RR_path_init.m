@@ -26,3 +26,4 @@ disp("           "+RRbase)
 disp("in sync with the base branch of the Renaissance Robotics codebase repository at")
 disp("           https://github.com/tbewley/RR")
 disp("See section 2.6 of the Renaissance Robotics text for further info."+newline)
+clear RRbase
