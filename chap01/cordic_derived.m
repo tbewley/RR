@@ -1,31 +1,23 @@
-function out = cordic(func,in,n,cordic_tables)
+function out = cordic_derived(func,in,n,cordic_tables)
 % function out = cordic(func,in,n,cordic_tables)
-% Performs range reduction and calls cordic_core to calculate various functions.
+% Calls cordic (which in turn calls cordic_core) to calculate various derived functions.
 % NOTE:   initialize cordic_tables by calling cordic_init script (just once)
-% INPUT:  func={'cos_sin','Givens','mod_atan','cosh_sinh','GivensH','modh_atanh','MAC','DAC'}
-%         in=input data (as defined for each case in comments of main code below)
+% INPUT:  func={'tan'}
+%         in=input data (as defined for each case in comments below)
 %         n=number of iterations (with increased precision for larger n; try n<40)
 %         cordic_tables=tables of values initialized using cordic_init
-% OUTPUT: v, modified by n shift/add iterations of the generalized CORDIC algorithm,
+% OUTPUT: out=input data (as defined for each case in comments below)
 % EXAMPLE CALL: (see examples for each special case in the code below)
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 switch func
-  case 'cos_sin'
+  case 'tan'
     % in=angle (any real number)
-    % out(1,2)->[cos(in); sin(in)]
-    % out(3)=angle error
-    % EXAMPLE CALL: cordic('cos_sin',1.0,30,cordic_tables)
-    rot=1; mode=1; [in,sign]=range_reduce(in);
-    v=[sign*cordic_tables.K(1,min(n,cordic_tables.N)); 0; in];
-  case 'Givens'
-    % in=[x,y,z] where z=angle (any real number)
-    % out(1,2)->G*[x;y] with G=[cos(z) -sin(z); sin(z) cos(z)]
-    % out(3)=angle error
-    % EXAMPLE CALL: cordic('Givens',[1.0; 2.0; 1.0],30,cordic_tables)
-    rot=1; mode=1; [in(3),sign]=range_reduce(in(3));
-    v=[sign*cordic_tables.K(1,min(n,cordic_tables.N))*[in(1); in(2)]; in(3)];
+    % out=tan(in)
+    % EXAMPLE CALL: x=1.0; cordic_derived('tan',x,40,cordic_tables), tan(x)
+    v=cordic('cos_sin',in,n,cordic_tables);
+    out=v(2)/v(1);
   case 'mod_atan'
     % in=[x,y,z] 
     % out(1)->sqrt(x^2+y^2)
@@ -71,19 +63,6 @@ switch func
     % EXAMPLE CALL: x=1.1; y=0.1; z=0.6; cordic('DAC',[x;y;z],30,cordic_tables), z+y/x
     rot=3; mode=2; v=in;
   otherwise
-    disp('Error: case not implemented in cordic.m, check cordic_derived.m')
-end
-out=cordic_core(v,n,rot,mode,cordic_tables);
-end
-%%%%%%%%%%%%%
-function [t,sign]=range_reduce(t)
-twopi=2*pi;                % Range reduction to 0<=t<2*pi
-c=floor(t/twopi); if c~=0, t=t-twopi*c; end
-q=1+floor(t/(pi/2));       % Further range reduction to -pi/2<=t<pi/2
-switch q, case 1, sign= 1;          
-          case 2, sign=-1; t=t-pi;    
-          case 3, sign=-1; t=t+pi;
-          case 4, sign= 1; t=t-twopi;
+    disp('Error: case not yet implemented.')
 end
 end
-    

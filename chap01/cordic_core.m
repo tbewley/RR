@@ -24,7 +24,7 @@ function v = cordic_core(v,n,rot,mode,cordic_tables)
 switch rot  % Initialize {mu,f,ang} for different types of rotations 
   case 1, mu= 1; f=1;   ang=cordic_tables.ang(1,1); % Circular rotations
   case 2, mu=-1; f=1/2; ang=cordic_tables.ang(2,1); % Hyperbolic rotations
-  case 3, mu= 0; f=1;   ang=1/2;                    % Linear rotations
+  case 3, mu= 0; f=1;   ang=1;                      % Linear rotations
 end        
 for j=1:n                                           % perform n iterations
   % Compute sign of next rotation (mode=1 for "rotation", mode=2 for "vectoring")
