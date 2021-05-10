@@ -9,7 +9,7 @@
 %   exit
 % IMPORTANT: modify the definition of RRbase in the above zsh script as needed.
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 format compact, close all, cd ~
 % IMPORTANT: modify the definition of RRbase as needed:

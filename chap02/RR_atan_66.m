@@ -1,9 +1,9 @@
-function [out]=atan_66(x)
-% function [out]=atan_66(x)
+function [out]=RR_atan_66(x)
+% function [out]=RR_atan_66(x)
 % INPUT:  any real x
 % OUTPUT: atan(x), with about 6.6 digits of precision
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if     x<0, out=-atan_66(-x);
 elseif 1<x, out=pi/2-atan_66(1/x);     % Range reduction to 0<=x<=pi/12

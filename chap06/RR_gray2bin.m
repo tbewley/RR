@@ -1,8 +1,9 @@
-function b=gray2bin(g)
-% function b=gray2bin(g)
+function b=RR_gray2bin(g)
+% function b=RR_gray2bin(g)
+% Converts from Gray code to binary
 % INPUT:  g=Gray code number
 % OUTPUT: b=corresponding binary number
-% EXAMPLE CALL: d=87, b=dec2bin(d), g=bin2gray(b), b1=gray2bin(g)
+% EXAMPLE CALL: d=87, b=dec2bin(d), g=RR_bin2gray(b), b1=RR_gray2bin(g)
 % open-source algorithm from https://www.matrixlab-examples.com/gray-code.html
 
 b(1)=g(1);

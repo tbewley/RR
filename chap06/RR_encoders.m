@@ -1,11 +1,12 @@
-function encoders(m,Rmin,Rmax,Rgap)
-% function encoders(m,Rmin,Rmax,Rgap)
+function RR_encoders(m,Rmin,Rmax,Rgap)
+% function RR_encoders(m,Rmin,Rmax,Rgap)
 % Draws incremental+reset, binary, and Gray encoder disks at specified resolution.
-% INPUTS: m=resolution
+% INPUT:  m=resolution
 %         Rmin=inner radius
 %         Rmax=outer radius
 %         Rgap=gap between marks
-% EXAMPLE CALL: encoders(6,0.2,1,0.01)
+% OUTPUT: (none)
+% EXAMPLE CALL: RR_encoders(6,0.2,1,0.01)
 % Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD-3-Clause license.
 

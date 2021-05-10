@@ -11,7 +11,7 @@ function out = RR_cordic_derived(func,in,n,cordic_tables)
 % OUTPUT: out=input data (as defined for each case in comments below)
 % EXAMPLE CALL: (see examples for each special case in the code below)
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch func
   case 'tan'

@@ -8,7 +8,7 @@ To set your Matlab/Octave path in a way that will streamline your testing of the
 please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>.<BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
-All files Copyright 2021 by Thomas Bewley, distributed under the Modified BSD License.
+All files Copyright 2021 by Thomas Bewley, distributed under the BSD 3-Clause License.
 
 PART 1: TECHNOLOGY<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a><BR>

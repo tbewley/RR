@@ -9,7 +9,7 @@ function out = RR_cordic(func,in,n,cordic_tables)
 % OUTPUT: v, modified by n shift/add iterations of the generalized CORDIC algorithm,
 % EXAMPLE CALL: (see examples for each special case in the code below)
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch func
   case 'cos_sin'

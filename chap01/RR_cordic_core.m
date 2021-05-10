@@ -2,7 +2,7 @@ function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % Apply n shift/add iterations of the CORDIC algorithm.
 % (This Matlab code uses floating point numbers, so it's just for demo purposes.)
-% INPUTS: v=[x;y;z]
+% INPUT:  v=[x;y;z]
 %         n=number of iterations (with increased precision for larger n; try n<40)
 %         rot={1,2,3} (for circular, hyperbolic, or linear rotations, respectively)
 %         mode={1,2}  (for rotation or vectoring mode, respectively)
@@ -19,7 +19,7 @@ function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % See RR_cordic.m and RR_cordic_derived.m for how to set up the input v,
 % and how to process the output v, to approximate various specific functions.
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch rot  % Initialize {mu,f,ang} for different types of rotations 
   case 1, mu= 1; f=1;   ang=cordic_tables.ang(1,1); % Circular rotations
