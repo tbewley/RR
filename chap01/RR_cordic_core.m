@@ -1,7 +1,7 @@
 function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % Apply n shift/add iterations of the CORDIC algorithm.
-% (This Matlab code uses floating point numbers, so it's just for demo purposes.)
+% (This Matlab code uses floating point numbers, so it is just for demo purposes.)
 % INPUT:  v=[x;y;z]
 %         n=number of iterations (with increased precision for larger n; try n<40)
 %         rot={1,2,3} (for circular, hyperbolic, or linear rotations, respectively)
