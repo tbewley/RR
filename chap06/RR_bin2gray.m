@@ -4,9 +4,10 @@ function g=RR_bin2gray(b)
 % INPUT:  in=binary number [generate, e.g., via dec2bin(int)]
 % OUTPUT: g=corresponding Gray form
 % EXAMPLE CALL: for d=0:15, b=dec2bin(d); g=RR_bin2gray(b); disp({d b g}), end
-% open-source algorithm from https://www.matrixlab-examples.com/gray-code.html
+% Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under BSD-3-Clause license.
 
 g(1)=b(1);
-for i=2:length(b);
-    x=xor(str2num(b(i-1)),str2num(b(i))); g(i)=num2str(x);
+for j=2:length(b);
+    g(j)=num2str(xor(str2num(b(j-1)),str2num(b(j))));
 end
