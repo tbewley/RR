@@ -15,8 +15,8 @@ PART 1: TECHNOLOGY<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap02">Chapter 2: Embedded programming</a><BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap03">Chapter 3: Communication</a><BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap04">Chapter 4: Connector standards</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap05">Chapter 5: Sensors, actuators, and interfaces</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap06">Chapter 6: Berets</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap05">Chapter 5: Berets</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap06">Chapter 6: Sensors, actuators, and interfaces</a><BR>
 <BR>
 PART 2: THEORETICAL FOUNDATIONS<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap07">Chapter 7: Linear Error-Correcting Codes</a><BR>
