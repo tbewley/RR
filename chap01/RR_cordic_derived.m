@@ -45,7 +45,7 @@ switch func
     % EXAMPLE CALLS:
     %  x=1.2; b=10; RR_cordic_derived('log_b',[x,b],40,cordic_tables), log10(x)
     %  x=1.2; b=2;  RR_cordic_derived('log_b',[x,b],40,cordic_tables), log2(x)
-    %  x=1.2; b=5;  RR_cordic_derived('log_b',[x,b],40,cordic_tables), log(x)/log(5)
+    %  x=1.2; b=5;  RR_cordic_derived('log_b',[x,b],40,cordic_tables), log(x)/log(b)
     x=in(1); b=in(2); log_x=RR_cordic_derived('log',x,n,cordic_tables);
     switch b
        case 2,    log_b=0.693147180559945;
