@@ -8,6 +8,6 @@ function g=RR_bin2gray(b)
 % Copyright 2021 by Thomas Bewley, distributed under BSD-3-Clause license.
 
 g(1)=b(1);
-for j=2:length(b);
-    g(j)=num2str(xor(str2num(b(j-1)),str2num(b(j))));
+for j=1:length(b)-1;
+    g(j+1)=num2str(xor(str2num(b(j)),str2num(b(j+1))));
 end
