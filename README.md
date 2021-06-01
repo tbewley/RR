@@ -1,12 +1,12 @@
 # Renaissance Robotics codebase
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
-To see what this text is all about, see the draft of the front matter available <a href="https://github.com/tbewley/RR/blob/main/RR_chap00.pdf">here</a>.<BR>
+To see what this text is all about, see the draft of its <a href="https://github.com/tbewley/RR/blob/main/RR_chap00.pdf">front matter</a>.<BR>
 The various codes and text files in this repository are broken out by chapters.<BR>
 I am currently working on Chapters 1-6, and update this repository a couple of times a week.<BR>
 If you are interested in using this text and these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a><BR>
 using <a href="https://desktop.github.com/">GitHub Desktop</a>, and fetch updates from its main branch relatively often.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
-please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>.<BR>
+please install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a> as specified in its comments.<BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
 All files Copyright 2021 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.
