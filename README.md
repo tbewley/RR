@@ -1,8 +1,9 @@
 # Renaissance Robotics codebase
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
+To see what this text is about, see the draft of the preface available <a href="https://github.com/tbewley/RR/blob/main/RR_chap00.pdf">here</a>.<BR>
 The various codes and text files in this repository are broken out by chapters.<BR>
-I am currently working on Chapters 1-6, and update this repository a few times a week.<BR>
-If you are interested in using these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a> using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
+I am currently working on Chapters 1-6, and update this repository a couple of times a week.<BR>
+If you are interested in using this text and these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a> using <a href="https://desktop.github.com/">GitHub Desktop</a>,<BR>
 and fetch updates from its main branch relatively often.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
 please download & install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a>.<BR>
@@ -11,12 +12,12 @@ To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github
 All files Copyright 2021 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.
 
 PART 1: TECHNOLOGY<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap02">Chapter 2: Embedded programming</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap03">Chapter 3: Communication</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap04">Chapter 4: Connector standards</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap05">Chapter 5: Berets</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap06_Berets.pdf" style="color:#FF0000;">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap06">Chapter 6: Sensors, actuators, and interfaces</a><BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap01.pdf">PDF</a>)<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap02">Chapter 2: Embedded programming</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap02.pdf">PDF</a>)<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap03">Chapter 3: Communication</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap03.pdf">PDF</a>)<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap04">Chapter 4: Connector standards</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap04.pdf">PDF</a>)<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap05">Chapter 5: Berets</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap05.pdf">PDF</a>)<BR>
+<a href="https://github.com/tbewley/RR/tree/main/chap06">Chapter 6: Sensors, actuators, and interfaces</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap05.pdf">PDF</a>)<BR>
 <BR>
 PART 2: THEORETICAL FOUNDATIONS<BR>
 <a href="https://github.com/tbewley/RR/tree/main/chap07">Chapter 7: Linear Error-Correcting Codes</a><BR>
