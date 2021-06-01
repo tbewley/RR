@@ -1,6 +1,6 @@
 # Renaissance Robotics codebase
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
-To see what this text is all about, see the draft of the preface available <a href="https://github.com/tbewley/RR/blob/main/RR_chap00.pdf">here</a>.<BR>
+To see what this text is all about, see the draft of the front matter available <a href="https://github.com/tbewley/RR/blob/main/RR_chap00.pdf">here</a>.<BR>
 The various codes and text files in this repository are broken out by chapters.<BR>
 I am currently working on Chapters 1-6, and update this repository a couple of times a week.<BR>
 If you are interested in using this text and these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a><BR>
