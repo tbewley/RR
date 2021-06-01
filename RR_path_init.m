@@ -7,12 +7,12 @@
 %     set RRbase "~/RR/"  
 %     echo "cd" $RRbase"; RR_path_init" >> ~/Documents/MATLAB/startup.m
 %   exit
-% IMPORTANT: modify the definition of RRbase in the above zsh script as needed.
+% IMPORTANT: modify the definition of RRbase in the above zsh commands as needed.
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 format compact, close all, cd ~
-% IMPORTANT: modify the definition of RRbase as needed:
+% IMPORTANT: modify the definition of RRbase below as needed:
 RRbase='~/RR/';
 addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03'), ...
         strcat(RRbase,'/chap04'),strcat(RRbase,'/chap05'),strcat(RRbase,'/chap06'), ...
