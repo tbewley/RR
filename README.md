@@ -10,27 +10,26 @@ please install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
 All files Copyright 2021 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.
-
 PART 1: TECHNOLOGY<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap01">Chapter 1: Cybernetics</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap01.pdf">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap02">Chapter 2: Embedded programming</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap02.pdf">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap03">Chapter 3: Communication</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap03.pdf">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap04">Chapter 4: Connector standards</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap04.pdf">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap05">Chapter 5: Berets</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap05.pdf">PDF</a>)<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap06">Chapter 6: Sensors, actuators, and interfaces</a> (<a href="https://github.com/tbewley/RR/blob/main/RR_chap05.pdf">PDF</a>)<BR>
-<BR>
+<a href="http://robotics.ucsd.edu/RR_chap01.pdf">Chapter 1: Cybernetics</a>                         (<a href="https://github.com/tbewley/RR/tree/main/chap01">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR_chap02.pdf">Chapter 2: Embedded programming</a>.               (<a href="https://github.com/tbewley/RR/tree/main/chap02">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR_chap03.pdf">Chapter 3: Communication </a>                      (<a href="https://github.com/tbewley/RR/tree/main/chap03">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR_chap04.pdf">Chapter 4: Connector standards</a>                 (<a href="https://github.com/tbewley/RR/tree/main/chap04">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR_chap05.pdf">Chapter 5: Berets</a>                              (<a href="https://github.com/tbewley/RR/tree/main/chap05">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR_chap06.pdf">Chapter 6: Sensors, actuators, and interfaces</a>  (<a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR><BR>
+
 PART 2: THEORETICAL FOUNDATIONS<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap07">Chapter 7: Linear Error-Correcting Codes</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap08">Chapter 8: Robot Kinematics & Dynamics</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap09">Chapter 9: ODE Simulation</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap10">Chapter 10: Signals & Systems</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap11">Chapter 11: Circuits</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap12">Chapter 12: Classical Control</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap13">Chapter 13: Motion Planning</a><BR>
-<BR>
+<a href="http://robotics.ucsd.edu/RR_chap07.pdf">Chapter 7: Linear Error-Correcting Codes</a>       (<a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
+Chapter 8: Robot Kinematics & Dynamics</a>   (<a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
+Chapter 9: ODE Simulation</a>                (<a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
+Chapter 10: Signals & Systems</a>            (<a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
+Chapter 11: Circuits</a>                     (<a href="https://github.com/tbewley/RR/tree/main/chap11">code</a>)<BR>
+Chapter 12: Classical Control</a>            (<a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
+Chapter 13: Motion Planning</a>              (<a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR><BR>
+
 PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap14">Chapter 14: Open vs Proprietary Development Models</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap15">Chapter 15: Crowd Funding vs Venture Capital</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap16">Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM)</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap17">Chapter 17: Design Paradigms</a><BR>
-<a href="https://github.com/tbewley/RR/tree/main/chap18">Chapter 18: Case study: eduMIP</a><BR>
+Chapter 14: Open vs Proprietary Development Models</a>         (<a href="https://github.com/tbewley/RR/tree/main/chap14">code</a>)<BR>
+Chapter 15: Crowd Funding vs Venture Capital</a>               (<a href="https://github.com/tbewley/RR/tree/main/chap15">code</a>)<BR>
+Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM)</a>(<a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
+Chapter 17: Design Paradigms</a>                               (<a href="https://github.com/tbewley/RR/tree/main/chap17">code</a>)<BR>
+Chapter 18: Case study: eduMIP</a>                             (<a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>)<BR>
