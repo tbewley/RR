@@ -15,7 +15,7 @@ PART 1: TECHNOLOGY<BR>
 <a href="http://robotics.ucsd.edu/RR/RR_chap02.pdf">Chapter 2: Embedded programming</a>.               (<a href="https://github.com/tbewley/RR/tree/main/chap02">code</a>)<BR>
 <a href="http://robotics.ucsd.edu/RR/RR_chap03.pdf">Chapter 3: Communication </a>                      (<a href="https://github.com/tbewley/RR/tree/main/chap03">code</a>)<BR>
 <a href="http://robotics.ucsd.edu/RR/RR_chap04.pdf">Chapter 4: Connector standards</a>                 (<a href="https://github.com/tbewley/RR/tree/main/chap04">code</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap05.pdf">Chapter 5: Berets</a>                              (<a href="https://github.com/tbewley/RR/tree/main/chap05">code</a>)<BR>
+<a href="http://robotics.ucsd.edu/RR/RR_chap05.pdf">Chapter 5: Berets</a>                              (<a href="https://github.com/tbewley/RR/tree/main/chap05">code</a>) (<a href="http://robotics.ucsd.edu/Berets">hardware</a>)<BR>
 <a href="http://robotics.ucsd.edu/RR/RR_chap06.pdf">Chapter 6: Sensors, actuators, and interfaces</a>  (<a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR><BR>
 
 PART 2: THEORETICAL FOUNDATIONS<BR>
@@ -32,4 +32,4 @@ Chapter 14: Open vs Proprietary Development Models</a>         (<a href="https:/
 Chapter 15: Crowd Funding vs Venture Capital</a>               (<a href="https://github.com/tbewley/RR/tree/main/chap15">code</a>)<BR>
 Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM)</a>(<a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
 Chapter 17: Design Paradigms</a>                               (<a href="https://github.com/tbewley/RR/tree/main/chap17">code</a>)<BR>
-Chapter 18: Case study: eduMIP</a>                             (<a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>)<BR>
+Chapter 18: Case study: eduMIP</a>                             (<a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>)  (<a href="http://robotics.ucsd.edu/eduMIP">hardware</a>)<BR>
