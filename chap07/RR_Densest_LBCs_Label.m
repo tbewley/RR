@@ -1,4 +1,9 @@
-clear; close all; figure(1); BestCodes; d{01}={	'1'};
+% script RR_Densest_LBCs_Label
+% This code labels Figure 7.3 in Renaissance Robotics.
+% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+
+clear; close all; figure(1); RR_Densest_LBCs_Plot; d{01}={	'1'};
 d{02}={	'2' '[2,2,1]'}; 	 
 d{03}={	'3' '[3,2,2]' '[3,3,1]'};
 d{04}={	'4' 	''    '[4,3,2]' '[4,4,1]'};	 	 
@@ -98,4 +103,4 @@ d{97}={	''      ''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  
 d{98}={	''      ''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''    	''  	''    	''    	''    	''    	''    	''  	''      ''    	''    	''    	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''	    ''      ''  	''  	''  	''  	''  	''      ''  	''   	''  	''  	''  	''  	''  	''  	''  	''      ''      ''  	''  	''  	''  	''      ''   '[98,64,11]'};	 	 
 d{99}={	''      ''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''    	''  	''    	''    	''    	''    	''    	''  	''      ''    	''    	''    	''  	''  	''  	''  	''  	''  	''  	''  	''  	''  	''	    ''      ''  	''  	''  	''  	''  	''      ''  	''   	''  	''  	''  	''  	''  	''  	''  	''      ''      ''  	''  	''  	''  	''      ''   '[99,64,12]'};
 for n=1:99; for k=1:min(n,64); text(log2(k),k/n,d{n}(k),'FontSize',8,'HorizontalAlignment','center','VerticalAlignment','middle'); end; end
-print -painters -depsc bestcodes.eps
+% print -painters -depsc Densest_LBCs.eps
