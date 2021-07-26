@@ -1,3 +1,8 @@
+% script RR_Plot_Densest_LBCs
+% This code plots Figure 7.3 in Renaissance Robotics.
+% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+
 clear; close all; h=figure(1); hold on; ko=0; 
 axis([0 log2(64) 0.18 1.0]), grid
 
@@ -19,19 +24,19 @@ plotshortened(65,64,63,0,0,'k.','k-','k-.','k.',1);
 [no,ko]=plotshortened(128,120,62,0,0,'r.','r-','r-.','r.',1);
 
 % quadratic residue
-[no,ko]=plotshortened(17,9,4,0,0,'b.','b-','b-.','b.',0);    % d=5
-[no,ko]=plotshortened(23,12,6,0,0,'m.','m-','m-.','m.',0);   % d=7
-% [no,ko]=plotshortened(31,16,3,0,0,'m.','m-','m-.','m.',0);   % d=7
-[no,ko]=plotshortened(41,21,4,0,0,'g.','g-','g-.','g.',0);  % d=9
-[no,ko]=plotshortened(47,24,10,0,0,'c.','c-','c-.','c.',0);  % d=11
+[no,ko]=plotshortened(17,9,4,0,0,'b.','b-','b-.','b.',0);     % d=5
+[no,ko]=plotshortened(23,12,6,0,0,'m.','m-','m-.','m.',0);    % d=7
+% [no,ko]=plotshortened(31,16,3,0,0,'m.','m-','m-.','m.',0);  % d=7
+[no,ko]=plotshortened(41,21,4,0,0,'g.','g-','g-.','g.',0);    % d=9
+[no,ko]=plotshortened(47,24,10,0,0,'c.','c-','c-.','c.',0);   % d=11
 
 % extended quadratic residue (includes self-dual)
-[no,ko]=plotshortened(18,9,4,0,0,'b.','b-','b-.','b.',1);    % d=6
-        plotshortened(24,12,2,0,0,'b.','b-','','b.',3);        % d=7-8
-[no,ko]=plotshortened(24,12,6,0,0,'m.','m-','m-.','m.',1);   % d=8
-% [no,ko]=plotshortened(32,16,3,0,0,'m.','m-','m-.','m.',1);   % d=8
-[no,ko]=plotshortened(42,21,4,0,0,'g.','g-','g-.','g.',1);   % d=10
-        plotshortened(48,24,2,0,0,'g.','g-','','g.',3);      % d=9-10
+[no,ko]=plotshortened(18,9,4,0,0,'b.','b-','b-.','b.',1);     % d=6
+        plotshortened(24,12,2,0,0,'b.','b-','','b.',3);       % d=7-8
+[no,ko]=plotshortened(24,12,6,0,0,'m.','m-','m-.','m.',1);    % d=8
+% [no,ko]=plotshortened(32,16,3,0,0,'m.','m-','m-.','m.',1);  % d=8
+[no,ko]=plotshortened(42,21,4,0,0,'g.','g-','g-.','g.',1);    % d=10
+        plotshortened(48,24,2,0,0,'g.','g-','','g.',3);       % d=9-10
 [no,ko]=plotshortened(48,24,10,0,0,'c.','c-','c-.','c.',1);   % d=12
 
 % 57,29,?        58,29,?
@@ -43,14 +48,13 @@ plotshortened(65,64,63,0,0,'k.','k-','k-.','k.',1);
 % 113,57,        114,57,
 % 127,64,15      128,64,16
 
-
 % biorthogonal: (16,5,8  32,6,16  64,7,32  128,8,64  256,9,128) includes simplex
-        plotshortened(16,5,0,0,0,'b.','b-','','b.',3);       % d=6-5
+plotshortened(16,5,0,0,0,'b.','b-','','b.',3);             % d=6-5
 [no,ko]=plotshortened(15,5,2,0,0,'m.','m-','m-.','m.',0);  % d=7
 [no,ko]=plotshortened(16,5,2,0,0,'m.','m-','m-.','m.',1);  % d=8
 
 % other
-plotshortened(9,2,0,0,0,'b.','b-','','b.',1);    % d=5-6
+plotshortened(9,2,0,0,0,'b.','b-','','b.',1);     % d=5-6
 plotshortened(11,4,1,0,0,'b.','b-','','b.',0);    % d=5
 plotshortened(12,4,1,0,0,'b.','b-','','b.',1);    % d=6
 plotshortened(23,14,4,0,0,'b.','b-','','b.',0);   % d=5

@@ -22,11 +22,11 @@ function b = RR_CRC_encode(a,v,k,r,verbose)
 
 n=k+r
 if ~verbose
-  t=bitshift(a,r);
-  for  i=n:-1:r+1
+  t=bitshift(a,r);  % initialize t corresponding to t(z) = z^r * a(z)
+  for  i=n:-1:r+1   % zero coefficient i in t(z) by subtracting shift of v(z)
     if bitget(t,i), t=bitxor(t,bitshift(v,i-r-1)); end
   end
-  b=dec2bin(t,r);
+  b=dec2bin(t,r); whos
 else                                  % (same as above, with more screen output)
   t=bitshift(a,r); ts=dec2bin(t,n)
   for  i=n:-1:r+1
