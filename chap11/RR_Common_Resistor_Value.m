@@ -1,5 +1,13 @@
-function Rcom=CommonResistorValue(R,n,direction)
-% Rounds R to common values in the En series, for n=6, 12, 24, 48, 96, or 192.
+function Rcom=RR_Common_Resistor_Value(R,n,direction)
+% function Rcom=RR_Common_Resistor_Value(R,n,direction)
+% Rounds R to a common values in the En series, for n={6, 12, 24, 48, 96, or 192}.
+% INPUTS: R=some resistor value, in ohms
+%         n={6, 12, 24, 48, 96, or 192} = which En series to round to
+%         direction={'up', 'down', or 'closest'} = which direction to round.
+% OUTPUT: Rcom=closest resistor value in the series selected.
+% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+
 switch n
   case 6
     values=[1.0 1.5 2.2 3.3 4.7 6.8 10];
