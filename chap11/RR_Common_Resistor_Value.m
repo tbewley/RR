@@ -5,7 +5,7 @@ function Rcom=RR_Common_Resistor_Value(R,n,direction)
 %         n={6, 12, 24, 48, 96, or 192} = which En series to round to
 %         direction={'up', 'down', or 'closest'} = which direction to round.
 % OUTPUT: Rcom=closest resistor value in the series selected.
-% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+% Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch n
