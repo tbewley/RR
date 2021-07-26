@@ -4,7 +4,7 @@
 % PRO TIP: call this init code automatically when firing up Matlab or Octave by appending
 % to the startup.m file in your Matlab or Octave installation as follows:
 %   /bin/zsh
-%     set RRbase "~/RR/"  
+%     export RRbase="~/RR/"
 %     echo "cd" $RRbase"; RR_path_init" >> ~/Documents/MATLAB/startup.m
 %   exit
 % IMPORTANT: modify the definition of RRbase in the above zsh commands as needed.
