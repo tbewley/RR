@@ -19,7 +19,7 @@ Chapter 5: Berets                             (<a href="http://robotics.ucsd.edu
 Chapter 6: Sensors, actuators, and interfaces (<a href="http://robotics.ucsd.edu/RR/RR_chap06.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR>
 
 PART 2: THEORETICAL FOUNDATIONS<BR>
-Chapter 7: Linear Error-Correcting Codes (<a href="http://robotics.ucsd.edu/RR/RR_chap07.pdf">, <a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
+Chapter 7: Linear Error-Correcting Codes (<a href="http://robotics.ucsd.edu/RR/RR_chap07.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
 Chapter 8: Robot Kinematics & Dynamics   (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
 Chapter 9: ODE Simulation                (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
 Chapter 10: Signals & Systems            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
