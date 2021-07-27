@@ -11,25 +11,25 @@ To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github
   
 All files Copyright 2021 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.<BR><BR>
 PART 1: TECHNOLOGY<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap01.pdf">Chapter 1: Cybernetics</a>                         (<a href="https://github.com/tbewley/RR/tree/main/chap01">code</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap02.pdf">Chapter 2: Embedded programming</a>.               (<a href="https://github.com/tbewley/RR/tree/main/chap02">code</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap03.pdf">Chapter 3: Communication </a>                      (<a href="https://github.com/tbewley/RR/tree/main/chap03">code</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap04.pdf">Chapter 4: Connector standards</a>                 (<a href="https://github.com/tbewley/RR/tree/main/chap04">code</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap05.pdf">Chapter 5: Berets</a>                              (<a href="https://github.com/tbewley/RR/tree/main/chap05">code</a>) (<a href="http://robotics.ucsd.edu/Berets">hardware</a>)<BR>
-<a href="http://robotics.ucsd.edu/RR/RR_chap06.pdf">Chapter 6: Sensors, actuators, and interfaces</a>  (<a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR><BR>
+Chapter 1: Cybernetics                        (<a href="http://robotics.ucsd.edu/RR/RR_chap01.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap01">code</a>)<BR>
+Chapter 2: Embedded programming               (<a href="http://robotics.ucsd.edu/RR/RR_chap02.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap02">code</a>)<BR>
+Chapter 3: Communication                      (<a href="http://robotics.ucsd.edu/RR/RR_chap03.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap03">code</a>)<BR>
+Chapter 4: Connector standards                (<a href="http://robotics.ucsd.edu/RR/RR_chap04.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap04">code</a>)<BR>
+Chapter 5: Berets                             (<a href="http://robotics.ucsd.edu/RR/RR_chap05.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap05">code</a>, <a href="http://robotics.ucsd.edu/Berets">hardware</a>)<BR>
+Chapter 6: Sensors, actuators, and interfaces (<a href="http://robotics.ucsd.edu/RR/RR_chap06.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR>
 
 PART 2: THEORETICAL FOUNDATIONS<BR>
 <a href="http://robotics.ucsd.edu/RR/RR_chap07.pdf">Chapter 7: Linear Error-Correcting Codes</a>       (<a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
-Chapter 8: Robot Kinematics & Dynamics</a>   (<a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
-Chapter 9: ODE Simulation</a>                (<a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
-Chapter 10: Signals & Systems</a>            (<a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
-Chapter 11: Circuits</a>                     (<a href="https://github.com/tbewley/RR/tree/main/chap11">code</a>)<BR>
-Chapter 12: Classical Control</a>            (<a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
-Chapter 13: Motion Planning</a>              (<a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR><BR>
+  Chapter 8: Robot Kinematics & Dynamics (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
+Chapter 9: ODE Simulation                (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
+Chapter 10: Signals & Systems            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
+Chapter 11: Circuits                     (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap11">code</a>)<BR>
+Chapter 12: Classical Control            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
+Chapter 13: Motion Planning              (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR>
 
 PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR>
-Chapter 14: Open vs Proprietary Development Models</a>         (<a href="https://github.com/tbewley/RR/tree/main/chap14">code</a>)<BR>
-Chapter 15: Crowd Funding vs Venture Capital</a>               (<a href="https://github.com/tbewley/RR/tree/main/chap15">code</a>)<BR>
-Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM)</a>(<a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
-Chapter 17: Design Paradigms</a>                               (<a href="https://github.com/tbewley/RR/tree/main/chap17">code</a>)<BR>
-Chapter 18: Case study: eduMIP</a>                             (<a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>)  (<a href="http://robotics.ucsd.edu/eduMIP">hardware</a>)<BR>
+Chapter 14: Open vs Proprietary Development Models (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap14">code</a>)<BR>
+Chapter 15: Crowd Funding vs Venture Capital       (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap15">code</a>)<BR>
+Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM) (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
+Chapter 17: Design Paradigms                       (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap17">code</a>)<BR>
+Chapter 18: Case study: eduMIP                     (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>, <a href="http://robotics.ucsd.edu/eduMIP">hardware</a>)<BR>
