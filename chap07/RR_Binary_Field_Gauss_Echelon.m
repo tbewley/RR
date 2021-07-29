@@ -1,5 +1,5 @@
-function [A,p,r,v,R] = RR_Gauss_Echelon_Binary_Field(A)
-% function [A,p,r,v,R] = RR_Gauss_Echelon_Binary_Field(A)
+function [A,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A)
+% function [A,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A)
 % This function computes the A=P*L*U decomposition, on GF(2^m), of a singular or nonsquare matrix A,
 % where P is a permutation matrix, L is unit lower triangular, and U is in echelon form,
 % using an extension of Gaussian elimination with partial pivoting (see NR, Chapter 2), and
@@ -9,7 +9,7 @@ function [A,p,r,v,R] = RR_Gauss_Echelon_Binary_Field(A)
 % OUTPUT: A=the matrix A is replaced by the m_ij (which can be used to build L) and U on exit
 %         p=the permutation vector
 %         v=a vector containing the column of each pivot.
-% EXAMPLE CALL: see RR_Gauss_Echelon_Binary_Field_Test
+% EXAMPLE CALL: see RR_Binary_Field_Gauss_Echelon_Test
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 

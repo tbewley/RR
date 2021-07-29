@@ -6,9 +6,8 @@ function r = RR_Binary_Field_Mod(b,a)
 %         d=denomenator
 % OUTPUT: r=remainder
 % EXAMPLE #1: b=0b10000u64; a=0b10011u64; r=RR_Binary_Field_Mod(b,a)
-% EXAMPLE #2: [see (7.26a) in RR]
+% EXAMPLE #2: [see (7.26) in RR]
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10011u64); end
-% EXAMPLE #3: [see (7.26b) in RR]
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10101u64); end
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.

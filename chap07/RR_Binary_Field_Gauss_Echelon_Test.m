@@ -1,11 +1,11 @@
-% script RR_Gauss_Echelon_Binary_Field_Test
-% Test RR_Gauss_Echelon_Binary_Field on a binary matrix with m=4, n=5, and r=3.
+% script RR_Binary_Field_Gauss_Echelon_Test
+% Test RR_Binary_Field_Gauss_Echelon on a binary matrix with m=4, n=5, and r=3.
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-disp('Now testing RR_Gauss_Echelon_Binary_Field on a matrix with m=4, n=5, and r=3.')
+disp('Now testing RR_Binary_Field_Gauss_Echelon on a matrix with m=4, n=5, and r=3.')
 A=[1  0  0  0  0  1;  0 0 1 1 1 1; 0 0 0 0 1 1;  0 1 1 1 1 1; 0 0 0 1 0 1]
-[m,n]=size(A);  [Amod,p,r,v,R] = RR_Gauss_Echelon_Binary_Field(A);
+[m,n]=size(A);  [Amod,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A);
 
 % The nontrivial part of L is in the column below each pivot in the modified A
 L=eye(m);      for j=1:r,  for i=j+1:m,    L(i,j)=Amod(i,v(j));  end,  end
@@ -18,5 +18,3 @@ U=zeros(m,n);  for i=1:r,  for j=v(i):n,   U(i,j)=Amod(i,j);      end,  end
 P=zeros(m);    for k=1:m   P(p(k),k)=1;  end
 
 P, L, U, R, rank=r, error=norm(mod(A-P*L*U,2)), disp(' ')
-
-% end script RR_Gauss_Echelon_Binary_Field_Test
