@@ -13,6 +13,7 @@ function [A,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A)
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
+A=cast(A,'single'); % Work around a matlab bug related to A(r+1:m,j) * A(r,j+1:n) for integer A
 [m,n]=size(A);  p=[1:m]';  r=0; v=[];             % Initialize rank = 0, no pivots
 for j = 1:n,
    [amax,imax]=max(A(r+1:m,j));                   % Find the max element in left column
@@ -27,6 +28,8 @@ for j = 1:n,
       end      
    end
 end                               % If requested, also calculate reduced echelon matrix R.
-if nargout==5; R=zeros(size(A)); for j=1:r, R(j,v(j):end)=A(j,v(j):end); end  % Initialize
-   for j=r:-1:1, R(j,:) = mod((R(j,:) - R(j,v(j+1:r))*R(j+1:r,:)) / R(j,v(j)),2); end
-end % (the above computation just elimates the elements above the pivots, then normalizes)
+if nargout==5; R=zeros(size(A));                   % Initialize
+   for j=1:r,    R(j,v(j):end)=A(j,v(j):end); end  % Elimates the elements above the pivots
+   for j=r:-1:1, R(j,:) = mod((R(j,:) - R(j,v(j+1:r))*R(j+1:r,:)),2); end  % Normalize
+end
+A=cast(A,'uint64'); if nargout==5; R=cast(R,'uint64'); end

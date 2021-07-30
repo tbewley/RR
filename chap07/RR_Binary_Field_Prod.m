@@ -1,5 +1,5 @@
-function r = RR_Binary_Field_Mod(b,a)
-% function r = RR_Binary_Field_Mod(b,a)
+function c = RR_Binary_Field_Prod(a,b)
+% function r = RR_Binary_Field_Prod(b,a)
 % This function computes r = b mod a, where {r,b,a} are binary polynomials,
 % with all arithmetic restricted to the binary Galois field GF(2^m).
 % INPUT:  n=numerator
@@ -12,9 +12,14 @@ function r = RR_Binary_Field_Mod(b,a)
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-n=length(dec2bin(b)); m=length(dec2bin(a));
-r=b;
-for  i=n:-1:m    % zero coefficient i in b(z) by subtracting shift of a(z)
-    if bitget(r,i), r=bitxor(r,bitshift(a,i-m)); end
+m=length(dec2bin(a)); n=length(dec2bin(b));
+c=0b0u64;
+for  i=1:m
+    if bitget(a,i), c=bitxor(c,bitshift(b,i-1)); end
 end
+
+% m=length(a); n=length(b); p=zeros(1,n+m-1);
+% for k=0:n-1; p=p+[zeros(1,n-1-k) b(n-k)*a zeros(1,k)]; end
+
+
 % dec2bin(r,m-1)
