@@ -1,14 +1,11 @@
-function [v_bin,v_shorthand] = RR_BCH_Constructor(m,t)
-% function [v_bin,v_shorthand] = RR_BCH_Constructor(m,t)
-% This function computes the A=P*L*U decomposition, on GF(2^m), of a singular or nonsquare matrix A,
-% where P is a permutation matrix, L is unit lower triangular, and U is in echelon form,
-% using an extension of Gaussian elimination with partial pivoting (see NR, Chapter 2), and
-% with all arithmetic restricted to the binary Galois field GF(2^m).
-% The computation is done essentially in place in the matrix A.
+function [v_binary,v_shorthand] = RR_BCH_Constructor(m,t)
+% function [v_binary,v_shorthand] = RR_BCH_Constructor(m,t)
+% This function constructs binary BCH codes with m<51 and m*(2*t-1)<65.
+% For larger BCH codes, try RR_BCH_Constructor_Big
 % INPUT:  (m,t)=integers defining the BCH code
-% OUTPUT: v_bin=character string of binary coefficients of v(z)
-%         v_shorthand=
-% EXAMPLE CALL: [v_bin,v_shorthand] = RR_BCH_Constructor(4,2)
+% OUTPUT: v_binary   =character string of binary coefficients of v(z)
+%         v_shorthand=implicit+1 format for v(z)
+% EXAMPLE CALL: [v_binary,v_shorthand] = RR_BCH_Constructor(4,2)
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
@@ -28,20 +25,21 @@ f=0b0u64; for i=1:5, f=bitset(f,P(m,i)+1); end, phi(1)=f;
 
 for p=3:2:2*t-1  % Calculate the required minimum polynomials for beta_p=alpha^p with p=3,5,7,...
   for q=0:m
-     b=0b0u64; b=bitset(b,p*q+1); b=RR_Binary_Field_Mod(b,f);
+     b=0b0u64; b=bitset(b,p*q+1); dec2bin(b)
+     b=RR_Binary_Field_Mod(b,f);
      % build column i of binary mx(m+1) matrix A (each row from lsb to msb, as opposed to elsewhere)
      A(:,q+1)=bitget(b,1:m);
   end
   % Convert A to binary reduced echelon form R
   [A,t,r,v,R] = RR_Binary_Field_Gauss_Echelon(A);
   % Identify first nonpivot column (npc) of R
-  npc=m+1; for i=1:length(v), if v(i)>i, npc=i; break, end, end
+  npc=length(v)+1; for i=1:length(v), if v(i)>i, npc=i; break, end, end
   % Extract minimum nontrivial solution to determfine phi_p(p)
   count=(p+1)/2; phi(count)=0b0u64; phi(count)=bitset(phi(count),npc);
   for i=1:npc-1, phi(count)=bitset(phi(count),i,R(i,npc)); end
   % p, phi_bin=dec2bin(phi(count))  % Uncomment to peek at phi_p in binary form 
 end
 % Compute LCM[f(z),phi_3(z),phi_5(z),...].
-factors=unique(phi); v_dec=f;
-for i=2:length(factors); v_dec=RR_Binary_Field_Prod(v_dec,factors(i)); end
-v_bin=dec2bin(v_dec); v_shorthand=dec2hex(bitshift(v_dec,-1));
+factors=unique(phi); v_dec=factors(1);
+for i=2:length(factors); v_dec=RR_Binary_Field_Prod(factors(i),v_dec); end
+v_binary=dec2bin(v_dec); v_shorthand=dec2hex(bitshift(v_dec,-1));
