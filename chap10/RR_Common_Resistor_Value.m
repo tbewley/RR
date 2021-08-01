@@ -6,7 +6,7 @@ function Rcom=RR_Common_Resistor_Value(R,n,direction)
 %         direction={'up', 'down', or 'closest'} = which direction to round.
 % OUTPUT: Rcom=closest resistor value in the series selected.
 % EXAMPLE: Rcom=RR_Common_Resistor_Value(7000,24,'closest')
-% Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
+% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch n

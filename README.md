@@ -19,13 +19,13 @@ Chapter 5: Berets                             (<a href="http://robotics.ucsd.edu
 Chapter 6: Sensors, actuators, and interfaces (<a href="http://robotics.ucsd.edu/RR/RR_chap06.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap06">code</a>)<BR>
 
 PART 2: THEORETICAL FOUNDATIONS<BR>
-Chapter 7: Linear Error-Correcting Codes (<a href="http://robotics.ucsd.edu/RR/RR_chap07.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
-Chapter 8: Robot Kinematics & Dynamics   (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
-Chapter 9: ODE Simulation                (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
-Chapter 10: Signals & Systems            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
-Chapter 11: Circuits                     (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap11">code</a>)<BR>
-Chapter 12: Classical Control            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
-Chapter 13: Motion Planning              (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR>
+Chapter 7: Robot Kinematics & Dynamics   (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap07">code</a>)<BR>
+Chapter 8: ODE Simulation                (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap08">code</a>)<BR>
+Chapter 9: Signals & Systems            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap09">code</a>)<BR>
+Chapter 10: Circuits                     (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap10">code</a>)<BR>
+Chapter 11: Classical Control            (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap11">code</a>)<BR>
+Chapter 12: Motion Planning              (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
+Chapter 13: Linear Error-Correcting Codes (<a href="http://robotics.ucsd.edu/RR/RR_chap13.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR>
 
 PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR>
 Chapter 14: Open vs Proprietary Development Models (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap14">code</a>)<BR>
