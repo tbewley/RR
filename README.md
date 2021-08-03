@@ -2,9 +2,9 @@
 This code repository is associated with the text Renaissance Robotics, by Thomas Bewley.<BR>
 To see what this text is about, see the draft of its <a href="http://robotics.ucsd.edu/RR/RR_chap00.pdf">front matter</a>.<BR>
 The various codes and text files in this repository are broken out by chapters.<BR>
-I am currently working on Chapters 1-7, and update this repository a couple of times a week.<BR>
 If you are interested in using this text and these codes, please clone <a href="https://github.com/tbewley/RR">this repository</a><BR>
-using <a href="https://desktop.github.com/">GitHub Desktop</a>, and fetch updates from its main branch relatively often.<BR>
+using, for example, <a href="https://desktop.github.com/">GitHub Desktop</a>, and fetch updates from its main branch relatively often,<BR>
+as I currently update this repository a few times a week.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
 please install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a> as specified in its comments.<BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
