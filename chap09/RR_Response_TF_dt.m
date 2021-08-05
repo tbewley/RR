@@ -1,12 +1,12 @@
-function [r,y,t]=ResponseTFdt(gz,fz,type,g)
-% function [r,y,t]=ResponseTFdt(gz,fz,type,g)
+function [r,y,t]=RR_Response_TF_dt(gz,fz,type,g)
+% function [r,y,t]=RR_Response_TF_dt(gz,fz,type,g)
 % Using its partial fraction expansion, compute the response Y(z)=T(z)*R(z) of a
 % DT SISO linear system T(z)=gz(z)/fz(z) to an impulse (type=0), step (type=1),
 % or quadratic (type=2) input.  The derived type g groups together convenient
 % plotting parameters: g.T is the interval over which response is plotted,
 % g.h is the timestep, and {g.styler,g.styley} are the linestyles used.
-% See <a href="matlab:NRweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 17.4.3.
-% Part of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help NRchap17">Chapter 17</a>; please read the <a href="matlab:help NRcopyleft">copyleft</a>.
+% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 % Depends on <a href="matlab:help PartialFractionExpansion">PartialFractionExpansion</a>, <a href="matlab:help Fac">Fac</a>, <a href="matlab:help PolylogarithmNegativeInverse">PolylogarithmNegativeInverse</a>.
 % Verify with: <a href="matlab:help ResponseTFdtTest">ResponseTFdtTest</a>.
 
@@ -23,4 +23,3 @@ for i=1:rn, a=rd(i)/(Fac(rpp(i)-1)*ra(i)^rpp(i));
   b=a*ones(size(k)); for j=1:rpp(i)-1, b=b.*(k-j); end
   if rpp(i)>0, r(2:end)=r(2:end)+b(2:end).*ra(i).^k(2:end); else, r(1)=r(1)+rd(i); end
 end, r=real(r); if type>0, hold on; plot(t,r,g.styler), hold off; end
-end % function ResponseTFdt
