@@ -12,7 +12,8 @@ function [r,y,t]=RR_Response_TF(gs,fs,type,g)
 numR=Fac(type-1); denR=1; for i=1:type, denR=[denR 0]; end,  gs=gs/fs(1);
 [rp,rd,rk]=PartialFractionExpansion(numR,denR);              fs=fs/fs(1);
 [yp,yd,yk]=PartialFractionExpansion(PolyConv(numR,gs),PolyConv(denR,fs));
-h=g.T/g.N; t=[0:g.N]*h; for k=1:g.N+1
+h=g.T/g.N; t=[0:g.N]*h;
+for k=1:g.N+1
   if type>0, r(k)=real(sum(rd.*(t(k).^(rk-1).*exp(rp*t(k))))); else, r(k)=0; end
              y(k)=real(sum(yd.*(t(k).^(yk-1).*exp(yp*t(k)))));
 end
