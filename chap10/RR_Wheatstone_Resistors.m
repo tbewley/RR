@@ -1,5 +1,5 @@
 % script RR_Wheatstone_Resistors
-% Computes the currents and intermediate nodal voltages of a Wheatstone Bridge of resistors.
+% Computes the currents and nodal voltages in a Wheatstone Bridge of resistors.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
