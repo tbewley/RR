@@ -3,14 +3,16 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
-clear
-R=0; G=0; L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), 
+clear; termination=true  
+R=0; G=0; % also try G=1e-3 or R=1e1;
+L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), 
 h=4e-11;  X=10; N=200; Delta_x=X/(N+0.5), d=1/Delta_x;  
 A=zeros(2*N,2*N);
 for i=1:N,
    if i>1, A(2*i-1,2*i-2)= d/L; end, A(2*i-1,2*i-1)=-R/L; A(2*i-1,2*i)=-d/L; 
    if i<N, A(2*i,2*i+1)  =-d/C; end, A(2*i,  2*i  )=-G/C; A(2*i,2*i-1)= d/C;       
 end
+if termination, A(2*N,2*N)=A(2*N,2*N)-(d/C)/Z0; end
 D=eye(2*N)-A*h/2;
 E=eye(2*N)+A*h/2;
 
