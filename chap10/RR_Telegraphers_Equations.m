@@ -4,7 +4,7 @@
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 clear; termination=true  
-R=0; G=0; % also try G=1e-3 or R=1e1;
+R=0; G=0; % also try G=1e-3 or R=1e1
 L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), 
 h=4e-11;  X=10; N=200; Delta_x=X/(N+0.5), d=1/Delta_x;  
 A=zeros(2*N,2*N);
