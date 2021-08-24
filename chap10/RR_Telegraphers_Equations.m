@@ -19,6 +19,7 @@ for n=1:n_max
    if t<t1, r(1)=r(1)+(d/L)*h*(1-cos(pi*t/t1)); else, r(1)=r(1)+(d/L)*h*2; end
    x=D\r; t=n*h;
    if mod(n,80)==0, figure(1); plot(x(2:2:2*N)), axis([0 N -0.1 4.1]),
-                    text(N/2,1,['t=',num2str(t)]), pause;
-   end
+                    text(N/2,1,['Voltage, t=',num2str(t)]), pause;
+                    figure(2); plot(x(1:2:2*N-1)), axis([0 N -.03 .03]),
+                    text(N/2,1,['Current, t=',num2str(t)]), pause; end
 end
