@@ -14,7 +14,7 @@ for i=1:N/2,
 end
 
 % IN THE FOLLOWING LINE, WE MODIFY L and/or C IN THE RIGHT HALF OF WIRE
-Rr=0; Gr=0; Lr=4*L; Cr=0.25*C; Z0r=sqrt(Lr/Cr), cr=1/sqrt(Lr*Cr),  
+Rr=0; Gr=0; Lr=4*L; Cr=1*C; Z0r=sqrt(Lr/Cr), cr=1/sqrt(Lr*Cr),  
 % [Try Lr=alpha*L, Cr=beta*C for {alpha,beta} some combination of {4,1,0.25}.]
 
 for i=N/2+1:N,
