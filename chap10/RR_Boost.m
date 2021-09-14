@@ -3,18 +3,16 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
-% Problem 1 - Startup
-
 clear; syms C L R Vs Vd VoutB ILB IL IC IR Vm Vout s
 eqn1= Vm-Vout==Vd/s; eqn2= Vout==R*IR; eqn3= IC==C*(s*Vout-VoutB); eqn4= Vs/s-Vm==L*(s*IL-ILB);
 eqn5= IL==IC+IR; 
-SOL=solve(eqn1,eqn2,eqn3,eqn4,eqn5,IL,IC,IR,Vm,Vout); SOL.Vout, SOL.IL
-pause
+SOL=solve(eqn1,eqn2,eqn3,eqn4,eqn5,IL,IC,IR,Vm,Vout); Vout=SOL.Vout, IL=SOL.IL
+pause, disp(' ')
 
 clear; syms B2 B1 B0 b2 b1 b0 sigma omegad
 eqn1= b2==B2+B1; eqn2= b1==B2*2*sigma+B1*sigma+B0*omegad; eqn3= b0==B2*(sigma^2+omegad^2);
-SOL=solve(eqn1,eqn2,eqn3,B2,B1,B0); SOL.B2, SOL.B1, SOL.B0
-pause
+SOL=solve(eqn1,eqn2,eqn3,B2,B1,B0); B2=SOL.B2, B1=SOL.B1, B0=SOL.B0
+pause, disp(' ')
 
 clear; syms R L C Vs Vd omegad sigma D f tBmtA tCmtB VoutA VoutB ILA ILB
 omegad=sqrt(1/(L*C)-1/(4*C^2*R^2)); sigma=1/(2*C*R); tBmtA=D/f; tCmtB=(1-D)/f;
@@ -24,10 +22,11 @@ eqn1= VoutB==VoutA*exp(-(tBmtA)/(R*C));
 eqn2= ILB  ==Vs*(tBmtA)/L + ILA;
 eqn3= VoutA==B2+B1*exp(-sigma*(tCmtB))*cos(omegad*(tCmtB))+B0*exp(-sigma*(tCmtB))*sin(omegad*(tCmtB));
 eqn4= ILA  ==C2+C1*exp(-sigma*(tCmtB))*cos(omegad*(tCmtB))+C0*exp(-sigma*(tCmtB))*sin(omegad*(tCmtB));
-SOL=solve(eqn1,eqn2,eqn3,eqn4,ILB,VoutB,ILA,VoutA); SOL.VoutA, SOL.VoutB, SOL.ILA, SOL.ILB
+SOL=solve(eqn1,eqn2,eqn3,eqn4,ILB,VoutB,ILA,VoutA); VoutA=SOL.VoutA, VoutB=SOL.VoutB, ILA=SOL.ILA, ILB=SOL.ILB
+pause, disp(' ')
 
 Vs=5; Vd=0.5; L=10e-6; C=4.7e-6; R=250; f=1.6e6; D=7/12; % try also D=0.60086;
-VoutA=eval(SOL.VoutA), VoutB=eval(SOL.VoutB), ILA=eval(SOL.ILA), ILB=eval(SOL.ILB)
+VoutA=eval(VoutA), VoutB=eval(VoutB), ILA=eval(ILA), ILB=eval(ILB)
 tA=0; tB=D/f; tC=1/f; N=200
 t=0:tC/N:tC;
 for i=1:N+1;
