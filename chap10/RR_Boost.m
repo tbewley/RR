@@ -26,8 +26,8 @@ SOL=solve(eqn1,eqn2,eqn3,eqn4,ILB,VoutB,ILA,VoutA); VoutA=SOL.VoutA, VoutB=SOL.V
 pause, disp(' ')
 
 Vs=5; Vd=0.5; L=10e-6; C=4.7e-6; R=250; f=1.6e6; D=7/12; % try also D=0.60086;
-VoutA=eval(VoutA), VoutB=eval(VoutB), ILA=eval(ILA), ILB=eval(ILB)
-tA=0; tB=D/f; tC=1/f; N=200
+VoutA=eval(VoutA), VoutB=eval(VoutB), ILA=eval(ILA), ILB=eval(ILB), disp(' ')
+tA=0; tB=D/f; tC=1/f; N=200;
 t=0:tC/N:tC;
 for i=1:N+1;
   if t(i)<tB
@@ -38,7 +38,10 @@ for i=1:N+1;
 	IL(i)  =eval(C2+C1*exp(-sigma*(t(i)-tB))*cos(omegad*(t(i)-tB))+C0*exp(-sigma*(t(i)-tB))*sin(omegad*(t(i)-tB)));
   end
 end
-figure(1); plot(t,Vout); axis([0 tC min(Vout) max(Vout)]); ; print -depsc boost_V.eps
-figure(2); plot(t,IL);   axis([0 tC 0 max(IL)]); 
-  hold on; Imean=sum(IL(1:N))/N; plot([0 tC],[Imean Imean],'k--'); print -depsc boost_I.eps
+figure(1); clf; plot(t,Vout); axis([0 tC min(Vout) max(Vout)]); hold on
+   Vmean=sum(Vout(1:N))/N, plot([0 tC],[Vmean Vmean],'k--'); print -depsc boost_V.eps
+figure(2); clf; plot(t,IL);   axis([0 tC 0 max(IL)]);  hold on
+   Imean=sum(IL(1:N))/N, plot([0 tC],[Imean Imean],'k--'); print -depsc boost_I.eps
+
+Imean_approx=(Vmean/R)/(1-D)
 
