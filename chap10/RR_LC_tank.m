@@ -6,7 +6,7 @@
 % Simple LC tank: computation of Vout(s)
 clear; syms C1 C2 L3 R4 I Va Vb Vout Vs s
 eqn1= I==-s*C2*Va; eqn2= Va-Vb==s*L3*I; eqn3= Vb-Vout==R4*I; eqn4= I==C1*(s*Vout-Vs);
-SOL=solve(eqn1,eqn2,eqn3,eqn4,I,Va,Vb,Vout); SOL.Vout
+SOL=solve(eqn1,eqn2,eqn3,eqn4,I,Va,Vb,Vout); Vout=SOL.Vout
 pause
 
 % Simple LC tank: partial fraction expansion
