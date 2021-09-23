@@ -1,5 +1,6 @@
-% script RR_Telegraphers_Equations
-% Simulates the Telegraphers Equations.
+% script RR_Telegraphers_Equations_Wire_Junction
+% Simulates propogation of a signal across a junction of two wires with
+% different properties.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
@@ -10,20 +11,18 @@ Delta_x=X/(N+0.5); d=1/Delta_x; A=zeros(2*N,2*N);
 figure(1); clf, XV=[0:Delta_x:X]; XI=[Delta_x/2:Delta_x:X];
 for i=1:N/2,
    if i>1, A(2*i-1,2*i-2)= d/L; end, A(2*i-1,2*i-1)=-R/L; A(2*i-1,2*i)=-d/L; 
-   if i<N, A(2*i,2*i+1)  =-d/C; end, A(2*i,  2*i  )=-G/C; A(2*i,2*i-1)= d/C;
+           A(2*i,2*i+1)  =-d/C;      A(2*i,  2*i  )=-G/C; A(2*i,2*i-1)= d/C;
 end
-
 % IN THE FOLLOWING LINE, WE MODIFY L and/or C IN THE RIGHT HALF OF WIRE
 Rr=0; Gr=0; Lr=4*L; Cr=1*C; Z0r=sqrt(Lr/Cr), cr=1/sqrt(Lr*Cr),  
 % [Try Lr=alpha*L, Cr=beta*C for {alpha,beta} some combination of {4,1,0.25}.]
-
 for i=N/2+1:N,
-   if i>1, A(2*i-1,2*i-2)= d/Lr; end, A(2*i-1,2*i-1)=-Rr/Lr; A(2*i-1,2*i)=-d/Lr; 
+           A(2*i-1,2*i-2)= d/Lr;      A(2*i-1,2*i-1)=-Rr/Lr; A(2*i-1,2*i)=-d/Lr; 
    if i<N, A(2*i,2*i+1)  =-d/Cr; end, A(2*i,  2*i  )=-Gr/Cr; A(2*i,2*i-1)= d/Cr;
 end
 A(2*N,2*N)=A(2*N,2*N)-(d/Cr)/Z0r; % incorporation of termination 
 D=eye(2*N)-A*h/2; E=eye(2*N)+A*h/2;
-n_max=floor(3*T/h); t1=1e-8; x=zeros(2*N,1); t=0; 
+n_max=floor(5*T/h); t1=1e-8; x=zeros(2*N,1); t=0; 
 for n=1:n_max
    r=E*x; t=(n-0.5)*h;
    if t<t1, Vleft=(1-cos(pi*t/t1)); else, Vleft=2; end, r(1)=r(1)+(d/L)*h*Vleft;
