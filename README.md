@@ -33,3 +33,7 @@ Chapter 15: Crowd Funding vs Venture Capital       (text, <a href="https://githu
 Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM) (text, <a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
 Chapter 17: Design Paradigms                       (text, <a href="https://github.com/tbewley/RR/tree/main/chap17">code</a>)<BR>
 Chapter 18: Case study: eduMIP                     (text, <a href="https://github.com/tbewley/RR/tree/main/chap18">code</a>, <a href="http://robotics.ucsd.edu/eduMIP">hardware</a>)<BR>
+
+SUPPLEMENT<BR>
+Appendix A: Programming: a brief introduction (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chapAA">code</a>)<BR>
+Appendix B: Assorted mathematical formulations (<a href="http://robotics.ucsd.edu/RR/">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chapAB">code</a>)<BR>
