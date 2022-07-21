@@ -1,3 +1,6 @@
+% Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+
 disp('Set up the Diophantine problem (solve a*x1+b*y1=f1 for x1 and y1) in NR Example 19.9')
 b=[1 0 -4], a=[1 0 -10 0 9], f1=RR_PolyConv([1 1],[1 1],[1 3],[1 3])
 [x1,y1] = RR_Diophantine(a,b,f1)
