@@ -1,6 +1,6 @@
 function p=NR_Poly(r)
 % function p=NR_Poly(r)
-% Compute the coefficients of the polynomial with roots r.
+% Generate the coefficients of the polynomial with roots r.
 % INPUT:  r=vector of roots of a polynomial
 % OUTPUT: p=vector of coefficients of polynomial with roots r
 % TEST:   r=[1 -2 -3], p=NR_Poly(r), roots(p)
