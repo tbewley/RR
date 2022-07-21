@@ -8,6 +8,7 @@ function [x,y,r,t] = RR_Diophantine(a,b,f)
 % TEST:    Test with the <a href="matlab:RR_DiophantineTest">RR_DiophantineTest</a>.
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% hi there guys
 
 [g,xg,yg]=RR_Bezout(a,b); c=RR_PolyDiv(f,g);
 x=RR_PolyConv(xg,c); y=RR_PolyConv(yg,c); r=-RR_PolyDiv(b,g); t=RR_PolyDiv(a,g);
