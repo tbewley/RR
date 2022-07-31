@@ -1,5 +1,5 @@
 function [g,xg,yg] = RR_Bezout(a,b)
-% function [g,xg,yg] = RR_Bezout(a,b,g,q,n)
+% function [g,xg,yg] = RR_Bezout(a,b)
 % First solves for the greatest common factor g, and the corresponding quotients q, using Euclid's algorithm, then
 % solve for {xg,yg} satisfying the Bezout identity a*xg+b*yg=g using the Extended Euclidian algorithm.
 % INPUTS:  a,b = vectors of coefficients of input polynomials, with order of a >= order of b

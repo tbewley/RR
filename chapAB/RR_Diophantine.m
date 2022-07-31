@@ -1,5 +1,5 @@
 function [x,y,r,t] = RR_Diophantine(a,b,f)
-% function [xt,yt,r,t] = RR_Diophantine(a,b,f)
+% function [x,y,r,t] = RR_Diophantine(a,b,f)
 % Solve the polynomial Diophantine eqn a*x+b*y=f.  Assumes (a,b) have no common factors.
 % NOTE:    Assumes the input system is proper! [that is, the order of a >= the order of b]
 % INPUTS:  a,b,f = coefficients of the a,b,f polynomials in a polynomial Diophantine eqn
