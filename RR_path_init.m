@@ -2,19 +2,18 @@
 % Initialize the path environment for using the Renaissance Robotics (RR) codebase.
 % You can check your path in Matlab at any time by typing "path".
 %
-% You should call the RR and NR path init codes automatically when firing up Matlab on your computer,
-% by appending calls to RR_path_init and NR_path_init in the startup.m file of your userpath directory.
-% Matlab provides guidance on this subject here:  https://www.mathworks.com/help/matlab/ref/startup.html
+% You should call the RR path init codes automatically when firing up Matlab on your computer,
+% by appending calls to RR_path_init in the startup.m file of your userpath directory.
+% Matlab provides guidance on this subject here: https://www.mathworks.com/help/matlab/ref/startup.html
 %
 % In short, fire up Matlab, and type the command 'userpath', which will return the name of a directory.
 % WITHIN THAT DIRECTORY (important!), edit the file startup.m (or, create a file of this name
-% if one doesn't already exist); this file should contain (at least) the following two lines:
-%    RRbase='/Users/bewley/RR'; cd RRbase; RR_path_init
-%    NRbase='/Users/bewley/NR'; cd NRbase; NR_path_init
-% NOTE: replace the directory names in single quotes above with the full paths to the locations
-% that you have installed the RR and NR codebases on your computer.  Note that forward slashes (/),
+% if one doesn't already exist); this file should contain (at least) the following line:
+%    RRbase='/Users/bewley/RR'; cd(RRbase); RR_path_init
+% NOTE: replace the directory name in single quotes above with the full path to the locations
+% that you have installed the RR codebase on your computer.  Note that forward slashes (/),
 % as shown above, are used on Macs, whereas backslashes (\) are used in Windows; on a Windows machine,
-% the full path to one of these directories might look something like, e.g., 'C:\Users\bewley\RR'
+% the full path to this directory might look something like, e.g., 'C:\Users\bewley\RR'
 % Note you can also put other commonly needed Matlab initialization commands in your startup.m file.
 %
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
