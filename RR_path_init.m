@@ -6,7 +6,7 @@
 % by appending calls to RR_path_init and NR_path_init in the startup.m file of your userpath directory.
 % Matlab provides guidance on this subject here:  https://www.mathworks.com/help/matlab/ref/startup.html
 %
-% In short, first type the command 'userpath' in Matlab, which will return the name of a directory.
+% In short, fire up Matlab, and type the command 'userpath', which will return the name of a directory.
 % WITHIN THAT DIRECTORY (important!), edit the file startup.m (or, create a file of this name
 % if one doesn't already exist); this file should contain (at least) the following two lines:
 %    RRbase='/Users/bewley/RR'; cd RRbase; RR_path_init
@@ -30,11 +30,7 @@ addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03
         strcat(RRbase,'/chap13'),strcat(RRbase,'/chap14'),strcat(RRbase,'/chap15'), ...
         strcat(RRbase,'/chap16'),strcat(RRbase,'/chap17'),strcat(RRbase,'/chap18'), ...
         strcat(RRbase,'/chapAA'),strcat(RRbase,'/chapAB'),RRbase) 
-disp(newline+"Path set for using the Renaissance Robotics codebase.")
-disp("Note: please use GitHub Desktop to keep your local directory at ")
-disp("           "+RRbase)
-disp("in sync with the base branch of the Renaissance Robotics codebase repository at")
-disp("           https://github.com/tbewley/RR")
-disp("See appendix A of the Renaissance Robotics text for further info."+newline)
-
+disp("Path set for using the Renaissance Robotics (RR) codebase.")
+disp("Note: please use GitHub Desktop to keep "+RRbase)
+disp("in sync with the main RR repository at https://github.com/tbewley/RR"+newline)
 % end script RR_path_init
