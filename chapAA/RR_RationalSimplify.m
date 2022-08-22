@@ -6,7 +6,7 @@ function [b,a]=RR_RationalSimplify(b,a)
 %         a=vector of polynomial coefficients in denominator
 % OUTPUT: b=vector of polynomial coefficients in simplified numerator
 %         a=vector of polynomial coefficients in simplified denominator
-% TEST:   num=RR_PolyConv([1 10],[1 1],[1 10],[1 5]), den=RR_PolyConv([1 5],[1 10],[1 2])
+% TEST:   num=RR_PolyProd([1 10],[1 1],[1 10],[1 5]), den=RR_PolyProd([1 5],[1 10],[1 2])
 %         roots_num_before=roots(num)', roots_den_before=roots(den)'
 %         [num,den]=RR_RationalSimplify(num,den)
 %         roots_num_after=roots(num)', roots_den_after=roots(den)', num, den

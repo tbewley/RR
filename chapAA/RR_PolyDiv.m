@@ -5,9 +5,9 @@ function [d,b]=RR_PolyDiv(b,a)
 % OUTPUTS: d= vectors of polynimal coefficients of quotient 
 %          b= vectors of polynimal coefficients of remainder
 % TEST1:   num=[1 2 3 4 5 6], den=[1 2 3], [div,rem]=RR_PolyDiv(num,den)
-%          check=RR_PolyAdd(RR_PolyConv(div,den),rem)
+%          check=RR_PolyAdd(RR_PolyProd(div,den),rem)
 % TEST2:   syms K, num=[1 K 2*K 3*K], den=[1 K], [div,rem]=RR_PolyDiv(num,den)
-%          check=RR_PolyAdd(RR_PolyConv(div,den),rem)
+%          check=RR_PolyAdd(RR_PolyProd(div,den),rem)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 

@@ -12,8 +12,8 @@ k=ones(n,1); p=roots(den); if n>1, p=NR_SortComplex(p); end, if nargin<3, eps=1e
 for i=1:n-1, if abs(p(i+1)-p(i))<eps, k(i+1)=k(i)+1; end, end, k(n+1,1)=0;
 for i=n:-1:1
   if k(i)>=k(i+1), r=k(i); a=1;
-    for j=1:i-k(i), a=RR_PolyConv(a,[1 -p(j)]); end
-    for j=i+1:n,    a=RR_PolyConv(a,[1 -p(j)]); end
+    for j=1:i-k(i), a=RR_PolyProd(a,[1 -p(j)]); end
+    for j=i+1:n,    a=RR_PolyProd(a,[1 -p(j)]); end
     for j=1:k(i)-1, ad{j}=RR_PolyDiff(a,j); end
   end
   q=r-k(i); d(i,1)=RR_PolyVal(RR_PolyDiff(rem,q),p(i))/RR_Factorial(q);

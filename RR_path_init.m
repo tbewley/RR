@@ -10,7 +10,7 @@
 % WITHIN THAT DIRECTORY (important!), edit the file startup.m (or, create a file of this name
 % if one doesn't already exist); this file should contain (at least) the following line:
 %    RRbase='/Users/bewley/RR'; cd(RRbase); RR_path_init
-% NOTE: replace the directory name in single quotes above with the full path to the locations
+% NOTE: replace the directory name in single quotes above with the full path to the location
 % that you have installed the RR codebase on your computer.  Note that forward slashes (/),
 % as shown above, are used on Macs, whereas backslashes (\) are used in Windows; on a Windows machine,
 % the full path to this directory might look something like, e.g., 'C:\Users\bewley\RR'

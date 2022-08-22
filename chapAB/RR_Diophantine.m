@@ -11,7 +11,7 @@ function [x,y,r,t] = RR_Diophantine(a,b,f)
 % hi there guys
 
 [g,xg,yg]=RR_Bezout(a,b); c=RR_PolyDiv(f,g);
-x=RR_PolyConv(xg,c); y=RR_PolyConv(yg,c); r=-RR_PolyDiv(b,g); t=RR_PolyDiv(a,g);
-[k,y]=RR_PolyDiv(y,t);  x=RR_PolyAdd(x,RR_PolyConv(r,-k)); 
+x=RR_PolyProd(xg,c); y=RR_PolyProd(yg,c); r=-RR_PolyDiv(b,g); t=RR_PolyDiv(a,g);
+[k,y]=RR_PolyDiv(y,t);  x=RR_PolyAdd(x,RR_PolyProd(r,-k)); 
 y=y(find(abs(y)>1e-8,1):end); x=x(find(abs(x)>1e-8,1):end);
 end % function RR_Diophantine
