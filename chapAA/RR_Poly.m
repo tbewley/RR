@@ -17,7 +17,7 @@
 %   a=RR_Poly([1 2 3]), b=RR_Poly([1 2 3 4 5 6])  % Define a couple of test polynomials (change this!)
 %   sum=a+b, diff=b-a, product=a*b, quo=b./a, [quo,rem]=b./a        % (self explanatory)
 %   check=(a*quo+rem)-b, check_norm=norm(check)          % note: check should be the zero polynomial
-%   r=[-3 -1 1 3], b=RR_Poly_from_roots(r), r1=roots(b)  % note: r and r1 should match (change r!)
+%   r=[-3 -1 1 3], b=RR_Poly(r,'roots'), r1=roots(b)     % note: r and r1 should match (change r!)
 %   check_norm=norm(sort(r)-r1)                          % norm should be zero
 %   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)     % note: z1 should be nonzero, z2 should be zero
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
@@ -29,11 +29,16 @@ classdef RR_Poly
         n       % The order of this polynomial.  Note that poly has n+1 elements
     end
     methods
-        function obj = RR_Poly(c)           % Create an RR_Poly object from c, the coefficient vector
-            index=find(abs(c(1:end-1))>1e-10,1);     % Trim off any leading zeros!
-            if isempty(index), index=length(c); end  
-            obj.poly = c(index:end);          
-            obj.n    = length(obj.poly)-1; 
+        function obj = RR_Poly(c,flag)       % a=RR_Poly creates an RR_Poly object obj.
+            if nargin==1                     % one argument: create obj for c = vector of coefficients            
+                 index=find(abs(c(1:end-1))>1e-10,1);     % First trim off any leading zeros!
+                 if isempty(index), index=length(c); end 
+                 obj.poly = c(index:end);
+                 obj.n    = length(obj.poly)-1; 
+            else                             % two arguments: create obj for c = vector of roots
+                 obj=RR_Poly([1]); index=1;  % note: flag can be anything!  recommend flag='roots'...  :)
+                 for k=1:length(c), obj=obj*RR_Poly([1 -c(k)]); end % (the resulting p in this case is monic)
+            end 
         end
         function sum = plus(a,b)          % Defines a+b
             sum = RR_Poly([zeros(1,b.n-a.n) a.poly]+[zeros(1,a.n-b.n) b.poly]);
@@ -42,7 +47,7 @@ classdef RR_Poly
             diff = RR_Poly([zeros(1,b.n-a.n) a.poly]-[zeros(1,a.n-b.n) b.poly]);
         end    
         function prod = mtimes(a,b)       % Defines a*b
-            p=zeros(1,b.n+a.n+1),
+            p=zeros(1,b.n+a.n+1);
             for k=0:b.n; p=p+[zeros(1,b.n-k) b.poly(b.n+1-k)*a.poly zeros(1,k)]; end
             prod=RR_Poly(p);
         end
@@ -60,12 +65,8 @@ classdef RR_Poly
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(a.poly,option);
         end
-        function p = RR_Poly_from_roots(r)   % Create an RR_Poly object p from a vector of roots r
-            p=RR_Poly([1])
-            for k=1:length(r); p=p*RR_Poly([1 -r(k)]), end  % The resulting polynomial is monic.
-        end
         function r = roots(p)             % Defines r=roots(p), where p is an RR_Poly object
-            r=sort(roots(p.poly));
+            r=sort(roots(p.poly))';
         end
         function z = evaluate(a, s)
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
