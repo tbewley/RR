@@ -12,10 +12,12 @@
 %   minus:    b-a  gives the difference of two polynomials.
 %   mtimes:   a*b  gives the product of two polynomials.
 %   rdivide:  [quo,rem]=b./a divides two polynomials, giving the quotient quo and remainder rem
+%   mpower:   a^n  gives the n'th power of a polynomial
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_Poly object b
 %   z = eval(b,s)              Evaluates b(s) for some (real or complex) scalar s
+%   d = diff(p,m)              Computes the m'th derivative of the polynomial p
 % SOME TESTS:  [Try them!!]
 %   a=RR_Poly([1 2 3]), b=RR_Poly([1 2 3 4 5 6])          % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
@@ -23,6 +25,7 @@
 %   r=[-3 -1 1 3], b=RR_Poly(r,'roots'), r1=roots(b)      % note: r and r1 should match (change r!)
 %   check_norm=norm(sort(r)-r1)                           % norm should be zero
 %   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)      % note: z1 should be nonzero, z2 should be zero
+%   for m=0:d = diff(p,m)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
 
@@ -64,6 +67,9 @@ classdef RR_Poly
             end
             quo=RR_Poly(dp); rem=RR_Poly(bp); 
         end
+        function pow = mpower(a,n)        % Defines a^n
+             if n==0, pow=RR_Poly([1]); else, pow=a; for i=2:n, pow=pow*a; end, end
+        end
         function n = norm(a,option)       % Defines n=norm(a,option), where a is an RR_Poly object
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(a.poly,option);
@@ -73,6 +79,12 @@ classdef RR_Poly
         end
         function z = evaluate(a, s)
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
+        end
+        function p = diff(p,m)            % Computes the m'th derivative of the polynomial p
+             if nargin<2, m=1; end
+             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
+             if p.n<0, p=RR_Poly(0); end
+             if m>1, p=diff(p,m-1); end
         end
     end
 end
