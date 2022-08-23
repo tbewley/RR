@@ -3,6 +3,10 @@
 % This class defines a set of operations on row vectors, each interpreted as the 
 % coefficients of a polynomial, written in descending orrder.  For example,
 % b=[1 2 0 4] in this class is interpreted as the polynomial b(s)=s^3+2*s^2+4.
+% DEFINITION:
+%   a=RR_Poly(c)          defines an RR_Poly object from a coefficient vector c
+%   a=RR_Poly(r,'roots')  defines an RR_Poly object from a vector of roots r
+%   Note that any RR_Poly object b has two fields, b.poly and b.n
 % STANDARD OPERATIONS (overloading the +, -, *, and ./ operators):
 %   plus:     a+b  gives the sum of two polynomials.
 %   minus:    b-a  gives the difference of two polynomials.
@@ -11,15 +15,14 @@
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_Poly object b
-%   b = RR_Poly_from_roots(r)  Gives an RR_Poly object b from a vector of roots r
 %   z = eval(b,s)              Evaluates b(s) for some (real or complex) scalar s
 % SOME TESTS:  [Try them!!]
-%   a=RR_Poly([1 2 3]), b=RR_Poly([1 2 3 4 5 6])  % Define a couple of test polynomials (change this!)
-%   sum=a+b, diff=b-a, product=a*b, quo=b./a, [quo,rem]=b./a        % (self explanatory)
-%   check=(a*quo+rem)-b, check_norm=norm(check)          % note: check should be the zero polynomial
-%   r=[-3 -1 1 3], b=RR_Poly(r,'roots'), r1=roots(b)     % note: r and r1 should match (change r!)
-%   check_norm=norm(sort(r)-r1)                          % norm should be zero
-%   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)     % note: z1 should be nonzero, z2 should be zero
+%   a=RR_Poly([1 2 3]), b=RR_Poly([1 2 3 4 5 6])          % Define a couple of test polynomials
+%   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
+%   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be the zero polynomial
+%   r=[-3 -1 1 3], b=RR_Poly(r,'roots'), r1=roots(b)      % note: r and r1 should match (change r!)
+%   check_norm=norm(sort(r)-r1)                           % norm should be zero
+%   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)      % note: z1 should be nonzero, z2 should be zero
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
 
