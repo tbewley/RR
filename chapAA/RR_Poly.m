@@ -7,10 +7,10 @@
 %   a=RR_Poly(c)          defines an RR_Poly object from a coefficient vector c
 %   a=RR_Poly(r,'roots')  defines an RR_Poly object from a vector of roots r
 %   Note that any RR_Poly object b has two fields, b.poly and b.n
-% STANDARD OPERATIONS (overloading the +, -, *, and ./ operators):
-%   plus:     a+b  gives the sum of two polynomials.
-%   minus:    b-a  gives the difference of two polynomials.
-%   mtimes:   a*b  gives the product of two polynomials.
+% STANDARD OPERATIONS (overloading the +, -, *, ./, and ^ operators):
+%   plus:     a+b  gives the sum of two polynomials
+%   minus:    b-a  gives the difference of two polynomials
+%   mtimes:   a*b  gives the product of two polynomials
 %   rdivide:  [quo,rem]=b./a divides two polynomials, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
 % ADDITIONAL OPERATIONS:
@@ -29,7 +29,7 @@
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
 
-classdef RR_Poly
+classdef RR_Poly < matlab.mixin.CustomDisplay
     properties  % Each RR_Poly object consists of the following two fields:
         poly    % The polynomial coefficients themselves, just an ordinary row vector
         n       % The order of this polynomial.  Note that poly has n+1 elements
@@ -47,17 +47,20 @@ classdef RR_Poly
             end 
         end
         function sum = plus(a,b)          % Defines a+b
+            if ~isa(a,'RR_Poly'), a=RR_Poly(a); end,  if ~isa(b,'RR_Poly'), b=RR_Poly(b); end
             sum = RR_Poly([zeros(1,b.n-a.n) a.poly]+[zeros(1,a.n-b.n) b.poly]);
         end
         function diff = minus(a,b)        % Defines a-b
+            if ~isa(a,'RR_Poly'), a=RR_Poly(a); end,  if ~isa(b,'RR_Poly'), b=RR_Poly(b); end
             diff = RR_Poly([zeros(1,b.n-a.n) a.poly]-[zeros(1,a.n-b.n) b.poly]);
         end    
         function prod = mtimes(a,b)       % Defines a*b
+            if ~isa(a,'RR_Poly'), a=RR_Poly(a); end,  if ~isa(b,'RR_Poly'), b=RR_Poly(b); end
             p=zeros(1,b.n+a.n+1);
             for k=0:b.n; p=p+[zeros(1,b.n-k) b.poly(b.n+1-k)*a.poly zeros(1,k)]; end
             prod=RR_Poly(p);
         end
-        function [quo,rem] = rdivide(b,a) % Defines b./a
+        function [quo,rem] = rdivide(b,a) % Defines [quo,rem]=b./a
             bp=b.poly, ap=a.poly          % <-- just a couple of shorthands to simplify notation
             if b.n<a.n, dp=0; else
               if strcmp(class(bp),'sym')|strcmp(class(ap),'sym'), syms dp, end
@@ -81,10 +84,21 @@ classdef RR_Poly
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
         end
         function p = diff(p,m)            % Computes the m'th derivative of the polynomial p
-             if nargin<2, m=1; end
-             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
-             if p.n<0, p=RR_Poly(0); end
-             if m>1, p=diff(p,m-1); end
+            if nargin<2, m=1; end
+            p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
+            if p.n<0, p=RR_Poly(0); end
+            if m>1, p=diff(p,m-1); end
+        end
+    end
+    methods(Access = protected)
+        function displayScalarObject(obj)
+            fprintf(getHeader(obj)),
+            fprintf('poly:'), disp(obj.poly)
+            fprintf('   n: %d\n',obj.n)
         end
     end
 end
+
+
+
+ 
