@@ -14,7 +14,7 @@
 % SOME TESTS:  [Try them!!]
 %   G=RR_tf([1 10],[1 100]), D=RR_tf([1 2],[4 5])          % Define a couple of test transfer functions
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 classdef RR_tf < matlab.mixin.CustomDisplay
     properties
