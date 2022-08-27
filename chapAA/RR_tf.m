@@ -1,7 +1,7 @@
 % classdef RR_tf
 %
 % This class defines a set of operations on transfer functions, each given by a pair of 
-% numerator and denominator polynomials of the RR_poly class.
+% numerator and denominator polynomials of the RR_poly class, and the equivalent (z,p,K) representation.
 % DEFINITION:
 %   G=RR_tf(num)      defines an RR_tf object G from a numerator polynomial, setting denominator=1
 %   G=RR_tf(num,den)  2 arguments defines an RR_tf object from numerator and denominator polynomials
@@ -76,3 +76,23 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         end
     end
 end
+
+
+% .ooo.
+% .o...
+% ....x
+% oo..x
+% oxx.x
+% oxx.x
+
+% .ooo.
+% ...o.
+% x....
+% x..oo
+% x.xxo
+% x.xxo
+
+
+
+
+

@@ -7,7 +7,7 @@
 %   a=RR_poly(c)          defines an RR_poly object from a coefficient vector c
 %   a=RR_poly(r,'roots')  defines an RR_poly object from a vector of roots r
 %   Note that any RR_poly object b has two fields, b.poly and b.n
-% STANDARD OPERATIONS (overloading the +, -, *, ./, and ^ operators):
+% STANDARD OPERATIONS (overloading the +, -, *, ./, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     a+b  gives the sum of two polynomials
 %   minus:    b-a  gives the difference of two polynomials
 %   mtimes:   a*b  gives the product of two polynomials
@@ -61,8 +61,9 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             prod=RR_poly(p);
         end
         function [quo,rem] = rdivide(b,a) % Defines [quo,rem]=b./a
-            bp=b.poly, ap=a.poly          % <-- just a couple of shorthands to simplify notation
-            if b.n<a.n, dp=0; else
+            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
+            bp=b.poly; ap=a.poly;          % <-- just a couple of shorthands to simplify notation
+            if b.n<a.n, dp=0; elseif a.n==0, dp=bp/ap; bp=0; else,
               if strcmp(class(bp),'sym')|strcmp(class(ap),'sym'), syms dp, end
               for j=1:b.n-a.n+1
                 dp(j)=bp(1)/ap(1); bp(1:a.n+1)=bp(1:a.n+1)-dp(j)*ap; bp=bp(2:end);
@@ -73,6 +74,13 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function pow = mpower(a,n)        % Defines a^n
              if n==0, pow=RR_poly([1]); else, pow=a; for i=2:n, pow=pow*a; end, end
         end
+        % Define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the orders of a and b.
+        function TF=lt(a,b), if a.n< b.n, TF=true; else, TF=false; end, end
+        function TF=gt(a,b), if a.n> b.n, TF=true; else, TF=false; end, end
+        function TF=le(a,b), if a.n<=b.n, TF=true; else, TF=false; end, end
+        function TF=ge(a,b), if a.n>=b.n, TF=true; else, TF=false; end, end
+        function TF=ne(a,b), if a.n~=b.n, TF=true; else, TF=false; end, end
+        function TF=eq(a,b), if a.n==b.n, TF=true; else, TF=false; end, end
         function n = norm(a,option)       % Defines n=norm(a,option), where a is an RR_poly object
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(a.poly,option);
@@ -93,12 +101,9 @@ classdef RR_poly < matlab.mixin.CustomDisplay
     methods(Access = protected)
         function displayScalarObject(obj)
             fprintf(getHeader(obj)),
-            fprintf('poly:'), disp(obj.poly)
+            fprintf('poly: '), disp(obj.poly)
+            fprintf('roots:'), disp(sort(roots(obj.poly),'real')')
             fprintf('   n: %d\n',obj.n)
         end
     end
 end
-
-
-
- 

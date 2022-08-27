@@ -2,9 +2,8 @@
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('Set up the Diophantine problem (solve a*x1+b*y1=f1 for x1 and y1) in NR Example 19.9')
-b=[1 0 -4], a=[1 0 -10 0 9], f1=RR_PolyProd([1 1],[1 1],[1 3],[1 3])
-[x1,y1] = RR_Diophantine(a,b,f1)
-test1=RR_PolyAdd(RR_PolyProd(a,x1),RR_PolyProd(b,y1)); residual1=norm(RR_PolyAdd(f1,-test1))
+b=RR_poly([-2 2],'roots'), a=RR_poly([-1 1 -3 3],'roots'), f1=RR_poly([-1 -1 -3 -3],'roots')
+[x1,y1] = RR_Diophantine(a,b,f1), test1=a*x1+b*y1, residual1=norm(f1-test1)
 fprintf('Note that the solution {x1,y1} is improper, but solves a*x1+b*y1=f1, with ~ zero residual\n\n'), pause
 
 disp('Modify f and try again (solve a*x2+b*y2=f2 for x2 and y2).')

@@ -10,8 +10,5 @@ function [x,y,r,t] = RR_Diophantine(a,b,f)
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % hi there guys
 
-[g,xg,yg]=RR_Bezout(a,b); c=RR_PolyDiv(f,g);
-x=RR_PolyProd(xg,c); y=RR_PolyProd(yg,c); r=-RR_PolyDiv(b,g); t=RR_PolyDiv(a,g);
-[k,y]=RR_PolyDiv(y,t);  x=RR_PolyAdd(x,RR_PolyProd(r,-k)); 
-y=y(find(abs(y)>1e-8,1):end); x=x(find(abs(x)>1e-8,1):end);
+[g,xg,yg]=RR_Bezout(a,b); c=f./g;  x=xg*c; y=yg*c; r=-1*b./g; t=a./g; [k,y]=y./t; x=x-r*k; 
 end % function RR_Diophantine
