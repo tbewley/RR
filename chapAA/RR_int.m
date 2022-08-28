@@ -34,12 +34,12 @@ classdef RR_int < matlab.mixin.CustomDisplay
         function sum  = plus(a,b),   [a,b]=check(a,b); sum =RR_int(a.v+b.v); end  % Defines a+b
         function diff = minus(a,b),  [a,b]=check(a,b); diff=RR_int(a.v-b.v); end  % Defines a-b
         function prod = mtimes(a,b), [a,b]=check(a,b); prod=RR_int(a.v*b.v); end  % Defines a*b
-        function [quo,re] = rdivide(b,a)                                             % Defines [quo,rem]=b./a
+        function [quo,re] = rdivide(b,a)                                          % Defines [quo,rem]=b./a
             [b,a]=check(b,a); quo=RR_int(idivide(b.v,a.v)); re=RR_int(rem(b.v,a.v));
         end
-        function pow = mpower(a,n),  pow=RR_int(a.val^n); end                         % Defines a^n
-        % Define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function TF=lt(a,b), if a.v< b.v, TF=true; else, TF=false; end, end
+        function pow = mpower(a,n),  pow=RR_int(a.val^n); end                        % Defines a^n
+        % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
+        function TF=lt(a,b), if a.v< b.v, TF=true; else, TF=false; end, end            
         function TF=gt(a,b), if a.v> b.v, TF=true; else, TF=false; end, end
         function TF=le(a,b), if a.v<=b.v, TF=true; else, TF=false; end, end
         function TF=ge(a,b), if a.v>=b.v, TF=true; else, TF=false; end, end
