@@ -20,27 +20,31 @@
 
 classdef RR_tf < matlab.mixin.CustomDisplay
     properties
-    	num
+    	num  % num and den are of type RR_poly 
     	den
-        z
+        z    % z and k are row vectors, and K is an ordinary scalar
         p
-        K
+        K    % Note that the (num,den) and (z,p,K) representations of the transfer function are equivalent
     end
     methods
     	function obj = RR_tf(a,b,c)
+            % Generate an RR_tf object:
+            %   called with 1 argument,  generates from a numerator polynomial a
+            %   called with 2 arguments, generates from a numerator polynomial a and a denominator polynomial b
+            %   called with 3 arguments, generates from vectors of zeros and poles, a and b, and the overall gain c
     		switch nargin
-    			case 1  % 1 argument: define RR_tf object from polynomial a
+    			case 1  
     				if ~isa(a,'RR_poly'), a=RR_poly(a); end, obj = RR_tf(a,1);
-    			case 2 	% 2 arguments: define RR_tf object from numerator a and denominator b
+    			case 2 	
      				if  isa(a,'RR_poly'), obj.num=a; else, obj.num=RR_poly(a); end
    					if  isa(b,'RR_poly'), obj.den=b; else, obj.den=RR_poly(b); end
    					t=1/obj.den.poly(1); obj.den=obj.den*t; obj.num=obj.num*t;  % Make denominator monic
                     obj.z=roots(obj.num); obj.p=roots(obj.den); obj.K=obj.num.poly(1); 
-   				case 3	% 3 arguments: define RR_tf object from vectors of zeros and poles, a and b, and gain c
+   				case 3	
                     obj.z=a; obj.p=b; obj.K=c;
     	    		obj.num=c*RR_poly(a,'roots'); obj.den=RR_poly(b,'roots');
     	    end
-     	    if obj.num.poly==0, obj.den=RR_poly(1); end             % Simplify the zero transfer function
+     	    if obj.num.poly==0, obj.den=RR_poly(1); fprintf('Simplifying the zero transfer function\n'), end 
             if obj.num.n>0 & obj.den.n>0, for i=1:obj.num.n     
                 j=find(abs(obj.z(i)-obj.p)<1e-8,1);
                 if ~isempty(j); j=j(1); fprintf('Performing pole/zero cancellation at s=%f\n',obj.z(i))
@@ -48,21 +52,56 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                         obj.p=obj.p([1:j-1,j+1:obj.den.n]); obj=RR_tf(obj.z,obj.p,obj.K); break, end
             end, end
     	end
-    	function sum = plus(G1,G2)          % Defines G1+G2
+    	function sum = plus(G1,G2)          
+            % Defines G1+G2, where G1 and/or G2 are of class RR_tf
+            % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); sum  = RR_tf(G1.num*G2.den+G2.num*G1.den,G1.den*G2.den);
         end
-        function diff = minus(G1,G2)        % Defines G1-G2
+        function diff = minus(G1,G2)       
+            % Defines G1-G2, where G1 and/or G2 are of class RR_tf
+            % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); diff = RR_tf(G1.num*G2.den-G2.num*G1.den,G1.den*G2.den);
         end    
-        function prod = mtimes(G1,G2)       % Defines G1*G2
+        function prod = mtimes(G1,G2)       
+            % Defines G1*G2, where G1 and/or G2 are of class RR_tf
+            % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
         end
-        function quo = rdivide(G1,G2)        % Defines G1./G2
+        function quo = rdivide(G1,G2)
+            % Defines G1/G2, where G1 and/or G2 are of class RR_tf
+            % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
         end
         function [G1,G2]=check(G1,G2)
+            % Converts G1 or G2, as necessary, to class RR_tf
             if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
-        end        
+        end
+        function [p,d,k,n]=PartialFractionExpansion(F,eps)
+            % Compute {p,d,k,n} so that F(s)=num(s)/den(s)=d(1)/(s-p(1))^k(1) +...+ d(n)/(s-p(n))^k(n)
+            % INPUTS:  F   a proper rational polynomial of class RR_tf with m<n and n>0, where m=F.num.n and n=F.den.n
+            %          eps tolerance used when calculating repeated roots
+            % OUTPUTS: p   poles of F (a row vector of length n)
+            %          d   coefficients of the partial fraction expansion (a row vector of length n)
+            %          k   powers of the denominator in each term (a row vector of length n)
+            %          n   number of terms in the expansion
+            % TEST:    [p,d,k,n] = PartialFractionExpansion(RR_tf([1000 1000],[1 100 1000 1000 0]))
+            % Renaissance Robotics codebase, Appendix A (derivation in Appendix B), https://github.com/tbewley/RR
+            % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+            m=F.num.n; n=F.den.n;
+            if m==n, flag=1; [div,rem]=F.num/F.den; m=m-1; else, flag=0; rem=F.num; end
+            k=ones(1,n); p=F.p; if nargin<2, eps=1e-3; end
+            for i=1:n-1, if abs(p(i+1)-p(i))<eps, k(i+1)=k(i)+1; end, end, k(n+1)=0;
+            for i=n:-1:1
+                if k(1,i)>=k(i+1), r=k(i); a=RR_poly(1);
+                    for j=1:i-k(i),    a=a*[1 -p(j)]; end
+                    for j=i+1:n,       a=a*[1 -p(j)]; end
+                    for j=1:k(i)-1,    ad{j}=diff(a,j); end
+                end
+                q=r-k(i); d(i)=evaluate(diff(rem,q),p(i))/RR_Factorial(q);
+                for j=q:-1:1, d(i)=d(i)-d(i+j)*evaluate(ad{j},p(i))/RR_Factorial(j); end
+                d(i)=d(i)/evaluate(a,p(i));
+            end, if ~flag, k=k(1:n); else, n=n+1; p(n,1)=1; d(n,1)=div; end
+        end 
     end
     methods(Access = protected)
         function displayScalarObject(obj)

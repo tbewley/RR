@@ -32,7 +32,7 @@
 classdef RR_poly < matlab.mixin.CustomDisplay
     properties  % Each RR_poly object consists of the following two fields:
         poly    % The polynomial coefficients themselves, just an ordinary row vector
-        n       % The order of this polynomial.  Note that poly has n+1 elements
+        n       % The order of this polynomial.  Note that poly has n+1 coefficients
     end
     methods
         function obj = RR_poly(c,flag)       % a=RR_poly creates an RR_poly object obj.
@@ -87,7 +87,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function r = roots(p)             % Defines r=roots(p), where p is an RR_poly object
             r=sort(roots(p.poly))';
         end
-        function z = evaluate(a, s)
+        function z = evaluate(a,s)
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
         end
         function p = diff(p,m)            % Computes the m'th derivative of the polynomial p
