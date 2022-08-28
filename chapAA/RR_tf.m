@@ -13,7 +13,7 @@
 %   mtimes:   G1*G2  gives the product of two transfer functions    (or, a transfer functions and a scalar)
 %   rdivide:  G1./G2 divides two transfer functions
 % SOME TESTS:  [Try them! Change them!]
-%   G=RR_tf([1.1 10 110],[1 10 100],1), D=RR_tf([1 2],[4 5])       % Define a couple of test transfer functions
+%   G=RR_tf([1.1 10 110],[0 1 10 100],1), D=RR_tf([1 2],[4 5])       % Define a couple of test transfer functions
 %   T=G*D./(1+G*D)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
@@ -49,28 +49,29 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             end, end
     	end
     	function sum = plus(G1,G2)          % Defines G1+G2
-            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
-            sum = RR_tf(G1.num*G2.den+G2.num*G1.den,G1.den*G2.den);
+            [G1,G2]=check(G1,G2); sum  = RR_tf(G1.num*G2.den+G2.num*G1.den,G1.den*G2.den);
         end
         function diff = minus(G1,G2)        % Defines G1-G2
-            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
-            diff = RR_tf(G1.num*G2.den-G2.num*G1.den,G1.den*G2.den);
+            [G1,G2]=check(G1,G2); diff = RR_tf(G1.num*G2.den-G2.num*G1.den,G1.den*G2.den);
         end    
         function prod = mtimes(G1,G2)       % Defines G1*G2
-            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
-            prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
+            [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
         end
-        function quo = rdivide(G1,G2)        % Defines G1/G2
-            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
-            quo=RR_tf(G1.num*G2.den,G1.den*G2.num);
+        function quo = rdivide(G1,G2)        % Defines G1./G2
+            [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
         end
+        function [G1,G2]=check(G1,G2)
+            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
+        end        
     end
     methods(Access = protected)
         function displayScalarObject(obj)
             fprintf(getHeader(obj))
             fprintf('num:'), disp(obj.num.poly)
             fprintf('den:'), disp(obj.den.poly)
-            fprintf('  m: %d,  n: %d,  n_r=n-m: %d,  K: %f\n', obj.num.n, obj.den.n, obj.den.n-obj.num.n, obj.K)
+            nr=obj.den.n-obj.num.n;
+            if nr>0, s='strictly proper'; elseif nr==0, s='semiproper'; else, s='improper'; end
+            fprintf('  m=%d, n=%d, n_r=n-m=%d, %s, K=%f\n', obj.num.n, obj.den.n, nr, s, obj.K)
             fprintf('  z:'), disp(obj.z)
             fprintf('  p:'), disp(obj.p)
         end
@@ -91,7 +92,6 @@ end
 % x..oo
 % x.xxo
 % x.xxo
-
 
 
 

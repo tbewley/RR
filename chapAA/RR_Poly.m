@@ -47,22 +47,18 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             end 
         end
         function sum = plus(a,b)          % Defines a+b
-            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
-            sum = RR_poly([zeros(1,b.n-a.n) a.poly]+[zeros(1,a.n-b.n) b.poly]);
+            [a,b]=check(a,b); sum=RR_poly([zeros(1,b.n-a.n) a.poly]+[zeros(1,a.n-b.n) b.poly]);
         end
         function diff = minus(a,b)        % Defines a-b
-            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
-            diff = RR_poly([zeros(1,b.n-a.n) a.poly]-[zeros(1,a.n-b.n) b.poly]);
+            [a,b]=check(a,b); diff=RR_poly([zeros(1,b.n-a.n) a.poly]-[zeros(1,a.n-b.n) b.poly]);
         end    
         function prod = mtimes(a,b)       % Defines a*b
-            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
-            p=zeros(1,b.n+a.n+1);
+            [a,b]=check(a,b); p=zeros(1,b.n+a.n+1);
             for k=0:b.n; p=p+[zeros(1,b.n-k) b.poly(b.n+1-k)*a.poly zeros(1,k)]; end
             prod=RR_poly(p);
         end
         function [quo,rem] = rdivide(b,a) % Defines [quo,rem]=b./a
-            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
-            bp=b.poly; ap=a.poly;          % <-- just a couple of shorthands to simplify notation
+            [a,b]=check(a,b); bp=b.poly; ap=a.poly;  % <-- a couple of shorthands to simplify notation
             if b.n<a.n, dp=0; elseif a.n==0, dp=bp/ap; bp=0; else,
               if strcmp(class(bp),'sym')|strcmp(class(ap),'sym'), syms dp, end
               for j=1:b.n-a.n+1
@@ -81,6 +77,9 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function TF=ge(a,b), if a.n>=b.n, TF=true; else, TF=false; end, end
         function TF=ne(a,b), if a.n~=b.n, TF=true; else, TF=false; end, end
         function TF=eq(a,b), if a.n==b.n, TF=true; else, TF=false; end, end
+        function [a,b]=check(a,b)
+            if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
+        end
         function n = norm(a,option)       % Defines n=norm(a,option), where a is an RR_poly object
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(a.poly,option);
@@ -102,7 +101,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function displayScalarObject(obj)
             fprintf(getHeader(obj)),
             fprintf('poly: '), disp(obj.poly)
-            fprintf('roots:'), disp(sort(roots(obj.poly),'real')')
+            fprintf('roots:'), disp(sort(roots(obj.poly),'ComparisonMethod','real'))
             fprintf('   n: %d\n',obj.n)
         end
     end

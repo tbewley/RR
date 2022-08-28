@@ -1,4 +1,4 @@
-% script RR_Physical_Constants
+% script RR_Constants
 % Define some useful physical constants in SI
 % Results are stored in one large derived type named RR_PHYSICAL.
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
@@ -66,4 +66,4 @@ RR_PHYSICAL.R.value=8.31446261815324;
 RR_PHYSICAL.R.units='J/K/mol';
 RR_PHYSICAL.R.name ='Universal gas constant';
 
-end % RR_Physical_Constants
+end % RR_Constants
