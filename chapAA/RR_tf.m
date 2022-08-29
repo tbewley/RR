@@ -39,18 +39,31 @@ classdef RR_tf < matlab.mixin.CustomDisplay
      				if  isa(a,'RR_poly'), obj.num=a; else, obj.num=RR_poly(a); end
    					if  isa(b,'RR_poly'), obj.den=b; else, obj.den=RR_poly(b); end
    					t=1/obj.den.poly(1); obj.den=obj.den*t; obj.num=obj.num*t;  % Make denominator monic
-                    obj.z=roots(obj.num); obj.p=roots(obj.den); obj.K=obj.num.poly(1); 
+                    obj.z=roots(obj.num); obj.p=roots(obj.den);
+                    % if  obj.num.s, obj.z=sym('z',[1 obj.num.n]); else, obj.z=roots(obj.num); end
+                    % if  obj.den.s, obj.p=sym('p',[1 obj.den.n]); else, obj.p=roots(obj.den); end
+                    obj.K=obj.num.poly(1); 
    				case 3	
                     obj.z=a; obj.p=b; obj.K=c;
-    	    		obj.num=c*RR_poly(a,'roots'); obj.den=RR_poly(b,'roots');
+    	    		obj.num=RR_poly(a,'roots'); obj.num.poly=c*obj.num.poly;
+                    obj.den=RR_poly(b,'roots');
     	    end
      	    if obj.num.poly==0, obj.den=RR_poly(1); fprintf('Simplifying the zero transfer function\n'), end 
-            if obj.num.n>0 & obj.den.n>0, for i=1:obj.num.n     
-                j=find(abs(obj.z(i)-obj.p)<1e-8,1);
-                if ~isempty(j); j=j(1); fprintf('Performing pole/zero cancellation at s=%f\n',obj.z(i))
-                        obj.z=obj.z([1:i-1,i+1:obj.num.n]);
-                        obj.p=obj.p([1:j-1,j+1:obj.den.n]); obj=RR_tf(obj.z,obj.p,obj.K); break, end
-            end, end
+            if obj.num.n>0 & obj.den.n>0
+                for i=1:obj.num.n        % Perform pole/zero cancellations!
+                    for j=1:obj.den.n    % (Need to be EXTRA careful below to handle both numeric and symbolic types!)
+                        flag=0; a=obj.z(i); b=obj.p(j);
+                        if isnumeric(a), flag=flag+1; elseif isSymType(a,'constant'), a=eval(a); flag=flag+1; end
+                        if isnumeric(b), flag=flag+1; elseif isSymType(b,'constant'), b=eval(b); flag=flag+1; end
+                        if (flag==2 & abs(a-b)<1e-4) | obj.z(i)==obj.p(j)
+                            fprintf('Performing pole/zero cancellation at s='), disp(obj.z(i))
+                            obj.z=obj.z([1:i-1,i+1:obj.num.n]);
+                            obj.p=obj.p([1:j-1,j+1:obj.den.n]); obj=RR_tf(obj.z,obj.p,obj.K); flag=3; break
+                        end
+                    end
+                    if flag==3, break, end
+                end
+            end
     	end
     	function sum = plus(G1,G2)          
             % Defines G1+G2, where G1 and/or G2 are of class RR_tf
@@ -131,7 +144,3 @@ end
 % x..oo
 % x.xxo
 % x.xxo
-
-
-
-

@@ -6,13 +6,15 @@
 % DEFINITION:
 %   a=RR_poly(c)          defines an RR_poly object from a coefficient vector c
 %   a=RR_poly(r,'roots')  defines an RR_poly object from a vector of roots r
-%   Note that any RR_poly object b has two fields, b.poly and b.n
+%   syms a3 a2 a1 a0; a=RR_poly([a3 a2 a1 a0]) defines an RR_poly object from a vector of symbolic coefficients
+%   Note that any RR_poly object b has three fields, b.poly, b.n, and b.s
 % STANDARD OPERATIONS (overloading the +, -, *, ./, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     a+b  gives the sum of two polynomials
 %   minus:    b-a  gives the difference of two polynomials
 %   mtimes:   a*b  gives the product of two polynomials
 %   rdivide:  [quo,rem]=b./a divides two polynomials, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
+%   Note that <, >, <=, >=, ~=, ==
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_poly object b
@@ -30,9 +32,10 @@
 % Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
 
 classdef RR_poly < matlab.mixin.CustomDisplay
-    properties  % Each RR_poly object consists of the following two fields:
+    properties  % Each RR_poly object consists of the following three fields:
         poly    % The polynomial coefficients themselves, just an ordinary row vector
         n       % The order of this polynomial.  Note that poly has n+1 coefficients
+        s       % a T/F flag indicating whether or not poly is symbolic
     end
     methods
         function obj = RR_poly(c,flag)       % a=RR_poly creates an RR_poly object obj.
@@ -44,7 +47,8 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             else                             % two arguments: create obj for c = vector of roots
                  obj=RR_poly([1]); index=1;  % note: flag can be anything!  recommend flag='roots'...  :)
                  for k=1:length(c), obj=obj*RR_poly([1 -c(k)]); end % (the resulting p in this case is monic)
-            end 
+            end
+            obj.s=~isnumeric(obj.poly);
         end
         function sum = plus(a,b)          % Defines a+b
             [a,b]=check(a,b); sum=RR_poly([zeros(1,b.n-a.n) a.poly]+[zeros(1,a.n-b.n) b.poly]);
@@ -85,7 +89,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             n = norm(a.poly,option);
         end
         function r = roots(p)             % Defines r=roots(p), where p is an RR_poly object
-            r=sort(roots(p.poly))';
+            r=sort(roots(p.poly)).';
         end
         function z = evaluate(a,s)
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
@@ -101,7 +105,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function displayScalarObject(obj)
             fprintf(getHeader(obj)),
             fprintf('poly: '), disp(obj.poly)
-            fprintf('roots:'), disp(sort(roots(obj.poly),'ComparisonMethod','real'))
+            if ~obj.s, fprintf('roots:'), disp(sort(roots(obj.poly),'ComparisonMethod','real').'), end
             fprintf('   n: %d\n',obj.n)
         end
     end
