@@ -100,7 +100,10 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %          d   coefficients of the partial fraction expansion (a row vector of length n)
             %          k   powers of the denominator in each term (a row vector of length n)
             %          n   number of terms in the expansion
-            % TEST:    [p,d,k,n] = PartialFractionExpansion(RR_tf([1000 1000],[1 100 1000 1000 0]))
+            % TEST:    clear, syms c1 c0 a1 a0, F=RR_tf([c1 c0],[1 a1 a0])
+            %          [p,d,k,n]=PartialFractionExpansion(F)
+            %          c0=2; c1=1; a1=4; a0=3; eval(p), eval(d)
+            %
             % Renaissance Robotics codebase, Appendix A (derivation in Appendix B), https://github.com/tbewley/RR
             % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
             m=F.num.n; n=F.den.n;
