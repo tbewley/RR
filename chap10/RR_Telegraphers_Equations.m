@@ -4,7 +4,7 @@
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 clear; termination=true    % try both termination=true and termination=false
-R=0; G=0;                  % also try G=1e-3 or R=1e1
+R=0; G=0;                   % also try G=1e-3 or R=1e1
 L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), X=10; N=200, T=X/c;  h=T/1000
 Delta_x=X/(N+0.5); d=1/Delta_x; A=zeros(2*N,2*N);
 figure(1); clf, XV=[0:Delta_x:X]; XI=[Delta_x/2:Delta_x:X];
@@ -28,13 +28,15 @@ for n=1:n_max
       if n==1200
          subplot(2,1,1), title(['Voltage, t/T = ',num2str(0.05),', ',num2str(0.1),', ... , ',num2str(t/T)])
          subplot(2,1,2), title(['Current, t/T = ',num2str(0.05),', ',num2str(0.1),', ... , ',num2str(t/T)])
-         print -depsc telegraphers_terminated, break
+         % print -depsc telegraphers_terminated
+         break
      end
    else
       if (n==1050) | (n==2050) | (n==3050) | (n==4050)
          subplot(2,1,1), title(['Voltage, t/T = ',num2str(t/T-0.95),', ',num2str(t/T-0.9),', ... , ',num2str(t/T)])
          subplot(2,1,2), title(['Current, t/T = ',num2str(t/T-0.95),', ',num2str(t/T-0.9),', ... , ',num2str(t/T)])
-         print -depsc telegraphers_notermination, pause, clf
+         % print -depsc telegraphers_notermination
+         pause, clf
       end
    end
 end

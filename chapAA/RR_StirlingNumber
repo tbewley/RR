@@ -1,0 +1,10 @@
+function S=RR_Stirling_Number(n,k)
+% function S=RR_Stirling_Number(n,k)
+% Compute the Stirling number of the second kind, S(n,k), for a given n and k
+% INPUTS:  n,k integers
+% OUTPUT:  S   = (1/k!) * sum_{j=0}^k (-1)^(k-j) * Choose(k,j) * j^n
+% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/NR
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+
+s=0; for j=0:k, s=s+(-1)^(k-j)*RR_Choose(k,j)*j^n; end, s=s/RR_Factorial(k);
+end % function RR_stirling_number

@@ -13,10 +13,10 @@ function [Li_num,Li_den]=RR_Polylogarithm(p,r)
 % Note: uses various subroutines from the companion NR codebase.
 
 Li_num=[]; Li_den=NR_PolyPower([1/r -1],p+1);
-for k=p:-1:0, Li_num=[0 Li_num]+NR_Factorial(k)*StirlingNumber(p+1,k+1)*NR_PolyPower([1/r -1],p-k); end
+for k=p:-1:0, Li_num=[0 Li_num]+RR_Factorial(k)*RR_StirlingNumber(p+1,k+1)*RR_PolyPower([1/r -1],p-k); end
 Li_num=Li_num/Li_den(1); Li_den=Li_den/Li_den(1);
 end % function RR_Polylogarithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function s=StirlingNumber(n,k)
-s=0; for j=0:k, s=s+(-1)^(k-j)*NR_Choose(k,j)*j^n; end, s=s/NR_Factorial(k);
-end % function StirlingNumber
+function s=RR_StirlingNumber(n,k)
+s=0; for j=0:k, s=s+(-1)^(k-j)*RR_Choose(k,j)*j^n; end, s=s/RR_Factorial(k);
+end % function RR_StirlingNumber

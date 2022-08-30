@@ -14,7 +14,7 @@
 %   mtimes:   a*b  gives the product of two polynomials
 %   rdivide:  [quo,rem]=b./a divides two polynomials, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
-%   Note that <, >, <=, >=, ~=, ==
+%   Note that the relations <, >, <=, >=, ~=, == are based just on the order of the polynomials.
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_poly object b
