@@ -95,7 +95,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
         end
         function p = diff(p,m)            % Computes the m'th derivative of the polynomial p
-            if nargin<2, m=1; end
+            if m==0, return, elseif nargin<2, m=1; end
             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
             if p.n<0, p=RR_poly(0); end
             if m>1, p=diff(p,m-1); end
