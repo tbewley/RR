@@ -5,7 +5,7 @@
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 clear; % Note: this code is hardwired to use termination on the right end.
-R=0; G=0; % also try G=1e-3 or R=1e1
+R=0; G=0; % Try R=0 and G=0.  Also try R=10 and/or G=0.001.
 L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), X=10; N=400; T=X/c;  h=T/1000;
 Delta_x=X/(N+0.5); d=1/Delta_x; A=zeros(2*N,2*N);
 figure(1); clf, XV=[0:Delta_x:X]; XI=[Delta_x/2:Delta_x:X];
