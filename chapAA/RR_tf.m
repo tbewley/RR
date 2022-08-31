@@ -15,6 +15,7 @@
 %   minus:    G1-G2  gives the difference of two transfer functions (or, a transfer functions and a scalar)
 %   mtimes:   G1*G2  gives the product of two transfer functions    (or, a transfer functions and a scalar)
 %   rdivide:  G1./G2 divides two transfer functions
+%   mpower:   G1^n  gives the n'th power of a transfer function
 % SOME TESTS:  [Try them! Change them!]
 %   G=RR_tf([1.1 10 110],[0 1 10 100],1), D=RR_tf([1 2],[4 5])       % Define a couple of test transfer functions
 %   T=G*D./(1+G*D)
@@ -61,11 +62,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     for j=1:obj.den.n, if TF(j)
                         fprintf('Performing pole/zero cancellation at s='), disp(obj.z(i))
                         obj.z=obj.z([1:i-1,i+1:obj.num.n]);
-                        obj.p=obj.p([1:j-1,j+1:obj.den.n]);
-                        obj=RR_tf(obj.z,obj.p,obj.K); modified=true; break
+                        obj.p=obj.p([1:j-1,j+1:obj.den.n]); modified=true; break
                     end, end
-                    if modified, break, end
+                    if modified, obj=RR_tf(obj.z,obj.p,obj.K); break, end
                 end
+              %  if ~modified, obj=RR_tf(obj.num,obj.den); end
             if ~isnumeric(obj.z), obj.z=simplify(obj.z); obj.num.poly=simplify(obj.num.poly); end
             if ~isnumeric(obj.p), obj.p=simplify(obj.p); obj.den.poly=simplify(obj.den.poly); end
             end
@@ -73,26 +74,40 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     	function sum = plus(G1,G2)          
             % Defines G1+G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-            [G1,G2]=check(G1,G2); sum  = RR_tf(G1.num*G2.den+G2.num*G1.den,G1.den*G2.den);
+            [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
+            sum  = RR_tf(G1.num*(G2.den./g)+G2.num*(G1.den./g),G1.den*(G2.den./g));
+            if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
             % Defines G1-G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-            [G1,G2]=check(G1,G2); diff = RR_tf(G1.num*G2.den-G2.num*G1.den,G1.den*G2.den);
+            [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
+            diff = RR_tf(G1.num*(G2.den./g)-G2.num*(G1.den./g),G1.den*(G2.den./g));
+            if ~isempty(G1.h); sum.h=G1.h; end
         end    
         function prod = mtimes(G1,G2)       
             % Defines G1*G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
+            if ~isempty(G1.h); sum.h=G1.h; end
         end
         function quo = rdivide(G1,G2)
             % Defines G1./G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
+            if ~isempty(G1.h); sum.h=G1.h; end
+        end
+        function pow = mpower(G1,n)        % Defines G1^n
+             if n==0, pow=RR_tf([1]); else, pow=G1; for i=2:n, pow=pow*G1; end, end
+            if ~isempty(G1.h); sum.h=G1.h; end
         end
         function [G1,G2]=check(G1,G2)
             % Converts G1 or G2, as necessary, to the class RR_tf
             if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
+            if     ~isempty(G1.h) & ~isempty(G2.h) & G1.h==G2.h, % disp 'valid DT TF operation'
+            elseif  isempty(G1.h) &  isempty(G2.h),              % disp 'valid CT TF operation'
+            else    error('Incompatible operation on transfer functions!')
+            end
         end
         function z = evaluate(G,s)
             for i=1:length(s)
@@ -100,6 +115,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 d=0; for k=1:G.den.n+1; d=d+G.den.poly(k)*s(i)^(G.den.n+1-k); end, z(i)=n/d;
             end
         end
+
         function [p,d,k,n]=PartialFractionExpansion(F,tol)
             % Compute {p,d,k,n} so that F(s)=num(s)/den(s)=d(1)/(s-p(1))^k(1) +...+ d(n)/(s-p(n))^k(n)
             % INPUTS:  F   a (proper or improper) rational polynomial of class RR_tf
@@ -116,7 +132,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %          % The second example generates an (improper) TF, computes its Partial Fraction Expansion,
             %          % then reconstructs the TF from this Partial Fraction Expansion.  Cool.
             %          F=RR_tf([1 2 2 3 5],[1 7 7],1), [p,d,k,n]=PartialFractionExpansion(F)
-            %          F1=RR_tf(0); for i=1:n, if k(i)>0, F1=F1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
+            %          F1=RR_tf(0,1); for i=1:n, if k(i)>0, F1=F1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
             %             else, F1=F1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end  
             % Renaissance Robotics codebase, Appendix A (derivation in Appendix B), https://github.com/tbewley/RR
             % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
@@ -139,7 +155,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             while 1, mask=RR_eq(d,0); i=find(mask,1); if isempty(i), break, else
                 p=p([1:i-1,i+1:end]); d=d([1:i-1,i+1:end]);  k=k([1:i-1,i+1:end]); n=n-1;
             end, end
-        end
+        end % function PartialFractionExpansion
+
         function bode(L,g)
             % function bode(L,g)
             % The continuous-time Bode plot of G(s)=num(s)/den(s) if nargin=3, with s=(i omega), or
@@ -150,9 +167,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
             %   g.phase_shift is the integer multiple of 360 deg added to the phase in the phase plot.
             % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
-            % Renaissance Robotics codebase, Appendix A (see Chapter 9), https://github.com/tbewley/RR
-            % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
-
+            % Renaissance Robotics codebase, Appendix A (see also Chapter 9), https://github.com/tbewley/RR
+            % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
             if nargin==1, g=[]; end, p=[abs([L.z L.p])];  % Set up some convenient defaults for the plotting parameters
             if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
@@ -187,10 +203,37 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
             if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a)
+        end % function bode
 
-        end
         function rlocus(G,D)
-        end 
+        end % function rlocus
+
+        function [Yz]=Z(Ys,h)
+        % function [Yz]=Z(Ys,h)
+        % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at regular intervals t_k = h k)
+        % of the CT signal y(t) with Laplace transform Ys(s).
+        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Verify with <a href="matlab:help NRC">C2DzohTest</a>.
+
+            [a,d,k,n]=PartialFractionExpansion(Ys), r=exp(a*h); Yz=RR_tf(0,1);
+            for i=1:n, i, if    k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
+                          else, p=k(i)-1, Yz=Yz+d(i)*h^p*RR_Polylogarithm(p,r(i)); end
+            end,  Yz.h=h;
+        end % function Z
+
+        function [Gz]=C2Dzoh(Gs,h)
+        % function [Gz]=C2Dzoh(Gs,h)
+        % Compute (exactly) the G(z) corresponding to the D/A-G(s)-A/D cascade with timestep h.
+        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % See also C2DTustin.  Verify with C2DzohTest.  
+
+            HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
+            STEPs=RR_tf(1,[1 0]);
+            Gz=HATz * Z(Gs*STEPs,h);
+        end % function C2Dzoh
+
     end
     methods(Access = protected)
         function displayScalarObject(obj)

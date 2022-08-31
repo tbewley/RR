@@ -11,7 +11,7 @@ function [g,q,n] = RR_GCF(a,b)
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
-if b>a, disp('ERROR: Need a>=b!'), return, end
+if b>a, disp('Swapping a and b'), [a,b]=RR_Swap(a,b);, end
 n=0; rm=a; r=b; while norm(r)>1e-9
   [quo,rem]=rm./r;                    % Reduce (rm,r) to their GCF via Euclid's algorithm,
   n=n+1; q{n}=quo; rm=r; r=rem;       % saving the quotients quo generated along the way.

@@ -29,7 +29,7 @@
 %   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)      % note: z1 should be nonzero, z2 should be zero
 %   for m=0:d = diff(p,m)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley and Muhan Zhou, distributed under BSD 3-Clause License.
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 classdef RR_poly < matlab.mixin.CustomDisplay
     properties  % Each RR_poly object consists of the following three fields:

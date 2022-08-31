@@ -13,6 +13,7 @@ function [g,xg,yg] = RR_Bezout(a,b)
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
+if b>a, disp('ERROR: Need a>=b!'), return, end
 [g,q,n] = RR_GCF(a,b); 
 xg=0; yg=1; for j=n-1:-1:1    % Using the q{i} and g from the GCF call, compute {xg,yg}
   t=xg; xg=yg; yg=t-q{j}*yg;  % via the Extended Euclidean algorithm
