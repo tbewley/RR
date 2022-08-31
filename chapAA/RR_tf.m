@@ -134,8 +134,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %          F=RR_tf([1 2 2 3 5],[1 7 7],1), [p,d,k,n]=PartialFractionExpansion(F)
             %          F1=RR_tf(0,1); for i=1:n, if k(i)>0, F1=F1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
             %             else, F1=F1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end  
-            % Renaissance Robotics codebase, Appendix A (derivation in Appendix B), https://github.com/tbewley/RR
-            % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+            % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
+
             m=F.num.n; n=F.den.n; flag=0; if m>=n, [div,rem]=F.num./F.den; flag=1; m=rem.n; else, rem=F.num; end
             k=ones(1,n); p=F.p; if nargin<2, tol=1e-3; end
             for i=1:n-1, if RR_eq(p(i+1),p(i),tol), k(i+1)=k(i)+1; end, end, k(n+1)=0;
@@ -167,21 +167,21 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
             %   g.phase_shift is the integer multiple of 360 deg added to the phase in the phase plot.
             % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
-            % Renaissance Robotics codebase, Appendix A (see also Chapter 9), https://github.com/tbewley/RR
-            % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+            % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 
             if nargin==1, g=[]; end, p=[abs([L.z L.p])];  % Set up some convenient defaults for the plotting parameters
             if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
             % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
-            if     ~isempty(L.h              ), Nyquist=pi/h; g.log_omega_max=log10(0.999*Nyquist);
+            if     ~isempty(L.h              ), Nyquist=pi/L.h; g.log_omega_max=log10(0.999*Nyquist);
             elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p     )*5)); end
             if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
-            if     ~isfield(g,'linestyle'    ), g.linestyle    ='b-';                        end
+            if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
+                                                else             g.linestyle ='r-';  end,    end
             if     ~isfield(g,'lines'        ), g.lines        =false;                       end
             if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
 
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
-            if     ~isempty(L.h), arg=exp(i*omega*h); else arg=i*omega; end
+            if     ~isempty(L.h), arg=exp(i*omega*L.h); else arg=i*omega; end
 
             mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
 
@@ -212,8 +212,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function [Yz]=Z(Ys,h)
         % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at regular intervals t_k = h k)
         % of the CT signal y(t) with Laplace transform Ys(s).
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Renaissance Robotics Chapter 9
         % Verify with <a href="matlab:help NRC">C2DzohTest</a>.
 
             [a,d,k,n]=PartialFractionExpansion(Ys), r=exp(a*h); Yz=RR_tf(0,1);
@@ -224,16 +223,74 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
         function [Gz]=C2Dzoh(Gs,h)
         % function [Gz]=C2Dzoh(Gs,h)
-        % Compute (exactly) the G(z) corresponding to the D/A-G(s)-A/D cascade with timestep h.
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
-        % See also C2DTustin.  Verify with C2DzohTest.  
+        % Compute (exactly) the Gz(z) corresponding to the D/A-Gs(s)-A/D cascade with timestep h.
+        % Renaissance Robotics Chapter 9
 
             HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
             STEPs=RR_tf(1,[1 0]);
             Gz=HATz * Z(Gs*STEPs,h);
         end % function C2Dzoh
 
+        function [Dz]=RR_C2D_Tustin(Ds,h,omegac)
+        % function [Dz]=RR_C2D_Tustin(Ds,h,omegac)
+        % Convert Ds(s) to Dz(z) using Tustin's method.  If omegac is specified, prewarping is applied
+        % such that the dynamics of Ds(s) in the vicinity of this critical frequency are mapped correctly.
+        % Renaissance Robotics Chapter 9.
+ 
+            if nargin==2, f=1; else, f=2*(1-cos(omegac*h))/(omegac*h*sin(omegac*h)); end
+            c=2/(f*h); m=Ds.num.n; n=Ds.den.n; b=RR_poly(0); a=b;
+            fac1=RR_poly([1 1]); fac2=RR_poly([1 -1]);
+            for j=0:m; b=b+Ds.num.poly(m+1-j)*c^j*fac1^(n-j)*fac2^j; end
+            for j=0:n; a=a+Ds.den.poly(n+1-j)*c^j*fac1^(n-j)*fac2^j; end, Dz=RR_tf(b,a); Dz.h=h;
+        end % function RR_C2D_Tustin
+
+        function plot_response(T,p,g)
+        % function plot_response(T,type,g)
+        % Using partial fraction expansions, compute and plot either:
+        %   the response y(t) corresponding to Y(s)=T(s)*R(s) of a CT TF T(s) due to a input r(t), or
+        %   the response y_k  corresponding to Y(z)=T(z)*R(z) of a CT TF T(z) due to a input r_k.
+        % The CT input, for t>=0, is a unit impulse for p=-1, a unit step for p=0, and r(t)=t^p for p>0, or
+        % the DT input, for k>=0, is a unit impulse for p=-1, a unit step for p=0, and r_k=? for p>0, or
+        % The derived type g groups together convenient plotting parameters:
+        %   {g.T,g.N} define the interval and number of timesteps plotted in the CT case, and
+        %   g.N       defines the number of timesteps plotted in the DT case,
+        %   {g.style_r,g.style_y} are the linestyles used for the input r and the output y
+        % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
+        % Renaissance Robotics Chapter 9.
+
+
+            if nargin<2, p=0; end, if nargin<3, g=[]; end, p=[abs([L.z L.p])];  % Set up some convenient defaults
+            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
+            % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
+            if     ~isempty(L.h              ), Nyquist=pi/L.h; g.log_omega_max=log10(0.999*Nyquist);
+            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p     )*5)); end
+            if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
+            if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
+                                                else             g.linestyle ='r-';  end,    end
+            if     ~isfield(g,'lines'        ), g.lines        =false;                       end
+            if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
+
+            if isempty(T.h) % CT case
+                R=RR_tf(RR_Factorial(p),[1 zeros(1,p+1)])      % Set up R(s)
+                [Rp,Rd,Rk,Rn]=PartialFractionExpansion(R,tol)
+                [Yp,Yd,Yk,Yn]=PartialFractionExpansion(T*R,tol)
+
+                numR=RR_Factorial(type-1); denR=1; for i=1:type, denR=[denR 0]; end,  gs=gs/fs(1);
+                [rp,rd,rk]=PartialFractionExpansion(R);              
+                [yp,yd,yk]=PartialFractionExpansion(PolyConv(numR,gs),PolyConv(denR,fs));
+                h=g.T/g.N; t=[0:g.N]*h;
+                for k=1:g.N+1
+                    if type>0, r(k)=real(sum(rd.*(t(k).^(rk-1).*exp(rp*t(k))))); else, r(k)=0; end
+                    y(k)=real(sum(yd.*(t(k).^(yk-1).*exp(yp*t(k)))));
+                end
+                plot(t,y,g.styley), axis tight, if type>0, hold on; plot(t,r,g.styler), hold off, end
+
+            else           % DT case
+                R=RR_tf(RR_Factorial(p),[1 zeros(1,p+1)])      % Set up R(z)  FIX THIS
+            
+
+            end
+        end % function RR_Response_TF
     end
     methods(Access = protected)
         function displayScalarObject(obj)
@@ -266,3 +323,8 @@ end
 % x..oo
 % x.xxo
 % x.xxo
+
+
+
+
+

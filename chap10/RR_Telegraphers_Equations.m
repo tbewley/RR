@@ -3,9 +3,9 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
-clear; termination=true    % try both termination=true and termination=false
-R=0; G=0;                   % also try G=1e-3 or R=1e1
-L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), X=10; N=200, T=X/c;  h=T/1000
+clear; termination=true % try both termination=true and termination=false
+R=10; G=0.001;          % also try R=10 and/or G=0.001 
+L=525e-9; C=52e-12; Z0=sqrt(L/C), c=1/sqrt(L*C), X=10; N=2000, T=X/c;  h=T/10000
 Delta_x=X/(N+0.5); d=1/Delta_x; A=zeros(2*N,2*N);
 figure(1); clf, XV=[0:Delta_x:X]; XI=[Delta_x/2:Delta_x:X];
 for i=1:N,
@@ -14,7 +14,7 @@ for i=1:N,
 end
 if termination, A(2*N,2*N)=A(2*N,2*N)-(d/C)/Z0; end
 D=eye(2*N)-A*h/2; E=eye(2*N)+A*h/2;
-n_max=floor(5.050001*T/h); t1=1e-8; x=zeros(2*N,1); t=0; 
+n_max=floor(5.050001*T/h); t1=1e-9; x=zeros(2*N,1); t=0; 
 for n=1:n_max
    r=E*x; t=(n-0.5)*h;
    if t<t1, Vleft=(1-cos(pi*t/t1)); else, Vleft=2; end, r(1)=r(1)+(d/L)*h*Vleft;
