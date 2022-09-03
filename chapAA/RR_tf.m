@@ -83,23 +83,23 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
             diff = RR_tf(G1.num*(G2.den./g)-G2.num*(G1.den./g),G1.den*(G2.den./g));
-            if ~isempty(G1.h); sum.h=G1.h; end
+            if ~isempty(G1.h); diff.h=G1.h; end
         end    
         function prod = mtimes(G1,G2)       
             % Defines G1*G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
-            if ~isempty(G1.h); sum.h=G1.h; end
+            if ~isempty(G1.h); prod.h=G1.h; end
         end
         function quo = rdivide(G1,G2)
             % Defines G1./G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
-            if ~isempty(G1.h); sum.h=G1.h; end
+            if ~isempty(G1.h); quo.h=G1.h; end
         end
         function pow = mpower(G1,n)        % Defines G1^n
              if n==0, pow=RR_tf([1]); else, pow=G1; for i=2:n, pow=pow*G1; end, end
-            if ~isempty(G1.h); sum.h=G1.h; end
+            if ~isempty(G1.h); pow.h=G1.h; end
         end
         function [G1,G2]=check(G1,G2)
             % Converts G1 or G2, as necessary, to the class RR_tf
@@ -211,19 +211,20 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function [Yz]=Z(Ys,h)
         % function [Yz]=Z(Ys,h)
         % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at regular intervals t_k = h k)
-        % of the CT signal y(t) with Laplace transform Ys(s).
+        % of the CT signal y(t) with a strictly proper Laplace transform Ys(s).
         % Renaissance Robotics Chapter 9
         % Verify with <a href="matlab:help NRC">C2DzohTest</a>.
 
             [a,d,k,n]=PartialFractionExpansion(Ys), r=exp(a*h); Yz=RR_tf(0,1);
-            for i=1:n, i, if    k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
-                          else, p=k(i)-1, Yz=Yz+d(i)*h^p*RR_Polylogarithm(p,r(i)); end
+            for i=1:n, i, if     k(i)<1,   error('CT TF considered must be strictly proper!')
+                          elseif k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
+                          else,  p=k(i)-1, Yz=Yz+(d(i)/factorial(p))*h^p*RR_Polylogarithm(p,r(i)); end
             end,  Yz.h=h;
         end % function Z
 
         function [Gz]=C2Dzoh(Gs,h)
         % function [Gz]=C2Dzoh(Gs,h)
-        % Compute (exactly) the Gz(z) corresponding to the D/A-Gs(s)-A/D cascade with timestep h.
+        % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
         % Renaissance Robotics Chapter 9
 
             HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
@@ -231,7 +232,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             Gz=HATz * Z(Gs*STEPs,h);
         end % function C2Dzoh
 
-        function [Dz]=RR_C2D_Tustin(Ds,h,omegac)
+        function [Dz]=C2Dtustin(Ds,h,omegac)
         % function [Dz]=RR_C2D_Tustin(Ds,h,omegac)
         % Convert Ds(s) to Dz(z) using Tustin's method.  If omegac is specified, prewarping is applied
         % such that the dynamics of Ds(s) in the vicinity of this critical frequency are mapped correctly.
@@ -244,52 +245,67 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             for j=0:n; a=a+Ds.den.poly(n+1-j)*c^j*fac1^(n-j)*fac2^j; end, Dz=RR_tf(b,a); Dz.h=h;
         end % function RR_C2D_Tustin
 
-        function plot_response(T,p,g)
-        % function plot_response(T,type,g)
+        function [t,u,y]=plot_response(G,m,g)
+        % function [t,u,y]=plot_response(G,m,g)
         % Using partial fraction expansions, compute and plot either:
-        %   the response y(t) corresponding to Y(s)=T(s)*R(s) of a CT TF T(s) due to a input r(t), or
-        %   the response y_k  corresponding to Y(z)=T(z)*R(z) of a CT TF T(z) due to a input r_k.
-        % The CT input, for t>=0, is a unit impulse for p=-1, a unit step for p=0, and r(t)=t^p for p>0, or
-        % the DT input, for k>=0, is a unit impulse for p=-1, a unit step for p=0, and r_k=? for p>0, or
+        %   the response y(t) corresponding to Y(s)=G(s)*U(s) of a CT TF G(s) due to an input u(t), or
+        %   the response y_k  corresponding to Y(z)=G(z)*U(z) of a CT TF G(z) due to an input u_k.
+        % The CT input u(t), for t>=0, is a unit impulse for m=-1, a unit step for m=0, and u(t)=t^p for m>0, or
+        % the DT input u_k,  for k>=0, is a unit impulse for m=-1, a unit step for m=0, and u_k =k^p for m>0.
         % The derived type g groups together convenient plotting parameters:
         %   {g.T,g.N} define the interval and number of timesteps plotted in the CT case, and
         %   g.N       defines the number of timesteps plotted in the DT case,
-        %   {g.style_r,g.style_y} are the linestyles used for the input r and the output y
-        % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
+        %   {g.linestyle_u,g.linestyle_y} are the linestyles used for the input u and the output y
+        %   g.tol     defines the tolerance used when checking for repeated roots in the partial fraction expansion. 
+        % Some "convenient" defaults are defined for each of these fields, but any may be overwritten. You're welcome.
         % Renaissance Robotics Chapter 9.
 
+            if nargin<2, p=0; end, if nargin<3, g=[]; end      % Set up "convenient" defaults
+            if isempty(G.h),   % some defaults for the CT case
+                if ~isfield(g,'T'),             g.T=10;              end
+                if ~isfield(g,'N'),             g.N=1000;            end
+                if ~isfield(g,'linestyle_u'  ), g.linestyle_u='b-.'; end
+                if ~isfield(g,'linestyle_y'  ), g.linestyle_y='r-';  end
+            else               % some defaults for the DT case
+                h=G.h;
+                if ~isfield(g,'N'),             g.N=50;              end
+                if ~isfield(g,'linestyle_u'  ), g.linestyle_u='bo';  end
+                if ~isfield(g,'linestyle_y'  ), g.linestyle_y='rx';  end
+            end
+            if     ~isfield(g,'tol'  ),         g.tol=1e-4;          end
 
-            if nargin<2, p=0; end, if nargin<3, g=[]; end, p=[abs([L.z L.p])];  % Set up some convenient defaults
-            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
-            % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
-            if     ~isempty(L.h              ), Nyquist=pi/L.h; g.log_omega_max=log10(0.999*Nyquist);
-            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p     )*5)); end
-            if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
-            if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
-                                                else             g.linestyle ='r-';  end,    end
-            if     ~isfield(g,'lines'        ), g.lines        =false;                       end
-            if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
-
-            if isempty(T.h) % CT case
-                R=RR_tf(RR_Factorial(p),[1 zeros(1,p+1)])      % Set up R(s)
-                [Rp,Rd,Rk,Rn]=PartialFractionExpansion(R,tol)
-                [Yp,Yd,Yk,Yn]=PartialFractionExpansion(T*R,tol)
-
-                numR=RR_Factorial(type-1); denR=1; for i=1:type, denR=[denR 0]; end,  gs=gs/fs(1);
-                [rp,rd,rk]=PartialFractionExpansion(R);              
-                [yp,yd,yk]=PartialFractionExpansion(PolyConv(numR,gs),PolyConv(denR,fs));
+            if isempty(G.h)  %%%%%%%%%%%%%  CT case  %%%%%%%%%%%%%
+                U=RR_tf(RR_Factorial(m),[1 zeros(1,m+1)])             % First, set up U(s)  
+                [Up,Ud,Uk,Un]=PartialFractionExpansion(U,g.tol);      % Then take the necessary
+                [Yp,Yd,Yk,Yn]=PartialFractionExpansion(G*U,g.tol);    % partial fraction expansions
                 h=g.T/g.N; t=[0:g.N]*h;
                 for k=1:g.N+1
-                    if type>0, r(k)=real(sum(rd.*(t(k).^(rk-1).*exp(rp*t(k))))); else, r(k)=0; end
-                    y(k)=real(sum(yd.*(t(k).^(yk-1).*exp(yp*t(k)))));
+                    if m>=0, u(k)=real(sum(Ud.*t(k).^(Uk-1).*exp(Up*t(k)))); else, u(k)=0; end
+                             y(k)=real(sum(Yd.*t(k).^(Yk-1).*exp(Yp*t(k))));
                 end
-                plot(t,y,g.styley), axis tight, if type>0, hold on; plot(t,r,g.styler), hold off, end
-
-            else           % DT case
-                R=RR_tf(RR_Factorial(p),[1 zeros(1,p+1)])      % Set up R(z)  FIX THIS
-            
-
-            end
+            else             %%%%%%%%%%%%%  DT case  %%%%%%%%%%%%%    % First, set up R(z)
+                if     m==-1, U=h^(-1)*RR_tf(1);                             % unit impulse
+                elseif m==0 , U=RR_tf([1 0],[1 -1]);
+                else,         U=h^m*RR_Polylogarithm(m,1); end, U.h=h % (h*k)^m for m>=0
+                N=g.N; k=[0:N]; t=k*h;
+                [Ur,Ud,Up,Un]=PartialFractionExpansion(U,g.tol),   u=zeros(1,N+1);
+                [Yr,Yd,Yp,Yn]=PartialFractionExpansion(G*U,g.tol), y=zeros(1,N+1);
+                for i=1:Un
+                    if Up(i)>0, c=ones(1,N+1)*Ud(i)/(factorial(Up(i)-1)*Ur(i)^(Up(i)));
+                            for j=1:Up(i)-1, c=c.*(k-j); end
+                               u(Up(i)+1:end)=u(Up(i)+1:end)+c(Up(i)+1:end).*Ur(i).^k(Up(i)+1:end);
+                    else, u(1)=u(1)+Ud(i); end
+                end
+                if m==-1, u=[1, zeros(1,N)]; else, u=(h*k).^m; end
+                for i=1:Yn
+                    if Yp(i)>0, c=ones(1,N+1)*Yd(i)/(factorial(Yp(i)-1)*Yr(i)^(Yp(i)));
+                            for j=1:Yp(i)-1, c=c.*(k-j); end
+                               y(Yp(i)+1:end)=y(Yp(i)+1:end)+c(Yp(i)+1:end).*Yr(i).^k(Yp(i)+1:end);
+                    else, y(1)=y(1)+Yd(i); end
+                end
+            end, u=real(u); y=real(y);
+            if ~(isempty(G.h) & m==-1), plot(t,u,g.linestyle_u), hold on, end
+                                        plot(t,y,g.linestyle_y), hold off
         end % function RR_Response_TF
     end
     methods(Access = protected)
