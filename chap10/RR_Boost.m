@@ -29,28 +29,24 @@ for i=1:N+1
 	end
 end
 figure(1); clf; plot(t,Vout); axis([0 tC min(Vout) max(Vout)]); hold on
-   Vmean=sum(Vout(1:N))/N, plot([0 tC],[Vmean Vmean],'k--'); % print -depsc boost_V.eps
+   Vmean=sum(Vout(1:N))/N, plot([0 tC],[Vmean Vmean],'k--');
+   title('V_{out}(t) during periodic oscillation of boost converter'); % print -depsc boost_V.eps
 figure(2); clf; plot(t,IL);   axis([0 tC min(IL) max(IL)]);  hold on
-   Imean=sum(IL(1:N))/N, plot([0 tC],[Imean Imean],'k--'); % print -depsc boost_I.eps
+   Imean=sum(IL(1:N))/N, plot([0 tC],[Imean Imean],'k--');
+   title('I_{L}(t) during periodic oscillation of boost converter'); % print -depsc boost_I.eps
 Imean_approx=(Vmean/R)/(1-D)
-pause
 
-% Also plot the "startup" phase (with no switching).
-v0=Vs-Vd; i0=v0/R;
-sol1=inv(A3)*(sol-b3); vc=sol1(1); vs=sol1(2);
-sol2=A0*sol1;          ic=sol2(1); is=sol2(2);
-tA=0; tB=D/f; tC=1/f; N=1000; t=0:tC/N:tC;
-or i=1:N+1
-	if t(i)<tB
-		Vout(i)=VoutA*exp(-t(i)/(R*C));
-		IL(i)  =ILA + t(i)*Vs/L;
-	else
-		tau=t(i)-tB;
-		Vout(i)=v0-exp(-sigma*tau)*(vc*cos(omega_d*tau)+vs*sin(omega_d*tau));
-		IL(i)  =i0-exp(-sigma*tau)*(ic*cos(omega_d*tau)+is*sin(omega_d*tau));
-	end
+% Also, plot the "startup" phase (homogeneous ICs, before switching starts).
+v0=Vs-Vd; vc=v0; vs=v0*zeta/sqrt(1-zeta^2); i0=v0/R;  
+sol=A0*[vc; vs]; ic=sol(1); is=sol(2);
+t_max=1e-3; N=1000; t=0:t_max/N:t_max;
+for i=1:N+1
+	Vout(i)=v0-exp(-sigma*t(i))*(vc*cos(omega_d*t(i))+vs*sin(omega_d*t(i)));
+	IL(i)  =i0-exp(-sigma*t(i))*(ic*cos(omega_d*t(i))+is*sin(omega_d*t(i)));
 end
-figure(1); clf; plot(t,Vout); axis([0 tC min(Vout) max(Vout)]); hold on
-   Vmean=sum(Vout(1:N))/N, plot([0 tC],[Vmean Vmean],'k--'); % print -depsc boost_V.eps
-figure(2); clf; plot(t,IL);   axis([0 tC min(IL) max(IL)]);  hold on
-   Imean=sum(IL(1:N))/N, plot([0 tC],[Imean Imean],'k--'); % print -depsc boost_I.eps
+figure(3); clf; plot(t,Vout); axis([0 t_max min(Vout) max(Vout)]); hold on
+   Vmean=sum(Vout(1:N))/N, plot([0 t_max],[Vmean Vmean],'k--');
+   title('V_{out}(t) during startup (before switching starts)'); % print -depsc boost_V_startup.eps
+figure(4); clf; plot(t,IL);   axis([0 t_max min(IL) max(IL)]);  hold on
+   Imean=sum(IL(1:N))/N, plot([0 t_max],[Imean Imean],'k--');
+   title('I_{L}(t) during startup (before switching starts)');  % print -depsc boost_I_startup.eps
