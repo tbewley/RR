@@ -4,7 +4,7 @@
 % Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
 
 clear; termination=true      % try both termination=true and termination=false
-R=10; G=0.002;               % Try R=0 and G=0.  Also try R=10 and/or G=0.001.
+R=10; G=0.002;                % Try R=0 and G=0.  Also try R=10 and/or G=0.001.
 % t1=1e-8, N=200,  Nt=1000;  % Try either these three values...
 t1=1e-9, N=2000, Nt=10000;   % ... or (if you are patient) these three values.
 L=525e-9; C=52e-12;
@@ -16,7 +16,7 @@ for i=1:N,
    if i<N, A(2*i,2*i+1)  =-d/C; end, A(2*i,  2*i  )=-G/C; A(2*i,2*i-1)= d/C;       
 end
 if termination, A(2*N,2*N)=A(2*N,2*N)-(d/C)/Z0; end
-D=eye(2*N)-A*h/2; E=eye(2*N)+A*h/2;
+D=sparse(eye(2*N)-A*h/2); E=sparse(eye(2*N)+A*h/2);
 n_max=floor(5.050001*T/h); x=zeros(2*N,1); t=0; 
 for n=1:n_max
    r=E*x; t=(n-0.5)*h;
