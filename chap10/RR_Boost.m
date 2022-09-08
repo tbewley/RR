@@ -4,7 +4,7 @@
 % Copyright 2022 by Thomas Bewley, distributed under Modified BSD License.
 
 % Solve for the initial conditions of the periodic cycle.  Note that problem is linear!
-clear; Vs=5; Vd=0.5; L=10e-6; C=4.7e-6; R=250; f=1.6e6; D=0.600016 % also try guess: D=7/12
+clear; Vs=5; Vd=0.5; L=10e-6; C=4.7e-6; R=250; f=1.6e6; D=0.600016
 sigma=1/(2*R*C); omega_n=1/sqrt(L*C); zeta=sigma/omega_n; omega_d=omega_n*sqrt(1-zeta^2);
 v0=Vs-Vd; hA=D/f; hB=(1-D)/f; c1=cos(omega_d*hB); s1=sin(omega_d*hB);
 A0=[1/R-C*sigma C*omega_d;-C*omega_d 1/R-C*sigma];
@@ -30,10 +30,12 @@ for i=1:N+1
 end
 figure(1); clf; plot(t,Vout); axis([0 tC min(Vout) max(Vout)]); hold on
    Vmean=sum(Vout(1:N))/N, plot([0 tC],[Vmean Vmean],'k--');
-   title('V_{out}(t) during periodic oscillation of boost converter'); % print -depsc boost_V.eps
+   title('V_{out}(t) during periodic oscillation of boost converter (f=1.6e6)');
+   % print -depsc boost_V.eps
 figure(2); clf; plot(t,IL);   axis([0 tC min(IL) max(IL)]);  hold on
    Imean=sum(IL(1:N))/N, plot([0 tC],[Imean Imean],'k--');
-   title('I_{L}(t) during periodic oscillation of boost converter'); % print -depsc boost_I.eps
+   title('I_{L}(t) during periodic oscillation of boost converter (f=1.6e6)');
+   % print -depsc boost_I.eps
 Imean_approx=(Vmean/R)/(1-D)
 
 % Also, plot the "startup" phase (homogeneous ICs, before switching starts).
@@ -46,7 +48,9 @@ for i=1:N+1
 end
 figure(3); clf; plot(t,Vout); axis([0 t_max min(Vout) max(Vout)]); hold on
    Vmean=sum(Vout(1:N))/N, plot([0 t_max],[Vmean Vmean],'k--');
-   title('V_{out}(t) during startup (before switching starts)'); % print -depsc boost_V_startup.eps
+   title('V_{out}(t) during startup (before switching starts)');
+   % print -depsc boost_V_startup.eps
 figure(4); clf; plot(t,IL);   axis([0 t_max min(IL) max(IL)]);  hold on
    Imean=sum(IL(1:N))/N, plot([0 t_max],[Imean Imean],'k--');
-   title('I_{L}(t) during startup (before switching starts)');  % print -depsc boost_I_startup.eps
+   title('I_{L}(t) during startup (before switching starts)'); 
+   % print -depsc boost_I_startup.eps
