@@ -325,7 +325,6 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     end
 end
 
-
 % .ooo.
 % .o...
 % ....x
