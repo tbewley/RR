@@ -212,7 +212,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function [Yz]=Z(Ys,h)
         % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at regular intervals t_k = h k)
         % of the CT signal y(t) with a strictly proper Laplace transform Ys(s).
-        % Renaissance Robotics Chapter 9
+        % Renaissance Robotics Chapter 9.
         % Verify with <a href="matlab:help NRC">C2DzohTest</a>.
 
             [a,d,k,n]=PartialFractionExpansion(Ys), r=exp(a*h); Yz=RR_tf(0,1);
@@ -324,20 +324,6 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         end
     end
 end
-
-% .ooo.
-% .o...
-% ....x
-% oo..x
-% oxx.x
-% oxx.x
-
-% .ooo.
-% ...o.
-% x....
-% x..oo
-% x.xxo
-% x.xxo
 
 
 
