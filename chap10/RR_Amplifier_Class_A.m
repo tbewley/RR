@@ -32,10 +32,11 @@ x=A\b; V_out=simplify(x(8))
 % Representative application
 clear, syms R3 R4
 Vs=12; Imax=0.05; Rtot=Vs/Imax; Rspeaker=8; 
-Icmax=0.05; K=10; omega_ii=10  % Design targets
+Icmax=0.05; K=10; omega_i=10, omega_ii=10  % Design targets
 eqn1 = R3+R4==Rtot;
 eqn2 = 0.99*(R3/R4)*(Rspeaker/(R3+Rspeaker)) == 10;
 sol=solve(eqn1,eqn2,R3,R4); R3=eval(sol.R3(1)), R4=eval(sol.R4(1))
 Rii=R3 + Rspeaker
 C5 = (1/omega_ii)/Rii
 
+R1=600, R2=600, Ri=R1*R2/(R1+R2), C0 = (1/omega_i)/Ri

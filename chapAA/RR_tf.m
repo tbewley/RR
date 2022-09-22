@@ -166,22 +166,27 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %   g.linestyle is the linestyle used
             %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
             %   g.phase_shift is the integer multiple of 360 deg added to the phase in the phase plot.
+            %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
             % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
             % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 
-            if nargin==1, g=[]; end, p=[abs([L.z L.p])];  % Set up some convenient defaults for the plotting parameters
+            if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
+            c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
+                 elseif g.Hz==true,      c=2*pi;      end
+            p=[abs([L.z L.p])]/c;
             if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
             % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
-            if     ~isempty(L.h              ), Nyquist=pi/L.h; g.log_omega_max=log10(0.999*Nyquist);
+            if     ~isempty(L.h              ), Nyquist=pi/L.h/c; g.log_omega_max=log10(0.999*Nyquist);
             elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p     )*5)); end
             if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
             if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
                                                 else             g.linestyle ='r-';  end,    end
             if     ~isfield(g,'lines'        ), g.lines        =false;                       end
             if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
+            if     ~isfield(g,'Hz'  ),          g.Hz           =false;                       end
 
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
-            if     ~isempty(L.h), arg=exp(i*omega*L.h); else arg=i*omega; end
+            if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else arg=i*omega*c; end
 
             mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
 
