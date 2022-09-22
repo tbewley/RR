@@ -3,7 +3,7 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under Modified BSD License.
 
-clear; syms Ii C1 C2 L2;           % <--- list constants
+clear; syms s Ii C1 C2 R2 L2;      % <--- list constants
 %  I_1 I_2 V_i  V_a V_b              <--- list unknowns
 A=[ 1   1   0    0   0    % I_1 + I_2 = Ii     <-- list equations in Ax=b form
    -1   0 s*C1   0   0    % s*C1*Vi - I1 = 0       
