@@ -2,6 +2,7 @@ function [out]=RR_cos_32(x)
 % function [out]=RR_cos_32(x)
 % INPUT:  any real x
 % OUTPUT: cos(x), with about 3.2 digits of precision
+% TEST:   x=randn, a=cos(x), b=RR_cos_32(x), residual=norm(a-b)
 % Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
 % Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
 
