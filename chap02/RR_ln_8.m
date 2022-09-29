@@ -7,7 +7,7 @@ function [out]=RR_ln_8(x)
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 ln2=0.693147180559945;
-x_b=RR_float_to_bin(x); n=bin2dec(x_b(2:12))-1023; r=x/2^n;
-y=(r-1)/(r+1); y2=y*y; sum=0; ypower=1/y; 
+x_b=RR_float_to_bin(x); n=bin2dec(x_b(2:12))-1023, r=x/2^n
+y=(r-1)/(r+1); sum=0; ypower=2/y; y2=y*y;
 for i=1:2:13; ypower=ypower*y2; sum=sum+ypower/i; end
-out=n*ln2+2*sum;
+out=n*ln2+sum;
