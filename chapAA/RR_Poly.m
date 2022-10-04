@@ -1,11 +1,11 @@
 % classdef RR_poly
-%
-% This class defines a set of operations on row vectors, each interpreted as the 
-% coefficients of a polynomial, written in descending orrder.  For example,
+% This class defines a polynomial ring, and a set of operations over it, including Euclidian division.
+% Each polynomial is defined as a row vector with integer, real, or complex entries, each interpreted
+% as the coefficients of the polynomial, written in descending order.  For example,
 % b=[1 2 0 4] in this class is interpreted as the polynomial b(s)=s^3+2*s^2+4.
 % DEFINITION:
-%   a=RR_poly(c)          defines an RR_poly object from a coefficient vector c
-%   a=RR_poly(r,'roots')  defines an RR_poly object from a vector of roots r
+%   a=RR_poly(c)    defines an RR_poly object from a coefficient vector c
+%   a=RR_poly(r,K)  defines an RR_poly object from a vector of roots r and gain K
 %   syms a3 a2 a1 a0; a=RR_poly([a3 a2 a1 a0]) defines an RR_poly object from a vector of symbolic coefficients
 %   Note that any RR_poly object b has three fields, b.poly, b.n, and b.s
 % STANDARD OPERATIONS (overloading the +, -, *, ./, ^, <, >, <=, >=, ~=, == operators):
@@ -24,10 +24,10 @@
 %   a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])          % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
 %   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be the zero polynomial
-%   r=[-3 -1 1 3], b=RR_poly(r,'roots'), r1=roots(b)      % note: r and r1 should match
+%   r=[-3 -1 1 3], b=RR_poly(r,5), r1=roots(b)            % note: r and r1 should match
 %   check_norm=norm(sort(r)-r1)                           % norm should be zero
 %   s1=0, z1=evaluate(b,s1), s2=3, z2=evaluate(b,s2)      % note: z1 should be nonzero, z2 should be zero
-%   for m=0:d = diff(p,m)
+%   fprintf('   b      = '),disp(b.poly), for m=1:5; d=diff(b,m); fprintf('d^%db/ds^%d = ',m,m), disp(d.poly), end
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
@@ -38,15 +38,15 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         s       % a T/F flag indicating whether or not poly is symbolic
     end
     methods
-        function obj = RR_poly(c,flag)       % a=RR_poly creates an RR_poly object obj.
+        function obj = RR_poly(c,K)          % a=RR_poly creates an RR_poly object obj.
             if nargin==1                     % one argument: create obj for c = vector of coefficients            
-                 index=find(abs(c(1:end-1))>1e-10,1);     % First trim off any leading zeros!
+                 index=find(abs(c(1:end-1))>1e-10,1);     % First trim off any leading zeros
                  if isempty(index), index=length(c); end 
                  obj.poly = c(index:end);
                  obj.n    = length(obj.poly)-1; 
-            else                             % two arguments: create obj for c = vector of roots
-                 obj=RR_poly([1]); index=1;  % note: flag can be anything!  recommend flag='roots'...  :)
-                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]); end % (the resulting p in this case is monic)
+            else                             % two arguments: create obj for c = vector of roots, K = gain
+                 obj=RR_poly([1]); index=1;  
+                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]); end; obj=obj*K;
             end
             obj.s=~isnumeric(obj.poly);
         end

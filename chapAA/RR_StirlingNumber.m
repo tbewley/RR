@@ -9,4 +9,4 @@ function s=RR_Stirling_Number(n,k)
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 s=0; for j=0:k, s=s+(-1)^(k-j)*RR_Choose(k,j)*j^n; end, s=s/RR_Factorial(k);
-end % function RR_stirling_number
+end % function RR_Stirling_Number
