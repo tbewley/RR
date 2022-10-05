@@ -1,5 +1,4 @@
 % classdef RR_tf
-%
 % This class defines a set of operations on transfer functions, each given by a pair of 
 % numerator and denominator polynomials of the RR_poly class, and the equivalent (z,p,K) representation.
 % In contrast to the Matlab 'tf' command, the RR_tf class definition automatically performs pole/zero cancellations,
@@ -32,11 +31,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         K    % Note that the (num,den) and (z,p,K) representations of the transfer function are equivalent
     end
     methods
-    	function obj = RR_tf(a,b,c)
+    	function obj = RR_tf(a,b,K)
             % Generate an RR_tf object:
             %   called with 1 argument,  generates from a numerator polynomial a, setting denominator=1
             %   called with 2 arguments, generates from a numerator polynomial a and a denominator polynomial b
-            %   called with 3 arguments, generates from vectors of zeros and poles, a and b, and the overall gain c
+            %   called with 3 arguments, generates from vectors of zeros and poles, a and b, and the overall gain K
             % Automatically performs pole/zero cancellations as necessary
     		switch nargin
     			case 1  
@@ -50,9 +49,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     % if  obj.den.s, obj.p=sym('p',[1 obj.den.n]); else, obj.p=roots(obj.den); end
                     obj.K=obj.num.poly(1); 
    				case 3	
-                    obj.z=a; obj.p=b; obj.K=c;
-    	    		obj.num=RR_poly(a,'roots'); obj.num.poly=c*obj.num.poly;
-                    obj.den=RR_poly(b,'roots');
+                    obj.z=a; obj.p=b; obj.K=K; obj.num=RR_poly(a,K); obj.den=RR_poly(b,1);
     	    end
             G.h=[];
      	    if obj.num.poly==0, obj.den=RR_poly(1); fprintf('Simplifying the zero transfer function\n'), end 
