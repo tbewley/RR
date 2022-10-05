@@ -11,7 +11,7 @@ function [g,x,y] = RR_Bezout(a,b)
 %          [g,x,y] = RR_Bezout(a,b), test=a*x+b*y, residual=norm(g-test)
 %          a=RR_poly([1 2 3 5 7],1), b=RR_poly([1 2 3 4 6],1)                   % Test over the polynomials
 %          [g,x,y] = RR_Bezout(a,b), test=a*x+b*y, residual=norm(g-test)
-% Numerical Renaissance codebase, Appendix A, https://github.com/tbewley/NR
+% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if b>a, disp('ERROR: Need a>=b!'), return, end
