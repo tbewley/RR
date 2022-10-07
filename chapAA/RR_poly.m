@@ -100,6 +100,41 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if p.n<0, p=RR_poly(0);  end
             if m>1,   p=diff(p,m-1); end
         end
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        function inertia = routh(a)
+        % Find the number of roots of the polynomial a(s) that are in the LHP, on the
+        % imaginary axis, and in the RHP, referred to as the inertia of a(s), WITHOUT
+        % calculating the roots of the polynomial a(s).  Algorithm due to Routh (1895).
+        % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
+        % OUTPUT: inertia = vector quantifying number of [LHP imaginary RHP] roots 
+        % TEST:   i=sqrt(-1);
+        %         a=RR_poly([-2.3 -1.7  1  i   -i  ],1), inertia=routh(a) % unstable
+        %         a=RR_poly([-2.3 -1.7 -1  i   -i  ],1), inertia=routh(a) % marginally stable
+        %         a=RR_poly([-2.3 -1.7 -1 -1+i -1-i],1), inertia=routh(a) % stable
+        % Credit: implementation follows that in Meinsma (SCL, 1995)
+            p=a.poly; degree=a.n; inertia=[0 0 0]; flag=0; show_routh('Routh',degree,p(1:2:end))
+            for n=degree:-1:1
+                k=find(abs(p(2:2:n+1))>1e-14,1); show_routh('Routh',n-1,p(2:2:end))  
+                if length(k)==0, flag=1;                                 
+                    if mod(n,2)==0, t='Even'; else, t='Odd'; end
+                    disp(['Case 3: ',t,' polynomial. Add its derivative.'])
+                    p(2:2:n+1)=p(1:2:n).*(n:-2:1); show_routh('  NEW',n-1,p(2:2:end))
+                elseif k>1
+                    if mod(k,2)==0, s=-1; t='Subtract'; else, s=1; t='Add'; end
+                    disp(['Case 2: p_{n-1}=0. ',t,' s^',num2str(2*(k-1)),' times row ',num2str(n-1),'.'])
+                    i=0:2:(n+1-2*k); p(i+2)=p(i+2)+s*p(i+2*k); show_routh('  NEW',n-1,p(2:2:end))
+                end
+                eta=p(1)/p(2);  if flag, inertia=inertia+[(eta<0) 0 (eta<0)];
+                                else,    inertia=inertia+[(eta>0) 0 (eta<0)]; end
+                p(3:2:n)=p(3:2:n)-eta*p(4:2:n+1); p=p(2:n+1);  % Update p, strip off leading element
+            end
+            inertia=inertia+[0 degree-sum(inertia) 0]; s='stable CT system';
+            if inertia(3)>0 s=['un',s]; elseif inertia(2)>0 s=['marginally ',s]; end, disp(s)
+            function show_routh(t,num,data)
+                disp([t,' row ',num2str(num),':',sprintf(' %7.4g',data)])
+            end
+        end
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
     methods(Access = protected)
         function displayScalarObject(obj)
