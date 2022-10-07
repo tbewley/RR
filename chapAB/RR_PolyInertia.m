@@ -1,15 +1,15 @@
-function inertia=NR_PolyInertia(p)
-% function inertia=NR_PolyInertia(p)
+function inertia=RR_PolyInertia(p)
+% function inertia=RR_PolyInertia(p)
 % Find the number of roots of the polynomial p(s) that are in the LHP, on the imaginary
 % axis, and in the RHP, referred to as the inertia of p(s), WITHOUT calculating the roots
 % of the polynomial p(s).  Algorithm due to Routh (1895).
 % INPUT:  p = vectors of coefficients of input polynomial
 % OUTPUT: inertia = vector quantifying number of [LHP pure-imaginary RHP] roots 
-% TEST:   p=NR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), NR_PolyInertia(p);
+% TEST:   p=RR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), NR_PolyInertia(p);
 %         check_roots_of_p=roots(p)
-% Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
+% Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also PolyStationarity for DT analog.
+% See also RR_PolyStationarity for DT analog.
 
 i=find(abs(p)>1e-12,1); p=p(i:end); degree=length(p)-1;          % strip off leading zeros
 inertia=[0 0 0]; flag=0; show('Routh',degree,p(1:2:end))
@@ -30,6 +30,6 @@ for n=degree:-1:1
 end
 inertia=inertia+[0 degree-sum(inertia) 0], s='stable CT system';
 if inertia(3)>0 s=['un',s]; elseif inertia(2)>0 s=['marginally ',s]; end, disp(s)
-end % function NR_PolyInertia
+end % function RR_PolyInertia
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function show(t,num,data); disp([t,' row ',num2str(num),':',sprintf(' %7.4g',data)]), end

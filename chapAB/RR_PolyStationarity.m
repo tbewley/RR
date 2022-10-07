@@ -1,15 +1,14 @@
-function stationarity=NR_PolyStationarity(p)
-% function stationarity=NR_PolyStationarity(p)
+function stationarity=RR_PolyStationarity(p)
+% function stationarity=RR_PolyStationarity(p)
 % Find the number of roots of the polynomial p(z) that are inside, on, and outside the
 % unit circle, referred to as the stationarity of p(z), WITHOUT calculating the roots
 % of the polynomial p(z).  Algorithm due to Bistritz (2002).
 % INPUT:  p = vectors of coefficients of input polynomial p(z)
 % OUTPUT: stationarity = vector quantifying number of roots [inside on outside] the unit circle   
-% TEST:   p=NR_PolyConv([1 -0.5],[1 0 1],[1 0.77],[1 0.5],[1 -0.99]), NR_PolyStationarity(p);
-%         check_roots_of_p=roots(p), magnitude_of_roots=abs(check_roots_of_p)
-% Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
+% TEST:   i=sqrt(-1); p=RR_poly([-.77 -0.5 i -i 0.99 3],1), RR_PolyStationarity(p.poly)
+% Renaissance codebase, Appendix B, https://github.com/tbewley/NR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also PolyInertia for CT analog.
+% See also RR_PolyInertia for CT analog.
 
 i=find(abs(p)>1e-12,1); p=p(i:end); z1roots=0;           % strip off leading zeros, remove
 while abs(NR_PolyVal(p,1))<1e-12, p=NR_PolyDiv(p,[1 -1]); z1roots=z1roots+1; end  % roots at z=1
@@ -33,6 +32,6 @@ pairs=s-nu_s; disp(['nu_n=',num2str(nu_n),' s=',num2str(s),' nu_s=',num2str(nu_s
 a=deg-nu_n; b=2*nu_s-s; c=deg-a-b; stationarity=[a b+z1roots c], s='stable DT system';
 if stationarity(3)>0 s=['un',s]; elseif stationarity(2)>0 s=['marginally ',s]; end
 disp(s), if pairs>0, disp([num2str(pairs),' pair(s) of reciprocal roots']), end
-end % function NR_PolyStationarity
+end % function RR_PolyStationarity
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function show(t,num,data); disp([t,' row ',num2str(num),':',sprintf(' %7.4g',data)]), end
