@@ -187,7 +187,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        function stationarity=bistritz(a)
+        function stationarity = bistritz(a)
         % function stationarity=bistritz(a)
         % Find the number of roots of the polynomial a(z) that are inside, on, and outside the
         % unit circle, referred to as the stationarity of a(z), WITHOUT calculating the roots
