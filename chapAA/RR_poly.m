@@ -19,7 +19,7 @@
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_poly object b
 %   z = eval(b,s)              Evaluates b(s) for some (real or complex) scalar s
-%   d = diff(p,m)              Computes the m'th derivative of the polynomial p
+%   d = derivative(p,m)              Computes the m'th derivative of the polynomial p
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
@@ -33,32 +33,32 @@
 %   fprintf('   b      = '), disp(b.poly)                 
 %   for m=1:5; d=derivative(b,m); fprintf('d^%db/ds^%d = ',m,m), disp(d.poly), end
 %
-%   fprintf('\nCompute the inertia of unstable, marginally stable, and stable CT systems using Routh test\n')
-%   a=RR_poly([-2.3 -1.7  1  i   -i  ],1), inertia=routh(a) % unstable
-%   a=RR_poly([-2.3 -1.7 -1  i   -i  ],1), inertia=routh(a) % marginally stable
-%   a=RR_poly([-2.3 -1.7 -1 -1+i -1-i],1), inertia=routh(a) % stable
+%   fprintf('\nCompute the inertia of unstable, marginally stable, and stable CT systems using Routh\n')
+%   clear, a=RR_poly([-2.3 -1.7  1  i   -i  ],1), inertia=routh(a), routh_simplified(a)
+%          a=RR_poly([-2.3 -1.7 -1  i   -i  ],1), inertia=routh(a), routh_simplified(a)
+%          a=RR_poly([-2.3 -1.7 -1 -1+i -1-i],1), inertia=routh(a), routh_simplified(a)
 %
-%   fprintf('\nCompute the stationarity of unstable, marginally stable, and stable DT systems using Bistritz test\n')
-%   a=RR_poly([-0.99 -.1+i -.1-i 5],1),        abs(roots(a)), stationarity=bistritz(a) % unstable
-%   a=RR_poly([-0.99   i   -i 1],1),           abs(roots(a)), stationarity=bistritz(a) % marginally stable
-%   a=RR_poly([-0.99 -.1+.9*i -.1-.9*i .5],1), abs(roots(a)), stationarity=bistritz(a) % stable
+%   fprintf('\nCompute the stationarity of unstable, marginally stable, and stable DT systems using Bistritz\n')
+%   clear, a=RR_poly([-0.99 -.1+i -.1-i 5],1),        stationarity=bistritz(a), bistritz_simplified(a)
+%          a=RR_poly([-0.99   i   -i 1],1),           stationarity=bistritz(a), bistritz_simplified(a)
+%          a=RR_poly([-0.99 -.1+.9*i -.1-.9*i .5],1), stationarity=bistritz(a), bistritz_simplified(a)
 %
-%   fprintf('\nCheck the stability of CT systems using the simplified Routh test\n')
-%   a=RR_poly([-2.3 -1.7  1  i   -i  ],1), routh_simplified(a) % unstable
-%   a=RR_poly([-2.3 -1.7 -1  i   -i  ],1), routh_simplified(a) % marginally stable
-%   a=RR_poly([-2.3 -1.7 -1 -1+i -1-i],1), routh_simplified(a) % stable
+%   fprintf('\nCheck the range of stability of closed-loop CT system using simplified Routh test\n')
 %   b=RR_poly([1 .3]); a=RR_poly([1 12 20 0 0]); % Example given in Figure 18.4 of NR.
 %   den=-0.01*b+a,  routh_simplified(den);
 %   den= 0.01*b+a,  routh_simplified(den);
 %   den=196.7*b+a,  routh_simplified(den);
 %   den=196.9*b+a,  routh_simplified(den);
 %   syms K, den=RR_poly(K)*b+a, routh_simplified(den); K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
-
-%   fprintf('\nCheck the stability of DT systems using the simplified Bistritz test\n')
-%   a=RR_poly([-0.99 -.1+i -.1-i 5],1),        abs(roots(a)), bistritz_simplified(a) % unstable
-%   a=RR_poly([-0.99   i   -i 1],1),           abs(roots(a)), bistritz_simplified(a) % marginally stable
-%   a=RR_poly([-0.99 -.1+.9*i -.1-.9*i .5],1), abs(roots(a)), bistritz_simplified(a) % stable
-
+%
+%   fprintf('\nCheck the range of stability of closed-loop DT system using simplified Bistritz test\n')
+%   b=RR_poly([0.0001265 0.0002618 -0.0003026 -6.849e-05]); a=RR_poly([1 -3.187 3.674 -1.789 0.3012]);
+%   den=-9*b+a,  bistritz_simplified(den);
+%   den=-8*b+a,  bistritz_simplified(den);
+%   den=135*b+a,  bistritz_simplified(den);
+%   den=136*b+a,  bistritz_simplified(den);
+%   syms K, den=RR_poly(K)*b+a, bistritz_simplified(den); K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
+%
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
@@ -75,7 +75,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                  obj.n    = length(c)-1; 
             else                             % two arguments: create obj for c = vector of roots, K = gain
                  obj=RR_poly([1]); index=1;  
-                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]); end; obj=obj*K;
+                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]), end; obj=obj*K;
             end
             obj.s=~isnumeric(obj.poly);
         end
@@ -132,7 +132,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function p = trim(p)
             index=find(abs(p.poly(1:end-1))>1e-10,1);   % Trim off any leading zeros in p
             if isempty(index), index=length(p.poly); end 
-            p.poly = c(p.poly:end);
+            p.poly = p.poly(index:end);
             p.n    = length(p.poly)-1;
         end
         function out = invert(p)
@@ -146,6 +146,9 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % calculating the roots of the polynomial a(s).  Algorithm due to Routh (1895).
         % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
         % OUTPUT: inertia = vector quantifying number of [LHP imaginary RHP] roots 
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+
             p=a.poly; deg=a.n; inertia=[0 0 0]; flag=0; show_routh('Routh',deg,p(1:2:end))
             for n=deg:-1:1    % Note: implementation follows that in Meinsma (SCL, 1995)
                 k=find(abs(p(2:2:n+1))>1e-14,1); show_routh('Routh',n-1,p(2:2:end))  
@@ -175,15 +178,16 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Significantly, note that a(s) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
         % OUTPUT: none (Routh table is just printed to the screen) 
-            p=a.poly; n=a.n; s=strcmp(class(p),'sym'); R=0; f=1; disp(p(1:2:end));
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+
+            p=a.poly; n=a.n; s=strcmp(class(p),'sym'); R=0; disp(p(1:2:end));
             for i=n:-1:1
-               disp(p(2:2:end)), if p(2)==0, disp('Not Hurwitz.'), f=0; break, end
+               disp(p(2:2:end)), if p(2)==0, disp('Not Hurwitz.'), return, end
                a=p(1)/p(2); p(3:2:i)=p(3:2:i)-a*p(4:2:i+1); p=p(2:i+1); if ~s, if a<0, R=R+1; end, end
             end
-            if f
-                if s, disp('Hurwitz iff all entries in first column are the same sign.')
-                else, if R==0, disp('Hurwitz'), else, disp(['Not Hurwitz: ',num2str(R),' RHP poles']), end
-                end
+            if s, disp('Hurwitz iff all entries in first column are the same sign.')
+            else, if R==0, disp('Hurwitz'), else, disp(['Not Hurwitz: ',num2str(R),' RHP poles']), end
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,13 +199,16 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Note: The Schur-Cohn and Jury tests (not coded here) are alternatives to the Bistritz test
         % for calculating the stationarity of a(z).
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)
-        % OUTPUT: stationarity = vector quantifying number of roots [inside on outside] the unit circle   
+        % OUTPUT: stationarity = vector quantifying number of roots [inside on outside] the unit circle
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.  
+
             z1roots=0;
             while abs(evaluate(a,1))<1e-12, a=a./[1 -1]; z1roots=z1roots+1; end  % roots at z=1
             disp(['  Simplified a:',sprintf(' %7.4g',a.poly)])
             deg=a.n; T2=a+invert(a); T1=(a-invert(a))./[1 -1];
-            show_bistritz('Bistritz',deg,T2)
-            show_bistritz('Bistritz',deg-1,T1), nu_n=0; nu_s=0; s=0;
+            show_bistritz('Bistritz',T2)
+            show_bistritz('Bistritz',T1), nu_n=0; nu_s=0; s=0;
             for n=deg-1:-1:0
                 if norm(T1,1)>1e-12,
                     k=find(abs(T1.poly)>1e-14,1)-1; d=T2.poly(1)/T1.poly(1+k);
@@ -214,41 +221,45 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                     a=RR_poly(T2.poly(1:n+1).*(n+1:-1:1));
                     a.poly=-a.poly(end:-1:1); if (s==0), s=n+1; end
                     T1=a+invert(a); T0=(a-invert(a))./[1 -1];
-                    show_bistritz('     NEW',n,T1)
+                    show_bistritz('     NEW',T1)
                 end
                 eta=(evaluate(T2,1)+eps)/(evaluate(T1,1)+eps);  nu_n=nu_n+(eta<0);
                 if (s>0), nu_s=nu_s+(eta<0); end
-                if n>0, show_bistritz('Bistritz',n-1,T0); T2=T1; T1=T0; end
+                if n>0, show_bistritz('Bistritz',T0); T2=T1; T1=T0; end
             end
             disp(['nu_n=',num2str(nu_n),' s=',num2str(s),' nu_s=',num2str(nu_s)])
             a=deg-nu_n; b=2*nu_s-s; c=deg-a-b; stationarity=[a b+z1roots c]; s='stable DT system';
             if stationarity(3)>0, s=['un',s]; elseif stationarity(2)>0, s=['marginally ',s]; end, disp(s)
-            function show_bistritz(t,num,data)
-                disp([t,' row ',num2str(num),':',sprintf(' %7.4g',data.poly)])
+            function show_bistritz(t,p)
+                disp([t,' row ',num2str(p.n),':',sprintf(' %7.4g',p.poly)])
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         function bistritz_simplified(a)
         % function bistritz_simplified(a)
-        % Compute the simplified Bistritz table to determine if a(z) is Schur (all eigenvalues in unit circle).
-        % Significantly, note that a(z) may be symbolic.
+        % Compute the simplified Bistritz table to determine if a(z) is Schur stable
+        % (all eigenvalues in unit circle).  Significantly, note that a(z) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)
         % OUTPUT: none (Bistritz table is just printed to the screen) 
-            s=strcmp(class(a.poly),'sym'); R=0; f=1; disp('Simplified Bistritz table:')
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+
+            s=strcmp(class(a.poly),'sym')
+            if ~s & abs(evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
+            R=0; disp('Simplified Bistritz table:')
             uip2=a+invert(a);           uip20=uip2.poly(end); disp(uip2.poly)
             uip1=(a-invert(a))./[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
+            nu_n=0; nu_s=0; s=0;
             for i=a.n-2:-1:0
-                c=uip20/uip10;    if c==0, disp('Not Schur.'), f=0; break, end
-                ui=RR_poly(c)*(RR_poly([1 1])*uip1-uip2);
+                c=uip20/uip10;    if c==0, disp('Not Schur stable.'), return, end
+                ui=RR_poly(c)*RR_poly([1 1])*uip1-uip2;
                 ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(ui.poly)
                 uip2=uip1; uip20=uip10; uip1=ui; uip10=ui.poly(end);
-                if ~s, if c<=0, R=R+1; end, end
+               % if ~s, if c<=0, R=R+1; end, end
             end
-            c=uip20/uip10; if ~s, if c<=0, R=R+1; end, end
-            if f
-                if s, disp('Schur iff all entries in first column are the same sign.')
-                else, if R==0, disp('Schur.'), else, disp(['Not Schur.']), end
-                end
+           % c=uip20/uip10, if ~s, if c<=0, R=R+1; end, end
+            if s, disp('Schur stable iff all entries in first column are the same sign.')
+            else, if R==0, disp('Schur stable.'), else, disp(['Not Schur stable.']), end
             end
         end
     end

@@ -63,16 +63,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     end, end
                     if modified, obj=RR_tf(obj.z,obj.p,obj.K); break, end
                 end
-              %  if ~modified, obj=RR_tf(obj.num,obj.den); end
-            if ~isnumeric(obj.z), obj.z=simplify(obj.z); obj.num.poly=simplify(obj.num.poly); end
-            if ~isnumeric(obj.p), obj.p=simplify(obj.p); obj.den.poly=simplify(obj.den.poly); end
+
+                %  if ~modified, obj=RR_tf(obj.num,obj.den); end
+                if ~isnumeric(obj.z), obj.z=simplify(obj.z); obj.num.poly=simplify(obj.num.poly);
+                else, obj.num=trim(obj.num); end
+                if ~isnumeric(obj.p), obj.p=simplify(obj.p); obj.den.poly=simplify(obj.den.poly);
+                else, obj.den=trim(obj.den); end
             end
     	end
     	function sum = plus(G1,G2)          
             % Defines G1+G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
-            sum  = RR_tf(G1.num*(G2.den./g)+G2.num*(G1.den./g),G1.den*(G2.den./g));
+            sum  = RR_tf(trim(G1.num*(G2.den./g)+G2.num*(G1.den./g)),trim(G1.den*(G2.den./g)));
             if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
@@ -116,7 +119,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function [p,d,k,n]=PartialFractionExpansion(F,tol)
             % Compute {p,d,k,n} so that F(s)=num(s)/den(s)=d(1)/(s-p(1))^k(1) +...+ d(n)/(s-p(n))^k(n)
             % INPUTS:  F   a (proper or improper) rational polynomial of class RR_tf
-            %          tol tolerance used when calculating repeated roots
+            %          tol (optional) tolerance used when calculating repeated roots
             % OUTPUTS: p   poles of F (a row vector of length n)
             %          d   coefficients of the partial fraction expansion (a row vector of length n)
             %          k   powers of the denominator in each term (a row vector of length n)
@@ -125,12 +128,12 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %          % TF that is only defined symbolically. (top that, Mathworks!) It then assigns some values.
             %          clear, syms c1 c0 a1 a0, F=RR_tf([c1 c0],[1 a1 a0])
             %          [p,d,k,n]=PartialFractionExpansion(F)
-            %          c0=2; c1=1; a1=4; a0=3; eval(p), eval(d)
+            %          c0=2; c1=1; a1=4; a0=3; p_evaluated=eval(p), d_evaluated=eval(d)
             %          % The second example generates an (improper) TF, computes its Partial Fraction Expansion,
             %          % then reconstructs the TF from this Partial Fraction Expansion.  Cool.
             %          F=RR_tf([1 2 2 3 5],[1 7 7],1), [p,d,k,n]=PartialFractionExpansion(F)
-            %          F1=RR_tf(0,1); for i=1:n, if k(i)>0, F1=F1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
-            %             else, F1=F1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end  
+            %          F1=RR_tf(0); for i=1:n, if k(i)>0, F1=F1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
+            %             else, F1=F1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end, F1
             % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
 
             m=F.num.n; n=F.den.n; flag=0; if m>=n, [div,rem]=F.num./F.den; flag=1; m=rem.n; else, rem=F.num; end
@@ -140,9 +143,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 if k(1,i)>=k(i+1), r=k(i); a=RR_poly(1);
                     for j=1:i-k(i),    a=a*[1 -p(j)]; end
                     for j=i+1:n,       a=a*[1 -p(j)]; end
-                    for j=1:k(i)-1,    ad{j}=diff(a,j); end
+                    for j=1:k(i)-1,    ad{j}=derivative(a,j); end
                 end
-                q=r-k(i); d(i)=evaluate(diff(rem,q),p(i))/RR_Factorial(q);
+                q=r-k(i); d(i)=evaluate(derivative(rem,q),p(i))/RR_Factorial(q);
                 for j=q:-1:1, d(i)=d(i)-d(i+j)*evaluate(ad{j},p(i))/RR_Factorial(j); end
                 d(i)=d(i)/evaluate(a,p(i));
             end, if ~flag, k=k(1:n); else
