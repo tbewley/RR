@@ -37,10 +37,10 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
                  c=cos(phi); s=sin(phi); q.v=[c s*u(1) s*u(2) s*u(3)];
             end
         end
-        function p = plus(p,q),     [p,q]=check(p,q); p=p.v+q.v;  end  % p+q
-        function p = minus(p,q),    [p,q]=check(p,q); p=p.v-q.v;  end  % p-q
-        function p = mrdivide(p,q), [p,q]=check(p,q); p=p*inv(q); end  % p/q = p*inv(q)
-        function p = mldivide(p,q), [p,q]=check(p,q); p=inv(p)*q; end  % p\q = inv(p)*q
+        function p = plus(p,q),     [p,q]=check(p,q); p.v=p.v+q.v;  end  % p+q
+        function p = minus(p,q),    [p,q]=check(p,q); p.v=p.v-q.v;  end  % p-q
+        function p = mrdivide(p,q), [p,q]=check(p,q); p.v=p*inv(q); end  % p/q = p*inv(q)
+        function p = mldivide(p,q), [p,q]=check(p,q); p.v=inv(p)*q; end  % p\q = inv(p)*q
         function p = mtimes(p,q),   [p,q]=check(p,q); t=p.v;           % p*q
                P=[ t(1) -t(2) -t(3) -t(4);
                    t(2)  t(1) -t(4)  t(3);  % Note: indexing from 1, not 0!
