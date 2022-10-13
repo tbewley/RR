@@ -40,7 +40,7 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
         function p = plus(p,q),     [p,q]=check(p,q); p=p.v+q.v;  end  % p+q
         function p = minus(p,q),    [p,q]=check(p,q); p=p.v-q.v;  end  % p-q
         function p = mrdivide(p,q), [p,q]=check(p,q); p=p*inv(q); end  % p/q = p*inv(q)
-        function p = mldivide(p,q), [p,q]=check(p,q); p=inv(q)*p; end  % q\p = inv(q)*p
+        function p = mldivide(p,q), [p,q]=check(p,q); p=inv(p)*q; end  % p\q = inv(p)*q
         function p = mtimes(p,q),   [p,q]=check(p,q); t=p.v;           % p*q
                P=[ t(1) -t(2) -t(3) -t(4);
                    t(2)  t(1) -t(4)  t(3);  % Note: indexing from 1, not 0!
@@ -60,8 +60,8 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
         function n = norm(p),     n=norm(p.v);                end
         function p = inv(p),      p=p'/(norm(p))^2;           end
         function b = rotate(a,q), [t,q]=check(a,q); t=q*t*q'; b=[t.v(2); t.v(3); t.v(4)]; end
-        function R = rotation_matrix(q)      % Note: indexing from 1, not 0!
-            t=q.v;
+        function R = rotation_matrix(q)      
+            t=q.v;                              % Note: indexing from 1, not 0!
             R=[t(1)^2+t(2)^2-t(3)^2-t(4)^2  2*(t(2)*t(3)-t(1)*t(4))  2*(t(2)*t(4)+t(1)*t(3));
                2*(t(2)*t(3)+t(1)*t(4))  t(1)^2-t(2)^2+t(3)^2-t(4)^2  2*(t(3)*t(4)-t(1)*t(2));
                2*(t(2)*t(4)-t(1)*t(3))  2*(t(3)*t(4)+t(1)*t(2))  t(1)^2-t(2)^2-t(3)^2+t(4)^2];
