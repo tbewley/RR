@@ -75,7 +75,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                  obj.n    = length(c)-1; 
             else                             % two arguments: create obj for c = vector of roots, K = gain
                  obj=RR_poly([1]); index=1;  
-                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]), end; obj=obj*K;
+                 for k=1:length(c), obj=obj*RR_poly([1 -c(k)]); end; obj=obj*K;
             end
             obj.s=~isnumeric(obj.poly);
         end

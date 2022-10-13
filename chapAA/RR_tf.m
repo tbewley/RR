@@ -52,12 +52,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     obj.z=a; obj.p=b; obj.K=K; obj.num=RR_poly(a,K); obj.den=RR_poly(b,1);
     	    end
             G.h=[];
-     	    if obj.num.poly==0, obj.den=RR_poly(1); fprintf('Simplifying the zero transfer function\n'), end 
+     	    if obj.num.poly==0, obj.den=RR_poly(1); end  % Simplify the zero transfer function 
             if obj.num.n>0 & obj.den.n>0
                 for i=1:obj.num.n        % Perform pole/zero cancellations!
                     TF=RR_eq(obj.z(i),obj.p,1e-3); modified=false;
-                    for j=1:obj.den.n, if TF(j)
-                        fprintf('Performing pole/zero cancellation at s='), disp(obj.z(i))
+                    for j=1:obj.den.n, if TF(j)              % perform pole/zero cancellation.
                         obj.z=obj.z([1:i-1,i+1:obj.num.n]);
                         obj.p=obj.p([1:j-1,j+1:obj.den.n]); modified=true; break
                     end, end
@@ -220,10 +219,10 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Renaissance Robotics Chapter 9.
         % Verify with <a href="matlab:help NRC">C2DzohTest</a>.
 
-            [a,d,k,n]=PartialFractionExpansion(Ys), r=exp(a*h); Yz=RR_tf(0,1);
-            for i=1:n, i, if     k(i)<1,   error('CT TF considered must be strictly proper!')
-                          elseif k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
-                          else,  p=k(i)-1, Yz=Yz+(d(i)/factorial(p))*h^p*RR_Polylogarithm(p,r(i)); end
+            [a,d,k,n]=PartialFractionExpansion(Ys); r=exp(a*h); Yz=RR_tf(0,1);
+            for i=1:n,  if     k(i)<1,   error('CT TF considered must be strictly proper!')
+                        elseif k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
+                        else,  p=k(i)-1, Yz=Yz+(d(i)/factorial(p))*h^p*RR_Polylogarithm(p,r(i)); end
             end,  Yz.h=h;
         end % function Z
 
