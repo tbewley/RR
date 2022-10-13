@@ -10,14 +10,14 @@
 %   p/q = p*inv(q), q\p = inv(q)*p: right and left multiplication of the inverse
 %   rotate(a,q):        perform a quaternion rotation of a 3D vector a using the formula q*a*q'
 %   rotation_matrix(q): compute the rotation matrix equivalent to p
-% SOME TESTS:  [Try them! Change them!]
-%   a=rand(3,1)                              % a = a random 3D initial vector to be rotated
-%   u=rand(3,1); u=u/norm(u);                % u = a random unit vector
-%   phi=pi*randn                             % phi = a random angle about which to rotate a about u
-%   q=RR_quaternion(u,phi)                   % q = a quaternion useful for accomplishing this rotation
-%   b=rotate(a,q), a1=rotate(b,q')           % b = rotated version of a;  a1 = rotated back!
-%   R=rotation_matrix(q)                     % R = rotation matrix equivalent to quaternion q
-%   b1=R*a                                   % b1 = alternate calculation of b
+% SOME TESTS:
+%   a=rand(3,1)                    % a = a random 3D initial vector to be rotated
+%   u=rand(3,1); u=u/norm(u);      % u = a random unit vector
+%   phi=pi*randn                   % phi = a random angle to rotate a about u
+%   q=RR_quaternion(u,phi)         % q = a quaternion useful for accomplishing this rotation
+%   b=rotate(a,q), a1=rotate(b,q') % b = rotated version of a;  a1 = rotated back!
+%   R=rotation_matrix(q)           % R = rotation matrix equivalent to quaternion q
+%   b1=R*a                         % b1 = an alternate calculation of b
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
