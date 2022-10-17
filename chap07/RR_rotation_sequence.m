@@ -27,18 +27,14 @@ classdef RR_rotation_sequence < matlab.mixin.CustomDisplay
                 otherwise, error('Invalid rotation sequence axes')
             end
         end
-        % function [r]=check(r)
-        %     if ~isa(p,'RR_rotation_sequence'), p=RR_quaternion(p);   end
-        %     if ~isa(q,'RR_quaternion'), q=RR_quaternion(q);   end
-        % end
         function a = rotate(a,r)    % Rotate any vector a by a rotation sequence r
             a=rotation_matrix(r)*a;
         end
         function q = quaternion(r)  % Convert rotation sequence r to corresponding quaternion q
             t=deg2rad(r.an); alpha=t(1); beta=t(2); gamma=t(3);
             q1=RR_quaternion([cos(alpha/2)]); q2=RR_quaternion([cos(beta/2)]); q3=RR_quaternion([cos(gamma/2)]);
-            q1=q1+ e(r.ax(1))*sin(alpha/2),   q2=q2+ e(r.ax(2))*sin(beta/2),   q3=q3+ e(r.ax(3))*sin(gamma/2),
-            q=(q1*q2*q3)';
+            q1=q1+ e(r.ax(1))*sin(alpha/2);   q2=q2+ e(r.ax(2))*sin(beta/2);   q3=q3+ e(r.ax(3))*sin(gamma/2);
+            q=q1*q2*q3;
             function out=e(i), out=[0 0 0 0]; out(1+i)=1; end  % Defines a useful unit vector for this function
         end
         function R = rotation_matrix(r)  % Convert rotation sequence r to corresponding rotation_matrix R    
@@ -49,7 +45,7 @@ classdef RR_rotation_sequence < matlab.mixin.CustomDisplay
     methods(Access = protected)
         function displayScalarObject(r)
             fprintf(getHeader(r))
-            fprintf('%g %s rotation sequence with [alpha,beta,gamma]= ', ...
+            fprintf('%g %s rotation with [alpha,beta,gamma]= ', ...
                  r.ax(1)*100+r.ax(2)*10+r.ax(3),r.t), disp(r.an)
         end
     end
