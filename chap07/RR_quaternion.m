@@ -28,24 +28,49 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
     methods
         function q = RR_quaternion(u,phi)  % a=RR_poly creates an RR_poly object obj.
             if nargin==1                   % one argument: create q from component(s) specified
-                switch length(u), case 1, q.v=[u 0 0 0];
-                                  case 3, q.v=[ 0   u(1) u(2) u(3)];
-                                  case 4, q.v=[u(1) u(2) u(3) u(4)];
-                                  otherwise, error('input vector wrong size')
+                if sum(size(u)==[3 3])==2, % Convert rotation matrix to quaternion
+                    u11=u(1,1); u12=u(1,2); u13=u(1,3);
+                    u21=u(2,1); u22=u(2,2); u23=u(2,3);
+                    u31=u(3,1); u32=u(3,2); u33=u(3,3); t=u11+u22+u33;
+                    if (t>0);                        S=sqrt(t          +1)*2;             
+                        w=S/4; x=(u32-u23)/S; y=(u13-u31)/S; z=(u21-u12)/S; 
+                    elseif ((u11>u22) & (u11>u33)),  S=sqrt(u11-u22-u33+1)*2;    
+                        x=S/4; w=(u32-u23)/S; y=(u12+u21)/S; z=(u13+u31)/S; 
+                    elseif (u22>u33),                S=sqrt(u22-u11-u33+1)*2;   
+                        y=S/4; w=(u13-u31)/S; x=(u12+u21)/S; z=(u23+u32)/S; 
+                    else,                            S=sqrt(u33-u11-u22+1)*2;
+                        z=S/4; w=(u21-u12)/S; x=(u13+u31)/S; y=(u23+u32)/S;
+                    end;  q.v=[w x y z];
+                elseif isa(u,'RR_rotation_sequence')  % Convert rotation sequence to quaternion
+                    t=deg2rad(u.an); alpha=t(1); beta=t(2); gamma=t(3);
+                    q1=RR_quaternion([cos(alpha/2)]); q2=RR_quaternion([cos(beta/2)]); q3=RR_quaternion([cos(gamma/2)]);
+                    q1=q1+ e(u.ax(1))*sin(alpha/2),   q2=q2+ e(u.ax(2))*sin(beta/2),   q3=q3+ e(u.ax(3))*sin(gamma/2),
+                    q=(q1*q2*q3)';
+                else switch length(u)
+                    case 1, q.v=[u 0 0 0];              % Scalar
+                    case 3, q.v=[ 0   u(1) u(2) u(3)];  % 3D vector
+                    case 4, q.v=[u(1) u(2) u(3) u(4)];  % 4 components of a quaternion
+                    otherwise, error('input vector wrong size')
+                    end
                 end
-            else                           % two arguments: create q = e^(u*phi)
+            else                           % two arguments: compute q = e^(u*phi)
                  c=cos(phi); s=sin(phi); q.v=[c s*u(1) s*u(2) s*u(3)];
             end
+            function out=e(i), out=[0 0 0 0]; out(1+i)=1; end  % Defines a useful unit vector for this function
         end
         function p = plus(p,q),     [p,q]=check(p,q); p.v=p.v+q.v;  end  % p+q
         function p = minus(p,q),    [p,q]=check(p,q); p.v=p.v-q.v;  end  % p-q
-        function p = mrdivide(p,q), [p,q]=check(p,q); p.v=p*inv(q); end  % p/q = p*inv(q)
-        function p = mldivide(p,q), [p,q]=check(p,q); p.v=inv(p)*q; end  % p\q = inv(p)*q
-        function p = mtimes(p,q),   [p,q]=check(p,q); t=p.v;           % p*q
+        function p = mrdivide(p,q),                   p=p*inv(q); end  % p/q = p*inv(q)
+        function p = mldivide(p,q),                   p=inv(p)*q; end  % p\q = inv(p)*q
+        function out = mtimes(p,q),                                        % p*q
+           if     ~isa(p,'RR_quaternion'),  out=RR_quaternion(p*q.v);
+           elseif ~isa(q,'RR_quaternion'),  out=RR_quaternion(p.v*q);
+           else,  t=p.v;             
                P=[ t(1) -t(2) -t(3) -t(4);
                    t(2)  t(1) -t(4)  t(3);  % Note: indexing from 1, not 0!
                    t(3)  t(4)  t(1) -t(2);
-                   t(4) -t(3)  t(2)  t(1)]; p=RR_quaternion(P*q.v.');
+                   t(4) -t(3)  t(2)  t(1)]; out=RR_quaternion(P*q.v');
+           end
         end
         function pow = mpower(p,n)                                     % p^n
             if n==0, pow=RR_quaternion(1); else, pow=p; for i=2:n, pow=pow*p; end, end
@@ -58,13 +83,42 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
             if ~isa(q,'RR_quaternion'), q=RR_quaternion(q);   end
         end
         function n = norm(p),     n=norm(p.v);                end
-        function p = inv(p),      p=p'/(norm(p))^2;           end
-        function b = rotate(a,q), [t,q]=check(a,q); t=q*t*q'; b=[t.v(2); t.v(3); t.v(4)]; end
-        function R = rotation_matrix(q)      
-            t=q.v;                              % Note: indexing from 1, not 0!
-            R=[t(1)^2+t(2)^2-t(3)^2-t(4)^2  2*(t(2)*t(3)-t(1)*t(4))  2*(t(2)*t(4)+t(1)*t(3));
-               2*(t(2)*t(3)+t(1)*t(4))  t(1)^2-t(2)^2+t(3)^2-t(4)^2  2*(t(3)*t(4)-t(1)*t(2));
-               2*(t(2)*t(4)-t(1)*t(3))  2*(t(3)*t(4)+t(1)*t(2))  t(1)^2-t(2)^2-t(3)^2+t(4)^2];
+        function p = inv(p),      p=p'/(norm(p.v)^2);           end
+        function b = rotate(a,q)
+            [t,q]=check(a,q); t=q*t*q'; b=[t.v(2); t.v(3); t.v(4)];
+            % Note: above calculation is equivalent to t1=rotation_matrix(q)*a
+        end
+        function R = rotation_matrix(q)      % Convert quaternion to rotatin matrix
+            q0=q.v(1); q1=q.v(2); q2=q.v(3); q3=q.v(4);  % Note: indexing from 1, not 0!
+            R=[q0^2+q1^2-q2^2-q3^2  2*(q1*q2-q0*q3)  2*(q1*q3+q0*q2);
+               2*(q1*q2+q0*q3)  q0^2-q1^2+q2^2-q3^2  2*(q2*q3-q0*q1);
+               2*(q1*q3-q0*q2)  2*(q2*q3+q0*q1)  q0^2-q1^2-q2^2+q3^2];
+        end
+        function r = rotation_sequence(q,ax) % Convert quaternion to rotation sequence with axes ax
+            q0=q.v(1); q1=q.v(2); q2=q.v(3); q3=q.v(4);  % Note: indexing from 1, not 0!
+            r=RR_rotation_sequence(ax,[0 0 0]); 
+            switch ax(1)*100+ax(2)*10+ax(3)     
+                case 123, r.t='Tait-Bryan'; 
+                case 132, r.t='Tait-Bryan';
+                case 213, r.t='Tait-Bryan';
+                case 231, r.t='Tait-Bryan';
+                case 312, r.t='Tait-Bryan';
+                case 321, r.t='Tait-Bryan';
+                          alpha =  atan2(2*(q1*q2-q0*q3),q0^2+q1^2-q2^2-q3^2);
+                          beta  =  -asin(2*(q1*q3+q0*q2));
+                          gamma =  atan2(2*(q2*q3-q0*q1),q0^2-q1^2-q2^2+q3^2);
+                case 121, r.t='Euler';
+                case 131, r.t='Euler';
+                case 212, r.t='Euler';
+                case 232, r.t='Euler';
+                case 313, r.t='Euler';
+                          alpha = -atan2(q1*q3-q0*q2,q2*q3+q0*q1);
+                          beta  =   acos(q0^2-q1^2-q2^2+q3^2);
+                          gamma =  atan2(q1*q3+q0*q2,q2*q3-q0*q1);
+                case 323, r.t='Euler';
+                otherwise, error('Invalid rotation sequence axes'),
+            end
+            r.an=rad2deg([alpha beta gamma]);
         end
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
