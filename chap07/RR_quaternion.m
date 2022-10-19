@@ -44,8 +44,8 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
                 elseif isa(u,'RR_rotation_sequence')  % Convert rotation sequence to quaternion
                     t=deg2rad(u.an); alpha=t(1); beta=t(2); gamma=t(3);
                     q1=RR_quaternion([cos(alpha/2)]); q2=RR_quaternion([cos(beta/2)]); q3=RR_quaternion([cos(gamma/2)]);
-                    q1=q1+ e(u.ax(1))*sin(alpha/2),   q2=q2+ e(u.ax(2))*sin(beta/2),   q3=q3+ e(u.ax(3))*sin(gamma/2),
-                    q=(q1*q2*q3)';
+                    q1=q1+ e(u.ax(1))*sin(alpha/2);   q2=q2+ e(u.ax(2))*sin(beta/2);   q3=q3+ e(u.ax(3))*sin(gamma/2);
+                    q=q1*q2*q3;
                 else switch length(u)
                     case 1, q.v=[u 0 0 0];              % Scalar
                     case 3, q.v=[ 0   u(1) u(2) u(3)];  % 3D vector
@@ -56,7 +56,7 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
             else                           % two arguments: compute q = e^(u*phi)
                  c=cos(phi); s=sin(phi); q.v=[c s*u(1) s*u(2) s*u(3)];
             end
-            if q.v(1)<0, q.v=-q.v; end     % remove double cover
+            if isnumeric(q.v) & q.v(1)<0, q.v=-q.v; end   % remove double cover
             function out=e(i), out=[0 0 0 0]; out(1+i)=1; end  % Defines a useful unit vector for this function
         end
         function p = plus(p,q),     [p,q]=check(p,q); p.v=p.v+q.v;  end  % p+q
@@ -90,83 +90,25 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
             % Note: above calculation is equivalent to t1=rotation_matrix(q)*a
         end
         function R = rotation_matrix(q)      % Convert quaternion to rotatin matrix
+            if abs(norm(q)-1)>1e-8, error('quaternion not of unit length; not valid for rotation!'), end  
             q0=q.v(1); q1=q.v(2); q2=q.v(3); q3=q.v(4);  % Note: indexing from 1, not 0!
             R=[q0^2+q1^2-q2^2-q3^2  2*(q1*q2-q0*q3)  2*(q1*q3+q0*q2);
                2*(q1*q2+q0*q3)  q0^2-q1^2+q2^2-q3^2  2*(q2*q3-q0*q1);
                2*(q1*q3-q0*q2)  2*(q2*q3+q0*q1)  q0^2-q1^2-q2^2+q3^2];
         end
-        function r = rotation_sequence(q,ax)
-            % Convert quaternion to rotation sequence with axes ax
-            % Formulae from https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix,
-            % corrected to incorporate atan2.
-            R=rotation_matrix(q),  r=RR_rotation_sequence(ax,[0 0 0]);
-            q0=q.v(1); q1=q.v(2); q2=q.v(3); q3=q.v(4);
-            switch ax(1)*100+ax(2)*10+ax(3)     
-                case 123, r.t='Tait-Bryan';
-                    alpha =  atan2(-R(2,3),R(3,3));
-                    beta  =  atan2(R(1,3),sqrt(1-R(1,3)^2));
-                    gamma =  atan2(-R(1,2),R(1,1));
-                case 132, r.t='Tait-Bryan';
-                    alpha =  atan2(R(3,2),R(2,2));
-                    beta  =  atan2(-R(1,2),sqrt(1-R(1,2)^2));
-                    gamma =  atan2(R(1,3),R(1,1));
-                case 213, r.t='Tait-Bryan';
-                    alpha =  atan2(R(1,3),R(3,3));
-                    beta  =  atan2(-R(2,3),sqrt(1-R(2,3)^2));
-                    gamma =  atan2(R(2,1),R(2,2));
-                case 231, r.t='Tait-Bryan';
-                    alpha =  atan2(-R(3,1),R(1,1));
-                    beta  =  atan2(R(2,1),sqrt(1-R(2,1)^2));
-                    gamma =  atan2(-R(2,3),R(2,2));
-                case 312, r.t='Tait-Bryan';
-                    alpha =  atan2(-R(1,2),R(2,2));
-                    beta  =  atan2(R(3,2),sqrt(1-R(3,2)^2));
-                    gamma =  atan2(-R(3,1),R(3,3));
-                case 321, r.t='Tait-Bryan'; % 3-2-1 is the most common Tait-Bryan rotation sequence
-                    alpha =  atan2(R(2,1),R(1,1));
-                    beta  =  atan2(-R(3,1),sqrt(1-R(3,1)^2));
-                    gamma =  atan2(R(3,2),R(3,3));
-                case 121, r.t='Euler';
-                    alpha =  atan2(R(2,1),-R(3,1));
-                    beta  =  atan2(sqrt(1-R(1,1)^2),R(1,1));
-                    gamma =  atan2(R(1,2),R(1,3));
-                case 131, r.t='Euler';
-                    alpha =  atan2(R(3,1),R(2,1));
-                    beta  =  atan2(sqrt(1-R(1,1)^2),R(1,1));
-                    gamma =  atan2(R(1,3),-R(1,2));                    
-                case 212, r.t='Euler';
-                    alpha =  atan2(R(1,2),R(3,2));
-                    beta  =  atan2(sqrt(1-R(2,2)^2),R(2,2));
-                    gamma =  atan2(R(2,1),-R(2,3));
-                case 232, r.t='Euler';
-                    alpha =  atan2(R(3,2),-R(1,2));
-                    beta  =  atan2(sqrt(1-R(2,2)^2),R(2,2));
-                    gamma =  atan2(R(2,3),R(2,1));
-                case 313, r.t='Euler';   % 3-1-3 is the most common Euler rotation sequence
-                     alpha =  atan2(R(1,3),-R(2,3));
-                     beta  =  acos(q0^2-q1^2-q2^2+q3^2);
-                     gamma =  atan2(R(3,1),R(3,2));
-                case 323, r.t='Euler';
-                    alpha =  atan2(R(2,3),R(1,3));
-                    beta  =  acos(q0^2-q1^2-q2^2+q3^2);
-                    gamma =  atan2(R(3,2),-R(3,1));
-                otherwise, error('Invalid rotation sequence axes'),
-            end,    r.an=rad2deg([alpha beta gamma]);
-        end
-        function test_rotation_sequences(q)
+        function test_rot_seq_from_q(q)
         % This routine tests all 12 rotation sequences, converting from q to r and back to q.
         % Note that -180<alpha<=180 and -180<gamma<=180.
         % For Tait-Bryan rotations, -90<=beta<=90.  For Euler rotations, 0<=beta<=180.
         % To run this test on random q, for example, initialize as follows:
-        % u=rand(3,1); u=u/norm(u); phi=pi*randn; q=RR_quaternion(u,phi), test_rotation_sequences(q)
+        % u=rand(3,1); u=u/norm(u); phi=pi*randn; q=RR_quaternion(u,phi), test_rot_seq_from_q(q)
 
             seq=[1 2 3; 1 3 2; 2 1 3; 2 3 1; 3 1 2; 3 2 1; ...  % Tait-Bryan rotations
                  1 2 1; 1 3 1; 2 1 2; 2 3 2; 3 1 3; 3 2 3];     % Euler rotations
             for i=1:12
-                r=rotation_sequence(q,seq(i,:))   % Determine corresponding rotation sequence
-                q1=quaternion(r)                  % Convert back to the corresponding quaternion
-                error=norm(q-q1)                  % quantify the error
-                pause
+                r =RR_rotation_sequence(seq(i,:),q);  % Determine corresponding rotation sequence
+                q1=RR_quaternion(r);                    % Convert back to the corresponding quaternion
+                error=norm(q-q1)                     % quantify the error
             end
         end
     end
