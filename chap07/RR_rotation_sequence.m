@@ -1,13 +1,27 @@
 % classdef RR_rotation_sequence
-% This class defines an INTRINSIC rotation sequence class, and a standard set of operations over it.
+% This class defines an INTRINSIC rotation sequence class, and a standard set of operations using it.
 % Any of the 6 Tait-Bryan or 6 Euler rotation sequences are allowed.
 % DEFINITION:
-%   q=RR_rotation_sequence([axes(1) axes(2) axes(3)],[alpha beta gamma])  defines an RR_rotation_sequence object
-% OPERATIONS:
-%   rotation_matrix(q): compute the rotation matrix equivalent to p
-% SOME TESTS:
-%   a=rand(3,1)                                            % a = a random 3D initial vector to be rotated
-%   r = RR_rotation_sequence([3 2 1],floor(90*rand(1,3)))  % a 321 Tait-Bryan rotation with random angles
+%   The command r=RR_rotation_sequence([axes(1) axes(2) axes(3)],data) generates
+%   an RR_rotation_sequence object with the following fields:
+%      r.ax = a row vector with 3 integers defining the rotation sequence
+%      r.an = a row vector with 3 angles, in degrees (!), referred to as [alpha beta gamma], and
+%      r.at = a string naming the type of rotation sequence this is ('Tait-Bryan' or 'Euler')
+%   Note that -180<alpha<=180 and -180<gamma<=180.
+%   For Tait-Bryan rotation sequences, -90<=beta<=90.  For Euler rotation sequences, 0<=beta<=180.
+%   When executing the RR_rotation_sequence command, "data" can be any of the following:
+%       a row matrix with three angles [alpha, beta, gamma], or
+%       a unit quaternion object q, of type RR_quaternion, or
+%       a 3x3 matrix, of unit determinant, representing a rotation matrix.
+% FUNCTIONS DEFINED:
+%   a = rotate(a,r)        rotates a (column) vector a using a RR_rotation_sequence object r
+%   R = rotation_matrix(r) generates a rotation matrix R equivalent to the R_rotation_sequence object r
+% SOME SIMPLE TESTS:
+%   a =rand(3,1)                                 % a random initial (column) vector to be rotated
+%   an=floor(90*rand(1,3));                      % a row vector with three random angles
+%   r1=RR_rotation_sequence([3 2 1],an)          % a 321 Tait-Bryan rotation with random angles
+%   r2=RR_rotation_sequence([1 2 3],-an(3:-1:1)) % a 123 Tait-Bryan rotation with the opposite angles
+%   b =rotate(a,r1), a1=rotate(b,r2)             % rotate a to b, then rotate back.
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
 
@@ -78,11 +92,11 @@ classdef RR_rotation_sequence < matlab.mixin.CustomDisplay
                     else,    alpha=atan2( R(2,3), R(1,3)); gamma=atan2( R(3,2),-R(3,1)); end
             end,  r.an=rad2deg([alpha beta gamma]);
         end
-        function a = rotate(a,r)    % Rotate any vector a by a rotation sequence r
+        function a = rotate(a,r)    % Rotate any column vector a by a rotation sequence r
             a=rotation_matrix(r)*a;
         end
-        function R = rotation_matrix(r)  % Convert rotation sequence r to corresponding rotation_matrix R    
-            q=quaternion(r); R=rotation_matrix(q);
+        function R = rotation_matrix(r) % generate a rotation matrix R equivalent to a rotation sequence r    
+            q=RR_quaternion(r); R=rotation_matrix(q);
         end
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
