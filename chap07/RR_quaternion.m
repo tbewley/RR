@@ -95,11 +95,13 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
         end
         function n = norm(p),     n=norm(p.v);               end
         function p = inv(p),      p=p'/(norm(p.v)^2);        end
-        function b = rotate(a,q)
-            [t,q]=check(a,q); t=q*t*q'; b=[t.v(2); t.v(3); t.v(4)];
-            % Note: above calculation is equivalent to t1=rotation_matrix(q)*a
+        function a = rotate(a,q)
+        % Rotate a (column) vector a using a quaternion q, of type RR_quaternion, via q*a*q' 
+        % Note: above calculation is equivalent to t1=rotation_matrix(q)*a
+            [t,q]=check(a,q); t=q*t*q'; a=[t.v(2); t.v(3); t.v(4)];
         end
-        function R = rotation_matrix(q)      % Convert quaternion to rotatin matrix
+        function R = rotation_matrix(q)
+        % Convert a unit quaternion q, of type RR_quaternion, to a rotation matrix R with det(R)=1
             if abs(norm(q)-1)>1e-8, error('quaternion not of unit length; not valid for rotation!'), end  
             q0=q.v(1); q1=q.v(2); q2=q.v(3); q3=q.v(4);  % Note: indexing from 1, not 0!
             R=[q0^2+q1^2-q2^2-q3^2  2*(q1*q2-q0*q3)  2*(q1*q3+q0*q2);
@@ -115,8 +117,8 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
                  1 2 1; 1 3 1; 2 1 2; 2 3 2; 3 1 3; 3 2 3];     % Euler rotations
             for i=1:12
                 r =RR_rotation_sequence(seq(i,:),q);  % Determine corresponding rotation sequence
-                q1=RR_quaternion(r);                    % Convert back to the corresponding quaternion
-                error=norm(q-q1)                     % quantify the error
+                q1=RR_quaternion(r);                  % Convert back to the corresponding quaternion
+                error=norm(q-q1)                      % quantify the error
             end
         end
     end
