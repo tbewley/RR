@@ -24,6 +24,7 @@
 %   b =rotate(a,r1), a1=rotate(b,r2)             % rotate a to b, then rotate back.
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+% See also RR_quaternion.
 
 classdef RR_rotation_sequence < matlab.mixin.CustomDisplay
     properties  % Each RR_rotation_sequence object consists of three fields:

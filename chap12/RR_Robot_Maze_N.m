@@ -1,11 +1,11 @@
-function RobotMazeN(RR,v,x0)                                                 % Version 1.1
+function RR_Robot_Maze_N(RR,v,x0)                                                 % Version 1.1
 % Goal: traverse every path of a maze with RR robots, build a map, and exit.
 % [v]=verbosity: 0=silent, 1=print info, 2=make a movie, 3=pause each timestep
 % [x0]: initial condition
 % Notes: 1=true, 0=false. As p is built as we go; its ordering is different from truth.
 % MKS units used throughout, all angles in radians.
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 global ver; if nargin==1, ver=0; else, ver=v; end        % ver=verbosity (how much output)
 if ver==2, system('mkdir temp'); end   % if ver==2, we make a movie in directory 'temp'
@@ -202,7 +202,7 @@ while sum(finished)<RR;
  if v==2, fn=['temp/f' num2str(1000000+timestep) '.tiff']; print('-dtiff','-r100',fn), end
  timestep=timestep+1; if v==3, pause, else, pause(0.001), end
 end, show('ALL BOTS HOME!!!!!!!!!!!!')
-end % function RobotMazeN
+end % function RR_Robot_Maze_N
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [p,dist,via,j]=SetPoint(Tx,C,p,dist,via)
 % If nargin==1, initialize array p with point Tx.

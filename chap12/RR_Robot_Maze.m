@@ -1,6 +1,6 @@
-function RobotMaze  % Goal: traverse every path of a maze, build a map, exit once finished.
+function RR_Robot_Maze  % Goal: traverse every path of a maze, build a map, exit once finished.
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 % We build up in p a model of all points known so far, and their connectivity,
 % using the following data structure for each known point:
@@ -85,7 +85,7 @@ done=0; while (~done | C~=1)
   else, P=C; C=T; end                                     % UPDATE P & C AND REPEAT
   % for i=1:length(p), disp(sprintf('p(%d)',i)), p(i), end, dist, via, pause, % DEBUG CODE
 end
-end % function RobotMaze
+end % function RR_Robot_Maze
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [p,dist,via,j]=SetPoint(Tx,C,p,dist,via)
 % If nargin==1, initialize array p with point Tx.
