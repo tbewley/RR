@@ -16,22 +16,22 @@ clear, disp(' ') % now switch everything from RR_int types to RR_poly types
 
 disp('Set up the Diophantine problem (solve a*x1+b*y1=f1 for x1 and y1) in NR Example 19.9')
 b=RR_poly([-2 2],1), a=RR_poly([-1 1 -3 3],1), f1=RR_poly([-1 -1 -3 -3],1)
-[x1,y1] = RR_Diophantine(a,b,f1), test1=a*x1+b*y1, residual1=norm(f1-test1)
+[x1,y1] = RR_Diophantine(a,b,f1), test1=trim(a*x1+b*y1), residual1=norm(f1-test1)
 fprintf('Note that the solution {x1,y1} is improper (x1.n<y1.n), but solves a*x1+b*y1=f1 with ~ zero residual\n\n'), pause
 
 disp('Modify f and try again (solve a*x2+b*y2=f2 for x2 and y2).')
 f2=RR_poly([-1 -1 -3 -3 -30 -30 -30 -30],1)
-[x2,y2] = RR_Diophantine(a,b,f2), test2=a*x2+b*y2, residual2=norm(f2-test2)
+[x2,y2] = RR_Diophantine(a,b,f2), test2=trim(a*x2+b*y2), residual2=norm(f2-test2)
 fprintf('Note that the solution {x2,y2} is proper (x2.n>y2.n), and solves a*x2+b*y2=f2 with ~ zero residual\n\n'), pause
 
 disp('Now set up the Diophantine problem (solve a3*x3+b3*y3=f3 for x3 and y3) in NR Example 19.13')
 b3=RR_poly([0.0306 0.0455]), a3=RR_poly([1 -3.9397 3.3201]), f3=RR_poly([1 0 0 0])
-[x3,y3] = RR_Diophantine(a3,b3,f3), test3=a3*x3+b3*y3, residual3=norm(f3-test3)
+[x3,y3] = RR_Diophantine(a3,b3,f3), test3=trim(a3*x3+b3*y3), residual3=norm(f3-test3)
 fprintf('Note that the solution {x3,y3} is semi-proper (x3.n=y3.n), and solves a3*x3+b3*y3=f3 with ~ zero residual\n\n'), pause
 
 disp('Now set up one more Diophantine problem (solve a4*x4+b4*y4=f4 for x4 and y4)')
 b4=RR_poly([1 -1 -2]), a4=RR_poly([1 2 -13 -14 24]), f4=RR_poly([1 8 22 24 9])
-[x4,y4] = RR_Diophantine(a4,b4,f4), test4=a4*x4+b4*y4, residual4=norm(f4-test4)
+[x4,y4] = RR_Diophantine(a4,b4,f4), test4=trim(a4*x4+b4*y4), residual4=norm(f4-test4)
 fprintf('Note that the solution {x4,y4} is improper (x4.n<y4.n), and solves a4*x4+b4*y4=f4 with ~ zero residual\n\n')
 
 % end script RR_DiophantineTest
