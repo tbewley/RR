@@ -24,13 +24,13 @@ for i=1:2:n-3
     remaining=remaining([1:new_pair(1)-1,new_pair(1)+1:new_pair(2)-1,new_pair(2)+1:n+1-i]);
     length=length+D(seq(i),seq(i+1));
 end
-seq(n-1:n)=remaining; length=length+D(seq(n-1),seq(n)); initial_length=length
+seq(n-1:n)=remaining; length=length+D(seq(n-1),seq(n)); initial_extra_distance=length
 while 1,
     mod=false;
     [seq,length,mod]=pairwise_swaps(seq,length,D,n);
-    if mod, fprintf('Pairwise swaps reduced length to'), disp(length), continue, end
+    if mod, fprintf('Pairwise swaps reduced extra distance to'), disp(length), continue, end
     [seq,length,mod]=triplet_swaps(seq,length,D,n);
-    if mod, fprintf('Triplet swaps reduced length to'), disp(length), continue, end
+    if mod, fprintf('Triplet swaps reduced extra distance to'), disp(length), continue, end
     break
 end
 end % function RR_min_pair_length_approx

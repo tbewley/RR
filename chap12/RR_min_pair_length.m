@@ -21,4 +21,5 @@ for i=2:n,   new_seq(2)=i;
       seq=new_seq; length=D(1,2);
     end
 end
+fprintf('Optimal extra distance implemented for Eulerization'), disp(length)
 end % function RR_min_pair_length
