@@ -1,5 +1,5 @@
 function [X,node,n,tri]=RR_random_pipe_network(n,L)
-% TEST: [X,node,num_nodes,tri]=RR_random_pipe_network(50,21); num_nodes
+% TEST: [X,node,num_nodes,tri]=RR_random_pipe_network(100,21); num_nodes
 %       [distance,route]=RR_dijkstra(node,X,num_nodes);
 %       [node,num_pipes]=RR_eulerize(distance,node,route,X,num_nodes);
 %       [circuit]=RR_hierholzer(node,X,num_nodes,num_pipes)
