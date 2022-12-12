@@ -1,4 +1,4 @@
-function [node,path]=RR_tweak_path(node,path,objective)
+function [node,path]=RR_tweak_path(node,n,path,objective)
 
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
@@ -13,6 +13,12 @@ pair_order{3}=[1 2 3; 1 3 2; 2 1 3; 2 3 1; 3 1 2; 3 2 1];
 
 % update enumeration of links connected to each node (based on the path)
 
+
+% main loop
+for current_node=1:n
+	num_pipes=node(current_node).num_pipes
+	num_pairs=num_pipes/2-1;
+	basic_order=[1:n]
 
 
 

@@ -1,12 +1,13 @@
-function RobotPath
+function RR_Robot_Path
+
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
-U=.3;                      % U=(U_right+U_left)/2 = target forward velocity (MKS units)
+U=.3;                     % U=(U_right+U_left)/2 = target forward velocity (MKS units)
 Udiff=0;                  % U_diff=U_right-U_left = steering control variable
                           %   [note that U_right=U+U_diff/2, U_left=U-U_diff/2]
-ell=.1;                  % look ahead distance (increase for smoother, sloppier response)
-p=[0 1 1 0;               % desired trajectory (straight line segments)
+ell=.4;                   % look ahead distance (increase for smoother, "sloppier" response)
+p=[0 1 1 2;               % desired trajectory (straight line segments)
    0 1 0 1];
 n=size(p,2);              % number of points on desired trajectory
 k=2;                      % inital target point on trajectory
@@ -16,7 +17,10 @@ h=1;   t=0;               % timestep and initial time for time-marching algorith
 close all; global r L; r=.053975; L=.39116; % wheel radius, and distance between wheels
 K=2;  % Extra gain on feedback (nominally one!)
 
-plot(p(1,:),p(2,:),'bo-'); axis equal; hold on; axis([-.1 1.1 -.1 1.1]);
+xmin=min(p(1,:)); xmax=max(p(1,:)); ymin=min(p(2,:)); ymax=max(p(2,:)); 
+
+
+plot(p(1,:),p(2,:),'bo-'); axis equal; hold on; axis([xmin-.1 xmax+.1 ymin-.1 ymax+.1]);
 
 for i=1:1000
   s0=p(:,k)-p(:,k-1); s0=s0/norm(s0);     % Unit vector along current trajectory segment
