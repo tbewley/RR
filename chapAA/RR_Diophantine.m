@@ -1,8 +1,8 @@
 function [x,y,r,t] = RR_Diophantine(a,b,f)
 % function [x,y,r,t] = RR_Diophantine(a,b,f)
 % Solve the Diophantine eqn a*x+b*y=f.  
-% INPUTS:  a,b,f can be of RR_poly class or of RR_int class with a >= b, (a,b) must have no common factors
-% OUTPUTS: x,y = solution of polynomial Diophantine eqn with the lowest order for y
+% INPUTS:  a,b,f can be of RR_int class or RR_poly class with a >= b, (a,b) must have no common factors
+% OUTPUTS: x,y = solution of integer or polynomial Diophantine eqn with the lowest order for y
 %          r,t (OPTIONAL) = terms used to generate the general solution, {x+r*k,y-t*k} for any polynomial k.
 % TEST:    Test with the <a href="matlab:RR_DiophantineTest">RR_DiophantineTest</a>.
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
