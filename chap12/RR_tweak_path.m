@@ -18,9 +18,8 @@ pair_order{3}=[1 2 3; 1 3 2; 2 1 3; 2 3 1; 3 1 2; 3 2 1];
 for current_node=1:n
 	num_pipes=node(current_node).num_pipes
 	num_pairs=num_pipes/2-1;
-	basic_order=[1:n]
-
-
+	basic_order=[1:num_pipes]
+	for flips=
 
 
 
