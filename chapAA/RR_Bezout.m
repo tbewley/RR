@@ -19,5 +19,5 @@ if b>a, disp('ERROR: Need a>=b!'), return, end
 x=0; y=1; for j=n-1:-1:1    % Using the q{i} and g from the GCF call, compute {xg,yg}
   t=x; x=y; y=t-q{j}*y;     % via the Extended Euclidean algorithm
 end
-if isa(g,'RR_poly'), c=g.poly(1); g=g./c; x=x./c; y=y./c;
+if isa(g,'RR_poly'), c=g.poly(1); g=g/c; x=x/c; y=y/c;
 end % function RR_Bezout

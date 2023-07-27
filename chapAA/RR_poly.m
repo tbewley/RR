@@ -8,11 +8,11 @@
 %   a=RR_poly(r,K)  defines an RR_poly object from a vector of roots r and gain K
 %   syms a3 a2 a1 a0; a=RR_poly([a3 a2 a1 a0]) defines an RR_poly object from a vector of symbolic coefficients
 %   Note that any RR_poly object b has three fields, b.poly, b.n, and b.s
-% STANDARD OPERATIONS (overloading the +, -, *, ./, ^, <, >, <=, >=, ~=, == operators):
+% STANDARD OPERATIONS (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     a+b  gives the sum of two polynomials
 %   minus:    b-a  gives the difference of two polynomials
 %   mtimes:   a*b  gives the product of two polynomials
-%   rdivide:  [quo,rem]=b./a divides two polynomials, giving the quotient quo and remainder rem
+%   mrdivide: [quo,rem]=b/a divides two polynomials, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
 %   Note that the relations <, >, <=, >=, ~=, == are based just on the order of the polynomials.
 % ADDITIONAL OPERATIONS:
@@ -22,7 +22,7 @@
 %   d = derivative(p,m)              Computes the m'th derivative of the polynomial p
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
-%   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
+%   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a  % (self explanatory)
 %   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be the zero polynomial
 %
 %   fprintf('\nBuild and test a polynomial b from its roots\n')
@@ -91,7 +91,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             for k=0:b.n; p=p+[zeros(1,b.n-k) b.poly(b.n+1-k)*a.poly zeros(1,k)]; end
             prod=RR_poly(p);
         end
-        function [quo,rem] = rdivide(b,a) % Defines [quo,rem]=b./a
+        function [quo,rem] = mrdivide(b,a) % Defines [quo,rem]=b/a
             [a,b]=check(a,b); bp=b.poly; ap=a.poly;  % <-- a couple of shorthands to simplify notation
             if b.n<a.n, dp=0; elseif a.n==0, dp=bp/ap; bp=0; else,
               if strcmp(class(bp),'sym')|strcmp(class(ap),'sym'), syms dp, end
@@ -205,9 +205,9 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.  
 
             z1roots=0;
-            while abs(evaluate(a,1))<1e-12, a=a./[1 -1]; z1roots=z1roots+1; end  % roots at z=1
+            while abs(evaluate(a,1))<1e-12, a=a/[1 -1]; z1roots=z1roots+1; end  % roots at z=1
             disp(['  Simplified a:',sprintf(' %7.4g',a.poly)])
-            deg=a.n; T2=a+invert(a); T1=(a-invert(a))./[1 -1];
+            deg=a.n; T2=a+invert(a); T1=(a-invert(a))/[1 -1];
             show_bistritz('Bistritz',T2)
             show_bistritz('Bistritz',T1), nu_n=0; nu_s=0; s=0;
             for n=deg-1:-1:0
@@ -221,7 +221,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                 else                                                          % Singular case
                     a=RR_poly(T2.poly(1:n+1).*(n+1:-1:1));
                     a.poly=-a.poly(end:-1:1); if (s==0), s=n+1; end
-                    T1=a+invert(a); T0=(a-invert(a))./[1 -1];
+                    T1=a+invert(a); T0=(a-invert(a))/[1 -1];
                     show_bistritz('     NEW',T1)
                 end
                 eta=(evaluate(T2,1)+eps)/(evaluate(T1,1)+eps);  nu_n=nu_n+(eta<0);
@@ -249,7 +249,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if ~s & abs(evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
             R=0; disp('Simplified Bistritz table:')
             uip2=a+invert(a);           uip20=uip2.poly(end); disp(uip2.poly)
-            uip1=(a-invert(a))./[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
+            uip1=(a-invert(a))/[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
             nu_n=0; nu_s=0; s=0;
             for i=a.n-2:-1:0
                 c=uip20/uip10;    if c==0, disp('Not Schur stable.'), return, end

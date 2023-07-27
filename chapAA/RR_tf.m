@@ -3,23 +3,24 @@
 % numerator and denominator polynomials of the RR_poly class, and the equivalent (z,p,K) representation.
 % In contrast to the Matlab 'tf' command, the RR_tf class definition automatically performs pole/zero cancellations,
 % and can robustly handle a mixture of numeric and symbolic data.
-% Try, for example, syms z1, G=RR_tf([z1 z1 3 4],[4 5 6 z1],1), T=G./(1+G)
+% Try, for example, syms z1, G=RR_tf([z1 z1 3 4],[4 5 6 z1],1), T=G/(1+G)
 % DEFINITION:
 %   G=RR_tf(num)      1 argument  defines an RR_tf object G from a numerator polynomial, setting denominator=1
 %   G=RR_tf(num,den)  2 arguments defines an RR_tf object from numerator and denominator polynomials
 %   G=RR_tf(z,p,K)    3 arguments defines an RR_tf object from vectors of zeros and poles, z and p, and the gain K
 %   Note that any RR_tf object G has two RR_poly fields, G.num and G.den
-% STANDARD OPERATIONS (overloading the +, -, *, ./ operators):
+% STANDARD OPERATIONS (overloading the +, -, *, / operators):
 %   plus:     G1+G2  gives the sum of two transfer functions        (or, a transfer functions and a scalar)
 %   minus:    G1-G2  gives the difference of two transfer functions (or, a transfer functions and a scalar)
 %   mtimes:   G1*G2  gives the product of two transfer functions    (or, a transfer functions and a scalar)
-%   rdivide:  G1./G2 divides two transfer functions
+%   rdivide:  G1/G2 divides two transfer functions
 %   mpower:   G1^n  gives the n'th power of a transfer function
 % SOME TESTS:  [Try them! Change them!]
-%   G=RR_tf([1.1 10 110],[0 1 10 100],1), D=RR_tf([1 2],[4 5])       % Define a couple of test transfer functions
-%   T=G*D./(1+G*D)
+%   G=RR_tf([1],[1 0 0],1), D=RR_tf(3.3*[1 .33],[1 3.3]), T=G*D/(1+G*D)     % Define some transfer functions
+%   close all, figure(1), bode(G), figure(2), bode(D), figure(3), bode(G*D)
+%   figure(4), impulse(T), figure(5), step(T)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 classdef RR_tf < matlab.mixin.CustomDisplay
     properties
@@ -74,14 +75,14 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             % Defines G1+G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
-            sum  = RR_tf(trim(G1.num*(G2.den./g)+G2.num*(G1.den./g)),trim(G1.den*(G2.den./g)));
+            sum  = RR_tf(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
             if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
             % Defines G1-G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
-            diff = RR_tf(G1.num*(G2.den./g)-G2.num*(G1.den./g),G1.den*(G2.den./g));
+            diff = RR_tf(G1.num*(G2.den/g)-G2.num*(G1.den/g),G1.den*(G2.den/g));
             if ~isempty(G1.h); diff.h=G1.h; end
         end    
         function prod = mtimes(G1,G2)       
@@ -90,8 +91,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
             if ~isempty(G1.h); prod.h=G1.h; end
         end
-        function quo = rdivide(G1,G2)
-            % Defines G1./G2, where G1 and/or G2 are of class RR_tf
+        function quo = mrdivide(G1,G2)
+            % Defines G1/G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
             [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
             if ~isempty(G1.h); quo.h=G1.h; end
@@ -135,7 +136,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             %             else, F1=F1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end, F1
             % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
 
-            m=F.num.n; n=F.den.n; flag=0; if m>=n, [div,rem]=F.num./F.den; flag=1; m=rem.n; else, rem=F.num; end
+            m=F.num.n; n=F.den.n; flag=0; if m>=n, [div,rem]=F.num/F.den; flag=1; m=rem.n; else, rem=F.num; end
             k=ones(1,n); p=F.p; if nargin<2, tol=1e-3; end
             for i=1:n-1, if RR_eq(p(i+1),p(i),tol), k(i+1)=k(i)+1; end, end, k(n+1)=0;
             for i=n:-1:1
@@ -172,20 +173,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
-            p=[abs([L.z L.p])]/c;
-            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
+            p=[abs([L.z L.p])]/c;  if min(p)==0; p=1; end
+            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p)/5)); end
             % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
             if     ~isempty(L.h              ), Nyquist=pi/L.h/c; g.log_omega_max=log10(0.999*Nyquist);
-            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p     )*5)); end
+            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p)*5)); end
             if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
             if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
                                                 else             g.linestyle ='r-';  end,    end
             if     ~isfield(g,'lines'        ), g.lines        =false;                       end
             if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
             if     ~isfield(g,'Hz'  ),          g.Hz           =false;                       end
-
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
-            if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else arg=i*omega*c; end
+            if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c; end
 
             mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
 
@@ -200,13 +200,13 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if g.lines,              plot([a(1) a(2)],[1 1],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
-            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a)
+            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
 
             subplot(2,1,2),      semilogx(omega,phase,g.linestyle), hold on, a=axis;
             if g.lines,              plot([a(1) a(2)],[-180 -180],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
-            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a)
+            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
         end % function bode
 
         function rlocus(G,D)
@@ -249,6 +249,24 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             for j=0:n; a=a+Ds.den.poly(n+1-j)*c^j*fac1^(n-j)*fac2^j; end, Dz=RR_tf(b,a); Dz.h=h;
         end % function RR_C2D_Tustin
 
+        function impulse(G,g)
+        % function impulse(G,g)
+        % Given a CT or DT plant G, defined as an RR_tf, plot the impulse response.
+        % The (optional) derived type g groups together convenient plotting parameters
+        % (see plot_response for details).
+        % Renaissance Robotics Chapter 9.
+            if nargin<2; g={}; end, plot_response(G,-1,g); grid
+        end % function impulse
+
+        function step(G,g)
+        % function step(G,g)
+        % Given a CT or DT plant G, defined as an RR_tf, plot the impulse response.
+        % The (optional) derived type g groups together convenient plotting parameters
+        % (see plot_response for details).
+        % Renaissance Robotics Chapter 9.
+            if nargin<2; g={}; end, plot_response(G,0,g); grid
+        end % function step
+
         function [t,u,y]=plot_response(G,m,g)
         % function [t,u,y]=plot_response(G,m,g)
         % Using partial fraction expansions, compute and plot either:
@@ -256,7 +274,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   the response y_k  corresponding to Y(z)=G(z)*U(z) of a CT TF G(z) due to an input u_k.
         % The CT input u(t), for t>=0, is a unit impulse for m=-1, a unit step for m=0, and u(t)=t^p for m>0, or
         % the DT input u_k,  for k>=0, is a unit impulse for m=-1, a unit step for m=0, and u_k =k^p for m>0.
-        % The derived type g groups together convenient plotting parameters:
+        % The (optional) derived type g groups together convenient plotting parameters:
         %   {g.T,g.N} define the interval and number of timesteps plotted in the CT case, and
         %   g.N       defines the number of timesteps plotted in the DT case,
         %   {g.linestyle_u,g.linestyle_y} are the linestyles used for the input u and the output y
@@ -264,7 +282,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Some "convenient" defaults are defined for each of these fields, but any may be overwritten. You're welcome.
         % Renaissance Robotics Chapter 9.
 
-            if nargin<2, p=0; end, if nargin<3, g=[]; end      % Set up "convenient" defaults
+            if nargin<2, m=0; end, if nargin<3, g=[]; end      % Set up "convenient" defaults
             if isempty(G.h),   % some defaults for the CT case
                 if ~isfield(g,'T'),             g.T=10;              end
                 if ~isfield(g,'N'),             g.N=1000;            end
@@ -279,7 +297,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if     ~isfield(g,'tol'  ),         g.tol=1e-4;          end
 
             if isempty(G.h)  %%%%%%%%%%%%%  CT case  %%%%%%%%%%%%%
-                U=RR_tf(RR_Factorial(m),[1 zeros(1,m+1)])             % First, set up U(s)  
+                U=RR_tf(RR_Factorial(m),[1 zeros(1,m+1)]);            % First, set up U(s)  
                 [Up,Ud,Uk,Un]=PartialFractionExpansion(U,g.tol);      % Then take the necessary
                 [Yp,Yd,Yk,Yn]=PartialFractionExpansion(G*U,g.tol);    % partial fraction expansions
                 h=g.T/g.N; t=[0:g.N]*h;

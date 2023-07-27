@@ -1,18 +1,18 @@
 % classdef RR_int
 % This class defines an integer ring, and a set of operations over it, including Euclidian division
 % DEFINITION:
-%   a=RR_int(c)           defines an RR_ing object from an integer c
-% STANDARD OPERATIONS (overloading the +, -, *, ./, and ^ operators):
+%   a=RR_int(c)           defines an RR_int object from an integer c
+% STANDARD OPERATIONS (overloading the +, -, *, /, and ^ operators):
 %   plus:     a+b  gives the sum of two integers
 %   minus:    b-a  gives the difference of two integers
 %   mtimes:   a*b  gives the product of two integers
-%   rdivide:  [quo,rem]=b./a divides two integers, giving the quotient quo and remainder rem
+%   mrdivide: [quo,rem]=b/a divides two integers, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.v [see: "help norm" - option=2 if omitted]
 % SOME TESTS:  [Try them! Change them!]
 %   a=RR_int(3), b=RR_int(14)                             % Define a couple of test integers
-%   sum=a+b, diff=b-a, product=a*b, q=b./a, [q,rem]=b./a  % (self explanatory)
+%   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a    % (self explanatory)
 %   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be zero
 %   a^3                                                   % (self explanatory)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
@@ -28,7 +28,7 @@ classdef RR_int < matlab.mixin.CustomDisplay
         function sum  = plus(a,b),   [a,b]=check(a,b); sum =RR_int(a.v+b.v); end  % Defines a+b
         function diff = minus(a,b),  [a,b]=check(a,b); diff=RR_int(a.v-b.v); end  % Defines a-b
         function prod = mtimes(a,b), [a,b]=check(a,b); prod=RR_int(a.v*b.v); end  % Defines a*b
-        function [quo,re] = rdivide(b,a)                                          % Defines [quo,rem]=b./a
+        function [quo,re] = mrdivide(b,a)                                         % Defines [quo,rem]=b/a
             [b,a]=check(b,a); quo=RR_int(idivide(b.v,a.v)); re=RR_int(rem(b.v,a.v));
         end
         function pow = mpower(a,n),  pow=RR_int(a.v^n); end                       % Defines a^n

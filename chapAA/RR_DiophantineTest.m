@@ -15,7 +15,7 @@ fbad=RR_int(25), [x,y,r,t]=RR_Diophantine(a,b,fbad), residual=a*x+b*y-fbad, disp
 clear, disp(' ') % now switch everything from RR_int types to RR_poly types
 
 disp('Set up the Diophantine problem (solve a*x1+b*y1=f1 for x1 and y1) in NR Example 19.9')
-b=RR_poly([-2 2 -4 4],1), a=RR_poly([-1 1 -3 3 -5 5],1), f1=RR_poly([-1 -1 -3 -3 -5 -5 -50 -50 -50 -50],1)
+b=RR_poly([-2 2],1), a=RR_poly([-1 1 -3 3],1), f1=RR_poly([-1 -1 -3 -3],1)
 [x1,y1] = RR_Diophantine(a,b,f1), test1=trim(a*x1+b*y1), residual1=norm(f1-test1)
 fprintf('Note that the solution {x1,y1} is improper (x1.n<y1.n), but solves a*x1+b*y1=f1 with ~ zero residual\n\n'), pause
 
