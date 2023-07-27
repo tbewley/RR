@@ -18,8 +18,8 @@
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = roots(b)               Gives a vector of roots r from a RR_poly object b
-%   z = eval(b,s)              Evaluates b(s) for some (real or complex) scalar s
-%   d = derivative(p,m)              Computes the m'th derivative of the polynomial p
+%   z = evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
+%   d = derivative(p,m)        Computes the m'th derivative of the polynomial p
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a  % (self explanatory)
