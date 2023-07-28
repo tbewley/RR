@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_SuDokuSolveTest">RR_SuDokuSolveTest</a>
 % Test <a href="matlab:help RR_SuDokuSolve">RR_SuDokuSolve</a> on a couple of SuDoku problems.
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 format compact
 A=[0 2 0 1 4 0 0 0 0; 5 0 0 2 3 0 0 9 0; 8 0 0 0 0 0 1 7 0; ...

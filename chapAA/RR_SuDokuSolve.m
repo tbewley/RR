@@ -2,8 +2,8 @@ function RR_SuDokuSolve(F)
 % function RR_SuDokuSolve(F)
 % An involved recursive code for solving the SuDoku problems, emulating how a human plays.
 % TEST with <a href="matlab:RR_SuDokuSolveTest">RR_SuDokuSolveTest</a>
-% Numerical Renaissance codebase, Appendix A, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 % First, split SuDoku 9x9 array into a 3x3x3x3 array, which is easier for analysis
 for i=1:3;for j=1:3;for k=1:3;for l=1:3; A(i,j,k,l)=F(i+(k-1)*3,j+(l-1)*3); end;end;end;end

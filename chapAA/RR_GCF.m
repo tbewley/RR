@@ -9,7 +9,7 @@ function [g,q,n] = RR_GCF(a,b)
 %          b=RR_poly([1 3.7 6],1), a=RR_poly([2 3.7 6 7],1), [g,q,n] = RR_GCF(a,b)  % Find GCF of two polynomials
 % NOTE:    for the polynomial case, g and q come out with somewhat strange overall scalaing (fixed in Bezout)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if b>a, disp('Swapping a and b'), [a,b]=RR_Swap(a,b);, end
 n=0; rm=a; r=b; while norm(r)>1e-7

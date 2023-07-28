@@ -20,7 +20,7 @@
 %   close all, figure(1), bode(G), figure(2), bode(D), figure(3), bode(G*D)
 %   figure(4), impulse(T), figure(5), step(T)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 classdef RR_tf < matlab.mixin.CustomDisplay
     properties

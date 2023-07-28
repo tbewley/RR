@@ -8,7 +8,7 @@ function [a,b,c]=RR_Permute(a,b,c)
 % TEST:    a=randn, b=randn(1,2), c=randn(1,3)
 %          [b,c,a]=RR_Permute(a,b,c)  % Permute a->b, b->c, c->a  
 %          [c,a,b]=RR_Permute(a,b,c)  % Permute a->c, b->a, c->b
-% Numerical Renaissance codebase, Appendix A, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 end % function RR_Permute

@@ -1,7 +1,7 @@
 % script RR_DiophantineTest
 % Tests the Diophantine code on both integers and polynomials
-% Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clc, disp('Set up a simple integer Diophantine problem (solve a*x+b*y=f for x and y)')
 a=RR_int(385),  b=RR_int(357), f=RR_int(21)
@@ -22,7 +22,7 @@ fprintf('Note that the solution {x1,y1} is improper (x1.n<y1.n), but solves a*x1
 disp('Modify f and try again (solve a*x2+b*y2=f2 for x2 and y2).')
 f2=RR_poly([-1 -1 -3 -3 -30 -30 -30 -30],1)
 [x2,y2] = RR_Diophantine(a,b,f2), test2=trim(a*x2+b*y2), residual2=norm(f2-test2)
-fprintf('Note that the solution {x2,y2} is proper (x2.n>y2.n), and solves a*x2+b*y2=f2 with ~ zero residual\n\n'), pause
+fprintf('Note that the solution {x2,y2} is strictly proper (x2.n>y2.n), and solves a*x2+b*y2=f2 with ~ zero residual\n\n'), pause
 
 disp('Now set up the Diophantine problem (solve a3*x3+b3*y3=f3 for x3 and y3) in NR Example 19.13')
 b3=RR_poly([0.0306 0.0455]), a3=RR_poly([1 -3.9397 3.3201]), f3=RR_poly([1 0 0 0])
