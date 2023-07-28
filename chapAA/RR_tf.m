@@ -173,11 +173,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
-            p=[abs([L.z L.p])]/c;  if min(p)==0; p=1; end
-            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p)/5)); end
+            p=[abs([L.z L.p])]/c;  if sum(p)==0, p=1; end
+            if     ~isfield(g,'log_omega_min'), g.log_omega_min=floor(log10(min(p(p>0))/5)); end
             % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
             if     ~isempty(L.h              ), Nyquist=pi/L.h/c; g.log_omega_max=log10(0.999*Nyquist);
-            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p)*5)); end
+            elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p(p>0))*5)); end
             if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
             if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
                                                 else             g.linestyle ='r-';  end,    end

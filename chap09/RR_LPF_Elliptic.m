@@ -1,17 +1,23 @@
-function [num,den]=RR_Elliptic_Filter(n,epsilon,delta)
-% function [num,den]=RR_Elliptic_Filter(n,epsilon,delta)
-% Computes an n'th order elliptic filter (FOR n=2^s ONLY) with cutoff frequency omega_c=1, 
-% ripple in the passband between 1/(1+epsilon^2) and 1, and
-% ripple in the stopband between 0 and delta^2 (see Figures 17.20d, 17.21d).
+function F=RR_LPF_Elliptic(n,epsilon,delta,omegac)
+% function F=RR_LPF_Elliptic(n,epsilon,delta,omegac)
+% INPUTS:  n=order of filter, FOR n=2^s ONLY      [see, e.g., Figures 9.12b, 9.13b]
+%          epsilon=ripple of gain in the passband [between 1/sqrt(1+epsilon^2) and 1]
+%          delta  =ripple of gain in the stopband [between 0 and delta]
+%          omegac =cutoff frequency of filter     [OPTIONAL, taken as 1 if omitted]
+% OUTPUT:  F=n'th order Elliptic low-pass filter of type RR_tf
+% EXAMPLE: F=RR_LPF_Elliptic(4,0.1,0.1,10), close all, bode(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
-% Verify with <a href="matlab:help EllipticFilterTest">EllipticFilterTest</a>.  Depends on <a href="matlab:help Bisection">Bisection</a>, <a href="matlab:help Poly">Poly</a>, <a href="matlab:help Prod">Prod</a>.
+% Note: uses codes from the NR database https://github.com/tbewley/NR
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-s=log2(n); z=0; p.n=n; p.target=1/(epsilon*delta); xi=Bisection(1.0001,100,@Func,1e-6,0,p)
+s=log2(n); z=0; p.n=n; p.target=1/(epsilon*delta); xi=NR_Bisection(1.0001,100,@Func,1e-6,0,p)
 for r=s-1:-1:0, z=1./sqrt(1+sqrt(1-1./(CRF(2^r,xi,xi))^2)*(1-z)./(1+z)); z=[z; -z]; end
 zeta=SN(n,xi,epsilon); a=-zeta*sqrt(1-zeta^2).*sqrt(1-z.^2).*sqrt(1-z.^2./xi^2);
 b=z*sqrt(1-zeta^2*(1-1/xi^2)); c=1-zeta^2*(1-z.^2/xi^2); efz=i*xi./z; efp=(a+i*b)./c;
-C=Prod(efp)/Prod(efz)/sqrt(1+epsilon^2); num=real(C*Poly(efz)); den=real(Poly(efp));
+C=prod(efp)/prod(efz)/sqrt(1+epsilon^2); num=RR_poly(efz,C); den=RR_poly(efp,1);
+if nargin>2, for k=1:n+1, num.poly(k)=num.poly(k)/omegac^(n-k-1);
+                          den.poly(k)=den.poly(k)/omegac^(n-k-1); end, end
+F=RR_tf(real(num.poly),real(den.poly))                      
 end % function EllipticFilter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function zeta=SN(n,xi,epsilon)    % Computes the Jacobi elliptic function (for n=2^s only)
