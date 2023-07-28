@@ -159,9 +159,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
         function bode(L,g)
             % function bode(L,g)
-            % The continuous-time Bode plot of G(s)=num(s)/den(s) if nargin=3, with s=(i omega), or
-            % the discrete-time   Bode plot of G(z)=num(z)/den(z) if nargin=4, with z=e^(i omega h).
-            % Note: the (optional) derived type g is used to pass in various (optional) plotting parameters:
+            % Plots the continuous-time Bode plot of L(s) if L.h is not defined, with s=(i omega),
+            % or    the discrete-time   Bode plot of L(z) if L.h is defined, with z=e^(i omega h).
+            % The (optional) derived type g is used to pass in various (optional) plotting parameters:
             %   {g.log_omega_min,g.log_omega_max,G.omega_N} define the set of frequencies used (logarithmically spaced)
             %   g.linestyle is the linestyle used
             %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
@@ -183,18 +183,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                                                 else             g.linestyle ='r-';  end,    end
             if     ~isfield(g,'lines'        ), g.lines        =false;                       end
             if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
-            if     ~isfield(g,'Hz'  ),          g.Hz           =false;                       end
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c; end
 
             mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
 
+            if g.lines
             for k=1:g.omega_N-1; if (mag(k)  -1  )*(mag(k+1)  -1  )<=0;
                 omega_c=(omega(k)+omega(k+1))/2, phase_margin=180+(phase(k)+phase(k+1))/2
             break, end, end
             for k=1:g.omega_N-1; if (phase(k)+180)*(phase(k+1)+180)<=0;
                 omega_g=(omega(k)+omega(k+1))/2, gain_margin=1/(mag(k)+mag(k+1))/2
             break, end, end
+            end
 
             subplot(2,1,1),        loglog(omega,mag,g.linestyle), hold on, a=axis;
             if g.lines,              plot([a(1) a(2)],[1 1],'k:')
@@ -208,6 +209,37 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
             if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
         end % function bode
+
+        function bode_linear(L,g)
+            % function bode_linear(L,g)
+            % The continuous-time Bode plot of G(s)=num(s)/den(s) if nargin=3, with s=(i omega), or
+            % the discrete-time   Bode plot of G(z)=num(z)/den(z) if nargin=4, with z=e^(i omega h).
+            % Note: the (optional) derived type g is used to pass in various (optional) plotting parameters:
+            %   {g.omega_max,G.omega_N} define the set of frequencies used (linearly spaced)
+            %   g.linestyle is the linestyle used
+            %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
+            % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
+            % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+
+            if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
+            c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
+                 elseif g.Hz==true,      c=2*pi;      end
+            p=[abs([L.z L.p])]/c;  if sum(p)==0, p=1; end
+            % (In DT, always plot the Bode plot up to the Nyquist frequency, to see what's going on!)
+            if     ~isempty(L.h          ), Nyquist=pi/L.h/c; g.omega_max=(0.999*Nyquist);
+            elseif ~isfield(g,'omega_max'), g.omega_max=((max(p(p>0))*1.5)); end
+            if     ~isfield(g,'omega_N'  ), g.omega_N      =500;                end
+            if     ~isfield(g,'linestyle'), if isempty(L.h), g.linestyle ='b-';
+                                            else             g.linestyle ='r-'; end, end
+            omega=linspace(0,g.omega_max,g.omega_N);
+            if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c;  end
+
+            mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi;
+            subplot(2,1,1),        plot(omega,mag,g.linestyle), hold on, axis tight; a=axis;
+            if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
+            subplot(2,1,2),        plot(omega,phase,g.linestyle), hold on, axis tight; a=axis;
+            if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
+        end % function bode_linear
 
         function rlocus(G,D)
         end % function rlocus

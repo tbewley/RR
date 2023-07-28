@@ -9,4 +9,4 @@ function F=RR_HPF_second_order(omegac,zeta)
 
 if nargin<1, omegac=1;   end
 if nargin<2, zeta=0.707; end
-F=RR_tf(omegac^2,[1 2*zeta*omegac omegac^2]);
+F=RR_tf([1 0 0],[1 2*zeta*omegac omegac^2]);
