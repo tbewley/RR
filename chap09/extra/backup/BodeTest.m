@@ -13,8 +13,6 @@ g.style='k-'; Bode(bs,as,g), hold on, h=1; g.line=1; subplot(2,1,1), axis(10.^[-
 g.style='b-'; [bz,az]=C2DTustin(bs,as,h);   Bode(bz,az,g,h)
 g.style='r-'; [bz,az]=C2DTustin(bs,as,h,2.5); Bode(bz,az,g,h)
 
-break
-
 figure(3); clf; g.omega=logspace(-1,1,500);
 g.style='k-';  zeta=.01;  Bode([1],[1 2*zeta 1],g);
 g.style='k-.'; zeta=.1;   Bode([1],[1 2*zeta 1],g);
@@ -39,5 +37,9 @@ subplot(2,1,2), plot([.001 .002],[0 0],s,[.002 .05],[0 -90],s,[.05 1],[-90 -90],
 figure(6); clf; g.omega=[logspace(-1,-.0001,300) logspace(.0001,1,300)]; g.line=0; s='k--';
 g.style='b-';  Q=5;  Bode([1 0 1],[1 1/Q 1],g);
 g.style='r-.'; Q=.5; Bode([1 0 1],[1 1/Q 1],g); subplot(2,1,1), axis([.1 10 .01 1])
+
+figure(7); clf; g.omega=[logspace(-1,1,200)]; g.line=1; s='k--';
+bs=[8]; as=PolyPower([1 1],3);
+g.style='k-'; Bode(bs,as,g),
 
 % end script BodeTest

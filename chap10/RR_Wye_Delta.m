@@ -2,7 +2,7 @@
 % Computes the Wye Delta transformation, and apply it
 % to compute the equivalent resistance of a Wheatstone Bridge of resistors.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
 % The following method of symbolic solution extends easily to many simple
 % nonlinear systems of equations.

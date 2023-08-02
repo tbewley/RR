@@ -9,7 +9,7 @@ function Bode(num,den,g,h)
 % Part of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help NRchap17">Chapter 17</a>; please read the <a href="matlab:help NRcopyleft">copyleft</a>.
 % Verify with: <a href="matlab:help BodeTest">BodeTest</a>.  Depends on <a href="matlab:help PolyVal">PolyVal</a>.
 
-if nargin==4, N=pi/h; g.omega=logspace(log10(g.omega(1)),log10(N),length(g.omega));
+if nargin==4, N=pi/h; g.omega=logspace(log10(g.omega(1)),log10(0.999*N),length(g.omega));
   arg=exp(i*g.omega*h); else arg=i*g.omega; end
 subplot(2,1,1), loglog(g.omega,abs(PolyVal(num,arg)./PolyVal(den,arg)),g.style), hold on
 a=axis; plot([a(1) a(2)],[1 1],'k:'), if nargin==4, plot([N N],[a(3) a(4)],'k--'), end

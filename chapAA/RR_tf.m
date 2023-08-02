@@ -21,6 +21,7 @@
 %   figure(4), impulse(T), figure(5), step(T)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% See also RR_int, RR_poly.
 
 classdef RR_tf < matlab.mixin.CustomDisplay
     properties
@@ -74,14 +75,14 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     	function sum = plus(G1,G2)          
             % Defines G1+G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-            [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
+            [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
             sum  = RR_tf(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
             if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
             % Defines G1-G2, where G1 and/or G2 are of class RR_tf
             % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-            [G1,G2]=check(G1,G2);  g=RR_GCF(G1.den,G2.den);  % (Dividing out the GCF improves accuracy)
+            [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
             diff = RR_tf(G1.num*(G2.den/g)-G2.num*(G1.den/g),G1.den*(G2.den/g));
             if ~isempty(G1.h); diff.h=G1.h; end
         end    
@@ -186,7 +187,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c; end
 
-            mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
+            mag=abs(evaluate(L,arg)); phase=RR_phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
 
             if g.lines
             for k=1:g.omega_N-1; if (mag(k)  -1  )*(mag(k+1)  -1  )<=0;
@@ -234,7 +235,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             omega=linspace(0,g.omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c;  end
 
-            mag=abs(evaluate(L,arg)); phase=RR_Phase(evaluate(L,arg))*180/pi;
+            mag=abs(evaluate(L,arg)); phase=RR_phase(evaluate(L,arg))*180/pi;
             subplot(2,1,1),        plot(omega,mag,g.linestyle), hold on, axis tight; a=axis;
             if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
             subplot(2,1,2),        plot(omega,phase,g.linestyle), hold on, axis tight; a=axis;

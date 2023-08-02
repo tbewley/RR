@@ -61,7 +61,7 @@
 %
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_int.
+% See also RR_int, RR_tf.
 
 classdef RR_poly < matlab.mixin.CustomDisplay
     properties  % Each RR_poly object consists of the following three fields:

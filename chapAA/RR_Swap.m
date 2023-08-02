@@ -1,5 +1,5 @@
-function [b,a]=RR_Swap(a,b)
-% function [b,a]=RR_Swap(a,b)
+function [b,a]=RR_swap(a,b)
+% function [b,a]=RR_swap(a,b)
 % A curiously simple (empty!) function that simply swaps the (entire) contents of a and b.
 % INPUTS:  a=a matlab object containing pretty much anything
 %          b=another matlab object containing pretty much anything
@@ -9,4 +9,4 @@ function [b,a]=RR_Swap(a,b)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
-end % function RR_Swap
+end % function RR_swap
