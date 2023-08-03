@@ -1,7 +1,7 @@
-function RR_SuDokuSolve(F)
-% function RR_SuDokuSolve(F)
+function RR_sudoku_solve(F)
+% function RR_sudoku_solve(F)
 % An involved recursive code for solving the SuDoku problems, emulating how a human plays.
-% TEST with <a href="matlab:RR_SuDokuSolveTest">RR_SuDokuSolveTest</a>
+% TEST with <a href="matlab:RR_sudoku_solve_test">RR_sudoku_solve_test</a>.
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
@@ -9,7 +9,7 @@ function RR_SuDokuSolve(F)
 for i=1:3;for j=1:3;for k=1:3;for l=1:3; A(i,j,k,l)=F(i+(k-1)*3,j+(l-1)*3); end;end;end;end
 PrintSuDoku(A), [A,B,flag]=PlaySuDoku(A);
 PrintSuDoku(A), if flag==0; [A]=RecursiveSuDoku(A,B,flag); PrintSuDoku(A); end
-end % function RR_SuDokuSolve
+end % function RR_sudoku_solve
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [A,B,flag]=PlaySuDoku(A)
 % This routine attempts to solve the SuDoku puzzle directly (without guessing).  
