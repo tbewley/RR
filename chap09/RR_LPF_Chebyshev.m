@@ -1,10 +1,10 @@
-function F=RR_LPF_Chebyshev(n,epsilon,omegac)
-% function F=RR_LPF_Chebyshev(n,epsilon,omegac)
+function F=RR_LPF_chebyshev(n,epsilon,omegac)
+% function F=RR_LPF_chebyshev(n,epsilon,omegac)
 % INPUTS:  n=order of filter (see, e.g., Figures 9.12b, 9.13b)
 %          epsilon=ripple of gain in the passband [between 1/sqrt(1+epsilon^2) and 1]
 %          omegac=cutoff frequency of filter [OPTIONAL, taken as 1 if omitted]
 % OUTPUT:  F=n'th order Chebyshev low-pass filter of type RR_tf
-% EXAMPLE: F=RR_LPF_Chebyshev(4,0.3,10), close all, bode(F), figure(2), bode_linear(F)
+% EXAMPLE: F=RR_LPF_chebyshev(4,0.3,10), close all, RR_bode(F), figure(2), RR_bode_linear(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 

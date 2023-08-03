@@ -1,9 +1,9 @@
-function F=RR_LPF_Butterworth(n,omegac)
-% function F=RR_LPF_Butterworth(n,omegac)
+function F=RR_LPF_butterworth(n,omegac)
+% function F=RR_LPF_butterworth(n,omegac)
 % INPUTS:  n=order of filter
 %          omegac=cutoff frequency of filter [OPTIONAL, taken as 1 if omitted]
 % OUTPUT:  F=n'th order Butterworth filter of type RR_tf
-% EXAMPLE: F=RR_LPF_Butterworth(4,0.1), close all, bode(F)
+% EXAMPLE: F=RR_LPF_butterworth(4,0.1), close all, RR_bode(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 

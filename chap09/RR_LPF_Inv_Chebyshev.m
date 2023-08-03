@@ -1,10 +1,10 @@
-function F=RR_LPF_Inv_Chebyshev(n,delta,omegac)
-% function F=RR_LPF_Inv_Chebyshev(n,delta,omegac)
+function F=RR_LPF_inv_chebyshev(n,delta,omegac)
+% function F=RR_LPF_inv_chebyshev(n,delta,omegac)
 % INPUTS:  n=order of filter [see, e.g., Figures 9.12c, 9.13c]
 %          delta =ripple of gain in the stopband [between 0 and delta]
 %          omegac=cutoff frequency of filter     [OPTIONAL, taken as 1 if omitted]
 % OUTPUT:  F=n'th order Inverse Chebyshev low-pass filter of type RR_tf
-% EXAMPLE: F=RR_LPF_Inv_Chebyshev(4,0.04,0.1), close all, bode(F), figure(2), bode_linear(F)
+% EXAMPLE: F=RR_LPF_inv_chebyshev(4,0.04,0.1), close all, RR_bode(F), figure(2), RR_bode_linear(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 

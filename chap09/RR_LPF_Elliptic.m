@@ -1,11 +1,11 @@
-function F=RR_LPF_Elliptic(n,epsilon,delta,omegac)
-% function F=RR_LPF_Elliptic(n,epsilon,delta,omegac)
+function F=RR_LPF_elliptic(n,epsilon,delta,omegac)
+% function F=RR_LPF_elliptic(n,epsilon,delta,omegac)
 % INPUTS:  n=order of filter, FOR n=2^s ONLY      [see, e.g., Figures 9.12b, 9.13b]
 %          epsilon=ripple of gain in the passband [between 1/sqrt(1+epsilon^2) and 1]
 %          delta  =ripple of gain in the stopband [between 0 and delta]
 %          omegac =cutoff frequency of filter     [OPTIONAL, taken as 1 if omitted]
-% OUTPUT:  F=n'th order Elliptic low-pass filter of type RR_tf
-% EXAMPLE: F=RR_LPF_Elliptic(4,0.3,0.04,10), close all, bode(F), figure(2), bode_linear(F) 
+% OUTPUT:  F=n'th order elliptic low-pass filter of type RR_tf
+% EXAMPLE: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode(F), figure(2), RR_bode_linear(F) 
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Note: uses codes from the NR database https://github.com/tbewley/NR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
@@ -20,7 +20,7 @@ if nargin>2, for k=1:n+1, num.poly(k)=num.poly(k)/omegac^(n-k-1);
 F=RR_tf(real(num.poly),real(den.poly));
 disp(sprintf('Elliptic passband gain oscillation between %0.3g and 1.',1/sqrt(1+epsilon^2)))
 disp(sprintf('Elliptic stopband gain oscillation between 0 and %0.3g.',delta))                     
-end % function EllipticFilter
+end % function RR_LPF_elliptic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function zeta=SN(n,xi,epsilon)    % Computes the Jacobi elliptic function (for n=2^s only)
 if n<4, t=sqrt(1-1/xi^2); zeta=2/((1+t)*sqrt(1+epsilon^2)+sqrt((1-t)^2+epsilon^2*(1+t)^2));
