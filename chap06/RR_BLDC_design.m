@@ -5,7 +5,7 @@ function RR_BLDC_design(ns_min,ns_max,np_min,np_max)
 %         np_min,np_max=range for number of poles (multiples of 2)
 % EXAMPLE CALL: RR_BLDC_design(6,36,4,34)
 % Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 ns=[ns_min:3:ns_max]; np=[np_min:2:np_max];
 n_ns=length(ns); n_np=length(np); n=1; sigma=pi/3;
@@ -19,7 +19,6 @@ for i=1:n_ns, for j=1:n_np
     kp1(i,j)    =cos(n*epsilon(i,j)/2);
     kd1(i,j)    =sin(n*sigma/2)/(z(i,j)*sin(n*sigma/(2*z(i,j))));
     kw1(i,j)    =kp1(i,j)*kd1(i,j);
-    
     uz_out(i,j) =".";
     c_out(i,j)  =".";
     kw1_out(i,j)=".";

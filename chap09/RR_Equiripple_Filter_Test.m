@@ -7,7 +7,7 @@ clear all, close all, omegac=10; n=8; epsilon=0.3; delta=0.04; g.omega_max=omega
 % Edit the above quantities (in particular, try n=4 and n=8) to explore
 
 disp(sprintf('Compare the n=%0.2g Butterworth, Chebyshev, Inverse Chebyshev, and elliptic filters.',n))
-F1=RR_LPF_Butterworth(n,omegac);            close all, bode_linear(F1,g), pause
-F2=RR_LPF_Chebyshev(n,epsilon,omegac);      figure(2), bode_linear(F2,g), pause
-F3=RR_LPF_Inv_Chebyshev(n,delta,omegac);    figure(3), bode_linear(F3,g), pause
-F4=RR_LPF_Elliptic(n,epsilon,delta,omegac); figure(4), bode_linear(F4,g)
+F1=RR_LPF_Butterworth(n,omegac);            close all, RR_bode_linear(F1,g), pause
+F2=RR_LPF_Chebyshev(n,epsilon,omegac);      figure(2), RR_bode_linear(F2,g), pause
+F3=RR_LPF_Inv_Chebyshev(n,delta,omegac);    figure(3), RR_bode_linear(F3,g), pause
+F4=RR_LPF_Elliptic(n,epsilon,delta,omegac); figure(4), RR_bode_linear(F4,g)

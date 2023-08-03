@@ -235,7 +235,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c; end
 
-            mag=abs(evaluate(L,arg)); phase=RR_phase(evaluate(L,arg))*180/pi+g.phase_shift*360;
+            mag=abs(RR_evaluate(L,arg)); phase=RR_phase(RR_evaluate(L,arg))*180/pi+g.phase_shift*360;
 
             if g.lines
             for k=1:g.omega_N-1; if (mag(k)  -1  )*(mag(k+1)  -1  )<=0;
@@ -283,7 +283,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             omega=linspace(0,g.omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c;  end
 
-            mag=abs(evaluate(L,arg)); phase=RR_phase(evaluate(L,arg))*180/pi;
+            mag=abs(RR_evaluate(L,arg)); phase=RR_phase(RR_evaluate(L,arg))*180/pi;
             subplot(2,1,1),        plot(omega,mag,g.linestyle), hold on, axis tight; a=axis;
             if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
             subplot(2,1,2),        plot(omega,phase,g.linestyle), hold on, axis tight; a=axis;
