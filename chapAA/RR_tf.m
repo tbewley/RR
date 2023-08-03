@@ -9,8 +9,8 @@
 %   G=RR_tf(num)      1 argument  defines an RR_tf object G from a numerator polynomial, setting denominator=1
 %   G=RR_tf(num,den)  2 arguments defines an RR_tf object from numerator and denominator polynomials
 %   G=RR_tf(z,p,K)    3 arguments defines an RR_tf object from vectors of zeros and poles, z and p, and the gain K
-%   Note that any RR_tf object G has two RR_poly fields, G.num and G.den
-%   NOte also that, to generate a DT G(z), simply define G using one of the above commands, then set G.h.
+%   Note that, to generate a DT rational transfer function, use 1 of the above 3 commands, then set G.h.
+%   Any RR_tf object G has two RR_poly fields, G.num and G.den
 %
 % STANDARD OPERATIONS defined on RR_tf objects (overloading the +, -, *, /, ^ operators):
 %   plus:     G1+G2  gives the sum of two transfer functions        (or, a transfer functions and a scalar)
@@ -69,9 +69,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
      				if  isa(a,'RR_poly'), G.num=a; else, G.num=RR_poly(a); end
    					if  isa(b,'RR_poly'), G.den=b; else, G.den=RR_poly(b); end
    					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;  % Make denominator monic
-                    G.z=roots(G.num); G.p=roots(G.den);
-                    % if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=roots(G.num); end
-                    % if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=roots(G.den); end
+                    G.z=RR_roots(G.num); G.p=RR_roots(G.den);
+                    % if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
+                    % if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
                     G.K=G.num.poly(1); 
    				case 3	
                     G.z=a; G.p=b; G.K=K; G.num=RR_poly(a,K); G.den=RR_poly(b,1);
@@ -90,9 +90,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
                 %  if ~modified, G=RR_tf(G.num,G.den); end
                 if ~isnumeric(G.z), G.z=simplify(G.z); G.num.poly=simplify(G.num.poly);
-                else, G.num=trim(G.num); end
+                else, G.num=RR_trim(G.num); end
                 if ~isnumeric(G.p), G.p=simplify(G.p); G.den.poly=simplify(G.den.poly);
-                else, G.den=trim(G.den); end
+                else, G.den=RR_trim(G.den); end
             end
     	end
     	function sum = plus(G1,G2)          
@@ -102,7 +102,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
-            sum  = RR_tf(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
+            sum  = RR_tf(RR_trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),RR_trim(G1.den*(G2.den/g)));
             if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
@@ -153,9 +153,20 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             else    error('Incompatible operation on transfer functions!')
             end
         end
+
         function z = RR_evaluate(G,s)
         % function z = RR_evaluate(G,s)
         % Evaluates a transfer function G(s), of class RR_tf, at a given value of s.
+        % TEST: close all, F=RR_tf([1 1],[1 10]); oc=sqrt(10); RR_bode(F); 
+        %       F_at_oc=RR_evaluate(F,oc*i), mag_at_peak=abs(F_at_oc), phase_at_peak=phase(F_at_oc)*180/pi
+        %       % The following test code quantifies the phase lead or lag of of a lead compensator (for beta>1)
+        %       % or the phase lag of a lag compensator (if beta<1), for a range of beta, where
+        %       % F(s)=(s+z)/(s+p) and z=omegac/sqrt(beta), p=omegac*sqrt(beta).
+        %       close all, omegac=1; beta=logspace(-3,3,200); n=length(beta)
+        %       for k=1:n, z=omegac/sqrt(beta(k)); p=omegac*sqrt(beta(k));
+        %          F=RR_tf([1 z],[1 p]); phi(k)=phase(RR_evaluate(F,omegac*i))*180/pi; 
+        %       end, semilogx(beta,phi), grid, axis([beta(1) beta(end) -90 90])
+        %       title('Phase lead (if beta>1) or lag (if beta<1) of F(s)=(s+z)/(s+p) for beta=p/z')     
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             for i=1:length(s)
@@ -192,11 +203,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 if k(1,i)>=k(i+1), r=k(i); a=RR_poly(1);
                     for j=1:i-k(i),    a=a*[1 -p(j)]; end
                     for j=i+1:n,       a=a*[1 -p(j)]; end
-                    for j=1:k(i)-1,    ad{j}=derivative(a,j); end
+                    for j=1:k(i)-1,    ad{j}=RR_derivative(a,j); end
                 end
-                q=r-k(i); d(i)=evaluate(derivative(rem,q),p(i))/factorial(q);
-                for j=q:-1:1, d(i)=d(i)-d(i+j)*evaluate(ad{j},p(i))/factorial(j); end
-                d(i)=d(i)/evaluate(a,p(i));
+                q=r-k(i); d(i)=RR_evaluate(RR_derivative(rem,q),p(i))/factorial(q);
+                for j=q:-1:1, d(i)=d(i)-d(i+j)*RR_evaluate(ad{j},p(i))/factorial(j); end
+                d(i)=d(i)/RR_evaluate(a,p(i));
             end, if ~flag, k=k(1:n); else
                  p(n+1:n+1+div.n)=0; d(n+1:n+div.n+1)=div.poly(end:-1:1); k(n+1:n+1+div.n)=-[0:div.n]; n=n+div.n+1;
             end
@@ -209,17 +220,18 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function RR_bode(L,g)
         % function RR_bode(L,g)
         % Plots the continuous-time Bode plot of L(s) if L.h is not defined, with s=(i omega),
-        % or    the discrete-time   Bode plot of L(z) if L.h is defined, with z=e^(i omega h).
+        % or    the discrete-time   Bode plot of L(z) if L.h is defined,     with z=e^(i omega h).
         % The (optional) derived type g is used to pass in various (optional) plotting parameters:
         %   {g.log_omega_min,g.log_omega_max,G.omega_N} define the set of frequencies used (logarithmically spaced)
         %   g.linestyle is the linestyle used
         %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
         %   g.phase_shift is the integer multiple of 360 deg added to the phase in the phase plot.
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
-        % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
+        % Convenient defaults are defined for each of these fields of g if not provided.
+        % TEST: omegac=1; F=RR_tf([omegac^2],[1 2*0.707*omegac omegac^2]); close all, RR_bode(F)
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
+            if nargin==1, g=[]; end,     % Convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
             p=[abs([L.z L.p])]/c;  if sum(p)==0, p=1; end
@@ -261,13 +273,14 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
         function RR_bode_linear(L,g)
         % function RR_bode_linear(L,g)
-        % The continuous-time Bode plot of G(s)=num(s)/den(s) if nargin=3, with s=(i omega), or
-        % the discrete-time   Bode plot of G(z)=num(z)/den(z) if nargin=4, with z=e^(i omega h).
-        % Note: the (optional) derived type g is used to pass in various (optional) plotting parameters:
+        % Plots the continuous-time Bode plot of L(s) if L.h is not defined, with s=(i omega),
+        % or    the discrete-time   Bode plot of L(z) if L.h is defined,     with z=e^(i omega h).
+        % The (optional) derived type g is used to pass in various (optional) plotting parameters:
         %   {g.omega_max,G.omega_N} define the set of frequencies used (linearly spaced)
         %   g.linestyle is the linestyle used
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
-        % Some convenient defaults are defined for each of these fields, but any may be overwritten. You're welcome.
+        % Convenient defaults are defined for each of these fields of g if not provided.
+        % TEST: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode_linear(F)
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
@@ -293,32 +306,33 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function RR_rlocus(G,D,g)
         % function RR_rlocus(G,D,g)
         % Plot the root locus of K*G(s)*D(s) w.r.t. a range of K
-        % INPUTS: G,D = plant and controller, of type RR_tf
+        % INPUTS: G = plant, of type RR_tf
+        %         D = controller, of type RR_tf [OPTIONAL; default is D=1]
         %         g = OPTIONAL derived type with convenient plotting parameters:
-        %             g.K is the additional gains used [default: g.K=logspace(-2,3,200)]
-        %             g.axes is the axis limits [default contains all breakpoints]
+        %             g.K is the additional gains used [default: g.K=logspace(-2,2,500)]
+        %             g.axes is the axis limits        [default contains all breakpoints]
         % NOTE:   The roots for K=1 are marked (*).
+        % TEST:   G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), RR_rlocus(G,D)
         % Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; D=RR_tf(1); end        
             L=G*D; T=L/(1+L); t=[G.p G.z D.p D.z T.p T.z]*1.5;
-            if nargin<3, g=[]; end   % Set up convenient defaults for plotting
+            if nargin<3, g={}; end   % Set up convenient defaults for plotting
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
-
-            a(1)=min([real(t) -1]); a(2)=max([real(t) 1]);
-            a(3)=min([imag(t)  1]); a(4)=max([imag(t) 1]); 
-            if nargin<3; g.K=logspace(-2,3,300), g.axes=[-2.5 .5 -1.5 1.5], end
-            MS='MarkerSize'; clf, hold on
-            for j=1:length(g.K); Tj=g.K(j)*L/(1+L);
-              plot(real(Tj.p),imag(Tj.p),'k.',MS,10)
-            end, 
-            plot(real(G.p),imag(G.p),'kx',MS,17)
+            if ~isfield(g,'K'   ), g.K=logspace(-2,2,500); end
+            if ~isfield(g,'axes'), a(1)=min([real(t) -2]); a(2)=max([real(t) 1]);
+                                   a(3)=min([imag(t)  1]); a(4)=max([imag(t) 1]); g.axes=a; end
+            MS='MarkerSize'; close all
+            plot(real(G.p),imag(G.p),'kx',MS,17), axis(g.axes), hold on
             plot(real(G.z),imag(G.z),'ko',MS,12)
             plot(real(D.p),imag(D.p),'bx',MS,17)
             plot(real(D.z),imag(D.z),'bo',MS,12)
             plot(real(T.p),imag(T.p),'r*',MS,17)
-            axis equal, a=g.axes; axis(a), plot([a(1) a(2)],[0 0],'k-'), plot([0 0],[a(3) a(4)],'k-')
+            for j=1:length(g.K); Tj=L*g.K(j)/(1+L*g.K(j));
+              plot(real(Tj.p),imag(Tj.p),'k.',MS,10)
+            end
+            axis equal, grid, a=axis; plot([a(1) a(2)],[0 0],'k-'), plot([0 0],[a(3) a(4)],'k-')
         end % function RR_rlocus
 
         function [Yz]=RR_Z(Ys,h)
@@ -362,6 +376,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Given a CT or DT plant G, defined as an RR_tf, plot the impulse response.
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
+        % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_impulse(G*D/(1+G*D))
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; g={}; end, RR_plot_response(G,-1,g); grid
@@ -372,6 +387,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Given a CT or DT plant G, defined as an RR_tf, plot the impulse response.
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
+        % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_step(G*D/(1+G*D))
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; g={}; end, RR_plot_response(G,0,g); grid
@@ -407,7 +423,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if     ~isfield(g,'tol'  ),         g.tol=1e-4;          end
 
             if isempty(G.h)  %%%%%%%%%%%%%  CT case  %%%%%%%%%%%%%
-                U=RR_tf(RR_Factorial(m),[1 zeros(1,m+1)]);              % First, set up U(s)  
+                m
+                U=RR_tf(factorial(max(m,0)),[1 zeros(1,m+1)]);              % First, set up U(s)  
                 [Up,Ud,Uk,Un]=RR_partial_fraction_expansion(U,g.tol);   % Then take the necessary
                 [Yp,Yd,Yk,Yn]=RR_partial_fraction_expansion(G*U,g.tol); % partial fraction expansions
                 h=g.T/g.N; t=[0:g.N]*h;

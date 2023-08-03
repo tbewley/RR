@@ -114,33 +114,34 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function [a,b]=check(a,b)
             if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
         end
-        function n = norm(a,option)       % Defines n=norm(a,option), where a is an RR_poly object
+
+        function n = RR_norm(a,option)       % Defines n=norm(a,option), where a is an RR_poly object
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(a.poly,option);
         end
-        function r = roots(p)             % Defines r=roots(p), where p is an RR_poly object
+        function r = RR_roots(p)             % Defines r=roots(p), where p is an RR_poly object
             r=sort(roots(p.poly)).';
         end
-        function z = evaluate(a,s)
+        function z = RR_evaluate(a,s)
             z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
         end
-        function p = derivative(p,m)      % Computes the m'th derivative of the polynomial p
+        function p = RR_derivative(p,m)      % Computes the m'th derivative of the polynomial p
             if m==0, return, elseif nargin<2, m=1; end
             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
             if p.n<0, p=RR_poly(0);  end
             if m>1,   p=derivative(p,m-1); end
         end
-        function p = trim(p)
+        function p = RR_trim(p)
             index=find(abs(p.poly(1:end-1))>1e-10,1);   % Trim off any leading zeros in p
             if isempty(index), index=length(p.poly); end 
             p.poly = p.poly(index:end);
             p.n    = length(p.poly)-1;
         end
-        function out = invert(p)
+        function out = RR_invert(p)
             out = RR_poly(p.poly(end:-1:1));
         end
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        function inertia = routh(a)
+
+        function inertia = RR_routh(a)
         % function inertia = routh(a)
         % Find the number of roots of the polynomial a(s) that are in the LHP, on the
         % imaginary axis, and in the RHP, referred to as the inertia of a(s), WITHOUT
@@ -173,8 +174,8 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        function routh_simplified(a)
-        % function routh_simplified(a)
+        function RR_routh_simplified(a)
+        % function RR_routh_simplified(a)
         % Compute the simplified Routh table to determine if a(s) is Hurwitz (all eigenvalues in LHP).
         % Significantly, note that a(s) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
@@ -192,8 +193,8 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        function stationarity = bistritz(a)
-        % function stationarity=bistritz(a)
+        function stationarity = RR_bistritz(a)
+        % function stationarity = RR_bistritz(a)
         % Find the number of roots of the polynomial a(z) that are inside, on, and outside the
         % unit circle, referred to as the stationarity of a(z), WITHOUT calculating the roots
         % of the polynomial a(z).  Algorithm due to Bistritz (2002).
@@ -236,8 +237,8 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             end
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        function bistritz_simplified(a)
-        % function bistritz_simplified(a)
+        function RR_bistritz_simplified(a)
+        % function RR_bistritz_simplified(a)
         % Compute the simplified Bistritz table to determine if a(z) is Schur stable
         % (all eigenvalues in unit circle).  Significantly, note that a(z) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)

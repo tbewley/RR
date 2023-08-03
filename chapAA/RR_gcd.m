@@ -12,10 +12,10 @@ function [g,q,n] = RR_gcd(a,b)
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
-if b>a, disp('Swapping a and b'), [a,b]=RR_swap(a,b);, end
-n=0; rm=a; r=b; while norm(r)>1e-7
+if b>a, [a,b]=RR_swap(a,b); end
+n=0; rm=a; r=b; while RR_norm(r)>1e-7
   [quo,rem]=rm/r;                     % Reduce (rm,r) to their GCF via Euclid's algorithm
-  if isa(quo,'RR_poly'), quo=trim(quo); rem=trim(rem); end
+  if isa(quo,'RR_poly'), quo=RR_trim(quo); rem=RR_trim(rem); end
   n=n+1; q{n}=quo; rm=r; r=rem;       % saving the quotients quo generated along the way.
 end; n; g=rm; 
 end % function RR_gcd
