@@ -3,19 +3,22 @@
 % Each polynomial is defined as a row vector with integer, real, or complex entries, each interpreted
 % as the coefficients of the polynomial, written in descending order.  For example,
 % b=[1 2 0 4] in this class is interpreted as the polynomial b(s)=s^3+2*s^2+4.
+%
 % DEFINITION:
 %   a=RR_poly(c)    defines an RR_poly object from a coefficient vector c
 %   a=RR_poly(r,K)  defines an RR_poly object from a vector of roots r and gain K
 %   syms a3 a2 a1 a0; a=RR_poly([a3 a2 a1 a0]) defines an RR_poly object from a vector of symbolic coefficients
 %   Note that any RR_poly object b has three fields, b.poly, b.n, and b.s
-% STANDARD OPERATIONS (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
+%
+% STANDARD OPERATIONS defined on RR_poly objects (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     a+b  gives the sum of two polynomials
 %   minus:    b-a  gives the difference of two polynomials
 %   mtimes:   a*b  gives the product of two polynomials
 %   mrdivide: [quo,rem]=b/a divides two polynomials, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
-%   Note that the relations <, >, <=, >=, ~=, == are based just on the order of the polynomials.
-% ADDITIONAL OPERATIONS:
+%   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
+%
+% ADDITIONAL OPERATIONS defined on RR_poly objects:
 %   n = RR_norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = RR_roots(b)               Gives a vector of roots r from a RR_poly object b
 %   z = RR_evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
@@ -104,53 +107,95 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         function pow = mpower(a,n)        % Defines a^n
              if n==0, pow=RR_poly([1]); else, pow=a; for i=2:n, pow=pow*a; end, end
         end
-        % Define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the orders of a and b.
+        % Define a<b, a>b, a<=b, a>=b, a~=b, a==b based simply on the orders of a and b.
         function TF=lt(a,b), if a.n< b.n, TF=true; else, TF=false; end, end
         function TF=gt(a,b), if a.n> b.n, TF=true; else, TF=false; end, end
         function TF=le(a,b), if a.n<=b.n, TF=true; else, TF=false; end, end
         function TF=ge(a,b), if a.n>=b.n, TF=true; else, TF=false; end, end
         function TF=ne(a,b), if a.n~=b.n, TF=true; else, TF=false; end, end
         function TF=eq(a,b), if a.n==b.n, TF=true; else, TF=false; end, end
+
         function [a,b]=check(a,b)
+        % function [a,b]=check(a,b)
+        % Converts a or b, as necessary, to the class RR_poly
+        % NOTE: this routine is just used internally in this class definition.
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
         end
 
-        function n = RR_norm(a,option)       % Defines n=norm(a,option), where a is an RR_poly object
+        function n = RR_norm(p,option)    % Defines n=norm(a,option), where a is an RR_poly object
+        % function n = RR_norm(p,option)
+        % Computes the n norm of the coefficients of a polynomial p, of type RR_poly.
+        % TEST: p=RR_poly([1 1 1]), RR_norm(p)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
-            n = norm(a.poly,option);
+            n = norm(p.poly,option);
         end
+
         function r = RR_roots(p)             % Defines r=roots(p), where p is an RR_poly object
+        % function r = RR_roots(p)
+        % Compute the roots of a polynomial p, of type RR_poly (calls Matlab's "roots" command and sorts).
+        % TEST: p=RR_poly([1 2 1]), RR_roots(p)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             r=sort(roots(p.poly)).';
         end
-        function z = RR_evaluate(a,s)
-            z=0; for k=1:a.n+1; z=z+a.poly(k)*s^(a.n+1-k); end
+
+        function z = RR_evaluate(p,s)
+        % function z = RR_evaluate(a,s)
+        % Evaluate a polynomial p(s), of type RR_poly, at a given values of s.
+        % TEST: p=RR_poly([1 2 1]), RR_evaluate(p,2)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+            z=0; for k=1:p.n+1; z=z+p.poly(k)*s^(p.n+1-k); end
         end
-        function p = RR_derivative(p,m)      % Computes the m'th derivative of the polynomial p
+
+        function p = RR_derivative(p,m)      
+        % function p = RR_derivative(p,m)
+        % Computes the m'th derivative of the polynomial p, of type RR_poly.
+        % TEST: p=RR_poly([1 2 3 4]), RR_derivative(p,2)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if m==0, return, elseif nargin<2, m=1; end
             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
             if p.n<0, p=RR_poly(0);  end
             if m>1,   p=RR_derivative(p,m-1); end
         end
-        function p = RR_trim(p)
-            index=find(abs(p.poly(1:end-1))>1e-10,1);   % Trim off any leading zeros in p
+
+        function p = RR_trim(p)     
+        % function p = RR_trim(p)
+        % Simply trim off any leading zeros in the polynomial p, of type RR_poly.
+        % TEST: p=RR_poly([0 0 0 1 2 3 4]), RR_trim(p)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+            index=find(abs(p.poly(1:end-1))>1e-10,1);   
             if isempty(index), index=length(p.poly); end 
             p.poly = p.poly(index:end);
             p.n    = length(p.poly)-1;
         end
+
         function out = RR_invert(p)
-            out = RR_poly(p.poly(end:-1:1));
+        % function p = RR_invert(p)
+        % Reverse the order of the coefficients of the polynomial p, of type RR_poly.
+        % TEST: p=RR_poly([1 2 3 4]), RR_invert(p)
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+             out = RR_poly(p.poly(end:-1:1));
         end
 
         function inertia = RR_routh(a)
-        % function inertia = routh(a)
+        % function inertia = RR_routh(a)
         % Find the number of roots of the polynomial a(s) that are in the LHP, on the
         % imaginary axis, and in the RHP, referred to as the inertia of a(s), WITHOUT
         % calculating the roots of the polynomial a(s).  Algorithm due to Routh (1895).
         % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
-        % OUTPUT: inertia = vector quantifying number of [LHP imaginary RHP] roots 
+        % OUTPUT: inertia = vector quantifying number of [LHP imaginary RHP] roots
+        % TEST:   clear, a1=RR_poly([-3 -2 -1+i -1-i 0 0 3 4],1), RR_routh(a1)
+        % TEST:          a2=RR_poly([-3 -2 -1+i -1-i -1 -0.1],1), RR_routh(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
-
             p=a.poly; deg=a.n; inertia=[0 0 0]; flag=0; show_routh('Routh',deg,p(1:2:end))
             for n=deg:-1:1    % Note: implementation follows that in Meinsma (SCL, 1995)
                 k=find(abs(p(2:2:n+1))>1e-14,1); show_routh('Routh',n-1,p(2:2:end))  
@@ -173,16 +218,17 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                 disp([t,' row ',num2str(num),':',sprintf(' %7.4g',data)])
             end
         end
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
         function RR_routh_simplified(a)
         % function RR_routh_simplified(a)
         % Compute the simplified Routh table to determine if a(s) is Hurwitz (all eigenvalues in LHP).
         % Significantly, note that a(s) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the CT transfer function of interest)
         % OUTPUT: none (Routh table is just printed to the screen) 
+        % TEST:   clear, a1=RR_poly([-3 -2 -1+i -1-i 0],1), RR_routh_simplified(a1)
+        %                a2=RR_poly([-3 -2 -1+i -1-i  ],1), RR_routh_simplified(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
-
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             p=a.poly; n=a.n; s=strcmp(class(p),'sym'); R=0; disp(p(1:2:end));
             for i=n:-1:1
                disp(p(2:2:end)), if p(2)==0, disp('Not Hurwitz.'), return, end
@@ -192,7 +238,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             else, if R==0, disp('Hurwitz'), else, disp(['Not Hurwitz: ',num2str(R),' RHP poles']), end
             end
         end
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
         function stationarity = RR_bistritz(a)
         % function stationarity = RR_bistritz(a)
         % Find the number of roots of the polynomial a(z) that are inside, on, and outside the
@@ -202,17 +248,20 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % for calculating the stationarity of a(z).
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)
         % OUTPUT: stationarity = vector quantifying number of roots [inside on outside] the unit circle
+        % TEST:   clear, phi=0.1; c=cos(phi); s=sin(phi);
+        %         a1=RR_poly([0.5 -0.9 c+i*s c-i*s 1.3],1), RR_bistritz(a1)
+        %         a2=RR_poly([0.5 -0.9 c+i*s c-i*s 1],  1), RR_bistritz(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.  
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.  
 
             z1roots=0;
-            while abs(evaluate(a,1))<1e-12, a=a/[1 -1]; z1roots=z1roots+1; end  % roots at z=1
+            while abs(RR_evaluate(a,1))<1e-12, a=a/[1 -1]; z1roots=z1roots+1; end  % roots at z=1
             disp(['  Simplified a:',sprintf(' %7.4g',a.poly)])
-            deg=a.n; T2=a+invert(a); T1=(a-invert(a))/[1 -1];
+            deg=a.n; T2=a+RR_invert(a); T1=(a-RR_invert(a))/[1 -1];
             show_bistritz('Bistritz',T2)
             show_bistritz('Bistritz',T1), nu_n=0; nu_s=0; s=0;
             for n=deg-1:-1:0
-                if norm(T1,1)>1e-12,
+                if RR_norm(T1,1)>1e-12,
                     k=find(abs(T1.poly)>1e-14,1)-1; d=T2.poly(1)/T1.poly(1+k);
                     T1head=RR_poly(T1.poly(1:end-k)); T1tail=RR_poly([T1.poly(1+k:end) zeros(1,k+1)]);
                     a=d*(T1head+T1tail)-T2;
@@ -222,10 +271,10 @@ classdef RR_poly < matlab.mixin.CustomDisplay
                 else                                                          % Singular case
                     a=RR_poly(T2.poly(1:n+1).*(n+1:-1:1));
                     a.poly=-a.poly(end:-1:1); if (s==0), s=n+1; end
-                    T1=a+invert(a); T0=(a-invert(a))/[1 -1];
+                    T1=a+RR_invert(a); T0=(a-RR_invert(a))/[1 -1];
                     show_bistritz('     NEW',T1)
                 end
-                eta=(evaluate(T2,1)+eps)/(evaluate(T1,1)+eps);  nu_n=nu_n+(eta<0);
+                eta=(RR_evaluate(T2,1)+eps)/(RR_evaluate(T1,1)+eps);  nu_n=nu_n+(eta<0);
                 if (s>0), nu_s=nu_s+(eta<0); end
                 if n>0, show_bistritz('Bistritz',T0); T2=T1; T1=T0; end
             end
@@ -243,23 +292,24 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % (all eigenvalues in unit circle).  Significantly, note that a(z) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)
         % OUTPUT: none (Bistritz table is just printed to the screen) 
+        % TEST:   clear, phi=0.1; c=cos(phi); s=sin(phi);
+        %         a1=RR_poly([0.5 -0.9 c+i*s c-i*s -1],1), RR_bistritz_simplified(a1)
+        %         a2=RR_poly([0.5 -0.9 0.99*(c+i*s) 0.99*(c-i*s) -0.99],1), RR_bistritz_simplified(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
-
             s=strcmp(class(a.poly),'sym')
-            if ~s & abs(evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
+            if ~s & abs(RR_evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
             R=0; disp('Simplified Bistritz table:')
-            uip2=a+invert(a);           uip20=uip2.poly(end); disp(uip2.poly)
-            uip1=(a-invert(a))/[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
+            uip2=a+RR_invert(a);           uip20=uip2.poly(end); disp(uip2.poly)
+            uip1=(a-RR_invert(a))/[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
             nu_n=0; nu_s=0; s=0;
             for i=a.n-2:-1:0
                 c=uip20/uip10;    if c==0, disp('Not Schur stable.'), return, end
                 ui=RR_poly(c)*RR_poly([1 1])*uip1-uip2;
                 ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(ui.poly)
                 uip2=uip1; uip20=uip10; uip1=ui; uip10=ui.poly(end);
-               % if ~s, if c<=0, R=R+1; end, end
+                c=real(uip20/uip10); if ~s, if c<=1e-12, R=R+1; end, end
             end
-           % c=uip20/uip10, if ~s, if c<=0, R=R+1; end, end
             if s, disp('Schur stable iff all entries in first column are the same sign.')
             else, if R==0, disp('Schur stable.'), else, disp(['Not Schur stable.']), end
             end
