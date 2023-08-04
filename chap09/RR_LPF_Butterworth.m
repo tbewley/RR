@@ -10,4 +10,4 @@ function F=RR_LPF_butterworth(n,omegac)
 if nargin<2, omegac=1; end 
 p=exp(i*pi*(2*[1:n]-1+n)/(2*n)); den=RR_poly(p,1);
 for k=1:n+1, den.poly(k)=real(den.poly(k))/omegac^(n-k-1); end
-num=evaluate(den,0); F=RR_tf(num,den);
+num=RR_evaluate(den,0); F=RR_tf(num,den);

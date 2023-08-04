@@ -6,7 +6,7 @@
 disp('Perform exact conversion of a D/A–G(s)–A/D cascade to discrete time,')
 disp('assuming G(s)=b(s)/a(s) and the D/A incorporates a zoh.')
 
-bs=[1], as=[1 2 1], h=.1;  [bz,az]=C2Dzoh(bs,as,h), disp(' ')
+F=RR_tf([1],as=[1 2 1]), h=.1;  [bz,az]=RR_C2D+zoh(F,h), disp(' ')
 disp('Now compare to routine built into Matlab'), c2d(tf(bs,as),h,'zoh'), disp(' ')
 
 bs=[1], as=[1 6 5], h=.1;  [bz,az]=C2Dzoh(bs,as,h), disp(' ')

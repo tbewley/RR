@@ -357,7 +357,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function [Gz]=RR_C2D_zoh(Gs,h)
         % function [Gz]=RR_C2D_zoh(Gs,h)
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
-        % TEST:   Gs=RR_tf([1],[1 0 0]), [Gz]=RR_C2D_zoh(Gs,0.01)
+        % TEST: bs=[1]; as=[1 2 1]; h=0.01; Gs=RR_tf(bs,as), [Gz]=RR_C2D_zoh(Gs,h)
+        %       disp('Corresponding Matlab solution:'), c2d(tf(bs,as),h,'zoh')
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
@@ -369,7 +370,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function [Dz]=RR_C2D_tustin(Ds,h,omegac)
         % Convert Ds(s) to Dz(z) using Tustin's method.  If omegac is specified, prewarping is applied
         % such that the dynamics of Ds(s) in the vicinity of this critical frequency are mapped correctly.
-        % Ds=RR_tf(20*[1 1],[1 10]); omegac=sqrt(10); h=.01; [Dz]=RR_C2D_tustin(Ds,h,omegac)
+        % TEST: ys=20*[1 1]; xs=[1 10]; h=0.01; Ds=RR_tf(ys,xs); omegac=sqrt(10); [Dz]=RR_C2D_tustin(Ds,h,omegac)
+        %       disp('Corresponding Matlab solution:')
+        %       opt = c2dOptions('Method','tustin','PrewarpFrequency',omegac); c2d(tf(ys,xs),h,opt)
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==2, f=1; else, f=2*(1-cos(omegac*h))/(omegac*h*sin(omegac*h)); end

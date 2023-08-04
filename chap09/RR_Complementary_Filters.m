@@ -13,7 +13,7 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 % INPUTS:  omegac=breakpoint of filters    [OPTIONAL, default=1]
 %          n     =the order of the filters [OPTIONAL, default=1]
 % OUTPUTS: [LPF,HPF]=a matched pair of filters that sum to one and roll off at order n
-% EXAMPLE: [LPF,HPF]=RR_complementary_filters(10,2), close all
+% TEST:    [LPF,HPF]=RR_complementary_filters(10,2), close all
 %          figure(1), RR_bode(LPF), figure(2), RR_bode(HPF), LPF_plus_HPF=LPF+HPF
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
