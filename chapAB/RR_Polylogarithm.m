@@ -12,5 +12,5 @@ function [Li]=RR_polylogarithm(p,r)
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 Li_den=RR_poly([1/r -1])^(p+1); Li_num=RR_poly(0);
-for k=p:-1:0, Li_num=Li_num+RR_Factorial(k)*RR_StirlingNumber(p+1,k+1)*RR_poly([1/r -1])^(p-k); end
+for k=p:-1:0, Li_num=Li_num+factorial(k)*RR_stirling_number(p+1,k+1)*RR_poly([1/r -1])^(p-k); end
 Li=RR_tf(Li_num,Li_den);

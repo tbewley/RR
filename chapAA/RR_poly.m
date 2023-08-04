@@ -16,10 +16,10 @@
 %   mpower:   a^n  gives the n'th power of a polynomial
 %   Note that the relations <, >, <=, >=, ~=, == are based just on the order of the polynomials.
 % ADDITIONAL OPERATIONS:
-%   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
-%   r = roots(b)               Gives a vector of roots r from a RR_poly object b
-%   z = evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
-%   d = derivative(p,m)        Computes the m'th derivative of the polynomial p
+%   n = RR_norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
+%   r = RR_roots(b)               Gives a vector of roots r from a RR_poly object b
+%   z = RR_evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
+%   d = RR_derivative(p,m)        Computes the m'th derivative of the polynomial p
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a  % (self explanatory)
@@ -31,7 +31,7 @@
 %
 %   fprintf('\nCompute and plot 5 derivatives of b\n')
 %   fprintf('   b      = '), disp(b.poly)                 
-%   for m=1:5; d=derivative(b,m); fprintf('d^%db/ds^%d = ',m,m), disp(d.poly), end
+%   for m=1:5; d=RR_derivative(b,m); fprintf('d^%db/ds^%d = ',m,m), disp(d.poly), end
 %
 %   fprintf('\nCompute the inertia of unstable, marginally stable, and stable CT systems using Routh\n')
 %   clear, a=RR_poly([-2.3 -1.7  1  i   -i  ],1), inertia=routh(a), routh_simplified(a)
@@ -129,7 +129,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if m==0, return, elseif nargin<2, m=1; end
             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
             if p.n<0, p=RR_poly(0);  end
-            if m>1,   p=derivative(p,m-1); end
+            if m>1,   p=RR_derivative(p,m-1); end
         end
         function p = RR_trim(p)
             index=find(abs(p.poly(1:end-1))>1e-10,1);   % Trim off any leading zeros in p

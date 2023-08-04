@@ -100,7 +100,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Defines G1+G2, where G1 and/or G2 are of class RR_tf
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
             sum  = RR_tf(RR_trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),RR_trim(G1.den*(G2.den/g)));
             if ~isempty(G1.h); sum.h=G1.h; end
@@ -121,7 +121,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            [G1,G2]=check(G1,G2); prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
+            [G1,G2]=check(G1,G2);
+            prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
             if ~isempty(G1.h); prod.h=G1.h; end
         end
         function quo = mrdivide(G1,G2)
@@ -137,7 +138,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function pow = mpower(G,n)
         % Defines G^n, where G is of class RR_tf
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
              if n==0, pow=RR_tf([1]); else, pow=G; for i=2:n, pow=pow*G; end, end
             if ~isempty(G.h); pow.h=G.h; end
         end
@@ -147,7 +148,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % NOTE: this routine is just used internally in this class definition.
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); end,  if ~isa(G2,'RR_tf'), G2=RR_tf(G2); end
+            if ~isa(G1,'RR_tf'), G1=RR_tf(G1); if ~isempty(G2.h), G1.h=G2.h; end, end
+            if ~isa(G2,'RR_tf'), G2=RR_tf(G2); if ~isempty(G1.h), G2.h=G1.h; end, end
             if     ~isempty(G1.h) & ~isempty(G2.h) & G1.h==G2.h, % disp 'valid DT TF operation'
             elseif  isempty(G1.h) &  isempty(G2.h),              % disp 'valid CT TF operation'
             else    error('Incompatible operation on transfer functions!')
@@ -312,12 +314,18 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %             g.K is the additional gains used [default: g.K=logspace(-2,2,500)]
         %             g.axes is the axis limits        [default contains all breakpoints]
         % NOTE:   The roots for K=1 are marked (*).
-        % TEST:   G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), RR_rlocus(G,D)
+        % TEST:   % The following is a CT design:
+        %         G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), RR_rlocus(G,D)
+        %         % The following is the corresponding DT design for h=.05:
+        %         Gs=RR_tf([1],[1 0 0]),  h=.05; [Gz]=RR_C2D_zoh(Gs,h);
+        %         Ds=RR_tf(20*[1 1],[1 10]); omegac=sqrt(10); [Dz]=RR_C2D_tustin(Ds,h,omegac)
+        %         RR_rlocus(Gz,Dz); hold on; zgrid
         % Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            if nargin<2; D=RR_tf(1); end        
-            L=G*D; T=L/(1+L); t=[G.p G.z D.p D.z T.p T.z]*1.5;
             if nargin<3, g={}; end   % Set up convenient defaults for plotting
+            if nargin<2; D=RR_tf(1); end        
+            L=G*D; T=L/(1+L);
+            t=[G.p G.z D.p D.z T.p T.z]*1.5;
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
             if ~isfield(g,'K'   ), g.K=logspace(-2,2,500); end
@@ -329,9 +337,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             plot(real(D.p),imag(D.p),'bx',MS,17)
             plot(real(D.z),imag(D.z),'bo',MS,12)
             plot(real(T.p),imag(T.p),'r*',MS,17)
-            for j=1:length(g.K); Tj=L*g.K(j)/(1+L*g.K(j));
-              plot(real(Tj.p),imag(Tj.p),'k.',MS,10)
-            end
+            for j=1:length(g.K); Ls=L*g.K(j); Tj=Ls/(1+Ls); plot(real(Tj.p),imag(Tj.p),'k.',MS,10); end
             axis equal, grid, a=axis; plot([a(1) a(2)],[0 0],'k-'), plot([0 0],[a(3) a(4)],'k-')
         end % function RR_rlocus
 
@@ -351,17 +357,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function [Gz]=RR_C2D_zoh(Gs,h)
         % function [Gz]=RR_C2D_zoh(Gs,h)
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
+        % TEST:   Gs=RR_tf([1],[1 0 0]), [Gz]=RR_C2D_zoh(Gs,0.01)
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
             STEPs=RR_tf(1,[1 0]);
-            Gz=HATz * Z(Gs*STEPs,h);
+            Gz=HATz * RR_Z(Gs*STEPs,h);
         end % function RR_C2D_zoh
 
         function [Dz]=RR_C2D_tustin(Ds,h,omegac)
         % function [Dz]=RR_C2D_tustin(Ds,h,omegac)
         % Convert Ds(s) to Dz(z) using Tustin's method.  If omegac is specified, prewarping is applied
         % such that the dynamics of Ds(s) in the vicinity of this critical frequency are mapped correctly.
+        % Ds=RR_tf(20*[1 1],[1 10]); omegac=sqrt(10); h=.01; [Dz]=RR_C2D_tustin(Ds,h,omegac)
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==2, f=1; else, f=2*(1-cos(omegac*h))/(omegac*h*sin(omegac*h)); end
