@@ -19,7 +19,7 @@
 %   rdivide:  G1/G2 divides two transfer functions
 %   mpower:   G1^n  gives the n'th power of a transfer function
 %
-% ADDITIONAL OPERATIONS defined on RR_tf objects:
+% ADDITIONAL OPERATIONS defined on RR_tf objects (try "help RR_*" for more info on any of them)
 %   RR_evaluate: Evaluates a transfer function G(s) at a given value of s.
 %   RR_partial_fraction_expansion: Compute {p,d,k,n} such that G(s)=d(1)/(s-p(1))^k(1) +...+ d(n)/(s-p(n))^k(n)
 %   RR_bode: Plots the CT Bode plot of G(s) if G.h is not defined, with s=(i omega),

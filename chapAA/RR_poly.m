@@ -18,11 +18,12 @@
 %   mpower:   a^n  gives the n'th power of a polynomial
 %   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
 %
-% ADDITIONAL OPERATIONS defined on RR_poly objects:
+% ADDITIONAL OPERATIONS defined on RR_poly objects: (try "help RR_poly/RR_*" for more info on any of them)
 %   n = RR_norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = RR_roots(b)               Gives a vector of roots r from a RR_poly object b
 %   z = RR_evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
 %   d = RR_derivative(p,m)        Computes the m'th derivative of the polynomial p
+% 
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
 %   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a  % (self explanatory)
@@ -55,12 +56,6 @@
 %   syms K, den=RR_poly(K)*b+a, routh_simplified(den); K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
 %
 %   fprintf('\nCheck the range of stability of closed-loop DT system using simplified Bistritz test\n')
-%   b=RR_poly([0.0001265 0.0002618 -0.0003026 -6.849e-05]); a=RR_poly([1 -3.187 3.674 -1.789 0.3012]);
-%   den=-9*b+a,  bistritz_simplified(den);
-%   den=-8*b+a,  bistritz_simplified(den);
-%   den=135*b+a,  bistritz_simplified(den);
-%   den=136*b+a,  bistritz_simplified(den);
-%   syms K, den=RR_poly(K)*b+a, bistritz_simplified(den); K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
 %
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
@@ -195,7 +190,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % TEST:   clear, a1=RR_poly([-3 -2 -1+i -1-i 0 0 3 4],1), RR_routh(a1)
         % TEST:          a2=RR_poly([-3 -2 -1+i -1-i -1 -0.1],1), RR_routh(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             p=a.poly; deg=a.n; inertia=[0 0 0]; flag=0; show_routh('Routh',deg,p(1:2:end))
             for n=deg:-1:1    % Note: implementation follows that in Meinsma (SCL, 1995)
                 k=find(abs(p(2:2:n+1))>1e-14,1); show_routh('Routh',n-1,p(2:2:end))  
@@ -253,7 +248,6 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         %         a2=RR_poly([0.5 -0.9 c+i*s c-i*s 1],  1), RR_bistritz(a2)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.  
-
             z1roots=0;
             while abs(RR_evaluate(a,1))<1e-12, a=a/[1 -1]; z1roots=z1roots+1; end  % roots at z=1
             disp(['  Simplified a:',sprintf(' %7.4g',a.poly)])
@@ -292,23 +286,32 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % (all eigenvalues in unit circle).  Significantly, note that a(z) may be symbolic.
         % INPUT:  a = RR_poly object (the denominator of the DT transfer function of interest)
         % OUTPUT: none (Bistritz table is just printed to the screen) 
-        % TEST:   clear, phi=0.1; c=cos(phi); s=sin(phi);
+        % TESTS:  clear, phi=0.1; c=cos(phi); s=sin(phi);
         %         a1=RR_poly([0.5 -0.9 c+i*s c-i*s -1],1), RR_bistritz_simplified(a1)
         %         a2=RR_poly([0.5 -0.9 0.99*(c+i*s) 0.99*(c-i*s) -0.99],1), RR_bistritz_simplified(a2)
+        %         % The following test shows the power of this simplified test, handling symbolic K in the final row
+        %         b=RR_poly([0.0001265 0.0002618 -0.0003026 -6.849e-05]);
+        %         a=RR_poly([1 -3.187 3.674 -1.789 0.3012]);
+        %         den=-9*b+a,   RR_bistritz_simplified(den), pause
+        %         den=-8*b+a,   RR_bistritz_simplified(den), pause
+        %         den=135*b+a,  RR_bistritz_simplified(den), pause
+        %         den=136*b+a,  RR_bistritz_simplified(den), pause
+        %         syms K, den=RR_poly(K)*b+a, RR_bistritz_simplified(den)
+        %         K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-        % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             s=strcmp(class(a.poly),'sym')
             if ~s & abs(RR_evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
             R=0; disp('Simplified Bistritz table:')
-            uip2=a+RR_invert(a);           uip20=uip2.poly(end); disp(uip2.poly)
+            uip2=a+RR_invert(a);          uip20=uip2.poly(end); disp(uip2.poly)
             uip1=(a-RR_invert(a))/[1 -1]; uip10=uip1.poly(end); disp(uip1.poly)
-            nu_n=0; nu_s=0; s=0;
+            nu_n=0; nu_s=0;
             for i=a.n-2:-1:0
                 c=uip20/uip10;    if c==0, disp('Not Schur stable.'), return, end
                 ui=RR_poly(c)*RR_poly([1 1])*uip1-uip2;
-                ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(ui.poly)
+                ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(evaluate(ui.poly)
                 uip2=uip1; uip20=uip10; uip1=ui; uip10=ui.poly(end);
-                c=real(uip20/uip10); if ~s, if c<=1e-12, R=R+1; end, end
+                if ~s, c=real(uip20/uip10); if c<=1e-12, R=R+1; end, end
             end
             if s, disp('Schur stable iff all entries in first column are the same sign.')
             else, if R==0, disp('Schur stable.'), else, disp(['Not Schur stable.']), end
