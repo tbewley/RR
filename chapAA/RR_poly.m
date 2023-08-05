@@ -290,8 +290,8 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         %         a1=RR_poly([0.5 -0.9 c+i*s c-i*s -1],1), RR_bistritz_simplified(a1)
         %         a2=RR_poly([0.5 -0.9 0.99*(c+i*s) 0.99*(c-i*s) -0.99],1), RR_bistritz_simplified(a2)
         %         % The following test shows the power of this simplified test, handling symbolic K in the final row
-        %         b=RR_poly([0.0001265 0.0002618 -0.0003026 -6.849e-05]);
-        %         a=RR_poly([1 -3.187 3.674 -1.789 0.3012]);
+        %         b=RR_poly([1]);
+        %         a=RR_poly([1.1 0.6],1);
         %         den=-9*b+a,   RR_bistritz_simplified(den), pause
         %         den=-8*b+a,   RR_bistritz_simplified(den), pause
         %         den=135*b+a,  RR_bistritz_simplified(den), pause
@@ -309,7 +309,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             for i=a.n-2:-1:0
                 c=uip20/uip10;    if c==0, disp('Not Schur stable.'), return, end
                 ui=RR_poly(c)*RR_poly([1 1])*uip1-uip2;
-                ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(evaluate(ui.poly)
+                ui.poly=ui.poly(2:end-1); ui.n=ui.n-2; disp(evaluate(ui.poly))
                 uip2=uip1; uip20=uip10; uip1=ui; uip10=ui.poly(end);
                 if ~s, c=real(uip20/uip10); if c<=1e-12, R=R+1; end, end
             end

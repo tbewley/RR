@@ -19,7 +19,7 @@
 %   rdivide:  G1/G2 divides two transfer functions
 %   mpower:   G1^n  gives the n'th power of a transfer function
 %
-% ADDITIONAL OPERATIONS defined on RR_tf objects (try "help RR_*" for more info on any of them)
+% ADDITIONAL OPERATIONS defined on RR_tf objects (try "help RR_tf/RR_*" for more info on any of them)
 %   RR_evaluate: Evaluates a transfer function G(s) at a given value of s.
 %   RR_partial_fraction_expansion: Compute {p,d,k,n} such that G(s)=d(1)/(s-p(1))^k(1) +...+ d(n)/(s-p(n))^k(n)
 %   RR_bode: Plots the CT Bode plot of G(s) if G.h is not defined, with s=(i omega),
@@ -54,27 +54,29 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         K    % Note that the (num,den) and (z,p,K) representations of the transfer function are equivalent
     end
     methods
-    	function G = RR_tf(a,b,K)
-        % function G = RR_tf(a,b,K)
-        % Generate an RR_tf object G(s):
-        %   called with 2 arguments, generates from a numerator polynomial a and a denominator polynomial b
-        %   called with 3 arguments, generates from vectors of zeros and poles, a and b, and the overall gain K
-        % Automatically performs pole/zero cancellations as necessary
+    	function G = RR_tf(num,den,K)
+        % function G = RR_tf(num,den,K)
+        % Generate a CT RR_tf object G(s):
+        %   called with 1 argument,  generates from polynomial num, with den=1
+        %   called with 2 arguments, generates from polynomials num and den
+        %   called with 3 arguments, generates from vectors of zeros (num) and poles (den), and the overall gain K
+        % Automatically performs pole/zero cancellations as necessary.
+        % To define a DT RR_tf object G(z), define G as above, then set, e.g., G.h=0.01.
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
     		switch nargin
     			case 1  
-    				if ~isa(a,'RR_poly'), a=RR_poly(a); end, G = RR_tf(a,RR_poly(1));
+    				if ~isa(num,'RR_poly'), num=RR_poly(num); end, G = RR_tf(num,RR_poly(1));
     			case 2 	
-     				if  isa(a,'RR_poly'), G.num=a; else, G.num=RR_poly(a); end
-   					if  isa(b,'RR_poly'), G.den=b; else, G.den=RR_poly(b); end
+     				if  isa(num,'RR_poly'), G.num=num; else, G.num=RR_poly(num); end
+   					if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
    					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;  % Make denominator monic
                     G.z=RR_roots(G.num); G.p=RR_roots(G.den);
                     % if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
                     % if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
                     G.K=G.num.poly(1); 
    				case 3	
-                    G.z=a; G.p=b; G.K=K; G.num=RR_poly(a,K); G.den=RR_poly(b,1);
+                    G.z=num; G.p=den; G.K=K; G.num=RR_poly(num,K); G.den=RR_poly(den,1);
     	    end
             G.h=[];
      	    if G.num.poly==0, G.den=RR_poly(1); end  % Simplify the zero transfer function 
@@ -314,31 +316,35 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %             g.K is the additional gains used [default: g.K=logspace(-2,2,500)]
         %             g.axes is the axis limits        [default contains all breakpoints]
         % NOTE:   The roots for K=1 are marked (*).
-        % TEST:   % The following is a CT design:
-        %         G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), RR_rlocus(G,D)
-        %         % The following is the corresponding DT design for h=.05:
-        %         Gs=RR_tf([1],[1 0 0]),  h=.05; [Gz]=RR_C2D_zoh(Gs,h);
-        %         Ds=RR_tf(20*[1 1],[1 10]); omegac=sqrt(10); [Dz]=RR_C2D_tustin(Ds,h,omegac)
-        %         RR_rlocus(Gz,Dz); hold on; zgrid
+        % TEST:   clear; close all, G1=RR_tf([],[-3 1],2), Ds=RR_tf(2.5); h=0.2, d=h/2
+        %         figure(1), RR_rlocus(G1,Ds)
+        %         Gd=RR_tf([1 -6/d 12/d^2],[1 6/d 12/d^2]), G2=G1*Gd;
+        %         figure(2), g.K=logspace(-2,4,1500);  RR_rlocus(G2,Ds,g)
+        %         G3z=RR_C2D_zoh(G1,h), Dz=Ds; Dz.h=h;
+        %         figure(3), RR_rlocus(G3z,Dz,g)
         % Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<3, g={}; end   % Set up convenient defaults for plotting
-            if nargin<2; D=RR_tf(1); end        
+            if nargin<2; D=RR_tf(1); if ~isempty(G.h), D.h=G.h; end, end        
             L=G*D; T=L/(1+L);
-            t=[G.p G.z D.p D.z T.p T.z]*1.5;
+            t=[G.p G.z D.p D.z T.p T.z]*1.6;
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
             if ~isfield(g,'K'   ), g.K=logspace(-2,2,500); end
             if ~isfield(g,'axes'), a(1)=min([real(t) -2]); a(2)=max([real(t) 1]);
                                    a(3)=min([imag(t)  1]); a(4)=max([imag(t) 1]); g.axes=a; end
-            MS='MarkerSize'; close all
-            plot(real(G.p),imag(G.p),'kx',MS,17), axis(g.axes), hold on
+            MS='MarkerSize';
+            plot(real(G.p),imag(G.p),'kx',MS,17), axis equal, axis(g.axes), hold on
             plot(real(G.z),imag(G.z),'ko',MS,12)
             plot(real(D.p),imag(D.p),'bx',MS,17)
             plot(real(D.z),imag(D.z),'bo',MS,12)
             plot(real(T.p),imag(T.p),'r*',MS,17)
             for j=1:length(g.K); Ls=L*g.K(j); Tj=Ls/(1+Ls); plot(real(Tj.p),imag(Tj.p),'k.',MS,10); end
-            axis equal, grid, a=axis; plot([a(1) a(2)],[0 0],'k-'), plot([0 0],[a(3) a(4)],'k-')
+            if isempty(G.h)
+                grid, plot(5*[a(1) a(2)],[0 0],'k-'), plot([0 0],5*[a(3) a(4)],'k-')
+            else
+                axis([-1.3 1.3 -1.3 1.3]), zgrid, 
+            end
         end % function RR_rlocus
 
         function [Yz]=RR_Z(Ys,h)
