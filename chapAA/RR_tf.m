@@ -332,7 +332,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                  elseif g.Hz==true,      c=2*pi;      end
             if ~isfield(g,'K'   ), g.K=logspace(-2,2,500); end
             if ~isfield(g,'axes'), a(1)=min([real(t) -2]); a(2)=max([real(t) 1]);
-                                   a(3)=min([imag(t)  1]); a(4)=max([imag(t) 1]); g.axes=a; end
+                                   a(3)=min([imag(t) -1]); a(4)=max([imag(t) 1]); g.axes=a; end
             MS='MarkerSize';
             plot(real(G.p),imag(G.p),'kx',MS,17), axis equal, axis(g.axes), hold on
             plot(real(G.z),imag(G.z),'ko',MS,12)
