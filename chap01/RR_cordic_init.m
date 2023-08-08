@@ -3,8 +3,8 @@
 % INPUT: (none)
 % OUTPUT: cordic_tables.{K,ang,N}
 % See RR_cordic.m and RR_cordic_core.m for how these tables are used.
-% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
+%% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 N=26;
 % Generate data for the circular cordic routines.

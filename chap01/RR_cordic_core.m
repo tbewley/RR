@@ -18,8 +18,8 @@ function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % Note that z=v(3)->0 for mode=1 ("rotation"), and y=v(2)->0 for mode=2 ("vectoring")
 % See RR_cordic.m and RR_cordic_derived.m for how to set up the input v,
 % and how to process the output v, to approximate various specific functions.
-% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
+%% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 switch rot  % Initialize {mu,f,ang} for different types of rotations 
   case 1, mu= 1; f=1;   ang=cordic_tables.ang(1,1); % Circular rotations
