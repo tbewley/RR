@@ -7,7 +7,7 @@ function Rcom=RR_common_resistor_value(R,n,direction)
 % OUTPUT: Rcom=closest resistor value in the series selected.
 % EXAMPLE: Rcom=RR_Common_Resistor_Value(7000,24,'closest')
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
 
 switch n
   case 6
