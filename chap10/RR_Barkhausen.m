@@ -2,9 +2,9 @@ function [a4,a3,a5]=RR_Barkhausen(C1,C2,L3,R4,R5,R6,R7)
 % function [a3,a4,a5]=RR_Barkhausen(C1,C2,L3,R4,R5,R6,R7)
 % Computes {a3,a4,a5} (see text) of an op amp drivin Colpitts oscillator.
 % The Barkhausen condition for sustained oscillations is given by a4<0.
-% EXAMPLE CALL: a4=RR_Barkhausen(1e-6,1e-6,1e-3,1,1000,1325,100)
+% TEST: a4=RR_Barkhausen(1e-6,1e-6,1e-3,1,1000,1325,100)
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
 a2=(C1*C2*R4*R5*R7 + C1*L3*R7 + C2*L3*R5)/(C1*C2*L3*R5*R7);
 a1=(L3 + C2*R4*R5 + C1*R4*R7 + C1*R5*R7 + C2*R5*R7)/(C1*C2*L3*R5*R7);
