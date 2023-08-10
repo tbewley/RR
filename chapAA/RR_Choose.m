@@ -8,4 +8,3 @@ function c=RR_choose(n,k)
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 c=factorial(n)/(factorial(k)*factorial(n-k));
-end % function RR_Choose

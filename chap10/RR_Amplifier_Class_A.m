@@ -1,7 +1,7 @@
 % script RR_Amplifier_Class_A
 % Solves the basic equations of a Class A amplifier.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
 clear, syms s C0 R1 R2 V_in V_s
 
