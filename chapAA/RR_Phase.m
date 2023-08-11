@@ -4,7 +4,7 @@ function phi=RR_phase(a)
 % OUTPUT: phi = vector of phase of the complex numbers in a, adjusted so that a plot
 %               of the phase (as in a Bode plot) makes as few discontinuous jumps as possible
 % TEST:   om = logspace(-2,2,100); s=i*om; G=(s.^2+s+100)./(100*(s+.1).*(s.^2+2*0.1*s+1));
-%         phi=RR_phase(G); semilogx(om,phi*180/pi)
+%         phi=RR_phase(G); semilogx(om,phi*180/pi) 
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
