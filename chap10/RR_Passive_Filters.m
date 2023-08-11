@@ -16,6 +16,7 @@ A  =[ 1  -1   0;     % I_C - I_R = 0
       0   R   1];    % R*I_R + V_o = V_i
 b  =[ 0; 0; V_i];
 x=A\b; LPF1=simplify(x(3))
+omega1=10; F_LPF1=RR_tf([omega1],[1 omega1]); figure(1), RR_bode(F_LPF1)
 
 % First-order high-pass RC filter: Solve for V_o as a function of V_i
 % x={I_C,I_R,V_o}  <-- unknown vector  
@@ -24,6 +25,7 @@ A  =[ 1  -1   0;     % I_C - I_R = 0
       0   R  -1];    % R*I_R - V_o = 0
 b  =[ 0; C*s*V_i; 0];
 x=A\b; HPF1=simplify(x(3))
+omega1=10; F_HPF1=RR_tf([1 0],[1 omega1]); figure(2), RR_bode(F_HPF1)
 
 % Voltage-biased first-order high-pass RC filter: Solve for V_o as a function of V_i and V_s
 % x={I_0,I_1,I_2,V_o}  <-- unknown vector
@@ -41,3 +43,4 @@ A  =[ 1  -1   0;    % I_L - I_C = 0
       0  -1  C*s];  % C*s*V_o - I_C = 0
 b  =[ 0; V_i; 0];
 x=A\b; LPF2=simplify(x(3))
+omega3=10; F_LPF2=RR_tf([omega3^2],[1 0 omega3^2]); figure(3), RR_bode(F_LPF2)
