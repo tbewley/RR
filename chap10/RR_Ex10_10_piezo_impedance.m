@@ -1,15 +1,15 @@
 % script RR_Ex10_10_piezo_impedance
-% Computes 
+% Computes the impedence of a Butterworth/van Dyke circuit model of a piezo.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
-clear; syms s I_i Co C1 R1 L1;      % <--- list constants
-%  I_o I_1  V_i  V_a  V_b               <--- list unknowns
-A=[ 1   1    0    0    0    % I_o + I_1 = I_i     <-- list equations in Ax=b form
-   -1   0  s*Co   0    0    % s*Co*Vi - I_o = 0       
-    0  -1  s*C1 -s*C1  0    % s*C1*Vi - s*C1*Va - I_1 = 0
-    0 -s*L1  0    1   -1    % V_a - V_b  - s*L1*I_1 = 0     
-    0  -R1   0    0    1];  % V_b - R1*I_1 = 0
+clear; syms s I_i Co C1 R1 L1;      % <- list constants
+%  I_o I_1  V_i  V_a  V_b             <- list unknowns
+A=[ 1   1    0    0    0   % I_o + I_1 = I_i    <- list equations in Ax=b form
+   -1   0  s*Co   0    0   % s*Co*Vi - I_o = 0      
+    0  -1  s*C1 -s*C1  0   % s*C1*Vi - s*C1*Va - I_1 = 0
+    0 -s*L1  0    1   -1   % V_a - V_b  - s*L1*I_1 = 0     
+    0  -R1   0    0    1]; % V_b - R1*I_1 = 0
 b=[I_i; 0; 0; 0; 0]; x=A\b; x(3)  % <-- Solve
 R1=1e3; R4=1e3; R3=1e5;   % Apply constants
 

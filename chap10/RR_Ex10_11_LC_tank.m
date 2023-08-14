@@ -1,5 +1,5 @@
 % script RR_Ex10_11_LC_tank
-% Solves the equations of an LC tank.
+% Solve the equations of an LC tank oscillator.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
