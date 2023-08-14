@@ -42,5 +42,5 @@ for crystal=1:2
 
    figure(crystal), clf
    G=RR_tf(K*[1 2*zeta_r*omega_r omega_r^2],[1 2*zeta_a*omega_a omega_a^2 0]);
-   bode(G,g)
+   RR_bode(G,g)
 end
