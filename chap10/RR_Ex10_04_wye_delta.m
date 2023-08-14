@@ -1,4 +1,4 @@
-% script RR_Wye_Delta
+% script RR_Ex10_04_wye_delta
 % Computes the Wye Delta transformation, and apply it
 % to compute the equivalent resistance of a Wheatstone Bridge of resistors.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR

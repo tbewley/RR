@@ -1,4 +1,4 @@
-% script RR_Colpitts
+% script RR_Ex10_32_Colpitts_oscillator
 % Solves the equations of an LC tank and an opamp drivin Colpitts oscillator.
 % See also RR_LC_tank and RR_Barkhausen for related calculations.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR

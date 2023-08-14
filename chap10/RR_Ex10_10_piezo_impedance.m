@@ -1,10 +1,10 @@
-% script RR_piezo_impedance
-% Computes the currents and intermediate nodal voltages of a Wheatstone Bridge with two capacitors.
+% script RR_Ex10_10_piezo_impedance
+% Computes 
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
 clear; syms s I_i Co C1 R1 L1;      % <--- list constants
-%  I_o I_1 V_i  V_a V_b               <--- list unknowns
+%  I_o I_1  V_i  V_a  V_b               <--- list unknowns
 A=[ 1   1    0    0    0    % I_o + I_1 = I_i     <-- list equations in Ax=b form
    -1   0  s*Co   0    0    % s*Co*Vi - I_o = 0       
     0  -1  s*C1 -s*C1  0    % s*C1*Vi - s*C1*Va - I_1 = 0

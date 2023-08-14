@@ -1,4 +1,4 @@
-% script RR_Boost
+% script RR_Ex10_20_boost_converter
 % Solves the basic equations of a boost converter.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
