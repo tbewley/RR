@@ -11,7 +11,7 @@ clear, close all, syms s V1 V2 R1 R2
 % First-order low-pass RC filter: Solve for V_o as a function of V_i
 % x={I1, I2, Vmid}  <-- unknown vector   
 A  =[ 1  -1    0;     % I1 - I2 = 0
-      1   0   1/R1;   % I1 + Vmid/R = V1/R1
-      0   1  -1/R2];  % I2 - Vmid/R = - V2/R2
-b  =[ 0; V1/R1; -V2/R2];
+     R1   0    1;     % I1*R1 + Vmid = V1
+      0   R2  -1];  % I2*R2 - Vmid = - V2
+b  =[ 0; V1; -V2];
 x=A\b; Vmid=simplify(x(3))
