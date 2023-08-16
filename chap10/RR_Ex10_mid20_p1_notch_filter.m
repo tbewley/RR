@@ -6,11 +6,11 @@
 
 clear; syms s R L C c1 V0      % NOTE: We will solve for V1 as a fn of V0
 % x={Ir; Il; Ic; Iload; V1; V2}  <-- unknown vector   
-A  =[ 1  -1   0  -1      0   0;   % Ir - Il - Iload = 0  KCL1
-      0   1  -1   0      0   0;   % Il - Ic = 0          KCL2
-      R   0   0   0      1   0;   % V1 + R*Ir = V0       resistor eqn
-      0 -L*s  0   0      1  -1;   % V1 - V2 - L*s*Il = 0 inductor eqn
-      0   0   1   0      0 -C*s;  % Ic      - C*s*V2 = 0 capacitor eqn
+A  =[ 1  -1   0  -1      0   0;   % Ir - Il - Iload = 0   KCL1
+      0   1  -1   0      0   0;   % Il - Ic = 0           KCL2
+      R   0   0   0      1   0;   % V1 + R*Ir = V0        resistor eqn
+      0 -L*s  0   0      1  -1;   % V1 - V2 - L*s*Il = 0  inductor eqn
+      0   0   1   0      0 -C*s;  % Ic      - C*s*V2 = 0  capacitor eqn
       0   0   0  R/c1   -1   0];  % Iload*(R/c1) - V1 = 0 load eqn
 b  =[ 0;  0; V0; 0; 0; 0];
 x=A\b; V1_notch=simplify(x(5))
