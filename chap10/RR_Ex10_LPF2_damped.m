@@ -48,7 +48,7 @@ pause
 
 disp('PROBLEM 4: Substitute Cd=4*C and Rd=sqrt(L/C) in prob 3, simplify, and make Bode plot')
 % DISCUSSION: Taking Cd=4*C and Rd=sqrt(L/C) gives om=1/(4*C*sqrt(L/C))=omega/4, and thus
-% => Vo(s)/Vi(s) = (s+omega/4)*omega^2/(s^3 + 5/4*omega*s^2 + omega^2*s + omega^3/4)
+% => Vo(s)/Vi(s) = (s+omega/4)*omega^2/(s^3 + (5/4)*omega*s^2 + omega^2*s + omega^3/4)
 omega=10;
 F_LPF2_Rd_Cd=RR_tf(omega^2*[1 omega/4],[1 (5/4)*omega omega^2 omega^3/4])
 g.linestyle='r-'; RR_bode(F_LPF2_Rd_Cd)   % note: new Bode plot in red
