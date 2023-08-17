@@ -1,4 +1,4 @@
-% script RR_Ex10_mid20_p1_notch_filter
+% script RR_Ex10_notch_filter
 % This code implments the equations governing the Notch filter,
 % as discussed in problem 1 of the 2020 midterm in MAE40.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
