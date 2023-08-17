@@ -6,7 +6,7 @@
 
 clear, clc, close all
 disp('PROBLEM 1: LPF2 damped with Rd between Vo and GND.')
-syms s L C Rd Vi  % <- Laplace symbol s, parameters, and input Vi
+syms s L C Rd Cd Vi  % <- Laplace symbol s, parameters, and input Vi
 % x=[Il; Ic; Id; Vo]   <- unknown vector   
 A  =[ 1  -1  -1   0;     % Il -Ic -Id          = 0
      L*s  0   0   1;     % L*s*Il         + Vo = Vi
@@ -31,7 +31,6 @@ figure(1), omega=10, for i=1:3
 end
 
 disp('PROBLEM 3: LPF2 damped with Rd in series with Cd between Vo and GND.')
-syms Cd
 % x=[Il; Ic; Id; Vo, V1]   <- unknown vector   
 A  =[ 1  -1  -1   0   0;     % Il -Ic -Id                = 0
      L*s  0   0   1   0;     % L*s*Il          +Vo       = Vi
