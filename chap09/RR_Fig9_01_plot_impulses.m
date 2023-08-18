@@ -1,4 +1,4 @@
-% script RR_plot_impulses
+% script RR_Fig9_01_plot_impulses
 % This script just plots a few of impulses that, in the appropriate limits,
 % form finite approximations of the Dirac Delta. 
 % Numerical Renaissance codebase, Chapter 9, https://github.com/tbewley/NR

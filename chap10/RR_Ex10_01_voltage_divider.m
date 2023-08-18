@@ -12,6 +12,6 @@ clear, close all, syms s V1 V2 R1 R2
 % x={I1, I2, Vmid}  <-- unknown vector   
 A  =[ 1  -1    0;     % I1 - I2 = 0
      R1   0    1;     % I1*R1 + Vmid = V1
-      0   R2  -1];  % I2*R2 - Vmid = - V2
+      0   R2  -1];    % I2*R2 - Vmid = - V2
 b  =[ 0; V1; -V2];
 x=A\b; Vmid=simplify(x(3))
