@@ -33,8 +33,8 @@ close all; figure(1), RR_bode(F_notch)
 subplot(2,1,1); a=axis; plot([a(1) a(2)],K*0.707*[1 1],'k-')
 
 % Defined another way, Q=omega0/BW, where BW is the range of frequencies in which
-% the magnitude of the output is reduced by 3 dB = 0.707, which corresponds to the
-% power of the output being reduced by 50%.
+% the magnitude of the output is reduced by 3 dB = 0.707 or more, which corresponds
+% to the power of the output being reduced by 50% or more.
 % Zooming in, in the case of c1=1, omega0=10, Q=5, it is seen that this notch filter
 % attenuates by 3 dB between 9.05 rad/s and 11.05 rad/s.  Thus, omega0/BW=10/(11.05-9.05)=5,
 % which is exactly the Q factor that the filter is designed for above.  Cool.
