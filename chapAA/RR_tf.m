@@ -262,17 +262,17 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             break, end, end
             end
 
-            subplot(2,1,1),        loglog(omega,mag,g.linestyle), hold on, a=axis;
+            subplot(2,1,1),        loglog(omega,mag,g.linestyle), hold on, a=axis; grid on
             if g.lines,              plot([a(1) a(2)],[1 1],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
-            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
+            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a)
 
-            subplot(2,1,2),      semilogx(omega,phase,g.linestyle), hold on, a=axis;
+            subplot(2,1,2),      semilogx(omega,phase,g.linestyle), hold on, a=axis; grid on
             if g.lines,              plot([a(1) a(2)],[-180 -180],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
-            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
+            if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a) 
         end % function RR_bode
 
         function RR_bode_linear(L,g)
