@@ -3,6 +3,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 syms s C2 C5 Vin; R1=1e3; R3=1e5; R4=1e3;       % <- list constants
 % I0  I1  I2  I3  I4  I5  Va  Vb                 <- list unknowns
 A=[1  -1  -1   0   0   0   0   0;    % I0 -I1 -I2        = 0  <- list eqns as Ax=b

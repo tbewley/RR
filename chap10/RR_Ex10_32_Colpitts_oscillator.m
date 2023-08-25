@@ -4,6 +4,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 clear; syms C1 C2 L3 R4 R5 R6 R7 I1 I2 I3 I4 I5 I6 I7 I8 Va Vb Vs Vout Vout0 Va0 I30 s
 eqn1= I2==I3+I5;  eqn5= I6+I8==I7;              eqn9 = Vb-Vout==R4*I4;  
 eqn2= I3==I4;     eqn6= I1==C1*(s*Vout-Vout0);  eqn10= Va==R5*I5;  

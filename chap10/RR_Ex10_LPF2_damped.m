@@ -4,6 +4,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 clear, clc, close all
 disp('PROBLEM 1: LPF2 damped with Rd between Vo and GND.')
 syms s L C Rd Cd Vi  % <- Laplace symbol s, parameters, and input Vi

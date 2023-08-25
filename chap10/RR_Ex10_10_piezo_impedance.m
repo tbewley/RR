@@ -3,6 +3,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Capyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 % Set up Ax=b yourself...
 clear; syms s Ca Cb R L Iin;      % <- list constants
 % Iupper Ilower Vin Va  Vb             <- list unknowns

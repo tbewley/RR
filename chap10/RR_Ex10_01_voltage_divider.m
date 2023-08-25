@@ -6,6 +6,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 clear, close all, syms s V1 V2 R1 R2
 
 % x={Vmid, I1, I2}  <-- unknown vector   

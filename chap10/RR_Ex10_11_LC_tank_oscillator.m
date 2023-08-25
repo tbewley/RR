@@ -3,6 +3,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 % Simple LC tank: computation of Vout(s)
 clear; syms C1 C2 L3 R4 I Va Vb Vout Vs s
 eqn1= I==-s*C2*Va;
