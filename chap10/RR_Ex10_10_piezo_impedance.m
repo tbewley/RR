@@ -7,7 +7,7 @@
 
 % Set up Ax=b yourself...
 clear; syms s Ca Cb R L Iin;      % <- list constants
-% Iupper Ilower Vin Va  Vb             <- list unknowns
+% Iupper Ilower Vin Va  Vb          <- list unknowns
 A=[ 1      0  -s*Ca  0   0;  % Iupper    -s*Ca*Vi         = 0  <- list eqns in Ax=b form
     0      1  -s*Cb s*Cb 0;  %   Ilower -s*Cb*Vi +s*Cb*Va = 0
     0     s*L    0  -1   1;  %   s*L*Ilower       -Va +Vb = 0     

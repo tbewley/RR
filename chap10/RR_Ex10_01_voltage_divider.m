@@ -1,6 +1,6 @@
 % script RR_Ex10_01_voltage_divider
 % Solves the equations of a simple voltage divider.
-% This example is easy to solve by hand, but illustrates how
+% This example is very easy to solve by hand, but illustrates how
 % to put three linear equations into A*x=b form and solve using Matlab.
 % This idea is quite valuable for larger systems of linear equations.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR

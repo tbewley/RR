@@ -1,6 +1,6 @@
 % script RR_Ex10_02_passive_filters
 % Solves the basic equations of four simple passive filters.
-% These examples are easy to solve by hand, but illustrate how
+% These examples are also easy to solve by hand, but illustrate how
 % to put a few linear equations into A*x=b form and solve using Matlab.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
