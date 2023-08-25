@@ -1,4 +1,4 @@
-% script RR_Ex10_notch_filter
+% script RR_Ex10_03_notch_filter.m
 % This code implments the equations governing the notch filter,
 % as discussed in problem 1 of the 2020 midterm in MAE40.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
@@ -15,8 +15,8 @@ A  =[ 1    0   R   0   0   0;  % Vout +R*Ir         = Vin resistor eqn
      -1    0   0   0   0 R/c1; % -Vout  +Iload*R/c1 = 0   load eqn
       0    0   1  -1   0  -1;  %     Ir -Il  -Iload = 0   KCL1
       0    0   0   1  -1   0]; %         Il -Ic     = 0   KCL2
-b  =[ Vin; 0;  0; 0; 0; 0];
-x=A\b; F_notch1=simplify(x(1)/Vin) % transfer fn of filter = Vout/Vin
+b  =[ Vin; 0;  0; 0; 0; 0]; x=A\b;
+F_notch1=simplify(x(1)/Vin) % transfer fn of filter = Vout/Vin
 
 % ... or have "solve" do the reorganization work for you - easier!
 clear; syms s R L C c1 Vin     % <- Laplace variable s, parameters, input Vin
