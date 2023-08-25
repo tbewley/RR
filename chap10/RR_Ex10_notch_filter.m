@@ -7,7 +7,7 @@
 % pkg load symbolic  % uncomment this line if running in octave
 
 % Set up Ax=b yourself...
-clear; syms s R L C c1 Vin      % <- Laplace variable s, parameters, input Vin
+clear; syms s R L C c1 Vin       % <- Laplace variable s, parameters, input Vin
 % x={Vout; Va; Ir; Il; Ic; Iload}  <- unknown vector (output is Vout)  
 A  =[ 1    0   R   0   0   0;  % Vout +R*Ir         = Vin resistor eqn
       1   -1   0 -L*s  0   0;  % Vout -Va -L*s*Il   = 0   inductor eqn
