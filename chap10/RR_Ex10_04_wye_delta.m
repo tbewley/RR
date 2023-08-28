@@ -15,7 +15,8 @@ A=solve(eqn1,eqn2,eqn3,Ra,Rb,Rc);   % <- Solve for {Ra,Rb,Rc} in terms of {R1,R2
 B=solve(eqn1,eqn2,eqn3,R1,R2,R3);   % <- Solve for {R1,R2,R3} in terms of {Ra,Rb,Rc} 
 Ra=simplify(A.Ra),Rb=simplify(A.Rb),Rc=simplify(A.Rc)  % <- Simplify resulting expressions
 R1=simplify(B.R1),R2=simplify(B.R2),R3=simplify(B.R3)
-simplify(Ra + 1/(1/(Rb+R4) + 1/(Rc+R5)))  % <- Solve Fig 10.3d/e
+
+simplify(Ra + 1/(1/(Rb+R4) + 1/(Rc+R5)))  % <- Solve Fig 10.3d/e in Example 10.5
 
 % Note that the above method of symbolic solution extends easily to many
 % simple nonlinear systems of equations.

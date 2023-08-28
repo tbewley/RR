@@ -20,7 +20,7 @@ b=[0; 0; 0; Vin;   Vin;    0; 0; 0]; x=A\b; % solve
 F_wheatstone_resistors1=simplify(x(4)/Vin)  % display result as I3/Vin
 
 % ... or have "solve" do the reorganization work for you - easier!
-clear; syms   R2 R5 Vin;      % <- Laplace variable s, parameters, input Vin
+clear; syms   R2 R5 Vin;    % <- Laplace variable s, parameters, input Vin
 R1=1e3; R3=1e5; R4=1e3;
 syms I0 I1 I2 I3 I4 I5 Va Vb  % <- unknown variables (output is I3)
 eqn1=  R1*I1 == Vin-Va;     % R1 eqn
