@@ -6,28 +6,28 @@
 
 % pkg load symbolic  % uncomment this line if running in octave
 
-% Set up Ax=b yourself...
+% In the first code block below, you have to set up Ax=b yourself.
+% In the second block have "solve" do the reorganization work for you, which
+% is easier!  Both approaches give the same answer.  Pick your favorite.
+
 clear; syms s R L C c1 Vin       % <- Laplace variable s, parameters, input Vin
-% x={Vout; Va; Ir; Il; Ic; Iload}  <- unknown vector (output is Vout)  
-A  =[ 1    0   R   0   0   0;  % Vout +R*Ir         = Vin resistor eqn
-      1   -1   0 -L*s  0   0;  % Vout -Va -L*s*Il   = 0   inductor eqn
-      0 -C*s   0   0   1   0;  %  -C*s*Va   +Ic     = 0   capacitor eqn
-     -1    0   0   0   0 R/c1; % -Vout  +Iload*R/c1 = 0   load eqn
-      0    0   1  -1   0  -1;  %     Ir -Il  -Iload = 0   KCL1
-      0    0   0   1  -1   0]; %         Il -Ic     = 0   KCL2
-b  =[ Vin; 0;  0; 0; 0; 0]; x=A\b;
+% x={Vout; Va; Ir; Ic; Iload}  <- unknown vector (output is Vout)  
+A  =[ 1    0   R   0   0;  % Vout +R*Ir         = Vin resistor eqn
+      1   -1   0 -L*s  0;  % Vout -Va -L*s*Ic   = 0   inductor eqn
+      0 -C*s   0   1   0;  %  -C*s*Va   +Ic     = 0   capacitor eqn
+     -1    0   0   0 R/c1; % -Vout  +Iload*R/c1 = 0   load eqn
+      0    0   1  -1  -1];  %     Ir -Ic  -Iload = 0   KCL1
+b  =[ Vin; 0;  0; 0; 0]; x=A\b;
 F_notch1=simplify(x(1)/Vin) % transfer fn of filter = Vout/Vin
 
-% ... or have "solve" do the reorganization work for you - easier!
 clear; syms s R L C c1 Vin     % <- Laplace variable s, parameters, input Vin
-syms Vout Va Ir Il Ic Iload    % <- unknown variables (output is Vout)
+syms Vout Va Ir Ic Iload    % <- unknown variables (output is Vout)
 eqn1= Vin-Vout == R*Ir;        % resistor eqn
-eqn2=  Vout-Va == L*s*Il;      % inductor eqn
+eqn2=  Vout-Va == L*s*Ic;      % inductor eqn
 eqn3=       Ic == C*s*Va;      % capacitor eqn
 eqn4=     Vout == Iload*R/c1;  % load eqn
-eqn5=       Ir == Il + Iload;  % KCL1
-eqn6=       Il == Ic;          % KCL2
-sol=solve(eqn1,eqn2,eqn3,eqn4,eqn5,eqn6,Vout,Va,Ir,Il,Ic,Iload); % solve!
+eqn5=       Ir == Ic + Iload;  % KCL1
+sol=solve(eqn1,eqn2,eqn3,eqn4,eqn5,Vout,Va,Ir,Ic,Iload); % solve!
 F_notch2=simplify(sol.Vout/Vin) % transfer fn of filter = Vout/Vin
 
 % DISCUSSION:
