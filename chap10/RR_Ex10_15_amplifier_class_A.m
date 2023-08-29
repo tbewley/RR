@@ -1,10 +1,11 @@
-% script RR_Ex10_12_amplifier_class_A
+% script RR_Ex10_13_amplifier_class_A
 % Solves the equations of a simple Class A amplifier.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
 
-clear, syms s C0 R1 R2 V_in V_s
+% pkg load symbolic  % uncomment this line if running in octave
 
+clear, syms s C0 R1 R2 V_in V_s
 % Part i: Solve for V_B as a function of V_in and {V_s,C0,R1,R2}.
 % x={I_0,I_1,I_2,V_B}      <-- unknown vector (assumes I_B is negligible)
 A  =[ 1   1  -1   0;       % I_0 + I_1 - I_2 \approx 0
@@ -15,7 +16,6 @@ b  =[ 0; C0*s*V_in; V_s; 0];
 x=A\b; V_B=simplify(x(4))
 
 clear, syms s V_B V_d V_s alpha R3 R4 C5 Rspeaker
-
 % Part ii: Solve for V_out as a function of V_B and {alpha,V_d,V_s,R3,R4,C5}
 % x={I_C,I_B,I_E,V_C,V_E,I_3,I_5,V_out}    <-- unknown vector
 A  =[ 1   1  -1   0   0   0   0    0;      % I_B + I_C - I_E = 0
