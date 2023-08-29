@@ -4,6 +4,8 @@
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
 
+% pkg load symbolic  % uncomment this line if running in octave
+
 % Set up Ax=b yourself...
 clear; syms s R L C c1 Vin    % <- Laplace variable s, parameters, input Vin
 % x=[Vout; Va; Ir; Ic; Iload]   <-- unknown vector (output is Vout)    
@@ -55,3 +57,18 @@ g.linestyle='r-.'; RR_bode(F_anti_notch_Q10,g)
 % Zooming in, in the case of c1=0, omega0=10, Q=5, it is seen that this notch filter
 % attenuates by 3 dB between 9.05 rad/s and 11.05 rad/s.  Thus, omega0/BW=10/(11.05-9.05)=5,
 % which is exactly the Q factor that the filter above is designed for.  Cool.
+
+% Given targets of omega0=10^4 rad/s and Q=5, and taking, say, R=1 ohm, noting the
+% formulae for omega0 and Q above, we can select correspond values of L and C as follows:
+R_value=1; omega0=10000; Q=5; c1=0
+syms L C
+eqn1= omega0==1/sqrt(L*C);
+eqn2= Q==(1+c1)*sqrt(L/C)/R_value;
+sol=solve(eqn1,eqn2,L,C);
+L_value=eval(sol.L(2))
+C_value=eval(sol.C(2))
+% Exact result is L=500 uH (microHenries), C=20 uF (microFarads)
+% Now convert to common values in the E24 family:
+L_E24=RR_common_RLC_value(L_value)
+C_E24=RR_common_RLC_value(C_value)
+% In E24, we have: L=510 uH, C=20 uF.  The values are readily available.

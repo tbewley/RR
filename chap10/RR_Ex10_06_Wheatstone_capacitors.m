@@ -20,17 +20,17 @@ b=[0; 0; 0; Vin; C2*s*Vin; 0; 0; 0]; x=A\b; % solve
 F_wheatstone_capacitors1=simplify(x(4)/Vin)  % display result as I3/Vin
 
 % ... or have "solve" do the reorganization work for you - easier!
-clear; syms s C2 C5 Vin;          % <- Laplace variable s, parameters, input Vin
+clear; syms s C2 C5 Vin;      % <- Laplace variable s, parameters, input Vin
 R1=1e3; R3=1e5; R4=1e3;
 syms I0 I1 I2 I3 I4 I5 Va Vb  % <- unknown variables (output is I3)
-eqn1=  R1*I1 == Vin-Va; % R1 eqn
+eqn1=  R1*I1 == Vin-Va;     % R1 eqn
 eqn2=  I2 == C2*s*(Vin-Vb); % C2 eqn  *CHANGED*
-eqn3=  R3*I3 == Va-Vb;  % R3 eqn
-eqn4=  R4*I4 == Va;     % R4 eqn
+eqn3=  R3*I3 == Va-Vb;      % R3 eqn
+eqn4=  R4*I4 == Va;         % R4 eqn
 eqn5=  I5 == C5*s*Vb;       % C5 eqn  *CHANGED*
-eqn6=     I0 == I1+I2;  % KCL1
-eqn7=     I1 == I3+I4;  % KCL2
-eqn8=     I5 == I2+I3;  % KCL3
+eqn6=     I0 == I1+I2;      % KCL1
+eqn7=     I1 == I3+I4;      % KCL2
+eqn8=     I5 == I2+I3;      % KCL3
 sol=solve(eqn1,eqn2,eqn3,eqn4,eqn5,eqn6,eqn7,eqn8,I0,I1,I2,I3,I4,I5,Va,Vb);
 F_wheatstone_capacitors2=simplify(sol.I3/Vin)   % display result as I3/Vin
 

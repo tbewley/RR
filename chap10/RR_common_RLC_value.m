@@ -1,16 +1,20 @@
-function Rcom=RR_common_resistor_values(R,n,direction)
-% function Rcom=RR_common_resistor_values(R,n,direction)
-% Rounds R to a common value in the En series, for n={6, 12, 24, 48, 96, or 192}.
-% INPUTS: R=some resistor value, in ohms
+function Rcom=RR_common_RLC_value(R,n,direction)
+% function Rcom=RR_common_RLC_value(R,n,direction)
+% Rounds resistance R (or inductor L, or capacitor C) to a common value
+% in the En series, for n={6, 12, 24, 48, 96, or 192}.
+% INPUTS: R=some resistor (or inductor, or capacitor) value, in ohms
 %         n={6, 12, 24, 48, 96, or 192} = which En series to round to
 %         direction={'up', 'down', or 'closest'} = which direction to round.
-% OUTPUT: Rcom=closest resistor value in the series selected.
-% TESTS:  Rcom=RR_common_resistor_values(7000,24,'closest')
-%         Rcom=RR_common_resistor_values(6000,12,'down')
+% OUTPUT: Rcom=closest R (or L, or C) value in the series selected.
+% TESTS:  Rcom=RR_common_RLC_value(7000,24,'closest')
+%         Rcom=RR_common_RLC_value(6000,12,'down')
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
 
-switch n
+if nargin<2, n=24; end                 % set default value for n
+if nargin<3, direction='closest'; end  % set default value for direction
+
+switch n                               % set up tables
   case 6
     values=[1.0 1.5 2.2 3.3 4.7 6.8 10];
   case 12
