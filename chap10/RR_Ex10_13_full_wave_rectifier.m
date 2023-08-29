@@ -1,5 +1,5 @@
 % script RR_Ex10_13_full_wave_rectifier
-clear, close all, R=10000; Tmax=7;
+clear, close all, R=1000; Tmax=7;
 N=1000; for i=1:N
   omega_t(i)=i*Tmax/N;
   V_i(i)=10*sin(omega_t(i));
