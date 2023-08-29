@@ -60,7 +60,7 @@ g.linestyle='r-.'; RR_bode(F_anti_notch_Q10,g)
 
 % Given targets of omega0=10^4 rad/s and Q=5, and taking, say, R=1 ohm, noting the
 % formulae for omega0 and Q above, we can select correspond values of L and C as follows:
-R_value=1; omega0=10000; Q=5; c1=0
+R_value=1, omega0=10000; Q=5; c1=0
 syms L C
 eqn1= omega0==1/sqrt(L*C);
 eqn2= Q==(1+c1)*sqrt(L/C)/R_value;
@@ -71,4 +71,4 @@ C_value=eval(sol.C(2))
 % Now convert to common values in the E24 family:
 L_E24=RR_common_RLC_value(L_value)
 C_E24=RR_common_RLC_value(C_value)
-% In E24, we have: L=510 uH, C=20 uF.  The values are readily available.
+% In E24, we have: L=510 uH, C=20 uF.  Such {R,L,C} values are readily available.
