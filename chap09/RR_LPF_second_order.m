@@ -8,5 +8,5 @@ function F=RR_LPF_second_order(omegac,zeta)
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<1, omegac=1;   end
-if nargin<2, zeta=0.707; end
+if nargin<2, zeta=sqrt(2)/2; end
 F=RR_tf(omegac^2,[1 2*zeta*omegac omegac^2]);

@@ -1,6 +1,6 @@
 function F=RR_HPF_first_order(omegac)
 % function F=RR_HPF_first_order(omegac)
-% INPUT:  omegac=cutoff frequency of filter [OPTIONAL, taken as 1 if omitted]
+% INPUT:  omegac=corner frequency of filter [OPTIONAL, taken as 1 if omitted]
 % OUTPUT: F=first order high-pass filter of type RR_tf
 % TEST:   F=RR_HPF_first_order(0.1), close all, RR_bode(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
