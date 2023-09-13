@@ -3,7 +3,8 @@
 % complementary filters.  Note that each pair add up to all-pass filters, with
 % unit gain across all frequencies.  Their overall phase loss (of 180, 360, and 720
 % degrees, respectively) is the price you pay for stability [it doesn't affect
-% audio reproduction too noticably, but if using for control you gotta be aware of it.]
+% audio reproduction too noticably, but if using for control you gotta be aware of
+% it, especially in the vicinity of crossover]
 
 clear; close all; omegac=1;
 
