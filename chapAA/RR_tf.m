@@ -49,7 +49,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     	num  % num and den are of type RR_poly 
     	den
         h    % timestep for discrete-time TF representations (empty for continuous-time TF representations)
-        z    % z and k are row vectors, and K is an ordinary scalar
+        z    % z and p are row vectors, and K is an ordinary scalar
         p
         K    % Note that the (num,den) and (z,p,K) representations of the transfer function are equivalent
     end
@@ -70,11 +70,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     			case 2 	
      				if  isa(num,'RR_poly'), G.num=num; else, G.num=RR_poly(num); end
    					if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
-   					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;  % Make denominator monic
-                    G.z=RR_roots(G.num); G.p=RR_roots(G.den);
-                    % if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
-                    % if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
-                    G.K=G.num.poly(1); 
+   					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;
+                    % G.z=RR_roots(G.num); G.p=RR_roots(G.den);
+                    if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
+                    if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
+                    G.K=G.num.poly(1)/G.den.poly(1); 
    				case 3	
                     G.z=num; G.p=den; G.K=K; G.num=RR_poly(num,K); G.den=RR_poly(den,1);
     	    end
@@ -401,13 +401,24 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
         function RR_step(G,g)
         % function RR_step(G,g)
-        % Given a CT or DT plant G, defined as an RR_tf, plot the impulse response.
+        % Given a CT or DT plant G, defined as an RR_tf, plot the step response.
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
         % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_step(G*D/(1+G*D))
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            if nargin<2; g={}; end, RR_plot_response(G,0,g); grid
+            if nargin<2; g={}; end, RR_plot_response(G,0,g); grid on
+        end % function RR_step
+
+        function RR_ramp(G,g)
+        % function RR_ramp(G,g)
+        % Given a CT or DT plant G, defined as an RR_tf, plot the ramp response.
+        % The (optional) derived type g groups together convenient parameters for plotting
+        % (see RR_plot_response for details).
+        % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_ramp(G*D/(1+G*D))
+        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+            if nargin<2; g={}; end, RR_plot_response(G,1,g); grid on
         end % function RR_step
 
         function [t,u,y]=RR_plot_response(G,m,g)
@@ -440,7 +451,6 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if     ~isfield(g,'tol'  ),         g.tol=1e-4;          end
 
             if isempty(G.h)  %%%%%%%%%%%%%  CT case  %%%%%%%%%%%%%
-                m
                 U=RR_tf(factorial(max(m,0)),[1 zeros(1,m+1)]);              % First, set up U(s)  
                 [Up,Ud,Uk,Un]=RR_partial_fraction_expansion(U,g.tol);   % Then take the necessary
                 [Yp,Yd,Yk,Yn]=RR_partial_fraction_expansion(G*U,g.tol); % partial fraction expansions
@@ -485,8 +495,10 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             nr=G.den.n-G.num.n;
             if nr>0, s='strictly proper'; elseif nr==0, s='semiproper'; else, s='improper'; end
             fprintf('  m=%d, n=%d, n_r=n-m=%d, %s, K=', G.num.n, G.den.n, nr, s), disp(G.K)
-            fprintf('  z:'), disp(G.z)
-            fprintf('  p:'), disp(G.p)
+            if G.den.n<9
+               fprintf('  z:'), disp(G.z)
+               fprintf('  p:'), disp(G.p)
+            end
             if G.den.n==0, fprintf('\n'), end
         end
     end
