@@ -72,10 +72,10 @@ classdef RR_tf < matlab.mixin.CustomDisplay
    					if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
    					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;
                     % G.z=RR_roots(G.num); G.p=RR_roots(G.den);
-                    if  G.num.s, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
-                    if  G.den.s, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
+                    if  G.num.s & G.num.n>9, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
+                    if  G.den.s & G.den.n>9, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
                     G.K=G.num.poly(1)/G.den.poly(1); 
-   				case 3	
+   				case 3
                     G.z=num; G.p=den; G.K=K; G.num=RR_poly(num,K); G.den=RR_poly(den,1);
     	    end
             G.h=[];
@@ -495,7 +495,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             nr=G.den.n-G.num.n;
             if nr>0, s='strictly proper'; elseif nr==0, s='semiproper'; else, s='improper'; end
             fprintf('  m=%d, n=%d, n_r=n-m=%d, %s, K=', G.num.n, G.den.n, nr, s), disp(G.K)
-            if G.den.n<9
+            if G.den.n<=9
                fprintf('  z:'), disp(G.z)
                fprintf('  p:'), disp(G.p)
             end
