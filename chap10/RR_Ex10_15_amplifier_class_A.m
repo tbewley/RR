@@ -5,50 +5,30 @@
 
 % pkg load symbolic  % uncomment this line if running in octave
 
-clear, syms s C0 R1 R2 V_in V_s
-% Part i: Solve for V_B as a function of V_in and {V_s,C0,R1,R2}.
-% x={I_0,I_1,I_2,V_B}      <-- unknown vector (assumes I_B is negligible)
-A  =[ 1   1  -1   0;       % I_0 + I_1 - I_2 \approx 0
-      1   0   0  C0*s;     % I_0 + C0*s*V_B = C*s*V_in
-      0  R1   0   1;       % R1*I_1 + V_B = V_s
-      0   0  R2  -1];      % R2*I_2 - V_B = 0
-b  =[ 0; C0*s*V_in; V_s; 0];
-x=A\b; V_B=simplify(x(4))
-
-clear, syms s V_B V_d V_s alpha R3 R4 C5 Rspeaker
-% Part ii: Solve for V_out as a function of V_B and {alpha,V_d,V_s,R3,R4,C5}
-% x={I_C,I_B,I_E,V_C,V_E,I_3,I_5,V_out}    <-- unknown vector
-A  =[ 1   1  -1   0   0   0   0    0;      % I_B + I_C - I_E = 0
-     -1   0 alpha 0   0   0   0    0;      % alpha*I_E - I_C = 0
-      0   0   0   0   1   0   0    0;      % V_E = V_B - V_d
-      1   0   0   0   0  -1   1    0;      % I_C + I_5 - I_3 = 0
-      0   0   0   1   0  R3   0    0;      % R3*I_3 + V_C = V_s
-      0   0  R4   0  -1   0   0    0;      % R4*I_E - V_E = 0
-      0   0   0 -C5*s 0   0   1  C5*s;     % I_5 + C5*s*V_out - C5*s*V_C = 0
-      0   0   0   0   0 0 Rspeaker -1];    % Rspeaker*I_5 - V_out = 0
-b  =[ 0; 0; V_B-V_d; 0; V_s; 0; 0; 0];
-x=A\b; V_out=simplify(x(8))
-
-% Representative application
 clear
-% Design targets
-Icmax=0.05; K=10; omega_i=10, omega_ii=10  
+% The setup is defined by the following inputs:
+Vs=12        % Voltage of the source
+Vd=0.7       % Cut-in voltage of diode at V_BE
+absK=10      % Desired gain of amplifier
+ICmax=50e-3  % Maximum current through R3 and R4
+alphaF=0.99  % alphaF of transistor
+IB=120e-6    % base current at Q point
+fi=10        % frequency of high-pass filter at input
+% and you can fiddle some with this (to reach an available C...)
+I1=36*IB     % somewhere between 35 and 100 is probably good
 
-% Part i
-R1=600, R2=600, Ri=R1*R2/(R1+R2), C0 = (1/omega_i)/Ri
+syms R1 R2 I2 R3 R4
+% Start with analysis of part ii
+eqn1= Vs==ICmax*(R3+R4)
+eqn2= absK==alphaF*R3/R4
+sol=solve(eqn1,eqn2,R3,R4);
+R3=eval(sol.R3), R4=eval(sol.R4)
 
-% Part ii
-syms R3 R4
-Vs=12; Imax=0.05; Rtot=Vs/Imax; eqn1 = R3+R4==Rtot;
-
-Rspeaker=8
-eqn2 = 0.99*(R3/R4)*(Rspeaker/(R3+Rspeaker)) == 10;
-sol=solve(eqn1,eqn2,R3,R4); R3a=eval(sol.R3(1)), R4a=eval(sol.R4(1))
-Rii=R3a + Rspeaker; C5a = (1/omega_ii)/Rii
-
-Rspeaker=1e10 
-eqn2 = 0.99*(R3/R4)*(Rspeaker/(R3+Rspeaker)) == 10;
-sol=solve(eqn1,eqn2,R3,R4); R3b=eval(sol.R3(1)), R4b=eval(sol.R4(1))
-Rii=R3b + Rspeaker; C5b = (1/omega_ii)/Rii
-
-
+% Given knowledge of R4, we can now do analysis of part i
+ICquiescent=ICmax/2, VE=ICquiescent*R4, VB=VE+Vd, omegai=fi*pi/180
+eqnA= I1==I2+IB
+eqnB= Vs-VB==I1*R1
+eqnC= VB==I2*R2
+sol=solve(eqnA,eqnB,eqnC,R1,R2,I2);
+R1=eval(sol.R1), R2=eval(sol.R2), I2=eval(sol.I2)
+Ri=R1*R2/(R1+R2); C=1/(Ri*omegai)
