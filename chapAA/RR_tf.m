@@ -25,6 +25,7 @@
 %   RR_bode: Plots the CT Bode plot of G(s) if G.h is not defined, with s=(i omega),
 %            or    the DT Bode plot of G(z) if G.h is defined, with z=e^(i omega h).
 %   RR_bode_linear: Plots a modified Bode plot with linear axes (frequency and amplitude)
+%   RR_nyquist: Draws a Nyquist plot (NOT YET IMPLEMENTED)
 %   RR_rlocus: Plot the root locus of K*G(s)*D(s) w.r.t. a range of K
 %   Yz=RR_Z(Ys,h): Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at t_k = h k)
 %                  the CT signal y(t) with a strictly proper Laplace transform Ys(s).
