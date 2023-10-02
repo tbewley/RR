@@ -1,6 +1,6 @@
 function HPF=RR_filter_reflect(LPF)
 % function HPF=RR_filter_reflect(LPF)
-% Generates an HPF by reflecting a LPF via the transformation
+% Generates a HPF by reflecting a LPF via the transformation
 %   HPF(s/omegac)=LPF(omegac/s)
 % INPUT:  LPF=a unit-gain LPF, of type RR_tf
 % OUTPUT: HPF=the corresponding HPF, of type RR_tf
@@ -10,5 +10,4 @@ function HPF=RR_filter_reflect(LPF)
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 nr=LPF.den.n-LPF.num.n;          den=LPF.den.poly(end:-1:1);
-temp=[zeros(1,nr) LPF.num.poly]; num=temp(end:-1:1)
-HPF=RR_tf(num,den);
+temp=[zeros(1,nr) LPF.num.poly]; num=temp(end:-1:1);   HPF=RR_tf(num,den);
