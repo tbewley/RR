@@ -7,7 +7,7 @@
 %   minus:    b-a  gives the difference of two integers
 %   mtimes:   a*b  gives the product of two integers
 %   mrdivide: [quo,rem]=b/a divides two integers, giving the quotient quo and remainder rem
-%   mpower:   a^n  gives the n'th power of a polynomial
+%   mpower:   a^n  gives the n'th power of an integer
 % ADDITIONAL OPERATIONS:
 %   n = norm(b,option)         Gives the norm of b.v [see: "help norm" - option=2 if omitted]
 % SOME TESTS:  [Try them! Change them!]

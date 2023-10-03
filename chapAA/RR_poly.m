@@ -19,14 +19,14 @@
 %   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
 %
 % ADDITIONAL OPERATIONS defined on RR_poly objects: (try "help RR_poly/RR_*" for more info on any of them)
-%   n = RR_norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
+%   n = norm(b,option)         Gives the norm of b.poly [see: "help norm" - option=2 if omitted]
 %   r = RR_roots(b)               Gives a vector of roots r from a RR_poly object b
 %   z = RR_evaluate(b,s)          Evaluates b(s) for some (real or complex) scalar s
 %   d = RR_derivative(p,m)        Computes the m'th derivative of the polynomial p
 % 
 % SOME TESTS:  [Try them! Change them!]
 %   clear, a=RR_poly([1 2 3]), b=RR_poly([1 2 3 4 5 6])   % Define a couple of test polynomials
-%   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a  % (self explanatory)
+%   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a    % (self explanatory)
 %   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be the zero polynomial
 %
 %   fprintf('\nBuild and test a polynomial b from its roots\n')
@@ -119,10 +119,10 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
         end
 
-        function n = RR_norm(p,option)    % Defines n=norm(a,option), where a is an RR_poly object
-        % function n = RR_norm(p,option)
+        function n = norm(p,option)    % Defines n=norm(a,option), where a is an RR_poly object
+        % function n = norm(p,option)
         % Computes the n norm of the coefficients of a polynomial p, of type RR_poly.
-        % TEST: p=RR_poly([1 1 1]), RR_norm(p)
+        % TEST: p=RR_poly([1 1 1]), norm(p)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
@@ -159,10 +159,10 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if m>1,   p=RR_derivative(p,m-1); end
         end
 
-        function p = RR_trim(p)     
-        % function p = RR_trim(p)
+        function p = trim(p)     
+        % function p = trim(p)
         % Simply trim off any leading zeros in the polynomial p, of type RR_poly.
-        % TEST: p=RR_poly([0 0 0 1 2 3 4]), RR_trim(p)
+        % TEST: p=RR_poly([0 0 0 1 2 3 4]), trim(p)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
             index=find(abs(p.poly(1:end-1))>1e-10,1);   
@@ -255,7 +255,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             show_bistritz('Bistritz',T2)
             show_bistritz('Bistritz',T1), nu_n=0; nu_s=0; s=0;
             for n=deg-1:-1:0
-                if RR_norm(T1,1)>1e-12,
+                if norm(T1,1)>1e-12,
                     k=find(abs(T1.poly)>1e-14,1)-1; d=T2.poly(1)/T1.poly(1+k);
                     T1head=RR_poly(T1.poly(1:end-k)); T1tail=RR_poly([T1.poly(1+k:end) zeros(1,k+1)]);
                     a=d*(T1head+T1tail)-T2;

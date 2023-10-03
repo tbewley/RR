@@ -93,9 +93,9 @@ classdef RR_tf < matlab.mixin.CustomDisplay
 
                 %  if ~modified, G=RR_tf(G.num,G.den); end
                 if ~isnumeric(G.z), G.z=simplify(G.z); G.num.poly=simplify(G.num.poly);
-                else, G.num=RR_trim(G.num); end
+                else, G.num=trim(G.num); end
                 if ~isnumeric(G.p), G.p=simplify(G.p); G.den.poly=simplify(G.den.poly);
-                else, G.den=RR_trim(G.den); end
+                else, G.den=trim(G.den); end
             end
     	end
     	function sum = plus(G1,G2)          
@@ -105,7 +105,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
             [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
-            sum  = RR_tf(RR_trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),RR_trim(G1.den*(G2.den/g)));
+            sum  = RR_tf(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
             if ~isempty(G1.h); sum.h=G1.h; end
         end
         function diff = minus(G1,G2)       
@@ -348,7 +348,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             end
         end % function RR_rlocus
 
-        function [Gz]=RR_C2D_zoh(Gs,h)
+        function [Gz]=RR_c(Gs,h)
         % function [Gz]=RR_C2D_zoh(Gs,h)
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
         % TEST: bs=[1]; as=[1 2 1]; h=0.01; Gs=RR_tf(bs,as), [Gz]=RR_C2D_zoh(Gs,h)
