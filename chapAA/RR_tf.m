@@ -348,19 +348,6 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             end
         end % function RR_rlocus
 
-        function [Yz]=RR_Z(Ys,h)
-        % function [Yz]=RR_Z(Ys,h)
-        % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at regular intervals t_k = h k)
-        % the CT signal y(t) with a strictly proper Laplace transform Ys(s).
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            [a,d,k,n]=RR_partial_fraction_expansion(Ys); r=exp(a*h); Yz=RR_tf(0,1);
-            for i=1:n,  if     k(i)<1,   error('CT TF considered must be strictly proper!')
-                        elseif k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
-                        else,  p=k(i)-1, Yz=Yz+(d(i)/factorial(p))*h^p*RR_polylogarithm(p,r(i)); end
-            end,  Yz.h=h;
-        end % function RR_Z
-
         function [Gz]=RR_C2D_zoh(Gs,h)
         % function [Gz]=RR_C2D_zoh(Gs,h)
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
@@ -372,6 +359,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             STEPs=RR_tf(1,[1 0]);
             Gz=HATz * RR_Z(Gs*STEPs,h);
         end % function RR_C2D_zoh
+
+        function [Yz]=RR_Z(Ys,h)
+        % function [Yz]=RR_Z(Ys,h)
+        % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at timesteps
+        % t_k = h k) the CT signal y(t) with a strictly proper Laplace transform Ys(s).
+        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+            [a,d,k,n]=RR_partial_fraction_expansion(Ys); r=exp(a*h); Yz=RR_tf(0,1);
+            for i=1:n,  if     k(i)<1,   error('CT TF considered must be strictly proper!')
+                        elseif k(i)==1,  Yz=Yz+d(i)*RR_tf([1 0],[1 -r(i)]);
+                        else,  p=k(i)-1, Yz=Yz+(d(i)/factorial(p))*h^p*RR_polylogarithm(p,r(i)); end
+            end,  Yz.h=h;
+        end % function RR_Z
 
         function [Dz]=RR_C2D_tustin(Ds,h,omegac)
         % function [Dz]=RR_C2D_tustin(Ds,h,omegac)
