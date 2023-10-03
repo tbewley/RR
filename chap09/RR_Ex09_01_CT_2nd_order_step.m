@@ -1,6 +1,6 @@
 % script RR_Ex09_01_CT_2nd_order_step
-% This script calculates the {d+,d-,d0}, and {dc,dc}, coefficients in
-% the step response of the system G(s)=b0/(s^2+a1*s+a0).
+% This script calculates the {d+,d-,d0}, and {dc,ds}, coefficients in
+% the step response of the CT system G(s)=b0/(s^2+a1*s+a0).
 % (so much easier to avoid algebra errors this way!)
 % It then plugs in values for omega_n and b0, and several values for zeta, and plots.
 % Numerical Renaissance codebase, Chapter 9, https://github.com/tbewley/NR
