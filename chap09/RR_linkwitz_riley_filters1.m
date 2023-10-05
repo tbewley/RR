@@ -1,10 +1,12 @@
-% script RR_Linkwitz_Riley_filters.m
-% generates and makes the Bode plots of the 2nd, 4th, and 8th order LR
-% complementary filters.  Note that each pair add up to all-pass filters, with
+% script RR_linkwitz_riley_filters.m
+% generates and makes the Bode plots of the 2nd, 4th, and 8th order Linkwitz_Riley
+% (LR) complementary filters.  Note that each pair add up to all-pass filters, with
 % unit gain across all frequencies.  Their overall phase loss (of 180, 360, and 720
 % degrees, respectively) is the price you pay for stability [it doesn't affect
 % audio reproduction too noticably, but if using for control you gotta be aware of
 % it, especially in the vicinity of crossover]
+% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; omegac=1;
 
