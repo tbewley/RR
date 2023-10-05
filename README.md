@@ -27,7 +27,7 @@ Chapter 11: Classical Control            (text, <a href="https://github.com/tbew
 Chapter 12: Motion Planning              (text, <a href="https://github.com/tbewley/RR/tree/main/chap12">code</a>)<BR>
 Chapter 13: Linear Error-Correcting Codes (<a href="http://robotics.ucsd.edu/rr_chap13.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap13">code</a>)<BR>
 
-PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR>
+PART 3: SYSTEM DESIGN, DEVELOPMENT, AND INTEGRATION<BR> 
 Chapter 14: Open vs Proprietary Development Models (text, <a href="https://github.com/tbewley/RR/tree/main/chap14">code</a>)<BR>
 Chapter 15: Crowd Funding vs Venture Capital       (text, <a href="https://github.com/tbewley/RR/tree/main/chap15">code</a>)<BR>
 Chapter 16: Computer Aided Design & Manufacturing (CAD/CAM) (text, <a href="https://github.com/tbewley/RR/tree/main/chap16">code</a>)<BR>
