@@ -2,7 +2,7 @@
 % Tests the Diophantine code on both integers and polynomials
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-
+ 
 clc, disp('Set up a simple integer Diophantine problem (solve a*x+b*y=f for x and y)')
 a=RR_int(385),  b=RR_int(357), f=RR_int(21)
 [x,y,r,t]=RR_diophantine(a,b,f), residual=a*x+b*y-f, pause
