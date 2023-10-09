@@ -1,4 +1,4 @@
-% Example_18_xx
+% Example_??
 
 % Motor Parameters
 K=0.0525;     % Motor torque constant [measured in N*m/A = V/(rad/s)] for the 50:1 Pololu Motors

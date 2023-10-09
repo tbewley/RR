@@ -36,8 +36,14 @@ fprintf('Note that the solution {x,y} is improper (x.n<y.n), but solves a*x+b*y=
 
 disp('Set up a new Diophantine problem')
 b=RR_poly([-2 2 -4 4],1), a=RR_poly([-1 1 -3 3 -5 5],1)
-f=RR_poly([-1 -1 -3 -3 -5 -5 -50 -50 -50 -50 -50],1)
+f=RR_poly([-1 -1 -3 -3 -5 -5],1)
 [x,y] = RR_diophantine(a,b,f), test=trim(a*x+b*y), residual1=norm(f-test)
-fprintf('Note that the solution {x,y} is strictly proper (x.n>y.n), and solves a*x+b*y=f with ~ zero residual\n\n')
+fprintf('Note that the solution {x,y} is improper (x.n<y.n), and solves a*x+b*y=f with ~ zero residual\n\n')
+
+disp('Set up a new Diophantine problem')
+b=RR_poly([-2 2 -4 4],1), a=RR_poly([-1 1 -3 3 -5 5],1)
+f=RR_poly([-1 -1 -3 -3 -5 -5 -20 -20 -20 -20 -20],1)
+[x,y] = RR_diophantine(a,b,f), test=trim(a*x+b*y), residual1=norm(f-test)
+fprintf('Note that the solution {x,y} is proper (x.n=y.n), and solves a*x+b*y=f with ~ zero residual\n\n')
 
 % end script RR_DiophantineTest
