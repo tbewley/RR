@@ -1,4 +1,4 @@
-function Example_18_9
+function Example_18_09
 close all; syms a4 a3 a2 a1 a0 b2 b1 b0; format long;
 
 % Inspired Guess
