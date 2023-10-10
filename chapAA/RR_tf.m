@@ -348,7 +348,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             end
         end % function RR_rlocus
 
-        function [Gz]=RR_c(Gs,h)
+        function [Gz]=RR_C2D_zoh(Gs,h)
         % function [Gz]=RR_C2D_zoh(Gs,h)
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
         % TEST: bs=[1]; as=[1 2 1]; h=0.01; Gs=RR_tf(bs,as), [Gz]=RR_C2D_zoh(Gs,h)

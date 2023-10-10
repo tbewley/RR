@@ -3,14 +3,15 @@
 clf; figure(1)
 global g
 
-F1=RR_tf([1],[1 1]); g.linestyle='k-'; bode(TF,logspace(-1.5,1.5,500)); hold on
+F1=RR_tf([1],[1 1]); g.linestyle='k-'; RR_bode(F1,g)
+
+logspace(-1.5,1.5,500)); hold on
 subplot(2,1,1); axis([.05 20 .05 1.2])
 plot([1 100],[1 0.01],'k--');
 subplot(2,1,2); axis([.05 20 -100 10])
 plot([.01 100],[0 0],'k--');
 plot([.01 100],[-90 -90],'k--');
 plot([.2 5],[0 -90],'k--');
-% print -deps Bode1st.eps
 pause;
 
 clf; figure(2)
