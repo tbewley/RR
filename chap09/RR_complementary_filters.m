@@ -1,5 +1,5 @@
 function [LPF,HPF]=RR_complementary_filters(omegac,n)
-% function [LPF,HPF]=RR_complementary_filters(order)
+% function [LPF,HPF]=RR_complementary_filters(omegac,n)
 % This code generates a low-pass filter (LPF) and high-pass filter (HPF) pair that each
 % roll off at a prescribed rate n in the stopband, add to 1 over all frequencies, and have
 % symmetric Bode plots (that is, the HPF has a Bode plot which is a Left <-> Right
