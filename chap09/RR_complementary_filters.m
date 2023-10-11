@@ -13,8 +13,8 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 % INPUTS:  omegac=breakpoint of filters    [OPTIONAL, default=1]
 %          n     =the order of the filters [OPTIONAL, default=1]
 % OUTPUTS: [LPF,HPF]=a matched pair of filters that sum to one and roll off at order n
-% TEST:    clear, close all, for n=1:4, figure(n)
-%            [LPF,HPF]=RR_complementary_filters(10,n), LPF_plus_HPF=LPF+HPF
+% TEST:    clear, close all, omegac=10, for n=1:4, n, figure(n)
+%            [LPF,HPF]=RR_complementary_filters(omegac,n), LPF_plus_HPF=LPF+HPF
 %            g.log_omega_min=0; g.log_omega_max=2; g.omega_N=100; g.phase_shift=0;
 %            g.linestyle='b-'; RR_bode(LPF,g), g.linestyle='r-.'; 
 %            if n>2, g.phase_shift=1; end, RR_bode(HPF,g), axis([1 100 -90*n 90*n])
@@ -22,6 +22,6 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-if nargin<1, omegac=1, end, if nargin<2, n =1, end
+if nargin<1, omegac=1, end, if nargin<2, n=1, end
 t=RR_poly([1 omegac])^(2*n-1); LPF=RR_tf(t.poly(n+1:2*n),t.poly); HPF=1-LPF;
 % Note: the filters constructed are of order (2*n-1), and in the stop band roll off at rate n.
