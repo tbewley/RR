@@ -11,25 +11,23 @@ clear; syms pp pm          % Compute solution analytically
 b0=(1-pp)*(1-pm)
 Y=RR_tf(RR_poly([b0 0]),RR_poly([pp pm 1],1)); Y.h=1;
 [p,d,k,n]=RR_partial_fraction_expansion(Y)
-d0=simplify(d(1))
-dm=simplify(d(2)/pm)
-dp=simplify(d(3)/pp)
+d0=simplify(d(1))          % These should match what you can
+dm=simplify(d(2)/pm)       % easily calculate by hand using the
+dp=simplify(d(3)/pp)       % Heaviside coverup method
 dc=simplify(dp+dm)
 ds=simplify(i*(dp-dm));
-
 syms a1 a0
 pp=(-a1+sqrt(a1^2-4*a0))/2;
 pm=(-a1-sqrt(a1^2-4*a0))/2;
 ds1=simplify(i*(subs(dp)-subs(dm)))
-
-close all; kmax=60; k=0:1:kmax;
+close all; kmax=60; k=0:1:kmax;  % Now make some plots
 for fig=1:2
   figure(fig), switch fig
      case 1, theta=pi/10; disp('theta=pi/10')
      case 2, theta=pi/5;  disp('theta=pi/5')
   end
-  for r=0.7:0.1:1.0
-    r, a0=r^2; a1=-2*r*cos(theta);
+  for r=0.7:0.1:1.0, r
+    a0=r^2; a1=-2*r*cos(theta);
     dc_n=eval(subs(dc)); ds_n=eval(subs(ds));
     y=r.^k.*(dc_n*cos(theta*k)+ds_n*sin(theta*k))+1;
     plot(k,y,'k-o'); hold on
@@ -49,4 +47,4 @@ for fig=3:4
   end
   axis([0 g.N 0 2])
 end
-% Note: the approach using RR_step extends quite easily to other G(z).
+% Note: the approach using RR_step extends quite easily to more complicated G(z).
