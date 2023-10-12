@@ -1,5 +1,5 @@
 function [Li]=RR_polylogarithm(p,r)
-% function [Li_num,Li_den]=RR_polylogarithm(p,z)
+% function [Li_num,Li_den]=RR_polylogarithm(p,r)
 % Compute Li_{-p}(r/z) for integer p>0 as a rational function of z.
 % By Table 9.1 of RR, Li_{-p}(r/z) is the Z transform of k^p r^k for integer p>0.
 % INPUT:  p=order of power in above formula (p>0)
