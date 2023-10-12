@@ -170,7 +170,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         %         p=RR_poly([1e-9 0 0 1 2 3 4]), trim(p,1e-8)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            if nargin<2, eps=1e-10, end
+            if nargin<2, eps=1e-10; end
             index=find(abs(p.poly(1:end-1))>eps,1);   
             if isempty(index), index=length(p.poly); end 
             p.poly = p.poly(index:end);
