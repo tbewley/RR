@@ -159,13 +159,19 @@ classdef RR_poly < matlab.mixin.CustomDisplay
             if m>1,   p=RR_derivative(p,m-1); end
         end
 
-        function p = trim(p)     
-        % function p = trim(p)
-        % Simply trim off any leading zeros in the polynomial p, of type RR_poly.
-        % TEST: p=RR_poly([0 0 0 1 2 3 4]), trim(p)
+        function p = trim(p,eps)     
+        % function p = trim(p,eps)
+        % Trim off any leading terms in a polynomial p with coefficients less than eps
+        % in absolute value.
+        % INPUT:  p   = RR_poly object
+        %         eps = threshold below which term is said to be 0 (optional, default 1e-10)
+        % OUTPUT: p with negligible leading terms removed         
+        % TESTS:  p=RR_poly([0 0 0 1 2 3 4]), trim(p)
+        %         p=RR_poly([1e-9 0 0 1 2 3 4]), trim(p,1e-8)
         % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            index=find(abs(p.poly(1:end-1))>1e-10,1);   
+            if nargin<2, eps=1e-10, end
+            index=find(abs(p.poly(1:end-1))>eps,1);   
             if isempty(index), index=length(p.poly); end 
             p.poly = p.poly(index:end);
             p.n    = length(p.poly)-1;
