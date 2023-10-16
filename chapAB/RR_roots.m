@@ -1,9 +1,8 @@
 function [roots]=RR_roots(p)
 % Compute (dirctly!) the roots of a real or complex (!) polynomial p up to order 4.
-% TEST: for n=2:5
+% TEST: clear, for n=2:5
 %         r=randn(1,n),              RR_roots(r), sort(roots(r),'ComparisonMethod','real')
 %         c=randn(1,n)+i*randn(1,n), RR_roots(c), sort(roots(c),'ComparisonMethod','real')
-%       if n<5, pause, end, end
 p=p/p(1);                                     % simplify by first making p monic
 switch length(p)
     case 1, roots=[];                         % trivial case
@@ -14,7 +13,7 @@ switch length(p)
     case 4, P=p(2); Q=p(3); R=p(4); q=Q-P^2/3; r=R+2*P^3/27-P*Q/3;
             A=((-27*r+3*sqrt(3*(4*q^3+27*r^2)))/2)^(1/3)/3;
             B=q/(3*A); s=sqrt(3)/2; t1=-0.5-i*s; t2=-0.5+i*s;
-            roots=-P/3+[A-B; t1*A-t2*B; t2*A-t1*B];
+            roots=-P/3+[A-B; t1*A-t2*B; t2*A-t1*B]
     % algorithm below from: https://en.wikipedia.org/wiki/Quartic_equation#Summary_of_Ferrari's_method
     case 5, B=p(2); C=p(3); D=p(4); E=p(5);    % Note: A=1 because we made p monic above.
             if B==0, alpha=C; beta=D; gamma=E; % first convert to depressed quartic form
@@ -33,4 +32,4 @@ switch length(p)
             end
     otherwise, error('quintic or higher needs to be done iteratively!')
 end
-roots=sort(roots,'ComparisonMethod','real');
+% roots=sort(roots,'ComparisonMethod','real');
