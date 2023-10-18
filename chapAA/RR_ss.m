@@ -6,7 +6,8 @@
 %
 % DEFINITION:
 %   G=RR_ss(A)                 1 argument  defines G from A, taking B=C=D=0
-%   G=RR_ss(A,B) or RR_ss(A,C) 2 arguments defines G from A, and B or C (whichever fits)
+%   G=RR_ss(A,B) or RR_ss(A,C) 2 arguments defines G from A and B or C (whichever fits), or
+%   G=RR_ss([],D)              2 arguments with first=[] defines G from D (i.e., static gain)
 %   G=RR_ss(A,B,C)             3 arguments defines G from (A,B,C), taking D=0
 %   G=RR_ss(A,B,C,D)           4 arguments defines G from (A,B,C,D), taking D=0
 %   Note that an error is thrown if the dimensions don't fit correctly.
@@ -14,10 +15,10 @@
 %   TEST: G=RR_ss(rand(3),rand(3,2),rand(1,3))
 %
 % STANDARD OPERATIONS defined on RR_ss objects (overloading the +, -, *, /, ^ operators):
-%   plus:     G1+G2  gives the sum of two state-space forms        
+%   plus:     G1+G2  gives the sum of two state-space forms (parallel connection)       
 %   minus:    G1-G2  gives the difference of two state-space forms 
-%   mtimes:   G1*G2  gives the product of two state-space forms    
-%   rdivide:  G1/G2  divides (??) two state-space forms
+%   mtimes:   G1*G2  gives the product of two state-space forms (series connection)
+%   rdivide:  G1/G2  divides two state-space forms (???)
 %   mpower:   G1^n   gives the n'th power of a state-space form
 %
 % ADDITIONAL OPERATIONS defined on RR_ss objects (try "help RR_ss/RR_*" for more info on any of them)
@@ -45,21 +46,32 @@ classdef RR_ss < matlab.mixin.CustomDisplay
         % Generates a CT or DT RR_ss object.
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
-            [n,n1]=size(A); if nargin==1; B=zeros(n,1); end
-            [n2,ni]=size(B); % Check inputs and create B,C,D as needed.
-            if nargin<=2; if n2==n, no=1; n3=n; C=zeros(no,n); D=zeros(no,ni);
-            else no=n2; n2=n; n3=n; ni=1; C=B; B=zeros(n,ni); end, else, [no,n3]=size(C); end
-            if nargin<4, D=zeros(no,ni); no1=no; ni1=ni; else, [no1,ni1]=size(D); end
-            if (n~=n1 | n1~=n2 | n2~=n3 | ni~=ni1 | no~=no1 ), error('Invalid input to RR_ss.'), end
-            G.n=n; G.ni=ni; G.no=no; G.A=A; G.B=B; G.C=C; G.D=D; G.h=[];
+            [n,n1]=size(A);
+            if nargin==2 & n*n1==0, G.D=B; [G.no,G.ni]=size(G.D); G.n=0;
+                          G.A=zeros(G.n,G.n); G.B=zeros(G.n,G.ni); G.C=zeros(G.no,G.n);                              
+            else,
+              if nargin==1; B=zeros(n,1); end
+              [n2,ni]=size(B); % Check inputs and create B,C,D as needed.
+              if nargin<=2; if n2==n, no=1; n3=n; C=zeros(no,n); D=zeros(no,ni);
+              else no=n2; n2=n; n3=n; ni=1; C=B; B=zeros(n,ni); end, else, [no,n3]=size(C); end
+              if nargin<4, D=zeros(no,ni); no1=no; ni1=ni; else, [no1,ni1]=size(D); end
+              if (n~=n1 | n1~=n2 | n2~=n3 | ni~=ni1 | no~=no1 ), error('Invalid input to RR_ss.'), end
+              G.n=n; G.ni=ni; G.no=no; G.A=A; G.B=B; G.C=C; G.D=D; G.h=[];
+            end
     	end
     	function sum = plus(G1,G2)          
         % function sum = plus(G1,G2)          
         % Defines G1+G2, where G1 and G2 are of class RR_ss
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
-            sum  = RR_ss(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
-            if ~isempty(G1.h); sum.h=G1.h; end
+            if (G1.n~=G2.n|G1.ni~=G2.ni|G1.no~=G2.no), error('Dimensions incorrect'), end
+            if (isempty(G1.h)+isempty(G2.h)==1), error('Both ss forms must be CT or DT'), end
+            A=[G1.A, zeros(G1.n,G2.n); zeros(G2.n,G1.n) G2.A];
+            B=[G1.B; G2.B]; C=[G1.C, G2.C]; D=G1.D+G2.D; sum=RR_ss(A,B,C,D);
+            if ~isempty(G1.h)
+              if G1.h~=G2.h, error('timesteps of DT forms do not match'),
+              else, sum.h=G1.h; end
+            end
         end
         function diff = minus(G1,G2)       
         % function diff = minus(G1,G2)       
@@ -67,9 +79,7 @@ classdef RR_ss < matlab.mixin.CustomDisplay
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_ss   
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
-            diff = RR_ss(G1.num*(G2.den/g)-G2.num*(G1.den/g),G1.den*(G2.den/g));
-            if ~isempty(G1.h); diff.h=G1.h; end
+            G2.C=-G2.C; G2.D=-G2.D; diff=plus(G1,G2);
         end    
         function prod = mtimes(G1,G2)       
         % function prod = mtimes(G1,G2)       
@@ -77,9 +87,10 @@ classdef RR_ss < matlab.mixin.CustomDisplay
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_ss   
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
         % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-            [G1,G2]=check(G1,G2);
-            prod = RR_ss(G1.num*G2.num,G1.den*G2.den);
-            if ~isempty(G1.h); prod.h=G1.h; end
+            prod.A=[G1.A G1.C*G2.C; zeros(G1.n,G2.n) G2.A];
+            prod.B=[G1.C*G2.D];
+            prod.C=[G1.B G1.D*C];
+            prod.D=[G1.D*G.D];
         end
         function quo = mrdivide(G1,G2)
         % function quo = mrdivide(G1,G2)
@@ -117,21 +128,28 @@ classdef RR_ss < matlab.mixin.CustomDisplay
             % This function is used to print info about a CT or DT RR_ss object to the screen.
             fprintf(getHeader(G));
             m=max(8,floor(log10(max(max([G.A G.B; G.C G.D]))))+5); F=sprintf(' %% %d.%df',m,9);
-            for i=1:G.n, t='';
-              for j=1:G.n,  s=sprintf(F,G.A(i,j)); t=strcat(t,s(1:m)); end, t=strcat(t,' |');
-              for j=1:G.ni, s=sprintf(F,G.B(i,j)); t=strcat(t,s(1:m)); end, disp(t)
-            end, t=''; for i=1:m*G.n+3+m*G.ni, t=strcat(t,'-'); end, disp(t)
-            for i=1:G.no, t='';
-              for j=1:G.n,  s=sprintf(F,G.C(i,j)); t=strcat(t,s(1:m)); end, t=strcat(t,' |');
-              for j=1:G.ni, s=sprintf(F,G.D(i,j)); t=strcat(t,s(1:m)); end, disp(t)
-            end  
-            if isempty(G.h), fprintf('Continuous-time state-space form\n'), else
-                fprintf('Discrete-time state-space form, timestep='), disp(G.h), end
-            ci=''; co=''; c='';
-            if G.ni>1, ci='s'; end, if G.no>1, co='s'; end, if G.n>1, c='s'; end
-            fprintf('with %d input%s, %d output%s, and %d state%s\n', G.ni,ci,G.no,co,G.n,c)
-            if G.n<=9
-               fprintf('Eigenvalues of system matrix A:\n'), disp(sort(eig(G.A)))
+            if G.n==0, fprintf('Static gain.  D=\n')
+              for i=1:G.no, t='';
+                for j=1:G.ni, s=sprintf(F,G.D(i,j)); t=strcat(t,s(1:m)); end, disp(t)
+              end  
+            else
+              if isempty(G.h), fprintf('Continuous-time state-space form\n'), else
+                fprintf('Discrete-time state-space form with sample time='), disp(G.h), end
+              ci=''; co=''; c='';
+              if G.ni>1, ci='s'; end, if G.no>1, co='s'; end, if G.n>1, c='s'; end
+
+              for i=1:G.n, t=''; 
+                for j=1:G.n,  s=sprintf(F,G.A(i,j)); t=strcat(t,s(1:m)); end, t=strcat(t,' |');
+                for j=1:G.ni, s=sprintf(F,G.B(i,j)); t=strcat(t,s(1:m)); end, disp(t)
+              end, t=''; for i=1:m*G.n+3+m*G.ni, t=strcat(t,'-'); end, disp(t)
+              for i=1:G.no, t='';
+                for j=1:G.n,  s=sprintf(F,G.C(i,j)); t=strcat(t,s(1:m)); end, t=strcat(t,' |');
+                for j=1:G.ni, s=sprintf(F,G.D(i,j)); t=strcat(t,s(1:m)); end, disp(t)
+              end  
+              fprintf('with %d input%s, %d output%s, and %d state%s\n', G.ni,ci,G.no,co,G.n,c)
+              if G.n>1 & G.n<=9
+                fprintf('Eigenvalues of system matrix A:\n'), disp(sort(eig(G.A)))
+              end
             end
         end
     end
