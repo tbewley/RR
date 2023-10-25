@@ -484,6 +484,63 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if ~(isempty(G.h) & m==-1), plot(t,u,g.linestyle_u), hold on, end
                                         plot(t,y,g.linestyle_y), hold off
         end % function RR_plot_response
+
+        function [Gss]=RR_tf2ss(Gtf,form)
+        % function [Gss]=RR_tf2ss(Gtf,[form])
+        % Convert a proper SISO, SIMO, or MISO CT or DT transfer function to one of the
+        % canonical state-space forms.
+        % INPUTS: Gtf = a CT or DT transfer function of type RR_tf
+        %         form = 'Controller', 'Observer', 'Reachability', 'Observability',
+        %                'DTControllability', or 'DTConstructibility'
+        % OUTPUT: Gss = a CT or DT state-space form of type RR_ss
+        % TEST:   verify with RR_tf2ss_test
+        % Note: form is OPTIONAL, and set to 'Controller' in SISO case if not specified
+        %       form is automatically set to 'Controller' in SIMO case
+        %       form is automatically set to 'Observer'   in MISO case
+        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+
+        b=Gtf.num.poly; a=Gtf.den.poly; n=Gtf.den.n;
+        b=b/a(1); a=a/a(1); p=size(a,2); if nargin<2, form='Controller'; end, s=size(b);
+        if size(s,1)==2                           % Standardize inputs for the various cases.
+          if (s(1)>1), form='Controller'; end     % SIMO case.
+          if size(s,2)==3
+            if s(2)==1, b=reshape(b,s(1),s(3));   % Restructure b for SISO case if necessary.
+            elseif s(1)==1, form='Observer'; end  % MISO case.
+        end, end
+        m=size(b,2); b=[zeros(1,p-m) b]; switch form
+          case 'Controller'
+            A=[-a(2:p); eye(n-1,n)]; B=eye(n,1); C=b(:,2:p)-b(:,1)*a(2:p); D=b(:,1);
+          case 'Reachability'
+            A=[[zeros(1,n-1); eye(n-1)] -a(p:-1:2)'];
+            m=NR_TF2Markov(b,a); B=eye(n,1); C=m(2:p)'; D=m(1);
+          case 'DTControllability'
+            A=[-a(2:p)' eye(n,n-1)]; B=-a(2:p)'; D=b(1);
+            R=Hankel(a(2:p),zeros(1,n)); R=-inv(R); C=( b(2:p)-a(2:p)*b(1) )*R;
+          case 'Observer'
+            A=[-a(2:p)' eye(n,n-1)]; B=b(2:p)'-a(2:p)'*b(1); C=eye(1,n); D=b(:,1);
+          case 'Observability'
+            A=[zeros(n-1,1) eye(n-1); -a(p:-1:2)];
+            m=NR_TF2Markov(b,a); B=m(2:p); C=eye(1,n); D=m(1);
+          case 'DTConstructibility'
+            A=[-a(2:p); eye(n-1,n)]; C=-a(2:p); D=b(1);
+            R=NR_Hankel(a(2:p),zeros(1,n)); R=-R; B=inv(R)*( b(2:p)'-a(2:p)'*b(1) );
+        end
+        Gss=RR_ss(A,B,C,D); if ~isempty(Gtf.h), Gss.h=G.h; end
+    end % function RR_tf2ss
+    
+    function markov=RR_tf2markov(G)
+    % function markov=RR_tf2markov(G)
+    % Computes the first n+1 Markov parameters of a CT or DT SISO system G (of type RR_tf).
+    % TEST:   m=2; n=4; G=RR_tf(rand(1,m+1),rand(1,n+1)), markov=RR_tf2markov(G)
+    % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+    % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+       b=G.num.poly; a=G.den.poly; m=G.num.n; n=G.den.n;
+       b=[zeros(1,n-m) b]; u=[1; zeros(n,1)]; y=zeros(n+1,1);
+       for k=1:n+1, y(2:n+1)=y(1:n); y(1)=b*u-a(1,2:n+1)*y(2:n+1,1); u=[0; u(1:n)]; end
+       markov=y(n+1:-1:1);
+    end % function RR_tf2markov
+
     end
     methods(Access = protected)
         function displayScalarObject(G)
