@@ -50,8 +50,8 @@ for i=1:2:n-3
      a=D(seq(i),seq(j  ))+D(seq(i+1),seq(j+1));
      b=D(seq(i),seq(j+1))+D(seq(j  ),seq(i+1));
      [M,N] = min([a b x-1e-6]); switch N
-        case 1, [seq(i+1),seq(j  )]=RR_Swap(seq(i+1),seq(j  )); mod=true; length=length-x+a;
-        case 2, [seq(i+1),seq(j+1)]=RR_Swap(seq(i+1),seq(j+1)); mod=true; length=length-x+b;
+        case 1, [seq(i+1),seq(j  )]=RR_swap(seq(i+1),seq(j  )); mod=true; length=length-x+a;
+        case 2, [seq(i+1),seq(j+1)]=RR_swap(seq(i+1),seq(j+1)); mod=true; length=length-x+b;
      end
   end
 end
@@ -72,14 +72,14 @@ for i=1:2:n-5
        g=D(seq(i),seq(k  )) +D(seq(j  ),seq(i+1)) +D(seq(j+1),seq(k+1));
        h=D(seq(i),seq(k+1)) +D(seq(j  ),seq(i+1)) +D(seq(k  ),seq(j+1));
        [M,N] = min([a b c d e f g h x-1e-6]); switch N
-          case 1, [seq(k  ),seq(i+1),seq(j  )]=RR_Permute(seq(i+1),seq(j  ),seq(k  )); mod=true; length=length-x+a;
-          case 2, [seq(k+1),seq(i+1),seq(j  )]=RR_Permute(seq(i+1),seq(j  ),seq(k+1)); mod=true; length=length-x+b;
-          case 3, [seq(k  ),seq(i+1),seq(j+1)]=RR_Permute(seq(i+1),seq(j+1),seq(k  )); mod=true; length=length-x+c;
-          case 4, [seq(k+1),seq(i+1),seq(j+1)]=RR_Permute(seq(i+1),seq(j+1),seq(k+1)); mod=true; length=length-x+d;
-          case 5, [seq(j  ),seq(k  ),seq(i+1)]=RR_Permute(seq(i+1),seq(j  ),seq(k  )); mod=true; length=length-x+e;
-          case 6, [seq(j  ),seq(k+1),seq(i+1)]=RR_Permute(seq(i+1),seq(j  ),seq(k+1)); mod=true; length=length-x+f;
-          case 7, [seq(j+1),seq(k  ),seq(i+1)]=RR_Permute(seq(i+1),seq(j+1),seq(k  )); mod=true; length=length-x+g;
-          case 8, [seq(j+1),seq(k+1),seq(i+1)]=RR_Permute(seq(i+1),seq(j+1),seq(k+1)); mod=true; length=length-x+h;
+          case 1, [seq(k  ),seq(i+1),seq(j  )]=RR_permute(seq(i+1),seq(j  ),seq(k  )); mod=true; length=length-x+a;
+          case 2, [seq(k+1),seq(i+1),seq(j  )]=RR_permute(seq(i+1),seq(j  ),seq(k+1)); mod=true; length=length-x+b;
+          case 3, [seq(k  ),seq(i+1),seq(j+1)]=RR_permute(seq(i+1),seq(j+1),seq(k  )); mod=true; length=length-x+c;
+          case 4, [seq(k+1),seq(i+1),seq(j+1)]=RR_permute(seq(i+1),seq(j+1),seq(k+1)); mod=true; length=length-x+d;
+          case 5, [seq(j  ),seq(k  ),seq(i+1)]=RR_permute(seq(i+1),seq(j  ),seq(k  )); mod=true; length=length-x+e;
+          case 6, [seq(j  ),seq(k+1),seq(i+1)]=RR_permute(seq(i+1),seq(j  ),seq(k+1)); mod=true; length=length-x+f;
+          case 7, [seq(j+1),seq(k  ),seq(i+1)]=RR_permute(seq(i+1),seq(j+1),seq(k  )); mod=true; length=length-x+g;
+          case 8, [seq(j+1),seq(k+1),seq(i+1)]=RR_permute(seq(i+1),seq(j+1),seq(k+1)); mod=true; length=length-x+h;
        end
     end
   end

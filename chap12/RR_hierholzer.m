@@ -1,11 +1,11 @@
-function [circuit,travelled]=RR_hierholzer(node,X,n,s)
+function [circuit,travelled]=RR_hierholzer(node,X,n,num_pipes)
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
 % Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 for i=1:n, for j=1:node(i).num_pipes, travelled{i}(j)=false; end, end
 circuit=1;
 while 1, [circuit,travelled,done]=extend_loop(circuit,travelled,node,X,n); if done, break, end, end
-while length(circuit)-1<s                     % attach additional loops as necessary.
+while length(circuit)-1<num_pipes     % attach additional loops as necessary.
 	for i=1:length(circuit)
         if sum(travelled{circuit(i)})<node(circuit(i)).num_pipes
 		   loop=circuit(i); 
@@ -14,7 +14,7 @@ while length(circuit)-1<s                     % attach additional loops as neces
 		end
     end
 end
-for i=1:s
+for i=1:num_pipes
    current=circuit(i); next=circuit(i+1);     % plot the circuit.
    plot([X(current,1) X(next,1)],[X(current,2) X(next,2)],'k-','LineWidth',4); pause(0.25)
 end
