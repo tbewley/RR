@@ -8,7 +8,7 @@ function [seq,length]=RR_min_pair_length(D,n)
 %        tic, [seq,length]=RR_min_pair_length(D,n), toc
 %        check=0; for i=1:2:n-1, check=check+D(seq(i),seq(i+1)); end, check
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 length=Inf;  new_seq(1)=1;
 for i=2:n,   new_seq(2)=i;

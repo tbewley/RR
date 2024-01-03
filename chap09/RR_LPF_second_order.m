@@ -5,7 +5,7 @@ function F=RR_LPF_second_order(omegac,zeta)
 % OUTPUT:  F=second order low-pass filter of type RR_tf
 % EXAMPLE: F=RR_LPF_second_order(10,0.707), close all, RR_bode(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<1, omegac=1;   end
 if nargin<2, zeta=sqrt(2)/2; end

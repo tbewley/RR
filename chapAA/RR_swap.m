@@ -7,6 +7,6 @@ function [b,a]=RR_swap(a,b)
 %          second output argument = whatever a had on input
 % TEST:    a=randn, b=randn(2), [a,b]=RR_Swap(a,b); a, b
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 end % function RR_swap

@@ -6,7 +6,7 @@
 % audio reproduction too noticably, but if using for control you gotta be aware of
 % it, especially in the vicinity of crossover]
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; omegac=1;
 

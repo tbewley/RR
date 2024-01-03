@@ -5,7 +5,7 @@ function [X,node,n,tri]=RR_random_pipe_network(n,L)
 %       [circuit]=RR_hierholzer(node,X,num_nodes,num_pipes);
 %       [circuit]=RR_northstar(node,X,num_nodes,num_pipes,route);
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 X=[randi(L,n-1,2); 1 1]-[(L-1)/2+1 (L-1)/2]; X=sortrows(sortrows(X,2));
 while 1; [X,n,modified]=remove_duplicates(X,n,L); if ~modified, break, end, end

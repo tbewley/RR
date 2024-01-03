@@ -14,7 +14,7 @@ function h = RR_CRC_h_from_v(v,k,r,verbose)
 % EXAMPLE CALL [computes h(z) for v(z) corresponding to CRC-5-ITU, for k=10, d=4]:
 %     k=10; r=5; v=0b101011u64; h=RR_CRC_h_from_v(v,k,r,true);
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 n=k+r;
 if ~verbose

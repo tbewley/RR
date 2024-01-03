@@ -4,7 +4,7 @@
 % [If you don't use a computer to do such algebra, it gets messy!  Instead,
 % just state the equations, as done below, and have the computer solve them!]
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % The following method of symbolic solution extends easily to many simple
 % nonlinear systems of equations.

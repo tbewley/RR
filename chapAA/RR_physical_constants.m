@@ -2,7 +2,7 @@
 % Define some useful physical constants in SI
 % Results are stored in one large derived type named RR_PHYSICAL.
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear; global RR_PHYSICAL
 

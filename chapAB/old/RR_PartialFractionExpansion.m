@@ -4,7 +4,7 @@ function [p,d,k,n]=RR_PartialFractionExpansion(num,den,eps)
 % where order(num)<=order(den) and eps is tolerance when finding repeated roots.
 % TEST:  [p,d,k,n]=RR_PartialFractionExpansion([1000 1000],[1 100 1000 1000 0])
 % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 n=length(den)-1; m=length(num)-1; flag=0; if n<1, p=1; k=0; d=num/den; n=1; return, end
 if m==n, flag=1; [div,rem]=RR_PolyDiv(num,den); m=m-1; else, rem=num; end

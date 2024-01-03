@@ -5,7 +5,7 @@
 % It then plugs in values for omega_n, b0, and several values of zeta, and plots,
 % and compares against the corresponding numerical solutions determined by RR_step.
 % Numerical Renaissance codebase, Chapter 9, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear; syms zeta om_n b0;          % Compute solution analytically
 sig=zeta*om_n; om_d=om_n*sqrt(1-zeta^2);

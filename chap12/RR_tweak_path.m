@@ -1,7 +1,7 @@
 function [node,path]=RR_tweak_path(node,n,path,objective)
 
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 % initialize logic tables
 pair_flips{1}=[0; 1];

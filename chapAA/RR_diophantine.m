@@ -6,7 +6,7 @@ function [x,y,r,t] = RR_diophantine(a,b,f)
 %          r,t (OPTIONAL) = terms used to generate the general solution, {x+r*k,y-t*k} for any polynomial k.
 % TEST:    Test with <a href="matlab:RR_diophantine_test">RR_diophantine_test</a>.
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 [g,xg,yg]=RR_bezout(a,b);  % Start by calling the Bezout algorithm
 [c,rem]=f/g;               % c is found by dividing f by g.

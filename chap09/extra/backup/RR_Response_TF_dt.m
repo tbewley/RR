@@ -6,7 +6,7 @@ function [r,y,t]=RR_Response_TF_dt(gz,fz,type,g)
 % plotting parameters: g.T is the interval over which response is plotted,
 % g.h is the timestep, and {g.styler,g.styley} are the linestyles used.
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % Depends on <a href="matlab:help PartialFractionExpansion">PartialFractionExpansion</a>, <a href="matlab:help Fac">Fac</a>, <a href="matlab:help PolylogarithmNegativeInverse">PolylogarithmNegativeInverse</a>.
 % Verify with: <a href="matlab:help ResponseTFdtTest">ResponseTFdtTest</a>.
 

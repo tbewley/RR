@@ -17,7 +17,7 @@
 % Note you can also put other commonly needed Matlab initialization commands in your startup.m file.
 %
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 format compact, close all
 % IMPORTANT: modify the definition of RRbase in the startup.m code (see above) to indicate the

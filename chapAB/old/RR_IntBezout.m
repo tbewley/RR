@@ -7,7 +7,7 @@ function [g,xg,yg] = RR_IntBezout(a,b)
 %          xg,yg = integers satisfying the Bezout identity a*xg+b*yg=g   
 % TEST:    a=int32(385),  b=int32(357), [g,xg,yg]=RR_IntBezout(a,b), residualg=a*xg+b*yg-g
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 [g,q,n] = RR_IntGCF(a,b); 
 xg=0; yg=1; for j=n-1:-1:1                  % Using the q{i} from the GCF call, compute {xg,yg}

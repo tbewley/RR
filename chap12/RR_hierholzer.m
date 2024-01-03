@@ -1,6 +1,6 @@
 function [circuit,travelled]=RR_hierholzer(node,X,n,num_pipes)
 % Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 for i=1:n, for j=1:node(i).num_pipes, travelled{i}(j)=false; end, end
 circuit=1;

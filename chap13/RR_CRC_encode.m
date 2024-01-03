@@ -18,7 +18,7 @@ function b = RR_CRC_encode(a,v,k,r,verbose)
 %     v=0b100000100110000010001110110110111u64;  % (note the extra 1 at the lsb!)
 %     [b]=RR_CRC_encode(a,v,k,r,false)
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 n=k+r
 if ~verbose

@@ -6,7 +6,7 @@ function [out]=RR_atan2_66(b,a)
 % TEST:   a=randn, b=randn, x=atan2(b,a), y=RR_atan2_66(b,a), residual=norm(x-y)
 %         (also try changing a and/or b to zero and rerunning the test!)
 % Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if     (b~=0 & a>0 ), out=sign(b)*RR_atan_66(abs(b/a));
 elseif (b~=0 & a==0), out=sign(b)*pi/2;

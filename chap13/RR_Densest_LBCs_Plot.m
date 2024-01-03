@@ -1,7 +1,7 @@
 % script RR_Densest_LBCs_Plot
 % This code plots Figure 7.3 in Renaissance Robotics.
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; h=figure(1); hold on; ko=0; 
 axis([0 log2(64) 0.18 1.0]), grid

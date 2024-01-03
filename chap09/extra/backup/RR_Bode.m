@@ -6,7 +6,7 @@ function RR_Bode(num,den,g,h)
 % frequencies used, g.style is the linestyle, g.line turns on/off a line at -180 degrees,
 % and, if nargin=4, h is the timestep (where the Nyquist frequency is N=pi/h).
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin==4, N=pi/h; g.omega=logspace(log10(g.omega(1)),log10(0.999*N),length(g.omega));
   arg=exp(i*g.omega*h); else arg=i*g.omega; end

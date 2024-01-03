@@ -6,7 +6,7 @@ function F=RR_LPF_inv_chebyshev(n,delta,omegac)
 % OUTPUT:  F=n'th order Inverse Chebyshev low-pass filter of type RR_tf
 % EXAMPLE: F=RR_LPF_inv_chebyshev(4,0.04,0.1), close all, RR_bode(F), figure(2), RR_bode_linear(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<3, omegac=1; end 
 p=-i./cos(acos(i/delta)/n+[0:n-1]*pi/n); z=i./cos((2*[1:n]-1)*pi/(2*n));

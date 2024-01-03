@@ -8,7 +8,7 @@ function inertia=RR_PolyInertia(p)
 % TEST:   p=RR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), NR_PolyInertia(p);
 %         check_roots_of_p=roots(p)
 % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_PolyStationarity for DT analog.
 
 i=find(abs(p)>1e-12,1); p=p(i:end); degree=length(p)-1;          % strip off leading zeros

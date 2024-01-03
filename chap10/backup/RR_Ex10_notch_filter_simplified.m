@@ -1,6 +1,6 @@
 % script RR_Ex10_notch_filter_simplified
 % Here is a more human-readable way of inputing the equations of a system
-% (problem 1 of the 2020 midterm) that does not require you to swing specific
+% (problem 1 of the 2024 midterm) that does not require you to swing specific
 % terms to the LHS and RHS of each eqn, and then set up A and b yourself.
 % You can instead have the "solve" command do this work for you.
 

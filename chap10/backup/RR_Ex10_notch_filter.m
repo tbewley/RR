@@ -1,8 +1,8 @@
 % script RR_Ex10_notch_filter
 % This code implments the equations governing the notch filter,
-% as discussed in problem 1 of the 2020 midterm in MAE40.
+% as discussed in problem 1 of the 2024 midterm in MAE40.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License. 
 
 clear; syms s R L C c1 V0      % NOTE: We will solve for V1 as a fn of V0
 % x={Ir; Il; Ic; Iload; V1; V2}  <-- unknown vector   

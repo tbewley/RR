@@ -2,7 +2,7 @@ function inertia=RouthArray(p)
 % function inertia=RouthArray(p)
 % Finds the inertia of p=[p_n p_(n-1) ... p_0].  Algorithm due to G Meinsma (SCL, 1995).
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 i=find(abs(p)>1e-12,1); p(1:i-1)=[]; degree=length(p)-1; % strip off leading zeros
 inertia=[0 0 0]; flag=0; show('Routh',degree,p(1:2:end))
 for n=degree:-1:1 % Incrementally reduce the degree to 1

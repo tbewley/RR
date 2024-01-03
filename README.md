@@ -9,7 +9,7 @@ To set your Matlab/Octave path in a way that will streamline your testing of the
 please install <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a> as specified in its comments.<BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
-All files Copyright 2021 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.<BR><BR>
+All files Copyright 2024 by Thomas Bewley, distributed under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.<BR><BR>
 PART 1: TECHNOLOGY<BR>
 Chapter 1: Cybernetics                        (<a href="http://robotics.ucsd.edu/rr_chap01.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap01">code</a>)<BR>
 Chapter 2: Embedded programming               (<a href="http://robotics.ucsd.edu/rr_chap02.pdf">text</a>, <a href="https://github.com/tbewley/RR/tree/main/chap02">code</a>)<BR>

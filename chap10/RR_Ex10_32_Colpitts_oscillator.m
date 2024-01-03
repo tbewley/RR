@@ -2,7 +2,7 @@
 % Solves the equations of an an opamp driven Colpitts oscillator.
 % See also RR_Ex10_32_Barkhausen_condition for a related calculation.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

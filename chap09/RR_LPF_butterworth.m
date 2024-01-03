@@ -5,7 +5,7 @@ function F=RR_LPF_butterworth(n,omegac)
 % OUTPUT:  F=n'th order Butterworth filter of type RR_tf
 % EXAMPLE: F=RR_LPF_butterworth(4,0.1), close all, RR_bode(F)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<2, omegac=1; end 
 p=exp(i*pi*(2*[1:n]-1+n)/(2*n)); den=RR_poly(p,1);

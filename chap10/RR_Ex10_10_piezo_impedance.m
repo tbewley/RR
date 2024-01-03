@@ -1,7 +1,7 @@
 % script RR_Ex10_10_piezo_impedance
 % Camputes the impedence of a Butterworth/van Dyke circuit model of a piezo.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Capyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Capyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

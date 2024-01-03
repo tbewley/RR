@@ -23,7 +23,7 @@ function p=RR_supergaussian(mu,P,s,d,x,y,z)
 %         end
 %         title('s=\{0.5, 0.707, 1, 1.414, 2, 2.828, 4\}, P=1'); fontsize(gca,16,"pixels")
 % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if d==1,            c=sqrt(2*pi);                     % Calculate c
 elseif d==2,        c=2;

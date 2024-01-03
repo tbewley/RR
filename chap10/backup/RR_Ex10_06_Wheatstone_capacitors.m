@@ -1,7 +1,7 @@
 % script RR_Ex10_06_Wheatstone_capacitors
 % Computes all currents and intermediate nodal voltages of a Wheatstone Bridge with two capacitors.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % Note: as compared to RR_Ex10_5_Wheatstone_Resistors, only 2 equations have changed.
 syms C2 C5 s V0; R1=1e3; R4=1e3; R3=1e5; % <- list constants

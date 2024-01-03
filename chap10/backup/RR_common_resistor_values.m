@@ -8,7 +8,7 @@ function Rcom=RR_common_resistor_values(R,n,direction)
 % TESTS:  Rcom=RR_common_resistor_values(7000,24,'closest')
 %         Rcom=RR_common_resistor_values(6000,12,'down')
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License. 
 
 switch n
   case 6

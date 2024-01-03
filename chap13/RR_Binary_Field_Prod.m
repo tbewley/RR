@@ -10,7 +10,7 @@ function c = RR_Binary_Field_Prod(a,b)
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10011u64); end
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10101u64); end
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 m=length(dec2bin(a)); n=length(dec2bin(b));
 c=0b0u64;

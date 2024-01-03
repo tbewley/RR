@@ -11,7 +11,7 @@ function [A,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A)
 %         v=a vector containing the column of each pivot.
 % EXAMPLE CALL: see RR_Binary_Field_Gauss_Echelon_Test
 % Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
-% Copyright 2021 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 A=cast(A,'single'); % Work around a matlab bug related to A(r+1:m,j) * A(r,j+1:n) for integer A
 [m,n]=size(A);  p=[1:m]';  r=0; v=[];             % Initialize rank = 0, no pivots

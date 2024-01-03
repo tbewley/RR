@@ -3,7 +3,7 @@
 % equivalent resistance of a Wheatstone Bridge of resistors.
 % [If you don't use a computer to do such algebra, it can get messy!]
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

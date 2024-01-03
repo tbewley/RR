@@ -2,7 +2,7 @@
 % This script just plots a few of impulses that, in the appropriate limits,
 % form finite approximations of the Dirac Delta. 
 % Numerical Renaissance codebase, Chapter 9, https://github.com/tbewley/NR
-% Copyright 2022 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear; close all; x=[-0.3:.00025:.3];
 figure(1); subplot(1,3,1)

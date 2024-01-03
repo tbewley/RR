@@ -3,7 +3,7 @@
 % These examples are easy to solve by hand, but illustrate how
 % to put a few linear equations into A*x=b form and solve using Matlab.
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 clear, close all, syms s Vi Vs C L R R1 R2
 

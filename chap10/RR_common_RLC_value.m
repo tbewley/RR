@@ -9,7 +9,7 @@ function Rcom=RR_common_RLC_value(R,n,direction)
 % TESTS:  Rcom=RR_common_RLC_value(7000,24,'closest')
 %         Rcom=RR_common_RLC_value(6000,12,'down')
 % Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2023 by Thomas Bewley, distributed under Modified BSD License. 
+% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License. 
 
 if nargin<2, n=24; end                 % set default value for n
 if nargin<3, direction='closest'; end  % set default value for direction
