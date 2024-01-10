@@ -6,6 +6,4 @@ function F=RR_HPF_first_order(omegac)
 % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-% hi guys!  I just changed this comment.  cool.
-
 if nargin==0, omegac=1; end, F=RR_tf([1 0],[1 omegac]);
