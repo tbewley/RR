@@ -1,3 +1,6 @@
+
+% polhode drawings
+
 M=1; nframes=4
 for body=1:3;
   switch body
@@ -14,7 +17,7 @@ for body=1:3;
   [x,y,z]=sphere(300); surf(x,y,z,0*x+3); alpha(1); shading FLAT; axis equal;
   if body==1, axis(ax), end
   % title(sprintf('%s,  T=%5.3f',type,T(k)));
-  print('-depsc',sprintf('Conservation%d%d.eps',body,k))
+  % print('-depsc',sprintf('Conservation%d%d.eps',body,k))
   pause(1)
   end
   pause
