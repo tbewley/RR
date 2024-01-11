@@ -1,8 +1,8 @@
 % script RR_Ex10_04_wye_delta_caps
 % Compute the Wye Delta transformation for capacitors.
 % [If you don't use a computer to do such algebra, it can get messy!]
-% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
+%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

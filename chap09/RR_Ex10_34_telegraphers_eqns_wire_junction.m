@@ -1,8 +1,8 @@
 % script RR_Ex10_34_telegraphers_eqns_wire_junction
 % Simulates propogation of a signal across a junction of two wires with
 % different properties.
-% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
+%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; % Note: this code is hardwired to use termination on the right end.
 R=0; G=0; % Try R=0 and G=0.  Also try R=10 and/or G=0.001.

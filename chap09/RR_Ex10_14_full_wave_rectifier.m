@@ -1,4 +1,7 @@
 % script RR_Ex10_14_zener_clipper
+%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+
 clear, close all, R=1000; Tmax=7; N=1000; omega=Tmax/N; A=18;
 Vd=0.7; Vbr=12; Vmax=Vbr+Vd;
 for i=1:N
