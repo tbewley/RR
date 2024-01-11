@@ -1,3 +1,5 @@
+%% Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 syms gamma beta alpha
 q3a=[cos(alpha/2); 0; 0; sin(alpha/2)];

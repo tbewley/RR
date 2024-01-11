@@ -3,8 +3,8 @@
 % Basic equation for divider: (Vi-GND)/(Ri+R0)=(Vmon-GND)/R0
 % Max value for Vmon voltage: 3.2V. Max value of Vin=28V.
 % Max value of battery cell=4.4V.
-% Renaissance Robotics codebase, Chapter 5, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 5, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 R0=10000; GND=0; Vmon=3.2;
 I_nom=(Vmon-GND)/R0; Nominal_Power_R0=I_nom^2*R0

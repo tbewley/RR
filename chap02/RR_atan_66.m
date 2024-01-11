@@ -3,8 +3,8 @@ function [out]=RR_atan_66(x)
 % INPUT:  any real x
 % OUTPUT: atan(x), with about 6.6 digits of precision
 % TEST:   x=randn, a=atan(x), b=RR_atan_66(x), residual=norm(a-b)
-% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if     x<0, out=-RR_atan_66(-x);
 elseif 1<x, out=pi/2-RR_atan_66(1/x);     % Range reduction to 0<=x<=pi/12

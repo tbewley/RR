@@ -4,8 +4,8 @@
 %   G(z)=(1+a1+a0)/(z^2+a1*z+a0).
 % It then plugs in values for r=sqrt(a0) and theta=acos(-a1/(2*r)) and plots,
 % and compares against the corresponding numerical solutions determined by RR_step.
-% Numerical Renaissance codebase, Chapter 9, https://github.com/tbewley/NR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; syms pp pm          % Compute solution analytically
 b0=(1-pp)*(1-pm)

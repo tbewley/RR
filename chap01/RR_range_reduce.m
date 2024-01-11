@@ -5,8 +5,8 @@ function [out,sign]=RR_range_reduce(in)
 % INPUT:  in=any real angle
 % OUTPUT: out=in-2*pi*n+pi*(1-sign)/2, with -pi/2<=out<=pi/2
 %             (thus, sign=-1 corresponds to input angle in quadrant 2 or 3)
-% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 twopi=2*pi;                % Range reduction to 0<=t<2*pi
 c=floor(in/twopi); out=in-twopi*c;

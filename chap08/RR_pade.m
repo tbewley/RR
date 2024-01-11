@@ -15,8 +15,8 @@ function F=RR_pade(d,n,m,color)
 %              close all; F_15_16=RR_pade(d,16,15,'r');
 %                         F_14_16=RR_pade(d,16,14,'b');
 %                         F_13_16=RR_pade(d,16,13,'k');
-% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<1, syms d; end
 if nargin<2, n=2;    else, if n<1, error('need n>=1'), end, end

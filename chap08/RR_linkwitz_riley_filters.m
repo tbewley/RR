@@ -5,8 +5,8 @@
 % degrees, respectively) is the price you pay for stability [it doesn't affect
 % audio reproduction too noticably, but if using for control you gotta be aware of
 % it, especially in the vicinity of crossover]
-% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; omegac=1;
 

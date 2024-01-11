@@ -1,3 +1,3 @@
-# Chapter 9: Signals & Systems
-These files are associated with Chapter 9 of the text Renaissance Robotics, by Thomas Bewley.<BR>
+# Chapter 7: Numerical Simulation Methods
+These files are associated with Chapter 7 of the text Renaissance Robotics, by Thomas Bewley.<BR>
 All files Copyright 2024 by Thomas Bewley, distributed under the <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.

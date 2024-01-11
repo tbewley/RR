@@ -5,8 +5,8 @@ function F=RR_LPF_chebyshev(n,epsilon,omegac)
 %          omegac=cutoff frequency of filter [OPTIONAL, taken as 1 if omitted]
 % OUTPUT:  F=n'th order Chebyshev low-pass filter of type RR_tf
 % EXAMPLE: F=RR_LPF_chebyshev(4,0.3,10), close all, RR_bode(F), figure(2), RR_bode_linear(F)
-% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<3, omegac=1; end 
 p=i*cos(acos(i/epsilon)/n+[0:n-1]*pi/n); den=RR_poly(p,1);

@@ -1,3 +1,7 @@
+
+%% Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+
 syms c1 s1 c2 s2 c3 s3
 
 R1=[c1 s1 0; -s1 c1 0; 0 0 1];

@@ -3,8 +3,8 @@ function [out]=RR_tan_32(x)
 % INPUT:  any real x [note: tan(x) diverges near x=pi/2+n*pi for integer n]
 % OUTPUT: cos(x), with about 3.2 digits of precision
 % TEST:   x=randn, a=tan(x), b=RR_tan_32(x), residual=norm(a-b)
-% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 twopi=2*pi;
 c=floor(x/(twopi)); if c==0, y=x; else, y=x-twopi*c; end, o=floor(y/(pi/4)),
