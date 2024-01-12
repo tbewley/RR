@@ -3,6 +3,9 @@ function [roots]=RR_roots(p)
 % TEST: clear, for n=2:5
 %         r=randn(1,n),              RR_roots(r), sort(roots(r),'ComparisonMethod','real')
 %         c=randn(1,n)+i*randn(1,n), RR_roots(c), sort(roots(c),'ComparisonMethod','real')
+%% Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+
 p=p/p(1);                                     % simplify by first making p monic
 switch length(p)
     case 1, roots=[];                         % trivial case

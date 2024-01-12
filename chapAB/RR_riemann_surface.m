@@ -1,6 +1,6 @@
 % script RR_riemann_surface
-% Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%%% Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear; close all; R=[0:.1:1.5]; ii=i;
 theta=[-180:10:1.5*360]*pi/180;

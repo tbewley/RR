@@ -1,6 +1,6 @@
 % script RR_tf2ss_test
-% See <a href="matlab:NRweb">Numerical Renaissance: simulation, optimization, & control</a>, Sections 20.3.1 and 20.3.2.
-% Part of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help NRchap20">Chapter 20</a>; please read the <a href="matlab:help NRcopyleft">copyleft</a>.
+%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear, disp('Original transfer function:')
 % b=randn(1,5), a=[1 randn(1,4)], disp(' ')

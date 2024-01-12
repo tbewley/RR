@@ -1,7 +1,7 @@
 % script RR_sudoku_solve_test
 % Solves a couple of SuDoku problems.
-% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 format compact
 A=[0 2 0 1 4 0 0 0 0; 5 0 0 2 3 0 0 9 0; 8 0 0 0 0 0 1 7 0; ...

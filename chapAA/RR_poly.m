@@ -57,8 +57,8 @@
 %
 %   fprintf('\nCheck the range of stability of closed-loop DT system using simplified Bistritz test\n')
 %
-% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_int, RR_tf.
 
 classdef RR_poly < matlab.mixin.CustomDisplay

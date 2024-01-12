@@ -41,8 +41,8 @@
 %   figure(4), RR_impulse(T), figure(5), RR_step(T)
 %   NOTE: type "help RR_*", for any of the above-listed ADDITIONAL OPERATIONS, for further info.
 %
-% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_int, RR_poly.
 
 classdef RR_tf < matlab.mixin.CustomDisplay
