@@ -1,4 +1,4 @@
-% script RR_Ex10_01_voltage_divider
+% script RR_Ex09_01_voltage_divider
 % Solves the equations of a simple voltage divider.
 % This example is very easy to solve by hand, but illustrates how
 % to put three linear equations into A*x=b form and solve using Matlab.

@@ -1,4 +1,4 @@
-% script RR_Ex10_04_wye_delta
+% script RR_Ex09_04_wye_delta
 % Compute the Wye Delta transformation, and apply it to compute the
 % equivalent resistance of a Wheatstone Bridge of resistors.
 % [If you don't use a computer to do such algebra, it can get messy!]
