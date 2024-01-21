@@ -16,5 +16,5 @@ end
 %%%%%%%%
 function k=RHS(x)
 global sig b rbar
-   k=[sig*(x(2)-x(1)); -x(2)-x(1)*x(3); -b*x(3)+x(1)*x(2)-b*rbar];
+k=[sig*(x(2)-x(1)); -x(2)-x(1)*x(3); -b*x(3)+x(1)*x(2)-b*rbar];
 end
