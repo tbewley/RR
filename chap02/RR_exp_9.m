@@ -6,10 +6,5 @@ function [out]=RR_exp_9(x)
 %% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-ln2=0.693147180559945; 
-k=floor(0.5+x/ln2); r=x-k*ln2; out=2^k*exp_9(r);
-end
-%%%%%%%%%%%%%%%%%
-function [out]=exp_9(r) 
-a=120+12*r^2; b=60*r+r^3; out=(a+b)/(a-b);
-end
+ln2=0.693147180559945; k=floor(0.5+x/ln2); r=x-k*ln2;
+a=120+12*r^2; b=60*r+r^3; out=2^k*(a+b)/(a-b);

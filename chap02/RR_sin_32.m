@@ -6,5 +6,4 @@ function [out]=RR_sin_32(x)
 %% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-out=RR_cos_32(x-pi/2)
-end
+out=RR_cos_32(x-pi/2);
