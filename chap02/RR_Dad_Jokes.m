@@ -7,6 +7,7 @@ function RR_Dad_Jokes(i_max)
 %% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
+if nargin<1, i_max=1; end
 told=[]; rng('shuffle'), j=randi([0,15]); n=7; for i=1:i_max 
   while ~isempty(find(told(max(end-n,1):end)==j)), j=randi([0,15]); end
   told=[told,j];
