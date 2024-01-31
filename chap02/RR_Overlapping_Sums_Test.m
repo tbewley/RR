@@ -11,8 +11,9 @@
 
 clear; close all, N=10^7, M=100  % <- fiddle with N and M to test
 x=rand(N+M,1); for j=1:N, y(j)=sum(x(j:j+M-1)); end
-avg=sum(y)/N, std_deviation=sqrt(sum((y-avg).^2)/N), 
-histogram(y,50,'normalization','pdf')
-mu=M/2, sigma=sqrt(M/12), X=mu-4*sigma:.01:mu+4*sigma;
-P=(1/(sigma*sqrt(2*pi))*exp(-0.5*((X-mu)/sigma).^2)); hold on;
+avg=sum(y)/N, variance=sum((y-avg).^2)/N, 
+histogram(y,50,'normalization','pdf'), hold on
+mu=M/2, sigma_squared=M/12, sigma=sqrt(sigma_squared);
+X=mu-4*sigma:.01:mu+4*sigma;
+P=(1/(sigma*sqrt(2*pi))*exp(-0.5*((X-mu)/sigma).^2));
 plot(X,P,'k-','LineWidth',2)
