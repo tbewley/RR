@@ -9,7 +9,7 @@ figure(2), clf, F_LPa=RR_tf([100],[1 100]);          RR_bode(F_LPa)
 figure(3), clf, F_BP=F_LPa*F_HPa;                    RR_bode(F_BP), pause
 
 disp('lag, lead, lead-lag')
-figure(1), clf, F_lag=RR_tf([1 1],[1 0.1]);          RR_bode(F_lag)
+figure(1), clf, F_lag =   RR_tf([1 1],[1 0.1]);      RR_bode(F_lag)
 figure(2), clf, F_lead=10*RR_tf([1 100],[1 1000]);   RR_bode(F_lead)
 figure(3), clf, F_leadlag=F_lead*F_lag;              RR_bode(F_leadlag), pause
 
