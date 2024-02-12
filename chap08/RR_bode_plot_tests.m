@@ -4,18 +4,24 @@
 %% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-disp('high-pass, low-pass, band-pass')
+clear, disp('high-pass, low-pass, band-pass')
 figure(1), clf, F_HPa=RR_tf([1 0],[1 1]);            RR_bode(F_HPa)
 figure(2), clf, F_LPa=RR_tf([100],[1 100]);          RR_bode(F_LPa)
 figure(3), clf, F_BP=F_LPa*F_HPa;                    RR_bode(F_BP), pause
 
 disp('lag, lead, lead-lag')
-figure(1), clf, F_lag =   RR_tf([1 1],[1 0.1]);      RR_bode(F_lag)
-figure(2), clf, F_lead=10*RR_tf([1 100],[1 1000]);   RR_bode(F_lead)
-figure(3), clf, F_leadlag=F_lead*F_lag;              RR_bode(F_leadlag), pause
+g.log_omega_min=-2; g.log_omega_max=4;
+figure(1), clf, F_lag =   RR_tf([1 1],[1 0.1]);      RR_bode(F_lag,g)
+subplot(2,1,1); axis([.01 1e4 0.5 1e2])
+subplot(2,1,2); axis([.01 1e4 -110 110])
+figure(2), clf, F_lead=10*RR_tf([1 100],[1 1000]);   RR_bode(F_lead,g)
+subplot(2,1,1); axis([.01 1e4 0.5 1e2])
+subplot(2,1,2); axis([.01 1e4 -110 110])
+figure(3), clf, F_leadlag=F_lead*F_lag;              RR_bode(F_leadlag,g)
+subplot(2,1,1); axis([.01 1e4 0.5 1e2])
+subplot(2,1,2); axis([.01 1e4 -110 110]), pause
 
 figure(2), clf, figure(1), clf, hold on
-g.log_omega_min=-2; g.log_omega_max=4;
 fprintf('proportional (k--)'), F_P=RR_tf(1);
 g.linestyle='k--'; RR_bode(F_P,g)
 subplot(2,1,1); axis([.01 1e4 0.5 1e2])
