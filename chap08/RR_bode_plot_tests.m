@@ -5,36 +5,26 @@
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear, disp('high-pass, low-pass, band-pass')
-figure(1), clf, F_HPa=RR_tf([1 0],[1 1]);            RR_bode(F_HPa)
-figure(2), clf, F_LPa=RR_tf([100],[1 100]);          RR_bode(F_LPa)
-figure(3), clf, F_BP=F_LPa*F_HPa;                    RR_bode(F_BP), pause
+figure(1), clf, F_HPa=RR_tf([1 0],[1 1]);          RR_bode(F_HPa)
+figure(2), clf, F_LPa=RR_tf([100],[1 100]);        RR_bode(F_LPa)
+figure(3), clf, F_BP=F_LPa*F_HPa;                  RR_bode(F_BP), pause
 
 disp('lag, lead, lead-lag')
 g.log_omega_min=-2; g.log_omega_max=4;
-figure(1), clf, F_lag =   RR_tf([1 1],[1 0.1]);      RR_bode(F_lag,g)
-subplot(2,1,1); axis([.01 1e4 0.5 1e2])
-subplot(2,1,2); axis([.01 1e4 -110 110])
-figure(2), clf, F_lead=10*RR_tf([1 100],[1 1000]);   RR_bode(F_lead,g)
-subplot(2,1,1); axis([.01 1e4 0.5 1e2])
-subplot(2,1,2); axis([.01 1e4 -110 110])
-figure(3), clf, F_leadlag=F_lead*F_lag;              RR_bode(F_leadlag,g)
-subplot(2,1,1); axis([.01 1e4 0.5 1e2])
-subplot(2,1,2); axis([.01 1e4 -110 110]), pause
+g.axis1=[.01 1e4 0.5 1e2]; g.axis2=[.01 1e4 -110 110];
+figure(1), clf, F_lag =   RR_tf([1 1],[1 0.1]);    RR_bode(F_lag,g)
+figure(2), clf, F_lead=10*RR_tf([1 100],[1 1000]); RR_bode(F_lead,g)
+figure(3), clf, F_leadlag=F_lead*F_lag;            RR_bode(F_leadlag,g), pause
 
 figure(2), clf, figure(1), clf, hold on
-fprintf('proportional (k--)'), F_P=RR_tf(1);
-g.linestyle='k--'; RR_bode(F_P,g)
-subplot(2,1,1); axis([.01 1e4 0.5 1e2])
-subplot(2,1,2); axis([.01 1e4 -110 110]), pause
-fprintf(', integral (r-.)'), F_I=RR_tf(1,[1 0]);
-g.linestyle='r-.'; RR_bode(F_I,g), pause
-fprintf(', derivative (b-.)'), F_D=RR_tf(.01*[1 0],1);
-g.linestyle='b-.'; RR_bode(F_D,g), pause
+fprintf('proportional (k--)'), F_P=RR_tf(1);           g.ls='k--'; RR_bode(F_P,g), pause
+fprintf(', integral (r-.)'), F_I=RR_tf(1,[1 0]);       g.ls='r-.'; RR_bode(F_I,g), pause
+fprintf(', derivative (b-.)'), F_D=RR_tf(.01*[1 0],1); g.ls='b-.'; RR_bode(F_D,g), pause
 
-disp(', PID (k-, fig 1) vs lead-lag (fig 3)'), g.linestyle='k-';
+disp(', PID (k-, fig 1) vs lead-lag (fig 3)'), g.ls='k-';
 F_PID=0.01*RR_tf([1 101 100],[1 0]); RR_bode(F_PID,g), pause
 
-disp('low-pass, high-pass, band-stop')
+clear g; disp('low-pass, high-pass, band-stop')
 figure(1), clf, F_LPb=RR_tf(1,[1 1]);                RR_bode(F_LPb)
 figure(2), clf, F_HPb=RR_tf([1 0],[1 100]);          RR_bode(F_HPb)
 figure(3), clf, F_BS=F_LPb+F_HPb;                    RR_bode(F_BS), pause

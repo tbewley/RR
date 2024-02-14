@@ -33,6 +33,6 @@ F=RR_tf(num,den);
 if nargin==4 & ~F.den.s
   figure(1), plot(roots(F.num.poly),strcat(color,'o')), hold on
              plot(roots(F.den.poly),strcat(color,'x')), axis equal, grid on
-  g.linestyle_y=strcat(color,'-'); 
+  g.ls_y=strcat(color,'-'); 
   figure(2), RR_step(F,g); hold on; figure(3), RR_ramp(F,g); hold on;
 end

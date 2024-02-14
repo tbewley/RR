@@ -23,9 +23,9 @@ x=A\b; Vo_LPF2_Rd=simplify(x(4)), pause
     
 disp('PROBLEM 2: Bode plot of filter in prob 1.')
 figure(1), omega=10, for i=1:3
-   switch i, case 1; zeta=0.1, g.linestyle='k-';  % note: different linestyles
-             case 2; zeta=0.7, g.linestyle='k-.'; % for the different zetas
-             case 3; zeta=1.0, g.linestyle='k--';  end
+   switch i, case 1; zeta=0.1, g.ls='k-';  % note: different linestyles
+             case 2; zeta=0.7, g.ls='k-.'; % for the different zetas
+             case 3; zeta=1.0, g.ls='k--';  end
    F_LPF2_Rd=RR_tf([omega^2],[1 2*zeta*omega omega^2]);        
    RR_bode(F_LPF2_Rd,g), pause
 end
@@ -51,4 +51,4 @@ disp('PROBLEM 4: Substitute Cd=4*C and Rd=sqrt(L/C) in prob 3, simplify, and mak
 % => Vo(s)/Vi(s) = (s+omega/4)*omega^2/(s^3 + (5/4)*omega*s^2 + omega^2*s + omega^3/4)
 omega=10;
 F_LPF2_Rd_Cd=RR_tf(omega^2*[1 omega/4],[1 (5/4)*omega omega^2 omega^3/4])
-g.linestyle='r-'; RR_bode(F_LPF2_Rd_Cd)   % note: new Bode plot in red
+g.ls='r-'; RR_bode(F_LPF2_Rd_Cd)   % note: new Bode plot in red

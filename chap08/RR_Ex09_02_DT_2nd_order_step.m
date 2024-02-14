@@ -35,7 +35,7 @@ for fig=1:2
   axis([0 kmax 0 2])
 end
 
-clear; g.N=60; g.linestyle_y='k-o'  % Now, just do it all with RR_step!
+clear; g.N=60; g.ls_y='k-o'  % Now, just do it all with RR_step!
 for fig=3:4
   figure(fig), switch fig
      case 3, theta=pi/10; disp('theta=pi/10'), 

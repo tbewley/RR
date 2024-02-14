@@ -9,10 +9,10 @@ g.K=logspace(-2,+2,100); g.locus=[-3.01 1 -2 2]; g.T=10; g.steprange=[0 g.T 0 2]
 
 disp('Proportional feedback.');
 K=1;
-g.linestyle='b--'; TestSystem(numG,denG,K,1,g); figure(3); hold on; pause;
+g.ls='b--'; TestSystem(numG,denG,K,1,g); figure(3); hold on; pause;
 
 disp('Lag compensation (z>p). Note: faster step response!');
 K=1; z=3; p=1; numD=K*[1 z]; denD=[1 p];
-g.linestyle='r-'; TestSystem(numG,denG,numD,denD,g);
+g.ls='r-'; TestSystem(numG,denG,numD,denD,g);
 
 end % function LagTest

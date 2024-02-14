@@ -228,7 +228,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % or    the discrete-time   Bode plot of L(z) if L.h is defined,     with z=e^(i omega h).
         % The (optional) derived type g is used to pass in various (optional) plotting parameters:
         %   {g.log_omega_min,g.log_omega_max,G.omega_N} define the set of frequencies used (logarithmically spaced)
-        %   g.linestyle is the linestyle used
+        %   g.ls is the linestyle used
         %   g.lines is a logical flag turning on/off horizontal_lines at gain=1 and phase=-180 deg
         %   g.phase_shift is the integer multiple of 360 deg added to the phase in the phase plot.
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
@@ -245,8 +245,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if     ~isempty(L.h              ), Nyquist=pi/L.h/c; g.log_omega_max=log10(0.999*Nyquist);
             elseif ~isfield(g,'log_omega_max'), g.log_omega_max= ceil(log10(max(p(p>0))*5)); end
             if     ~isfield(g,'omega_N'      ), g.omega_N      =500;                         end
-            if     ~isfield(g,'linestyle'    ), if isempty(L.h), g.linestyle ='b-';
-                                                else             g.linestyle ='r-';  end,    end
+            if     ~isfield(g,'ls'    ), if isempty(L.h), g.ls ='b-';
+                                         else             g.ls ='r-';  end,    end
             if     ~isfield(g,'lines'        ), g.lines        =false;                       end
             if     ~isfield(g,'phase_shift'  ), g.phase_shift  =0;                           end
             omega=logspace(g.log_omega_min,g.log_omega_max,g.omega_N);
@@ -263,17 +263,19 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             break, end, end
             end
 
-            subplot(2,1,1),        loglog(omega,mag,g.linestyle), hold on, a=axis; grid on
+            subplot(2,1,1),          loglog(omega,mag,g.ls), hold on, a=axis; grid on
             if g.lines,              plot([a(1) a(2)],[1 1],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
             if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a)
+            if isfield(g,'axis1'),   axis(g.axis1), end
 
-            subplot(2,1,2),      semilogx(omega,phase,g.linestyle), hold on, a=axis; grid on
+            subplot(2,1,2),          semilogx(omega,phase,g.ls), hold on, a=axis; grid on
             if g.lines,              plot([a(1) a(2)],[-180 -180],'k:')
                 if exist('omega_c'), plot([omega_c omega_c],[a(3) a(4)],'k:'), end
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
             if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a) 
+            if isfield(g,'axis2'),   axis(g.axis2), end
         end % function RR_bode
 
         function RR_bode_linear(L,g)
@@ -282,7 +284,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % or    the discrete-time   Bode plot of L(z) if L.h is defined,     with z=e^(i omega h).
         % The (optional) derived type g is used to pass in various (optional) plotting parameters:
         %   {g.omega_max,G.omega_N} define the set of frequencies used (linearly spaced)
-        %   g.linestyle is the linestyle used
+        %   g.ls is the linestyle used
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
         % Convenient defaults are defined for each of these fields of g if not provided.
         % TEST: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode_linear(F)
@@ -296,15 +298,15 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if     ~isempty(L.h          ), Nyquist=pi/L.h/c; g.omega_max=(0.999*Nyquist);
             elseif ~isfield(g,'omega_max'), g.omega_max=((max(p(p>0))*1.5)); end
             if     ~isfield(g,'omega_N'  ), g.omega_N      =500;                end
-            if     ~isfield(g,'linestyle'), if isempty(L.h), g.linestyle ='b-';
-                                            else             g.linestyle ='r-'; end, end
+            if     ~isfield(g,'ls'), if isempty(L.h), g.ls ='b-';
+                                     else             g.ls ='r-'; end, end
             omega=linspace(0,g.omega_max,g.omega_N);
             if     ~isempty(L.h), arg=exp(i*omega*c*L.h); else, arg=i*omega*c;  end
 
             mag=abs(RR_evaluate(L,arg)); phase=RR_phase(RR_evaluate(L,arg))*180/pi;
-            subplot(2,1,1),        plot(omega,mag,g.linestyle), hold on, axis tight; a=axis;
+            subplot(2,1,1),        plot(omega,mag,g.ls), hold on, axis tight; a=axis;
             if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k-'), end, axis(a), grid
-            subplot(2,1,2),        plot(omega,phase,g.linestyle), hold on, axis tight; a=axis;
+            subplot(2,1,2),        plot(omega,phase,g.ls), hold on, axis tight; a=axis;
             if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
         end % function RR_bode_linear
 
@@ -432,7 +434,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % The (optional) derived type g groups together convenient parameters for plotting:
         %   {g.T,g.N} define the interval and number of timesteps plotted in the CT case, and
         %   g.N       defines the number of timesteps plotted in the DT case,
-        %   {g.linestyle_u,g.linestyle_y} are the linestyles used for the input u and the output y
+        %   {g.ls_u,g.ls_y} are the linestyles used for the input u and the output y
         %   g.tol     defines the tolerance used when checking for repeated roots in the partial fraction expansion. 
         % Some convenient defaults are defined for each of these fields if they are not provided. You're welcome.
         % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
@@ -441,13 +443,13 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             if isempty(G.h),                                   % some defaults for the CT case
                 if ~isfield(g,'T'),             g.T=10;              end
                 if ~isfield(g,'N'),             g.N=1000;            end
-                if ~isfield(g,'linestyle_u'  ), g.linestyle_u='b-.'; end
-                if ~isfield(g,'linestyle_y'  ), g.linestyle_y='r-';  end
+                if ~isfield(g,'ls_u'  ), g.ls_u='b-.'; end
+                if ~isfield(g,'ls_y'  ), g.ls_y='r-';  end
             else               
                 h=G.h;                                         % some defaults for the DT case
                 if ~isfield(g,'N'),             g.N=50;              end
-                if ~isfield(g,'linestyle_u'  ), g.linestyle_u='bo';  end
-                if ~isfield(g,'linestyle_y'  ), g.linestyle_y='rx';  end
+                if ~isfield(g,'ls_u'  ), g.ls_u='bo';  end
+                if ~isfield(g,'ls_y'  ), g.ls_y='rx';  end
             end
             if     ~isfield(g,'tol'  ),         g.tol=1e-4;          end
 
@@ -481,8 +483,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     else, y(1)=y(1)+Yd(i); end
                 end
             end, u=real(u); y=real(y);
-            if ~(isempty(G.h) & m==-1), plot(t,u,g.linestyle_u), hold on, end
-                                        plot(t,y,g.linestyle_y), hold off
+            if ~(isempty(G.h) & m==-1), plot(t,u,g.ls_u), hold on, end
+                                        plot(t,y,g.ls_y), hold off
         end % function RR_plot_response
 
         function [Gss]=RR_tf2ss(Gtf,form)

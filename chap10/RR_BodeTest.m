@@ -4,7 +4,7 @@
 clf; figure(1)
 global g
 
-F1=RR_tf([1],[1 1]); g.linestyle='k-'; RR_bode(F1,g)
+F1=RR_tf([1],[1 1]); g.ls='k-'; RR_bode(F1,g)
 
 logspace(-1.5,1.5,500)); hold on
 subplot(2,1,1); axis([.05 20 .05 1.2])
@@ -16,13 +16,13 @@ plot([.2 5],[0 -90],'k--');
 pause;
 
 clf; figure(2)
-F2=RR_tf([1],[1 2*0.01  1]); g.linestyle='k-' ; g.omega=logspace(-1,1,500); bode(F2); hold on
-F2=RR_tf([1],[1 2*0.1   1]); g.linestyle='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
-F2=RR_tf([1],[1 2*0.2   1]); g.linestyle='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
-F2=RR_tf([1],[1 2*0.3   1]); g.linestyle='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
-F2=RR_tf([1],[1 2*0.5   1]); g.linestyle='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
-F2=RR_tf([1],[1 2*0.707 1]); g.linestyle='r-' ; g.omega=logspace(-1,1,500); bode(F2); 
-F2=RR_tf([1],[1 2*1     1]); g.linestyle='b--'; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*0.01  1]); g.ls='k-' ; g.omega=logspace(-1,1,500); bode(F2); hold on
+F2=RR_tf([1],[1 2*0.1   1]); g.ls='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*0.2   1]); g.ls='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*0.3   1]); g.ls='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*0.5   1]); g.ls='k-.'; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*0.707 1]); g.ls='r-' ; g.omega=logspace(-1,1,500); bode(F2); 
+F2=RR_tf([1],[1 2*1     1]); g.ls='b--'; g.omega=logspace(-1,1,500); bode(F2); 
 subplot(2,1,1); axis([.1 10 .01 30])
 subplot(2,1,2); axis([.1 10 -180 0])
 % print -depsc Bode2nd.eps

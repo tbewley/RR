@@ -49,7 +49,7 @@ subplot(2,1,1); a=axis; plot([a(1) a(2)],0.707*[1 1],'k-')
 
 c1=1; Q=(1+c1)*Q;  % Then assume that c1 changes, and {R,L,C} are unchanged.  Then
 F_anti_notch_Q10=RR_tf([(1/Q)*omega0 0],[1 (1/Q)*omega0 omega0^2]);
-g.linestyle='r-.'; RR_bode(F_anti_notch_Q10,g)
+g.ls='r-.'; RR_bode(F_anti_notch_Q10,g)
 
 % Defined another way, Q=omega0/BW, where BW is the range of frequencies in which
 % the magnitude of the output is reduced by 3 dB = 0.707 or more from the peak,

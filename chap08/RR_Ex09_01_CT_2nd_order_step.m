@@ -22,7 +22,7 @@ for zeta=min:(max-min)/N:max, zeta
   y=exp(-sig_n*t).*(dc_n*cos(om_d_n*t)+ds_n*sin(om_d_n*t))+d0_n; plot(t,y); hold on
 end
 
-clear; figure(2); g.T=10; g.linestyle_y='k-'  % Now, just do it all with RR_step!
+clear; figure(2); g.T=10; g.ls_y='k-'  % Now, just do it all with RR_step!
 om_n=1; b0=1; eps=1e-7; min=eps; max=1-eps; N=10;
 for zeta=min:(max-min)/N:max, zeta
   G=RR_tf(b0,[1 2*zeta*om_n om_n^2]); RR_step(G,g); hold on

@@ -16,7 +16,7 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 % TEST:    clear, close all, omegac=10, for n=1:4, n, figure(n)
 %            [LPF,HPF]=RR_complementary_filters(omegac,n), LPF_plus_HPF=LPF+HPF
 %            g.log_omega_min=0; g.log_omega_max=2; g.omega_N=100; g.phase_shift=0;
-%            g.linestyle='b-'; RR_bode(LPF,g), g.linestyle='r-.'; 
+%            g.ls='b-'; RR_bode(LPF,g), g.ls='r-.'; 
 %            if n>2, g.phase_shift=1; end, RR_bode(HPF,g), axis([1 100 -90*n 90*n])
 %          end
 %% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR

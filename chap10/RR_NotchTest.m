@@ -9,12 +9,12 @@ g.K=logspace(-2,2,100); g.locus=6*[-2 2 -2 2]; g.T=3; g.steprange=[0 g.T 0 3.7];
 
 disp('Proportional feedback');
 K=50;
-g.linestyle='k-'; TestSystem(numG,denG,K,1,g), figure(1), % print -depsc cartoscPlocus.eps
+g.ls='k-'; TestSystem(numG,denG,K,1,g), figure(1), % print -depsc cartoscPlocus.eps
 pause; for i=1:1, figure(i), clf, end; figure(3); hold on;
 
 disp('Lead compensation (z<p). Bad overshoot, but response not sensitive to value of pbar')
 K=50; z=1; p=10; numD=K*[1 z]; denD=[1 p];
-g.linestyle='b--'; TestSystem(numG,denG,numD,denD,g);
+g.ls='b--'; TestSystem(numG,denG,numD,denD,g);
 figure(1), % print -depsc cartoscleadlocus.eps,
 figure(2), subplot(2,1,1), axis([.1 100 .006 300]), subplot(2,1,2), axis([.1 100 -190 80])
            % print -depsc cartoscleadBode.eps, 
