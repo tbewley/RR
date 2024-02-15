@@ -13,14 +13,14 @@ for i=2:n-1       % Now, set up and solve the tridiagonal system for g at each d
 end 
 switch end_conditions
   case {1,'parabolic'}
-    b(1)=1;  c(1)=-1;  g(1,1)=0;
-    b(n)=1;  a(n)=-1;  g(n,1)=0;
+    a(1)=0;  b(1)=1; c(1)=-1; g(1,1)=0;
+    a(n)=-1; b(n)=1; c(n)=0;  g(n,1)=0;
   case {2,'natural'}
-    b(1)=1;  c(1)=0;   g(1,1)=0;
-    b(n)=1;  a(n)=0;   g(n,1)=0;
+    a(1)=0;  b(1)=1; c(1)=0;  g(1,1)=0;
+    a(n)=0;  b(n)=1; c(n)=0;  g(n,1)=0;
   case {3,'periodic'}
-    a(1)=-1; b(1)=0; c(1)=1; g(1,1)=0;
-    a(n)=-1; b(n)=0; c(n)=1; g(n,1)=0;
+    a(1)=-1; b(1)=0; c(1)=1;  g(1,1)=0;
+    a(n)=-1; b(n)=0; c(n)=1;  g(n,1)=0;
 end
-A=RR_TriDiag(a,b,c), fpp=A\g;
+A=RC_tridiag_matrix(a,b,c); fpp=A\g;
 end % function RR_CubicSplineSetup

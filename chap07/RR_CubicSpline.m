@@ -1,11 +1,11 @@
-function [f,fp]=RC_CubicSpline(x,xd,fd,fpp,h)
-% function [f,fp]=RC_CubicSpline(x,xd,fd,fpp,h)
+function [f,fp]=RR_CubicSpline(x,xd,fd,fpp,h)
+% function [f,fp]=RR_CubicSpline(x,xd,fd,fpp,h)
 % Perform cubic spline interpolation based on the {xd,fd} and evaluate at the points in x.
-% Note: the initialization data {fpp,h} must be computed first using RC_CubicSplineSetup.
+% Note: the initialization data {fpp,h} must be computed first using RR_CubicSplineSetup.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RC_Lagrange, RC_LinearSpline. Depends on result from RC_CubicSplineSetup.
-% Verify with RC_CubicSplineTest.
+% See also RR_Lagrange, RR_LinearSpline. Depends on result from RR_CubicSplineSetup.
+% Verify with RR_CubicSplineTest.
 
 n=length(xd); m=length(x); i=1; for j=1:m
   for i=i:n-1, if xd(i+1) > x(j), break, end, end % Find the i such that xd(i)<=x<=xd(i+1)
@@ -16,4 +16,4 @@ n=length(xd); m=length(x); i=1; for j=1:m
      fp(j)=fpp(i)/6*(-3*(xd(i+1)-x(j))^2/h(i)+h(i)) +...          % and (if requested) its
          fpp(i+1)/6*( 3*(x(j) - xd(i))^2/h(i)-h(i)) + (fd(i+1)-fd(i))/h(i);  % derivative.
 end, end
-end % function RC_CubicSpline
+end % function RR_CubicSpline
