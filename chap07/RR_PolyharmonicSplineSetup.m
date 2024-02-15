@@ -2,8 +2,8 @@ function [w,v]=RR_PolyharmonicSplineSetup(c,y,k)
 % function [w,v]=RR_PolyharmonicSplineSetup(c,y,k)
 % Given the centers c, the value of the function at these centers, y, and the order of the
 % radial basis functions, k, calculate the weights {w,v} of the polyharmonic spline.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_InvDistanceInterp. Sets up subsequent call to RR_PolyharmonicSpline.
 % Verify with RR_PolyharmonicSplineTest.
 
@@ -17,5 +17,5 @@ else
     r=norm(c(:,i)-c(:,j)); if r>1, A(i,j)=r^k*log(r); else, A(i,j)=r^(k-1)*log(r^r); end
   end, end
 end
-x=RR_GaussPP([A V'; V zeros(n+1,n+1)],[y'; zeros(n+1,1)],N+n+1); w=x(1:N); v=x(N+1:N+n+1);
+x=[A V'; V zeros(n+1,n+1)]\[y'; zeros(n+1,1)]; w=x(1:N); v=x(N+1:N+n+1);
 end % function RR_PolyharmonicSplineSetup

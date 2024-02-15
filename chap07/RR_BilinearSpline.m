@@ -1,8 +1,8 @@
 function [f]=RR_BilinearSpline(x,y,xd,yd,fd)
 % function [f]=RR_BilinearSpline(x,y,xd,yd,fd)
 % Perform bilinear interpolation based on {xd,yd,fd} and evaluate on the grid {x,y}.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_BilinearSpline.  Verify with RR_BilinearSplineTest.
 
 ndx=length(xd); ndy=length(yd); nx=length(x); ny=length(y); i=1; 

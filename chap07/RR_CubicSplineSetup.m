@@ -2,8 +2,8 @@ function [fpp,h]=RR_CubicSplineSetup(xd,fd,end_conditions)
 % function [fpp,h]=RR_CubicSplineSetup(xd,fd,end_conditions)
 % Determine the intervals h and the curvature f'' for constructing the cubic spline
 % interpolant of the datapoints {xd,fd}, assuming this data is ordered as ascending in x.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_Lagrange. Sets up subsequent call to RR_CubicSpline.  Verify with RR_CubicSplineTest.
 
 n=length(xd); h(1:n-1)=xd(2:n)-xd(1:n-1);     % Calculate the h(i) = x(i+1)-x(i)
