@@ -11,6 +11,7 @@
 clear; close all, N=10^6, b=6  % <- fiddle with N and b to test
 max=30; x=randi(b,N+max,1);
 for i=1:N, for j=1:max, if x(i)==x(i+j), break, end, end, js(i)=j; end
-histogram(js,'normalization','pdf'), hold on
+histogram(js,'normalization','pdf')        % plot histogram as PDF
+
 X=1:max; c=(b-1)/b; P=c.^(X-1)/b; plot(X,P,'k-','LineWidth',2)
-ax=axis; axis([0 max-5 0 ax(4)])
+hold on, ax=axis; axis([0 max-5 0 ax(4)])  % result predicted by theory

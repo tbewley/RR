@@ -1,7 +1,8 @@
 function x=RR_MRG64(i_max)
-% PRNG with an MRG with period m^7-1~=2^217 where m=2^31-19=2147483629
+% Multiple Recursive Generator (MRG) with period m^7-1~=2^217 where m=2^31-19
 % Note: if this routine hasn't been run yet in this Matlab session, it
 % initializes the 7 previous states using the RR_LCG64 algorithm.
+% Constants due to L’Ecuyer, Blouin and Couture (1993).
 % INPUT:  i_max (OPTIONAL) number of random numbers to return.  default=1
 % OUTPUT: x
 % TEST:   RR_MRG64(7)

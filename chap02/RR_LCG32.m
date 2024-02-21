@@ -1,12 +1,11 @@
 function x=RR_LCG32(i_max,reverse)
-% Pseudo Random Number Generator (PRNG) with an LCG with period m=65521.
+% Pseudo Random Number Generator with an LCG with period m=2^16-15=65521.
 % Note: if this routine hasn't been run yet in this Matlab session, it
 % initializes the previous state using the fractional seconds of the clock.
 % INPUTS: i_max   (OPTIONAL) number of random numbers to return.  default=1
 %         reverse (OPTIONAL) set to true to run backward, omit to run forward
 % OUTPUT: x
-% TESTs:  RR_LCG32(7)
-%         RR_LCG32(6,true)
+% TESTs:  RR_LCG32(7), RR_LCG32(6,true)
 %% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 

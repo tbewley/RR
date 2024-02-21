@@ -10,9 +10,7 @@
 
 clear; close all, N=10^6   % <- fiddle with N to test
 b=365; max=70; x=randi(b,N+max,1);
-for i=1:N
-  t=1; while t+1==length(unique(x(i:i+t))), t=t+1; end, y(i)=t+1;
-end
+for i=1:N, t=1; while t+1==length(unique(x(i:i+t))), t=t+1; end, y(i)=t+1; end
 histogram(y,[0.5:max+0.5],'normalization','cdf') % plot histogram as CDF 
 
 X=(365-[0:max-1])/365; X_cumulative=cumprod(X);  % result predicted by theory

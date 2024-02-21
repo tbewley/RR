@@ -6,6 +6,7 @@
 
 clear; close all; N=10^3  % <- Fiddle with N to test
 y=randi(6,N)+randi(6,N);
-histogram(y,[1.5:12.5],'Normalization','pdf'), hold on
-plot([2 7 ],[1 6]/36,'k-','LineWidth',2)
+histogram(y,[1.5:12.5],'Normalization','pdf'), hold on % plot histogram as PDF 
+
+plot([2 7 ],[1 6]/36,'k-','LineWidth',2)          % result predicted by theory
 plot([7 12],[6 1]/36,'k-','LineWidth',2)
