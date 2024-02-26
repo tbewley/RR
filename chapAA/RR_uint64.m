@@ -1,8 +1,8 @@
 % classdef RR_uint64
-% This class emulates uint64 with wrap on overflow, because unfortunately Matlab doesn't
-% wrap (unlike C and Eminem).
-% This emulation is inefficient - use of this code is recommended for pedagogical purposes only.
-% For production codes, you should absolutely use C instead.
+% This class emulates uint64 with wrap on overflow, because unfortunately
+% Matlab doesn't wrap (unlike C and Eminem).
+% This emulation is inefficient - use of this code is recommended for pedagogical
+% purposes only.  For production codes, you should absolutely use C instead.
 %
 % DEFINITION:
 %   a=RR_uint64(c)  defines an RR_uint64 object from any positive integer
@@ -14,10 +14,6 @@
 %   mrdivide: [quo,rem]=b/a divides two integers, giving the quotient quo and remainder rem
 %   mpower:   a^n  gives the n'th power of a polynomial
 %   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
-%
-% ADDITIONAL OPERATIONS defined on RR_poly objects: (try "help RR_poly/RR_*" for more info on any of them)
-% 
-% SOME TESTS:  [Try them! Change them!]
 %
 %% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
@@ -85,5 +81,3 @@ end
 % a^b      XOR       bitxor(a,b)
 % a|b      OR        bitor(a,b)
 % -a     2's comp.   bitcmp(a)
-
-% a=bitset(intmax('uint64'),64,0) -> 9223372036854775807
