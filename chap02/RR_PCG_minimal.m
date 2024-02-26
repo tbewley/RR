@@ -10,15 +10,17 @@ function x=RR_PCG_minimal
 %% Use O'Neill's C and C++ codes for any practical application.
 
 persistent state inc a  % Matlab will hold these "persistent" variables for this function
-if isempty(state)       % Initialize state and inc as some big integers, with inc odd 
-  inc  =RR_uint64(convertTo(datetime,'epochtime','Epoch','1-Jan-2000','TicksPerSecond',1e6));
-  state=inc*pi, inc=inc+~bitget(inc.v,1)
-  a    =RR_uint64(6364136223846793005);  % initialize multiplier
+if isempty(state)       % Initialize inc and state as some big integers
+%  inc  =RR_uint64(convertTo(datetime,'epochtime','Epoch','1-Jan-2000','TicksPerSecond',1e6));
+%  state=inc*pi, inc=inc+~bitget(inc.v,1)         % make sure inc is odd
+  state=RR_uint64(uint64(3118741472915405573));
+  inc  =RR_uint64(uint64(109));
+  a    =RR_uint64(uint64(6364136223846793005));   % initialize multiplier
 end
-oldstate=state        % use oldstate below to improve instruction-level parallelism
-state=a*state + inc;  % Advance internal state
+oldstate=state;              % use oldstate to improve instruction-level parallelism
+state   =a*oldstate + inc  % Advance internal state
 
-% Calculate the output x (XSH RR).  Herein lies the PCG output bit permutations.
+% Calculate the output x (XSH RR).  This part is the PCG output bit permutations.
 xorshifted = uint32( bitsra(bitxor(bitsra(oldstate,18),oldstate),27) );
 rot = uint32(bitsra(oldstate,59))
 x   = bitor(bitsra(xorshifted,rot),bitsll(xorshifted,(bitand(-rot,31))));

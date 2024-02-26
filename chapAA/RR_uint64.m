@@ -30,9 +30,9 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         end
         function sum = plus(a,b)               % Defines a+b
             [a,b]=check(a,b); c=uint64(9223372036854775807);
-            sum=bitand(a.v,c) +bitand(b.v,c);   % add the first 63 bits
-            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64);
-            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)));
+            sum=bitand(a.v,c) +bitand(b.v,c)    % add the first 63 bits
+            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64)
+            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)))
         end
         function diff = minus(a,b)        % Defines a-b
             diff=plus(a,-b);
@@ -41,8 +41,7 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
             [a,b]=check(a,b); cl=uint64(4294967295);
             al=bitand(a.v,cl); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
             bl=bitand(b.v,cl); bh=bitsra(b.v,32); % {ah,bh} are upper 32 bits of {a,b}
-            temp=bl*al+bitsll(bl*ah+al*bh,32);
-            prod=RR_uint64(temp);
+            prod=RR_uint64(bl*al)+RR_uint64(bitsll((al*bh)+(ah*bl),32));
         end
         function [quo,re] = mrdivide(b,a) % Defines [quo,re]=b/a
             [b,a]=check(b,a); quo=RR_uint64(idivide(b.v,a.v)); re=RR_uint64(rem(b.v,a.v));
