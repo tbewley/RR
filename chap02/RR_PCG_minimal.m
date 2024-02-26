@@ -11,14 +11,14 @@ function x=RR_PCG_minimal
 
 persistent state inc a  % Matlab will hold these "persistent" variables for this function
 if isempty(state)       % Initialize state and inc as some big integers, with inc odd 
-  inc  =uint64(convertTo(datetime,'epochtime','Epoch','1-Jan-2000','TicksPerSecond',1e6));
-  state=uint64(inc*(pi*100)), inc=inc+uint64(~bitget(inc,1))
-  a    =uint64(6364136223846793005);  % initialize multiplier
+  inc  =RR_uint64(convertTo(datetime,'epochtime','Epoch','1-Jan-2000','TicksPerSecond',1e6));
+  state=inc*pi, inc=inc+~bitget(inc.v,1)
+  a    =RR_uint64(6364136223846793005);  % initialize multiplier
 end
-oldstate=state           % use oldstate below to improve instruction-level parallelism
-state=a*oldstate + inc;  % Advance internal state
+oldstate=state        % use oldstate below to improve instruction-level parallelism
+state=a*state + inc;  % Advance internal state
 
-% Calculate the output x (XSH RR).  Herein lies the PCG output bit permutation magic.
+% Calculate the output x (XSH RR).  Herein lies the PCG output bit permutations.
 xorshifted = uint32( bitsra(bitxor(bitsra(oldstate,18),oldstate),27) );
 rot = uint32(bitsra(oldstate,59))
 x   = bitor(bitsra(xorshifted,rot),bitsll(xorshifted,(bitand(-rot,31))));

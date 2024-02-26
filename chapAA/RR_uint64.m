@@ -39,9 +39,9 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         end    
         function prod = mtimes(a,b)       % Defines a*b
             [a,b]=check(a,b); cl=uint64(4294967295);
-            al=bitand(a.v,cl); ah=bitsra(a.v,32);
-            bl=bitand(b.v,cl); bh=bitsra(b.v,32);
-            temp=bl*al+bitsll(bl*ah+ah*bl,32);
+            al=bitand(a.v,cl); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
+            bl=bitand(b.v,cl); bh=bitsra(b.v,32); % {ah,bh} are upper 32 bits of {a,b}
+            temp=bl*al+bitsll(bl*ah+al*bh,32);
             prod=RR_uint64(temp);
         end
         function [quo,re] = mrdivide(b,a) % Defines [quo,re]=b/a
