@@ -31,5 +31,5 @@ x   = bitor(bitsra(xorshifted,rot),bitsll(xorshifted,(bitand(-rot,31))));
 % a&b      AND       bitand(a,b)
 % a^b      XOR       bitxor(a,b)
 % a|b      OR        bitor(a,b)
-% -  ?      
+% -a     2's comp.   bitcmp(a)
 
