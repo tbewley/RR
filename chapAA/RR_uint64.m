@@ -30,9 +30,9 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         end
         function sum = plus(a,b)               % Defines a+b
             [a,b]=check(a,b); c=uint64(9223372036854775807);
-            sum=bitand(a.v,c) +bitand(b.v,c)    % add the first 63 bits
-            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64)
-            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)))
+            sum=bitand(a.v,c) +bitand(b.v,c);   % add the first 63 bits
+            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64);
+            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)));
         end
         function diff = minus(a,b)        % Defines a-b
             diff=plus(a,-b);
