@@ -1,13 +1,13 @@
 # the Renaissance Repository
-      one repo to rule them all<BR>
-The codes in this repository are associated with the forthcoming texts<BR>
-<a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> (RR), and
+one repo to rule them all<BR>
+The codes in this repository are associated with two forthcoming texts,<BR>
+<a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> (RR) and
 <a href="http://robotics.ucsd.edu/RR.pdf">Numerical Renaissance</a> (NR),
 by Thomas Bewley.<BR>
 Drafts of these texts are maintained at the above two links.<BR>
 
-The various codes in this repository are broken out by chapters.<BR>
-If you are interested in using these two texts and their associated codes, please clone <a href="https://github.com/tbewley/RR">this repository</a><BR>
+The various codes in this repository are organized by the chapters of these two texts.
+If you are interested in using these texts and their associated codes, please clone <a href="https://github.com/tbewley/RR">this repository</a><BR>
 using, for example, <a href="https://desktop.github.com/">GitHub Desktop</a>, and fetch updates from its main branch relatively often,<BR>
 as I currently update this repository multiple times a week.<BR>
 To set your Matlab/Octave path in a way that will streamline your testing of these codes,<BR>
