@@ -5,7 +5,7 @@ function inertia=RR_PolyInertia(p)
 % of the polynomial p(s).  Algorithm due to Routh (1895).
 % INPUT:  p = vectors of coefficients of input polynomial
 % OUTPUT: inertia = vector quantifying number of [LHP pure-imaginary RHP] roots 
-% TEST:   p=RR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), NR_PolyInertia(p);
+% TEST:   p=RR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), RR_PolyInertia(p);
 %         check_roots_of_p=roots(p)
 % Renaissance Robotics codebase, Appendix B, https://github.com/tbewley/RR
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 

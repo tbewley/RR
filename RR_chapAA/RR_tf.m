@@ -515,7 +515,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             A=[-a(2:p); eye(n-1,n)]; B=eye(n,1); C=b(:,2:p)-b(:,1)*a(2:p); D=b(:,1);
           case 'Reachability'
             A=[[zeros(1,n-1); eye(n-1)] -a(p:-1:2)'];
-            m=NR_TF2Markov(b,a); B=eye(n,1); C=m(2:p)'; D=m(1);
+            m=RR_TF2Markov(b,a); B=eye(n,1); C=m(2:p)'; D=m(1);
           case 'DTControllability'
             A=[-a(2:p)' eye(n,n-1)]; B=-a(2:p)'; D=b(1);
             R=Hankel(a(2:p),zeros(1,n)); R=-inv(R); C=( b(2:p)-a(2:p)*b(1) )*R;
@@ -523,10 +523,10 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             A=[-a(2:p)' eye(n,n-1)]; B=b(2:p)'-a(2:p)'*b(1); C=eye(1,n); D=b(:,1);
           case 'Observability'
             A=[zeros(n-1,1) eye(n-1); -a(p:-1:2)];
-            m=NR_TF2Markov(b,a); B=m(2:p); C=eye(1,n); D=m(1);
+            m=RR_TF2Markov(b,a); B=m(2:p); C=eye(1,n); D=m(1);
           case 'DTConstructibility'
             A=[-a(2:p); eye(n-1,n)]; C=-a(2:p); D=b(1);
-            R=NR_Hankel(a(2:p),zeros(1,n)); R=-R; B=inv(R)*( b(2:p)'-a(2:p)'*b(1) );
+            R=RR_Hankel(a(2:p),zeros(1,n)); R=-R; B=inv(R)*( b(2:p)'-a(2:p)'*b(1) );
         end
         Gss=RR_ss(A,B,C,D); if ~isempty(Gtf.h), Gss.h=G.h; end
     end % function RR_tf2ss

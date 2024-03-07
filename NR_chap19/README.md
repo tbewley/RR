@@ -1,4 +1,3 @@
-# NRchap19: State estimation & adaptive observation
-These files are associated with Chapter 19 of the text Numerical Renaissance, by Thomas Bewley.<BR>
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap19
-All files Copyright 2023 by Thomas Bewley, distributed under the <a href="https://github.com/tbewley/RC/blob/main/LICENSE">BSD 3-Clause License</a>.
+# RR Chapter 18: Case study: myMiP
+These files are associated with Chapter 18 of the text <a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a>, by Thomas Bewley.<BR>
+All files Copyright 2024 by Thomas Bewley, distributed under the <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.

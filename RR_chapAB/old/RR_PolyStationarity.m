@@ -11,21 +11,21 @@ function stationarity=RR_PolyStationarity(p)
 % See also RR_PolyInertia for CT analog.
 
 i=find(abs(p)>1e-12,1); p=p(i:end); z1roots=0;           % strip off leading zeros, remove
-while abs(NR_PolyVal(p,1))<1e-12, p=NR_PolyDiv(p,[1 -1]); z1roots=z1roots+1; end  % roots at z=1
+while abs(RR_PolyVal(p,1))<1e-12, p=RR_PolyDiv(p,[1 -1]); z1roots=z1roots+1; end  % roots at z=1
 disp(['  Simplified p:',sprintf(' %7.4g',p)])
-deg=length(p)-1; T2=p+p(end:-1:1); T1=NR_PolyDiv(p-p(end:-1:1),[1 -1]);
+deg=length(p)-1; T2=p+p(end:-1:1); T1=RR_PolyDiv(p-p(end:-1:1),[1 -1]);
 show('Bistritz',deg,T2), show('Bistritz',deg-1,T1), nu_n=0; nu_s=0; s=0;
 for n=deg-1:-1:0
   if norm(T1,1)>1e-12,
     k=find(abs(T1)>1e-14,1)-1; d=T2(1)/T1(1+k);
-    p=NR_PolyAdd(d*T1(1:end-k),d*[T1(1+k:end) zeros(1,k+1)],-T2); T0=p(2:n+1);
+    p=RR_PolyAdd(d*T1(1:end-k),d*[T1(1+k:end) zeros(1,k+1)],-T2); T0=p(2:n+1);
   elseif T2(1)==0,
     T0=-T2(2:n+1);
   else                                                                     % Singular case
     p=T2(1:n+1).*(n+1:-1:1); p=-p(end:-1:1); if (s==0), s=n+1; end
-    T1=p+p(end:-1:1); T0=NR_PolyDiv(p-p(end:-1:1),[1 -1]); show('     NEW',n,T1)
+    T1=p+p(end:-1:1); T0=RR_PolyDiv(p-p(end:-1:1),[1 -1]); show('     NEW',n,T1)
   end
-  eta=(NR_PolyVal(T2,1)+eps)/(NR_PolyVal(T1,1)+eps);  nu_n=nu_n+(eta<0);
+  eta=(RR_PolyVal(T2,1)+eps)/(RR_PolyVal(T1,1)+eps);  nu_n=nu_n+(eta<0);
   if (s>0), nu_s=nu_s+(eta<0); end,  if n>0, show('Bistritz',n-1,T0); T2=T1; T1=T0; end
 end
 pairs=s-nu_s; disp(['nu_n=',num2str(nu_n),' s=',num2str(s),' nu_s=',num2str(nu_s)])

@@ -8,7 +8,7 @@ function [p,d,k,n]=RR_PartialFractionExpansion(num,den,eps)
 
 n=length(den)-1; m=length(num)-1; flag=0; if n<1, p=1; k=0; d=num/den; n=1; return, end
 if m==n, flag=1; [div,rem]=RR_PolyDiv(num,den); m=m-1; else, rem=num; end
-k=ones(n,1); p=roots(den); if n>1, p=NR_SortComplex(p); end, if nargin<3, eps=1e-3; end
+k=ones(n,1); p=roots(den); if n>1, p=RR_SortComplex(p); end, if nargin<3, eps=1e-3; end
 for i=1:n-1, if abs(p(i+1)-p(i))<eps, k(i+1)=k(i)+1; end, end, k(n+1,1)=0;
 for i=n:-1:1
   if k(i)>=k(i+1), r=k(i); a=1;

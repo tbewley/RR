@@ -48,6 +48,6 @@ switch d
        xs=[x(i)-mu(1); y(j)-mu(2); z(k)-mu(3)];
        p(i,j,k)=a*exp(-(b*xs'*Pi*xs)^s);
     end, end, end
-  otherwise, error('NR_supergaussian implemented for d<=3')
+  otherwise, error('RR_supergaussian implemented for d<=3')
 end % switch
 end % function RR_supergaussian

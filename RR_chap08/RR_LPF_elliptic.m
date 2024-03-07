@@ -11,7 +11,7 @@ function F=RR_LPF_elliptic(n,epsilon,delta,omegac)
 % Note: uses codes from the NR database https://github.com/tbewley/NR
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
-s=log2(n); z=0; p.n=n; p.target=1/(epsilon*delta); xi=NR_Bisection(1.0001,100,@Func,1e-6,0,p);
+s=log2(n); z=0; p.n=n; p.target=1/(epsilon*delta); xi=RR_Bisection(1.0001,100,@Func,1e-6,0,p);
 for r=s-1:-1:0, z=1./sqrt(1+sqrt(1-1./(CRF(2^r,xi,xi))^2)*(1-z)./(1+z)); z=[z; -z]; end
 zeta=SN(n,xi,epsilon); a=-zeta*sqrt(1-zeta^2).*sqrt(1-z.^2).*sqrt(1-z.^2./xi^2);
 b=z*sqrt(1-zeta^2*(1-1/xi^2)); c=1-zeta^2*(1-z.^2/xi^2); efz=i*xi./z; efp=(a+i*b)./c;
