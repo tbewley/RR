@@ -1,0 +1,4 @@
+rm RHS.m SimInit.m SimPlot.m
+ln -s RHS_ShallowWater_FD.m RHS.m
+ln -s SimInit_ShallowWater.m SimInit.m
+ln -s SimPlot_ShallowWater.m SimPlot.m

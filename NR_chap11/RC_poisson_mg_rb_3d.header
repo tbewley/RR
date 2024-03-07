@@ -1,0 +1,7 @@
+! header file for RC_poisson_mg_rb_3d
+integer :: XBC, YBC, ZBC, N1, N2, N3, xo, yo, zo, nlev
+type :: arrays; sequence; real*8, dimension(:,:,:), allocatable :: d; end type arrays
+type(arrays):: d(0:12), v(0:12)   ! Note: max allowable grid size = 2^12
+type grid; sequence; integer :: nx, ny, nz, xm, ym, zm; end type grid
+type(grid) :: g(0:12)
+common /variables/	XBC, YBC, ZBC, N1, N2, N3, xo, yo, zo, nlev, d, v, g

@@ -1,0 +1,4 @@
+rm RHS.m SimInit.m SimPlot.m
+ln -s RHS_Rossler.m RHS.m
+ln -s SimInit_Rossler.m SimInit.m
+ln -s SimPlot_Lorenz_Rossler.m SimPlot.m

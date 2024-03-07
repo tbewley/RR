@@ -1,0 +1,7 @@
+! header file for the PoissonMG2DTest.f90 code
+integer :: XBC, YBC, N1, N2, N3, xo, yo, nlev
+type :: arrays; sequence; real*8, dimension(:,:), pointer :: d; end type arrays
+type(arrays):: d(0:16), v(0:16)   ! Note: max allowable grid size = 2^16
+type grid; sequence; integer :: nx, ny, xm, ym; end type grid
+type(grid) :: g(0:16)
+common /variables/  XBC, YBC, N1, N2, N3, xo, yo, nlev, d, v, g

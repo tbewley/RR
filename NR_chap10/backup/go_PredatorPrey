@@ -1,0 +1,4 @@
+rm RHS.m SimInit.m SimPlot.m
+ln -s RHS_PredatorPrey.m RHS.m
+ln -s SimInit_PredatorPrey.m SimInit.m
+ln -s SimPlot_PredatorPrey.m SimPlot.m
