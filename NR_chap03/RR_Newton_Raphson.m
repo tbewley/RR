@@ -1,4 +1,4 @@
-function [x] = RC_NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
+function [x] = RR_NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
 % function [x] = NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
 % This function solves f(x)=0 using the Newton Raphson method given an initial guess for
 % x, where the function f(x) and its Jacobian are defined in Compute_f and Compute_A.
@@ -10,7 +10,7 @@ function [x] = RC_NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)
 if nargin<5, tol=1e-10; end, residual=2*tol;
 if nargin<6, verbose=1; end, if verbose, disp('Convergence:'), end
 while (residual>tol)
-   f=Compute_f(x);  A=Compute_A(x);  residual=norm(f);  x=x+RC_GaussPP(A,-f,n);
+   f=Compute_f(x);  A=Compute_A(x);  residual=norm(f);  x=x+RR_GaussPP(A,-f,n);
    if verbose, disp(sprintf('%20.13f ',x(1:n),residual)); end
 end
-end % function RC_NewtonRaphson
+end % function RR_NewtonRaphson

@@ -1,5 +1,5 @@
-function [g] = RC_ComputeGrad(x,N,Compute_f,method,e) 
-% function [g] = RC_ComputeGrad(x,N,Compute_f,method,e) 
+function [g] = RR_ComputeGrad(x,N,Compute_f,method,e) 
+% function [g] = RR_ComputeGrad(x,N,Compute_f,method,e) 
 % Compute gradient of the the function pointed to by the function handle Compute_f(x), by
 % computing the directional derivative one element at a time using a 2nd-order FD approach
 % if method="FD", or the complex step derivative approach if method="CSD".
@@ -9,7 +9,7 @@ function [g] = RC_ComputeGrad(x,N,Compute_f,method,e)
 %          method = 'FD' for 2nd-order finite difference, or 'CSD' for complex step derivative
 %          e = value of perturbation to use
 % OUTPUTS: g = gradient of the function Compute_f(x) in the vicinity of x
-% TEST:    use RC_ComputeGradTest
+% TEST:    use RR_ComputeGradTest
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Verify with: <a href="matlab:help ComputeGradTest">ComputeGradTest</a>.
@@ -20,4 +20,4 @@ for k=1:N, switch method
   case 'CSD'
     xe=x; xe(k,1)=xe(k,1)+i*e; g(k,1)=imag(Compute_f(xe))/e;
 end, end
-end % function RC_ComputeGrad
+end % function RR_ComputeGrad

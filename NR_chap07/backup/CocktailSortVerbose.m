@@ -1,4 +1,4 @@
-function RC_CocktailSortVerbose                         % Numerical Renaissance Codebase 1.0
+function RR_CocktailSortVerbose                         % Numerical Renaissance Codebase 1.0
 n=49; n1=25; D=0.85*([1:n]'-n1)/n1+0.15*(2*rand(n,1)-1); D([1 n])=D([n 1]);
 n=size(D,1); speed=1000; frame=1000;  l=1; r=n; figure(1); clf;
 while r>l
@@ -22,4 +22,4 @@ while r>l
 	  pause(1/speed);  
   end; l=a+1;
 end
-end % function RC_CocktailSortVerbose
+end % function RR_CocktailSortVerbose

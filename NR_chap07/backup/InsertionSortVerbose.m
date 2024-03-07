@@ -1,4 +1,4 @@
-function RC_InsertionSortVerbose                        % Numerical Renaissance Codebase 1.0
+function RR_InsertionSortVerbose                        % Numerical Renaissance Codebase 1.0
 global D n speed frame
 % This function reorders a matrix based on its first column, which is assumed to be real.
 for i=n-1:-1:1
@@ -10,7 +10,7 @@ for i=n-1:-1:1
   D(i:b,:)=[D(i+1:b,:); D(i,:)];    % Insert record i at the designated point.
   plot(D(:,1),'x'); axis([0 n+1 -1 1]); pause(5/speed)
 end
-end % function RC_InsertionSortVerbose.m
+end % function RR_InsertionSortVerbose.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Draw(c,i,a,b)
 global D n speed frame

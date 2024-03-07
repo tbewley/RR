@@ -1,8 +1,8 @@
-% script <a href="matlab:RC_SCGridTest">RC_SCGridTest</a>
-% Test <a href="matlab:help RC_SCGrid">RC_SCGrid</a> by producing a C-grid, an O-grid, and an H-grid around a NACA0012 airfoil.
+% script <a href="matlab:RR_SCGridTest">RR_SCGridTest</a>
+% Test <a href="matlab:help RR_SCGrid">RR_SCGrid</a> by producing a C-grid, an O-grid, and an H-grid around a NACA0012 airfoil.
 % Renaissance Codebase, Appendix B, https://github.com/tbewley/RC
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RC_CMGridTest.  Depends on RC_OrthGrid.
+% See also RR_CMGridTest.  Depends on RR_OrthGrid.
 
 clear; close all; cin=-1; cout=2; 
 c=[0.000000+0.000000*i,0.000600+0.004318*i,0.001248+0.006198*i,0.001947+0.007713*i,...
@@ -25,21 +25,21 @@ c=[0.000000+0.000000*i,0.000600+0.004318*i,0.001248+0.006198*i,0.001947+0.007713
 n=length(c); i1=1; i2=n; x=real(c);  
 
 g.x0=-.1; g.x1=1.2; g.y1=.4; II=51; JJ=16; steps=25;
-z=RC_OrthGrid(II,JJ,'Cartesian',g,0,0,0,0);
-w=RC_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
-RC_Plot2DMesh(z,1,II,JJ); RC_Plot2DMesh(w,2,II,JJ); hold on; RC_Plot2DMesh(conj(w),2,II,JJ);
+z=RR_OrthGrid(II,JJ,'Cartesian',g,0,0,0,0);
+w=RR_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
+RR_Plot2DMesh(z,1,II,JJ); RR_Plot2DMesh(w,2,II,JJ); hold on; RR_Plot2DMesh(conj(w),2,II,JJ);
 print -depsc naca0012_hgrid.eps; pause(0.1);
 
 g.x0=0; g.x1=1.2; g.y1=.3; II=55; JJ=16; steps=15;
-z=RC_OrthGrid(II,JJ,'ConfocalParabola',g,0,0,0,0);
-w=RC_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
-RC_Plot2DMesh(z,3,II,JJ); RC_Plot2DMesh(w,4,II,JJ); hold on; RC_Plot2DMesh(conj(w),4,II,JJ);
+z=RR_OrthGrid(II,JJ,'ConfocalParabola',g,0,0,0,0);
+w=RR_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
+RR_Plot2DMesh(z,3,II,JJ); RR_Plot2DMesh(w,4,II,JJ); hold on; RR_Plot2DMesh(conj(w),4,II,JJ);
 print -depsc naca0012_cgrid.eps; pause(0.1);
 
 g.y1=0.84; II=20; JJ=24; steps=10;
-z=RC_OrthGrid(II,JJ,'EllipseHyperbola',g,1,1,0,0); z=(z+1)/2;
-w=RC_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
-RC_Plot2DMesh(z,5,II,JJ); RC_Plot2DMesh(w,6,II,JJ); hold on; RC_Plot2DMesh(conj(w),6,II,JJ);
+z=RR_OrthGrid(II,JJ,'EllipseHyperbola',g,1,1,0,0); z=(z+1)/2;
+w=RR_SCGrid(c,n,cin,cout,i1,i2,x,steps,z,II,JJ);
+RR_Plot2DMesh(z,5,II,JJ); RR_Plot2DMesh(w,6,II,JJ); hold on; RR_Plot2DMesh(conj(w),6,II,JJ);
 print -depsc naca0012_ogrid.eps;
 
-% end script RC_SCGridTest
+% end script RR_SCGridTest

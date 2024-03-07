@@ -1,5 +1,5 @@
-function [U,T]=RC_SchurSort(U,T)                        % Numerical Renaissance Codebase 1.0
-% This function reorders a RC_Schur decomposition such that the LHP eigenvalues appear in the
+function [U,T]=RR_SchurSort(U,T)                        % Numerical Renaissance Codebase 1.0
+% This function reorders a RR_Schur decomposition such that the LHP eigenvalues appear in the
 % first N columns and the RHP eigenvalues appear in the last N columns.  By Gabe Graham.
 
 N=length(A); g=1; p1=N; p2=N; p3=N;  % initialize N, g, and 3 placeholders
@@ -14,10 +14,10 @@ while p1>0  % start from bottom right and work towards upper left
     T11=T(p1+1:p2,p1+1:p2);       % find T11, T12, T22, X, Q, & R
     T12=T(p1+1:p2,p2+1:p3);
     T22=T(p2+1:p3,p2+1:p3);
-    X=RC_Sylvester(T11,T12,T22,g);   % T12 T22 now Swapped!!!???
+    X=RR_Sylvester(T11,T12,T22,g);   % T12 T22 now Swapped!!!???
     [Q,R]=QRHouseholder([-X;g*eye(size(X,2),size(X,2))]);
     
-    % if length(T11)>1, use one more RC_Schur decomposition to make new T22 upper triangular
+    % if length(T11)>1, use one more RR_Schur decomposition to make new T22 upper triangular
     if length(T11)>1
         [m,n]=size(X);
         Q11=Q(1:m,1:n); Q12=Q(1:m,n+1:n+m); Q22=Q(m+1:n+m,n+1:n+m);  R11=R(1:n,1:n);
@@ -31,4 +31,4 @@ while p1>0  % start from bottom right and work towards upper left
     T=P'*T*P; % permute T
     U=U*P;    % permute U
 end
-end % function RC_SchurSort
+end % function RR_SchurSort

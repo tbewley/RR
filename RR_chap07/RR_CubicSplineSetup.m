@@ -22,5 +22,5 @@ switch end_conditions
     a(1)=-1; b(1)=0; c(1)=1;  g(1,1)=0;
     a(n)=-1; b(n)=0; c(n)=1;  g(n,1)=0;
 end
-A=RC_tridiag_matrix(a,b,c); fpp=A\g;
+A=RR_tridiag_matrix(a,b,c); fpp=A\g;
 end % function RR_CubicSplineSetup

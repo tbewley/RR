@@ -1,5 +1,5 @@
-function [uhatS]=RC_RFST(u,N)
-% function [uhatS]=RC_RFST(u,N)
+function [uhatS]=RR_RFST(u,N)
+% function [uhatS]=RR_RFST(u,N)
 % INPUT: u is a real column vector of length N-1 where N=2^s.
 % OUTPUT: uhatS is a real column vector of length N-1. 
 % This code combines the u_j according to (5.47a), computes its RFFT, 
@@ -11,4 +11,4 @@ function [uhatS]=RC_RFST(u,N)
 w(1)=0; w(2:N)=(u(N-1:-1:1)-u)+(u+u(N-1:-1:1)).*sin([1:N-1]'*pi/N); what=RFFT(w,N); 
 uhatS(1,1)=real(what(1)); uhatS(2:2:N-2,1)=imag(what(2:N/2));
 for n=3:2:N-1; uhatS(n,1)=uhatS(n-2,1)+2*real(what((n-1)/2+1)); end
-end % function RC_RFST
+end % function RR_RFST

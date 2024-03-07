@@ -1,9 +1,9 @@
-function [g] = RC_ThomasParallel(a,b,c,g,n,p)
-% function [g] = RC_ThomasParallel(a,b,c,g,n,p)
+function [g] = RR_ThomasParallel(a,b,c,g,n,p)
+% function [g] = RR_ThomasParallel(a,b,c,g,n,p)
 % This function solves AX=g for X using the parallel Thomas algorithm on p proessors.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% Verify with <a href="matlab:help RC_ThomasParallelTest">RC_ThomasParallelTest</a>.
+% Verify with <a href="matlab:help RR_ThomasParallelTest">RR_ThomasParallelTest</a>.
 
 a=distributed(a); b=distributed(b); c=distributed(c); g=distributed(g); % Move data to labs
 
@@ -41,11 +41,11 @@ ggg=Thomas(aaa,bbb,ccc,ggg,p);
 
 spmd % --------------------------- THIS BLOCK DONE IN PARALLEL ---------------------------
   gg(jm)=ggg(labindex);
-  for j = jm-1:-1:1                     % PARALLEL BACK SURC_BSTITUTIONS
+  for j = jm-1:-1:1                     % PARALLEL BACK SURR_BSTITUTIONS
     if labindex>1, gg(j) = (gg(j)-aa(j)*ggg(labindex-1)-cc(j)*gg(jm))/bb(j);
     else,          gg(j) = (gg(j)                      -cc(j)*gg(jm))/bb(j); end
   end
 end % ------------------------------------------------------------------------------------
 
 g=[]; for k=1:p, g=[g; gg{k}]; end      % Accumulate result to return from function.
-end % function RC_ThomasParallel
+end % function RR_ThomasParallel

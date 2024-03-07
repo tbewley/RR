@@ -1,4 +1,4 @@
-function RC_PoissonMG2d
+function RR_PoissonMG2d
 % A 2D Poisson solver on UNIFORM (relax this!) mesh using MULTIGRID with CHECKERBOARD, ZEBRA, or TWEED
 % smoothing. Input is assumed to be normalized such that the discretized Laplace operator
 % has a 1 on the diagonal element. By Thomas Bewley, Paolo Luchini, and Anish Karandikar.
@@ -14,7 +14,7 @@ tic; for iter=1:10             % PERFORM UP TO 10 MULTIGRID CYCLES.
 end; t=toc; 
 
 if verbose<2, fprintf('-> Total time: %0.3g; Time/iteration: %0.3g sec\n',t,t/iter); end
-% end function RC_PoissonMG2d
+% end function RR_PoissonMG2d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Multigrid(lev)
 % The main recursive function for the multigrid algorithm. It calls the smoothing function,
@@ -107,7 +107,7 @@ if ym==3;
   else
      v{lev}(2:xmm,2)=(v{lev}(2:xmm,3)+v{lev}(2:xmm,1))*0.25+d{lev}(2:xmm,2);
      v{lev}(2,2)=v{lev}(2,2)+v{lev}(1,2)*0.25;  v{lev}(xmm,2)=v{lev}(xmm,2)+v{lev}(xm,2)*0.25;
-     v{lev}(2:xmm,2)=RC_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2),xm-2);
+     v{lev}(2:xmm,2)=RR_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2),xm-2);
   end
   EnforceBCs(lev);
 else; for irb=0:1;
@@ -127,7 +127,7 @@ else; for irb=0:1;
     if direction==0;  
       if YBC==1
         v{lev}(2+irb:2:xmm,2:ymm)=(v{lev}((2+irb:2:xmm)+1,2:ymm)+v{lev}((2+irb:2:xmm)-1,2:ymm))*0.25+d{lev}((2+irb:2:xmm),2:ymm);
-        v{lev}(2+irb:2:xmm,2:ymm)=(RC_ThomasTT(-0.25,1,-0.25,(v{lev}(2+irb:2:xmm,2:ymm))',ym-2))';
+        v{lev}(2+irb:2:xmm,2:ymm)=(RR_ThomasTT(-0.25,1,-0.25,(v{lev}(2+irb:2:xmm,2:ymm))',ym-2))';
       else
         % fix the boundary conditions on this!
         a=-0.25*ones(ymm); b=ones(ymm); c=a;
@@ -138,7 +138,7 @@ else; for irb=0:1;
     else
       if XBC==1
         v{lev}(2:xmm,2+irb:2:ymm)=(v{lev}(2:xmm,(2+irb:2:ymm)+1)+v{lev}(2:xmm,(2+irb:2:ymm)-1))*0.25+d{lev}(2:xmm,(2+irb:2:ymm))
-        v{lev}(2:xmm,2+irb:2:ymm)=(RC_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2+irb:2:ymm),xmm-1)) ;
+        v{lev}(2:xmm,2+irb:2:ymm)=(RR_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2+irb:2:ymm),xmm-1)) ;
       else
         % fix the boundary conditions on this!
         a=-0.25*ones(ymm); b=ones(ymm); c=a;
@@ -184,7 +184,7 @@ pause;
 %      v{lev}(xmm:-1:xmp-i+1,ymp-i)=G(:,2,4);
 
 %        v{lev}(2,2)=v{lev}(2,2)+v{lev}(1,2)*0.25;  v{lev}(xmm,2)=v{lev}(xmm,2)+v{lev}(xm,2)*0.25;
-%        v{lev}(2:xmm,2)=RC_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2),xm-2);
+%        v{lev}(2:xmm,2)=RR_ThomasTT(-0.25,1,-0.25,v{lev}(2:xmm,2),xm-2);
 
     end
     

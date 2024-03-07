@@ -1,12 +1,12 @@
-function z=RC_OrthGrid(II,JJ,type,g,c0x,c1x,c0y,c1y)
-% function z=RC_OrthGrid(II,JJ,type,g,c0x,c1x,c0y,c1y)
+function z=RR_OrthGrid(II,JJ,type,g,c0x,c1x,c0y,c1y)
+% function z=RR_OrthGrid(II,JJ,type,g,c0x,c1x,c0y,c1y)
 % Generate a few convenient locally-orthogonal 2D grids.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RC_CMGridTest.  Verify with RC_OrthGridTest.
+% See also RR_CMGridTest.  Verify with RR_OrthGridTest.
 
-x=RC_Stretch1DMesh([0:1/(II-1):1],'p',0,1,c0x,c1x);
-y=RC_Stretch1DMesh([0:1/(JJ-1):1],'p',0,1,c0y,c1y);
+x=RR_Stretch1DMesh([0:1/(II-1):1],'p',0,1,c0x,c1x);
+y=RR_Stretch1DMesh([0:1/(JJ-1):1],'p',0,1,c0y,c1y);
 switch type % Set up the grid in the z plane
   case 'Cartesian'
     for I=1:II, for J=1:JJ, z(I,J)=g.x0+x(I)*g.x1+i*y(J)*g.y1; end, end
@@ -19,4 +19,4 @@ switch type % Set up the grid in the z plane
       end, z(II/2+I,J)=zr+i*zi; z(II/2+1-I,J)=-zr+i*zi;   
     end, end
 end
-end % function RC_OrthGrid
+end % function RR_OrthGrid

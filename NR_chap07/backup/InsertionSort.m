@@ -1,10 +1,10 @@
-function [D,index]=RC_InsertionSort(D,v,n)
-% function [D,index]=RC_InsertionSort(D,v,n)
+function [D,index]=RR_InsertionSort(D,v,n)
+% function [D,index]=RR_InsertionSort(D,v,n)
 % Reorder a matrix D based on the elements in its first column using an insertion sort.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RC_BlockInsertionSort, RC_MergeSort, RC_QuickSort, RC_HeapSort, RC_CocktailSort,
-% RC_BitonicSort, RC_OddEvenRC_MergeSort.  Verify with RC_InsertionSortTest.
+% See also RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_InsertionSortTest.
 
 if nargout==2; D=[D, [1:n]']; end, for i=n-1:-1:1, a=i+1; b=n;  
   % The following 2 lines search the ordered part of the list, [a,b], using a bisection
@@ -19,7 +19,7 @@ if nargout==2; D=[D, [1:n]']; end, for i=n-1:-1:1, a=i+1; b=n;
   if v, plot(D(:,1),'x'); axis([0 n+1 -1 1]); pause(0.1), end
 end
 if nargout==2, index=round(D(:,end)); D=D(:,1:end-1); end
-end % function RC_InsertionSort
+end % function RR_InsertionSort
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Draw(D,c,i,a,b,n)
 plot([i i],[-1 1],'r-',[a a],[-1 1],'g-',[b b],[-1 1],'c-',[c c],[-1 1],'b-'); hold on;

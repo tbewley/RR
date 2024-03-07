@@ -1,5 +1,5 @@
-function RC_AMtest
-% Test <a href="matlab:help RC_CNiter">RC_CNiter</a>, <a href="matlab:help RC_AM3iter">RC_AM3iter</a>, <a href="matlab:help RC_AM4iter">RC_AM4iter</a>, <a href="matlab:help RC_AM5iter">RC_AM5iter</a>, and <a href="matlab:help RC_AM6iter">RC_AM6iter</a>
+function RR_AMtest
+% Test <a href="matlab:help RR_CNiter">RR_CNiter</a>, <a href="matlab:help RR_AM3iter">RR_AM3iter</a>, <a href="matlab:help RR_AM4iter">RR_AM4iter</a>, <a href="matlab:help RR_AM5iter">RR_AM5iter</a>, and <a href="matlab:help RR_AM6iter">RR_AM6iter</a>
 % by simulating the Lorenz or Rossler equation.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.4.2.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
@@ -12,7 +12,7 @@ format long; while 1
     otherwise, break
   end
   s.MaxTime=input('  Over what time interval T (try, e.g., 10)? ');
-  disp('  Available methods: RC_CNiter, RC_AM3iter, RC_AM4iter, RC_AM5iter, RC_AM6iter')
+  disp('  Available methods: RR_CNiter, RR_AM3iter, RR_AM4iter, RR_AM5iter, RR_AM6iter')
   m  =input('  Which method? ','s'); order=2; if length(m)==7, order=str2num(m(3)); end
   s.h=input('  What is the timestep h (try, e.g., .01)? ');
   s.MaxIters=input('  How many iterations per timestep (try, e.g., 2)? ');
@@ -21,13 +21,13 @@ format long; while 1
           figure(1), plot3(x(1),x(2),x(3)), hold on, axis equal, view(-45,30), end
   if v>1, figure(2), plot(0,s.h), hold on, title('h_n versus t_n'), end  
 
-  t=0; s.MaxSteps=1;  % PERFORM (order-1) STEPS USING LOWER-ORC_RDER AM SCHEMES TO SET UP s.f
+  t=0; s.MaxSteps=1;  % PERFORM (order-1) STEPS USING LOWER-ORR_RDER AM SCHEMES TO SET UP s.f
   s.f(:,1)=feval(strcat('RHS_',S),x,p);
-  if order>2, [x,t,s]=RC_CNiter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>3, [x,t,s]=RC_AM3iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>4, [x,t,s]=RC_AM4iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>5, [x,t,s]=RC_AM5iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>2, [x,t,s]=RR_CNiter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>3, [x,t,s]=RR_AM3iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>4, [x,t,s]=RR_AM4iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>5, [x,t,s]=RR_AM5iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
   s.MaxSteps=1e6;
   [x,t]=feval(m,strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler')                % SIMULATE!
 end, disp(' '), format short
-end % function RC_AMtest
+end % function RR_AMtest

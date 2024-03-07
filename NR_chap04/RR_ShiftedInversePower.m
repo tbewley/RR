@@ -1,26 +1,26 @@
-function [S,T] = RC_ShiftedInversePower(A,mu)
-% function [S,T] = RC_ShiftedInversePower(A,mu)
+function [S,T] = RR_ShiftedInversePower(A,mu)
+% function [S,T] = RR_ShiftedInversePower(A,mu)
 % Apply two steps of the shifted inverse power method (per eigenvalue mu_k) to determine
 % (if called with nargout=1) the eigenvectors S(:,k), OR (if called with nargout=2)
-% the RC_Schur vectors U(:,k) and upper-triangular T of the RC_Schur decomposition A=U*T*U'.
+% the RR_Schur vectors U(:,k) and upper-triangular T of the RR_Schur decomposition A=U*T*U'.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.4.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 
 n=size(A,1);
 for k=1:length(mu);
-  B=A-mu(k)*eye(n);                                % Compute B=PLU (see RC_GaussPP.m) 
+  B=A-mu(k)*eye(n);                                % Compute B=PLU (see RR_GaussPP.m) 
   for j = 1:n-1,                                   % Loop through each column j<n
     [amax,imax]=max(abs(B(j:n,j)));                % If necessary, exchange the rows of B.
     if amax>abs(B(j,j)); B([j j-1+imax],:)=B([j-1+imax j],:); end
     B(j+1:n,j)     = - B(j+1:n,j) / B(j,j);                        % Compute m_ij.
     B(j+1:n,j+1:n) = B(j+1:n,j+1:n) + B(j+1:n,j) * B(j,j+1:n);     % Outer product update.
   end
-  if B(n,n)==0,              % RC_Eigenvalue exact! Solve Bs=0 exactly for a solution.
+  if B(n,n)==0,              % RR_Eigenvalue exact! Solve Bs=0 exactly for a solution.
     S(n,k)=1;
     for i = n-1:-1:1,   S(i,k) = -B(i,i+1:n)*S(i+1:n,k) / B(i,i); end  % Backsubstitution.
-  else                       % RC_Eigenvalue approximate. Apply Shifted Inverse Power method.
+  else                       % RR_Eigenvalue approximate. Apply Shifted Inverse Power method.
     S(:,k)=ones(n,1);        % Initialize (see footnote 8). (no need to apply P to e!)
-    S(n,k)=S(n,k) / B(n,n);  % Solve Ux=e (see RC_GaussPP.m)
+    S(n,k)=S(n,k) / B(n,n);  % Solve Ux=e (see RR_GaussPP.m)
     for i = n-1:-1:1,   S(i,k) = (S(i,k)-B(i,i+1:n)*S(i+1:n,k)) / B(i,i); end
     for steps=1:2            % Then apply two steps of the shifted inverse power method.
       for j = 1:n-1, S(j+1:n,k) = S(j+1:n,k) + B(j+1:n,j) * S(j,k); end
@@ -29,8 +29,8 @@ for k=1:length(mu);
     end
   end
   if nargout>1; S(:,k) = S(:,k)-S(:,1:k-1)*S(:,1:k-1)'*S(:,k); end;  % Orthogonalize.
-  S(:,k)=S(:,k)/norm(S(:,k));   % Note above that the RC_Schur decomposition may be derived
+  S(:,k)=S(:,k)/norm(S(:,k));   % Note above that the RR_Schur decomposition may be derived
 end                             % from this method simply by orthogonalization of the S
 if nargout>1; T=S'*A*S; end;    % matrix and recomputation of T.
-end % function RC_ShiftedInversePower
+end % function RR_ShiftedInversePower
 

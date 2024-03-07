@@ -1,5 +1,5 @@
-function [A,B,C,r1,r2,r3,r4]=RC_SS2CanonicalForm(A,B,C,FORM)
-% function [A,B,C,r1,r2,r3,r4]=RC_SS2CanonicalForm(A,B,C,FORM)
+function [A,B,C,r1,r2,r3,r4]=RR_SS2CanonicalForm(A,B,C,FORM)
+% function [A,B,C,r1,r2,r3,r4]=RR_SS2CanonicalForm(A,B,C,FORM)
 % Convert a general state-space model to one of a variety of canonical forms.
 %
 % If FORM = 'Controller', 'Reachability', 'DTControllability', 'Observer', 'Observability',
@@ -27,7 +27,7 @@ function [A,B,C,r1,r2,r3,r4]=RC_SS2CanonicalForm(A,B,C,FORM)
 %
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, NRchap20.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RC_SS2CanonicalFormTest">RC_SS2CanonicalFormTest</a>.
+% Verify with: <a href="matlab:help RR_SS2CanonicalFormTest">RR_SS2CanonicalFormTest</a>.
 
 disp(' '), r1=0; r2=0; r3=0; r4=0; [n,ni]=size(B); [no,n]=size(C);
 forms={'Controller','Reachability', 'DTControllability', ...
@@ -35,26 +35,26 @@ forms={'Controller','Reachability', 'DTControllability', ...
 if (ismember(FORM,forms) & ni*no>1), disp('Error: invalid case.'), return, end, FORM
 switch FORM         % Compute the transformation matrix
  case 'Reachability'
-   Q=RC_CtrbMatrix(A,B);
+   Q=RR_CtrbMatrix(A,B);
  case 'Controller'
-   Q=RC_CtrbMatrix(A,B); [A,B,C]=RC_SSTransform(A,B,C,Q); a=-A(:,n)'; Q=R1(a,n)';
+   Q=RR_CtrbMatrix(A,B); [A,B,C]=RR_SSTransform(A,B,C,Q); a=-A(:,n)'; Q=R1(a,n)';
  case 'DTControllability'
-   Q=RC_CtrbMatrix(A,B); [A,B,C]=RC_SSTransform(A,B,C,Q); a=-A(:,n)'; Q=-R1(a,n)'*Inv(R2(a,n));
+   Q=RR_CtrbMatrix(A,B); [A,B,C]=RR_SSTransform(A,B,C,Q); a=-A(:,n)'; Q=-R1(a,n)'*Inv(R2(a,n));
  case 'Observability'
-   Q=Inv(RC_ObsvMatrix(A,C));
+   Q=Inv(RR_ObsvMatrix(A,C));
  case 'Observer'
-   Q=Inv(RC_ObsvMatrix(A,C)); [A,B,C]=RC_SSTransform(A,B,C,Q); a=-A(n,:); Q=Inv(R1(a,n));
+   Q=Inv(RR_ObsvMatrix(A,C)); [A,B,C]=RR_SSTransform(A,B,C,Q); a=-A(n,:); Q=Inv(R1(a,n));
  case 'DTConstructibility'
-   Q=Inv(RC_ObsvMatrix(A,C)); [A,B,C]=RC_SSTransform(A,B,C,Q); a=-A(n,:); Q=-Inv(R1(a,n))*R2(a,n);
+   Q=Inv(RR_ObsvMatrix(A,C)); [A,B,C]=RR_SSTransform(A,B,C,Q); a=-A(n,:); Q=-Inv(R1(a,n))*R2(a,n);
  case 'ControllabilityBlockStaircase'
-   [Q,R,pi,r1]=QRmgs(RC_CtrbMatrix(A,B));  r2=n-r1;
+   [Q,R,pi,r1]=QRmgs(RR_CtrbMatrix(A,B));  r2=n-r1;
  case 'ObservabilityBlockStaircase'     
-   [Q,R,pi,r1]=QRmgs(RC_ObsvMatrix(A,C)'); r2=n-r1;
+   [Q,R,pi,r1]=QRmgs(RR_ObsvMatrix(A,C)'); r2=n-r1;
  case {'BlockKalman','Minimal'}
    % First, find orthogonal bases for the controllable/null-controllable subspaces,
    % and for the observable/null-observable subspaces.
-   [Qcnc,R,pi,rc]=QRmgs(RC_CtrbMatrix(A,B));  rnc=n-rc; Qc=Qcnc(:,1:rc); Qnc=Qcnc(:,rc+1:n);
-   [Qono,R,pi,ro]=QRmgs(RC_ObsvMatrix(A,C)'); rno=n-ro; Qo=Qono(:,1:ro); Qno=Qono(:,ro+1:n);
+   [Qcnc,R,pi,rc]=QRmgs(RR_CtrbMatrix(A,B));  rnc=n-rc; Qc=Qcnc(:,1:rc); Qnc=Qcnc(:,rc+1:n);
+   [Qono,R,pi,ro]=QRmgs(RR_ObsvMatrix(A,C)'); rno=n-ro; Qo=Qono(:,1:ro); Qno=Qono(:,ro+1:n);
    % Find an orthogonal basis for the modes that are neither null-controllable nor
    % observable (that is, for the modes that are both controllable and null-observable).
    [Q,R,pi,r]=QRmgs([Qnc Qo]);             rcno =n-r;      Qcno =Q(:,r+1:n);
@@ -68,9 +68,9 @@ switch FORM         % Compute the transformation matrix
    Q=[Qco Qcno Qnco Qncno]; r1=rco; r2=rcno; r3=rnco; r4=rncno;
  otherwise, disp('Error: invalid case.'), return
 end
-[A,B,C]=RC_SSTransform(A,B,C,Q);  % Perform final transform of the system
+[A,B,C]=RR_SSTransform(A,B,C,Q);  % Perform final transform of the system
 if strcmp(FORM,'Minimal'), A=A(1:r1,1:r1); B=B(1:r1,:); C=C(:,1:r1); end
-end % function RC_SS2CanonicalForm
+end % function RR_SS2CanonicalForm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [R]=R1(a,n)
 for row=1:n; R(row,:)=[a(n-row+2:n) 1 zeros(1,n-row)]; end

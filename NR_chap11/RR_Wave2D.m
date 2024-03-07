@@ -1,4 +1,4 @@
-function RC_Wave2D
+function RR_Wave2D
 % This code performs a simulation of a the excitation of surface waves in an
 % olypic size swimming pool, by an earthquake which moves its walls, as formulated
 % (using the shallow water equations) in the 2023 MAE207 final exam, available here:
@@ -36,7 +36,7 @@ for n=1:T/h;                                   % Now do the RK4 simulation
   y=y+h*(f1/6+(f2+f3)/3+f4/6); t=t+h;
   if v & mod(n,20)==0, SimPlot(y_old,y,t-h,t,h,h,v,p,h); y_old=y; end
 end
-end % function RC_Wave2D
+end % function RR_Wave2D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function f=RHS(y,p,t)
 % The RHS of the SWE, with u=y(:,:,1), v=y(:,:,2), h=y(:,:,3), approximated with FD.

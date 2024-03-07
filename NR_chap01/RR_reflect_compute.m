@@ -1,12 +1,12 @@
-function [sig,w] = RC_reflect_compute(x)
-% function [sig,w] = RC_reflect_compute(x)
+function [sig,w] = RR_reflect_compute(x)
+% function [sig,w] = RR_reflect_compute(x)
 % Compute the parameters {sig,w} of a Householder reflection matrix designed to reflect
 % the (possibly complex) vector x to the direction (*;0;0;...;0).
 % INPUT:  x      =vector to be rotated
 % OUTPUT: {sig,w}=parameters of the relection matrix sought
 % NOTE:   This code uses the Householder reflections formulation that works for both real and complex x.
 %         It does NOT reduce to the "simple and logical" case, with sig=2, in the real case.
-% See also RC_reflect. Verify with RC_reflect_test.
+% See also RR_reflect. Verify with RR_reflect_test.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 

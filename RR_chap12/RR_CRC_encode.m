@@ -1,5 +1,5 @@
-function b = RR_CRC_encode(a,v,k,r,verbose)
-% function b = RR_CRC_encode(a,v,k,r,verbose)
+function b = RR_CRR_encode(a,v,k,r,verbose)
+% function b = RR_CRR_encode(a,v,k,r,verbose)
 % Encodes the binary data vector a(z) using the cyclic basis polynomial v(z).
 % Note: all polynomials ordered from highest power to zero'th power of z in vectors.
 % INPUTS: a=vector of binary (logical) coefficients of the data polynomial a(z)
@@ -12,11 +12,11 @@ function b = RR_CRC_encode(a,v,k,r,verbose)
 % NOTE 2: This simple demo code requires n=k+r<=64.
 % NOTE 3: In systematic cyclic form, the resulting codeword may be written [a b].
 % EXAMPLE CALL #1: [encodes/decodes a given binary vector a using CRC-5-USB]:
-%     k=16; r=5; a=0b1101100111011010u64; v=0b100101u64; [b]=RR_CRC_encode(a,v,k,r,true)
+%     k=16; r=5; a=0b1101100111011010u64; v=0b100101u64; [b]=RR_CRR_encode(a,v,k,r,true)
 % EXAMPLE CALL #2: [encodes/decodes a random binary vector a using CRC-32 (802.3)]
 %     k=32; r=32; as=sprintf('%d',rand(1,k)>.5), a=eval(strcat('0b',as,'u64'));
 %     v=0b100000100110000010001110110110111u64;  % (note the extra 1 at the lsb!)
-%     [b]=RR_CRC_encode(a,v,k,r,false)
+%     [b]=RR_CRR_encode(a,v,k,r,false)
 %% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 

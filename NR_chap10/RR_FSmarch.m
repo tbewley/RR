@@ -1,6 +1,6 @@
 function y=FSmarch(x,v,m)
 % function y=FSmarch(x,v,m)
-% This is an ancillary code to FS_Bisection_Test and FS_RC_CSD_Test.
+% This is an ancillary code to FS_Bisection_Test and FS_RR_CSD_Test.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.7.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 

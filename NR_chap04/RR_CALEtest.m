@@ -1,11 +1,11 @@
-% script <a href="matlab:RC_CALEtest">RC_CALEtest</a>
-% Test <a href="matlab:help RC_CALE">RC_CALE</a> with random A and random Q>0.
+% script <a href="matlab:RR_CALEtest">RR_CALEtest</a>
+% Test <a href="matlab:help RR_CALE">RR_CALE</a> with random A and random Q>0.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.5.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RC_SylvesterTest, RC_CAREtest, RC_DALEtest, RC_DAREtest. 
+% See also RR_SylvesterTest, RR_CAREtest, RR_DALEtest, RR_DAREtest. 
 
-disp('Now testing RC_CALE with random A and random Q>0.')
+disp('Now testing RR_CALE with random A and random Q>0.')
 clear; n=5; Q=randn(n); Q=Q*Q'; A=randn(n);
-X=RC_CALE(A,Q); error_RC_CALE=norm(A*X+X*A'+Q), disp(' ')
+X=RR_CALE(A,Q); error_RR_CALE=norm(A*X+X*A'+Q), disp(' ')
 
-% end script RC_CALEtest
+% end script RR_CALEtest

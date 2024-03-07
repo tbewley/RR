@@ -1,4 +1,4 @@
-% script <a href="matlab:RC_PODtest">RC_PODtest</a>
+% script <a href="matlab:RR_PODtest">RR_PODtest</a>
 % Test the POD algorithm on a random set of periodic training data with a given spectra.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
@@ -19,4 +19,4 @@ for j=1:n2;
      r=r+U(:,k)*S(k,k)*V(j,k); if k==1, plot(x,r,'k--'); else, plot(x,r,'-.'), end
    end, plot(x,r,'k-'), axis([0 L -0.8 0.8])
 end
-% end script RC_PODtest
+% end script RR_PODtest

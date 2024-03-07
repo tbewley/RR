@@ -1,4 +1,4 @@
-function RC_BlockInsertionSort                          % Numerical Renaissance Codebase 1.0
+function RR_BlockInsertionSort                          % Numerical Renaissance Codebase 1.0
 global D n speed frame
 % This function reorders a matrix D based on sgn(D(:,1)), treating 0 as positive.
 c=n; while c>1 & D(c,1)>=0; Draw(c,n,n); c=c-1; end; Draw(c,n,n); b=c-1; a=b;
@@ -9,7 +9,7 @@ if c>1, while a>0
   Draw(c,a+c-b,a); pause(5/speed); c=a+c-b; b=a-1;
 end, end
 Draw(n,c,0); hold on;
-end % function RC_BlockInsertionSort.m
+end % function RR_BlockInsertionSort.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Draw(a,b,c)
 global D n speed frame

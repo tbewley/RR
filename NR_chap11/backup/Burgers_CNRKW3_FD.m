@@ -1,11 +1,11 @@
-function RC_Burgers_CRCKW3_FD
-% function <a href="matlab:RC_Burgers_CRCKW3_FD">RC_Burgers_CRCKW3_FD</a>
+function RR_Burgers_CRCKW3_FD
+% function <a href="matlab:RR_Burgers_CRCKW3_FD">RR_Burgers_CRCKW3_FD</a>
 % Simulate the 1D Burgers on 0<x<L with homogeneous Dirichlet BCs using CN/RKW3 in time
 % (explicit on nonlinear terms, implicit on linear terms) & 2nd-order central FD in space.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 11.2.1.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap11">Chapter 11</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RC_Burgers_CRCKW3_FD_RS, with 2 registers & 57 flops/timestep (instead of 3 & 55),
-% and RC_Burgers_KS_CRCKW3_PS with a pseudospectral implementation.
+% See also RR_Burgers_CRCKW3_FD_RS, with 2 registers & 57 flops/timestep (instead of 3 & 55),
+% and RR_Burgers_KS_CRCKW3_PS with a pseudospectral implementation.
 
 %%%%%%%%%%%%%%%%%%%% Initialize the simulation paramters (user input) %%%%%%%%%%%%%%%%%%%%
 L=100; Tmax=50; N=100; dt=0.5; PlotInterval=1;
@@ -25,10 +25,10 @@ for k=1:Tmax/dt
         rhs=y(2:N) +d(rk)*(y(3:N+1)-2*y(2:N)+y(1:N-1)) +e(rk)*r +f(rk)*rhs;    % ~ 9N
      end       
      % Solve for new y
-     y(2:N)=RC_ThomasTT(a(rk),b(rk),c(rk),rhs',N-1);                              % ~ 8N
+     y(2:N)=RR_ThomasTT(a(rk),b(rk),c(rk),rhs',N-1);                              % ~ 8N
      % Save r (in rhs) for the next timestep                            --------------
      if (rk<3) rhs=r; end                                               % Total: ~ 55N
   end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF RK LOOP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   if (mod(k,PlotInterval)==0) PlotXY(x,y,k*dt,0,L,-3,3); end            
 end                                                                     
-end % function RC_Burgers_CRCKW3_FD
+end % function RR_Burgers_CRCKW3_FD

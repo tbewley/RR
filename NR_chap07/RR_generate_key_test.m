@@ -1,4 +1,4 @@
-% script RC_generate_key_test
+% script RR_generate_key_test
 % Generates a "key" from some signed integer data, for use in a dictionary (hash) function
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 

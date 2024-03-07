@@ -1,9 +1,9 @@
-function [X] = RC_rotate(X,c,s,i,k,p,q,which)
-% function [X] = RC_rotate(X,c,s,i,k,p,q,which)
+function [X] = RR_rotate(X,c,s,i,k,p,q,which)
+% function [X] = RR_rotate(X,c,s,i,k,p,q,which)
 % Apply a Givens rotation G(c,s), embedded in elements (i,i) (i,k) (k,i) and (k,k)
-% of an identiy matrix, to the matrix X, with {c,s} as given by RC_Rotate_Compute.  
+% of an identiy matrix, to the matrix X, with {c,s} as given by RR_Rotate_Compute.  
 % INPUT:  X     = matrix to which reflection is to be applied
-%         [c,s] = parameters defining the rotation, as determined by RC_Reflect_Compute
+%         [c,s] = parameters defining the rotation, as determined by RR_Reflect_Compute
 %         [i,k] = (i,i) (i,k) (k,i) and (k,k) are the 4 elements of G that are different than the identity matrix
 %         [p:q] = range outside of which the columns (if premultiplying), and/or
 %                 the rows (if postmultiplying), of X are assumed to be zero, and are
@@ -13,7 +13,7 @@ function [X] = RC_rotate(X,c,s,i,k,p,q,which)
 %                 use which='R' to postmultiply by G  (that is, to compute X * G)
 %                 use which='B' to do both            (that is, to compute G^H * X * G)
 % OUTPUT: X     = the modified X, as specified by which (see above)
-% See also RC_rotate_compute. Verify with RC_rotate_test.
+% See also RR_rotate_compute. Verify with RR_rotate_test.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 

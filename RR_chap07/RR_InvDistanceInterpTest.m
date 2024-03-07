@@ -1,5 +1,5 @@
-% script <a href="matlab:RC_InvDistanceInterpTest">RC_InvDistanceInterpTest</a>
-% Test <a href="matlab:help RC_InvDistanceInterp">RC_InvDistanceInterp</a> on data from a smooth fn.
+% script <a href="matlab:RR_InvDistanceInterpTest">RR_InvDistanceInterpTest</a>
+% Test <a href="matlab:help RR_InvDistanceInterp">RR_InvDistanceInterp</a> on data from a smooth fn.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
  
@@ -16,9 +16,9 @@ plot3(c(2,:),c(1,:),f,'ko','markerfacecolor','k'), axis tight, view(-11.5,14)
 
 for k=2:5, if k<5, p=k; else, p=20; end, figure(k)
   for i=1:Nx, for j=1:Ny
-    fn(i,j)=RC_InvDistanceInterp([x(i); y(j)],c,f,p,100); % inverse distance interpolant
+    fn(i,j)=RR_InvDistanceInterp([x(i); y(j)],c,f,p,100); % inverse distance interpolant
   end, end
   grid on, hold on, title(sprintf('Inverse distance interpolant, p=%d',p)), surf(y,x,fn)
   plot3(c(2,:),c(1,:),f+.01,'ko','markerfacecolor','k'), axis tight, view(-11.5,14)
 end
-% end script RC_InvDistanceInterpTest
+% end script RR_InvDistanceInterpTest

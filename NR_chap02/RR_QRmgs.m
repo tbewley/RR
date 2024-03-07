@@ -14,5 +14,5 @@ for i=1:n
   R(i,i+1:n)=A(:,i)'*A(:,i+1:n); A(:,i+1:n)=A(:,i+1:n)-(A(:,i))*(R(i,i+1:n));
 end
 r=n; for i=1:n, if abs(R(i,i))<tol, r=i-1; break, end, end, A=A(:,1:r); R=R(1:r,:);
-if r<m, A(:,r+1:m)=randn(m,m-r); R(r+1:m,:)=zeros(m-r,n); A=RC_QRcgs(A,r); end
+if r<m, A(:,r+1:m)=randn(m,m-r); R(r+1:m,:)=zeros(m-r,n); A=RR_QRcgs(A,r); end
 end % function QRmgs

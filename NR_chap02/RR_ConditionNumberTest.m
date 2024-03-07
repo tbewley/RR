@@ -1,4 +1,4 @@
-% script <a href="matlab:ConditionNumberTest">RC_ConditionNumberTest</a>
+% script <a href="matlab:ConditionNumberTest">RR_ConditionNumberTest</a>
 % Calculate the perturbation dx to the solution x due to a perturbation db to the RHS b
 % in the problem A*x=b for a matrix A with a large condition number.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
@@ -12,10 +12,10 @@ for k=1:2
     case 1, disp('Now illustrating a benign case with b, db in random directions')
       b=randn(N,1); db=1e-6*randn(N,1); 
     case 2, disp('Now illustrating a pathological case with db in a direction masked by d')
-      [lam,S]=RC_Eig(A,'r'); s1=S(:,1); sN=S(:,N); b=s1; db=1e-6*sN;
+      [lam,S]=RR_Eig(A,'r'); s1=S(:,1); sN=S(:,N); b=s1; db=1e-6*sN;
   end
   x=A\b; xpdx=A\(b+db);
   norm_db_over_norm_b = norm(db)/norm(b)
   norm_dx_over_norm_x = norm(xpdx-x)/norm(x), disp(' '); if k==1, pause, end
 end
-% end script RC_ConditionNumberTest
+% end script RR_ConditionNumberTest

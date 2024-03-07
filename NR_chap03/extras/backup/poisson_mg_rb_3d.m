@@ -1,5 +1,5 @@
-function RC_poisson_mg_rb_3d
-% A 3D Poisson solver on uniform mesh using Multigrid and Red/Black RC_Gauss-Seidel.
+function RR_poisson_mg_rb_3d
+% A 3D Poisson solver on uniform mesh using Multigrid and Red/Black RR_Gauss-Seidel.
 % By Thomas Bewley, Anish Karandikar, and Paolo Luchini.
 global XBC YBC ZBC N1 N2 N3 xo yo zo nlev d v g
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% USER INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,17 +22,17 @@ d{1}(3:g{1}.xm-2,3:g{1}.ym-2,3:g{1}.zm-2)=rand(g{1}.xm-4,g{1}.ym-4,g{1}.zm-4);
 i=sum(sum(sum(d{1}(:,:,:))))/((g{1}.xm-4)*(g{1}.ym-4)*(g{1}.zm-4))+0.0001;
 d{1}(3:g{1}.xm-2,3:g{1}.ym-2,3:g{1}.zm-2)=d{1}(3:g{1}.xm-2,3:g{1}.ym-2,3:g{1}.zm-2)-i;
 e=max_error(1); fprintf('Iteration =  0, error = %0.3e\n',e)                                     
-for i=1:N1; RC_poisson_rb(1); end
+for i=1:N1; RR_poisson_rb(1); end
 tic;
 for iter=1:10 
-   o=e;  RC_poisson_mg(1); e = max_error(1);
+   o=e;  RR_poisson_mg(1); e = max_error(1);
    fprintf('Iteration = %0.6g, error = %0.3e, factor = %0.4f\n',iter,e,o/e)
    if e<1E-14, fprintf('Converged\n'), break, end
 end 
 t=toc
 fprintf('Total time = %0.4g sec for %0.6g iterations',t,iter)
 fprintf('-> time/iteration: %0.3g sec\n',t/iter);
-% end function RC_poisson_mg_rb_3d
+% end function RR_poisson_mg_rb_3d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function enforce_bcs(lev)
 global XBC YBC ZBC N1 N2 N3 xo yo zo nlev d v g
@@ -52,17 +52,17 @@ switch ZBC case 3, v{lev}(2:i,2:j,1        )=v{lev}(2:i,2:j,3          );
                    v{lev}(2:i,2:j,g{lev}.zm)=v{lev}(2:i,2:j,2          ); end
 % end function enforce_bcs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function RC_poisson_mg(lev)
+function RR_poisson_mg(lev)
 global XBC YBC ZBC N1 N2 N3 xo yo zo nlev d v g
-for i=1:N2; RC_poisson_rb(lev); end 
+for i=1:N2; RR_poisson_rb(lev); end 
 for ic=2:g{lev+1}.xm-1; for jc=2:g{lev+1}.ym-1; for kc=2:g{lev+1}.zm-1; % Compute residual
    i=2*(ic-xo)+xo; j=2*(jc-yo)+yo; k=2*(kc-zo)+zo;          % and restrict to coarser grid
    d{lev+1}(ic,jc,kc)=(v{lev}(i+1,j,k)+v{lev}(i-1,j,k)+v{lev}(i,j+1,k)+v{lev}(i,j-1,k)...
                       +v{lev}(i,j,k+1)+v{lev}(i,j,k-1))/6.d0-v{lev}(i,j,k)+d{lev}(i,j,k);                                  
 end; end; end
 v{lev+1}=d{lev+1};  enforce_bcs(lev)
-if (lev<nlev-1),   RC_poisson_mg(lev+1)       % Continue to even coarser grid, or
-else, for i=1:20;  RC_poisson_rb(nlev); end   % solve coarsest system (almost exactly)
+if (lev<nlev-1),   RR_poisson_mg(lev+1)       % Continue to even coarser grid, or
+else, for i=1:20;  RR_poisson_rb(nlev); end   % solve coarsest system (almost exactly)
 end
 for ic=2:g{lev+1}.xm; for jc=2:g{lev+1}.ym; for kc=2:g{lev+1}.zm; % Prolongation (using
    i=2*(ic-xo)+xo; j=2*(jc-yo)+yo; k=2*(kc-zo)+zo;            % bilinear interpolation)
@@ -78,12 +78,12 @@ for ic=2:g{lev+1}.xm; for jc=2:g{lev+1}.ym; for kc=2:g{lev+1}.zm; % Prolongation
    v{lev}(i-1,j-1,k-1)=v{lev}(i-1,j-1,k-1)+(v{lev+1}(ic,jc,kc)+v{lev+1}(ic-1,jc,kc)...
          +v{lev+1}(ic,jc-1,kc)  +v{lev+1}(ic-1,jc-1,kc)+v{lev+1}(ic,jc,kc-1)...
          +v{lev+1}(ic-1,jc,kc-1)+v{lev+1}(ic,jc-1,kc-1)+v{lev+1}(ic-1,jc-1,kc-1))*0.25;
-end; end; end    % Note that the next call to RC_poisson_rb takes care of red points
+end; end; end    % Note that the next call to RR_poisson_rb takes care of red points
 enforce_bcs(lev)
-for i=1:N3; RC_poisson_rb(lev); end
-% end function RC_poisson_mg
+for i=1:N3; RR_poisson_rb(lev); end
+% end function RR_poisson_mg
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function RC_poisson_rb(lev);              % Apply Red/Black RC_Gauss-Seidel, with L from Poisson
+function RR_poisson_rb(lev);              % Apply Red/Black RR_Gauss-Seidel, with L from Poisson
 global XBC YBC ZBC N1 N2 N3 xo yo zo nlev d v g
 for irb=0:1; for i=2:g{lev}.xm-1; for j=2:g{lev}.ym-1       % update red first, then black
 m=2+mod(i+j+irb+xo+yo+zo,2); n=g{lev}.zm-1;
@@ -92,7 +92,7 @@ v{lev}(i,j,m:2:n)=(v{lev}(i,j,mp:2:np) +v{lev}(i,j,mm:2:nm) +v{lev}(ip,j,m:2:n) 
      +v{lev}(im,j,m:2:n) +v{lev}(i,jp,m:2:n) +v{lev}(i,jm,m:2:n))/6.d0+d{lev}(i,j,m:2:n);
      if i==2 & j==2; v{lev}(i,j,2)=0; end;
 end; end; enforce_bcs(lev); end
-% end function RC_poisson_rb
+% end function RR_poisson_rb
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function e = max_error(lev)
 global XBC YBC ZBC N1 N2 N3 xo yo zo nlev d v g

@@ -1,4 +1,4 @@
-function [g,delta] = RC_SplineSetup(x_data,y_data,n)
+function [g,delta] = RR_SplineSetup(x_data,y_data,n)
 % Determine the g=f'' for constructing the cubic spline interpolant of the n datapoints
 % {x_data,y_data}, assuming this data is already sorted in ascending order in x.
 % Calculate the delta_i = x_(i+1)-x_i for i=1:n-1.
@@ -23,4 +23,4 @@ elseif end_conditions==3             % Periodic end conditions
    a(n)=-1;  b(n)=0;  c(n)=1;   g(n)=0;
    [a,b,c,g]=circulant(a,b,c,g,n);   % <--- solve system (see Appendix C)
 end
-% end function RC_SplineSetup.m
+% end function RR_SplineSetup.m

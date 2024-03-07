@@ -1,4 +1,4 @@
-function [h,T,y,p]=RC_SimInit_ShallowWater(v)  % Numerical Renaissance Codebase 1.0  
+function [h,T,y,p]=RR_SimInit_ShallowWater(v)  % Numerical Renaissance Codebase 1.0  
 T=500; h=0.0001; p.Nx=50; p.Ny=25; p.g=9.8;    % Simulation paramters
 p.Lx=50; p.Ly=25; p.b_max=3; p.b_min=2;        % Dimensions and depth of pool 
 p.excitation_case='earthquake';                % Which excitation case to consider
@@ -24,4 +24,4 @@ switch p.excitation_case          % Implement excitation from ICs.
 end
 
 map=colormap('jet'); colormap(map(end:-1:1,:)); SimPlot(y,y,0,0,h,h,v,p,0); pause(1);
-end % function RC_SimInit_ShallowWater.m
+end % function RR_SimInit_ShallowWater.m

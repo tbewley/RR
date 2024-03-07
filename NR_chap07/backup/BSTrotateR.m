@@ -1,10 +1,10 @@
-function [D,b]=RC_BSTrotateR(D,d)
-% function [D,b]=RC_BSTrotateR(D,d)
-% Apply a right rotation to a RC_BST at record d (see Figure 7.7).  (RC_BSTrotateL is similar.)
+function [D,b]=RR_BSTrotateR(D,d)
+% function [D,b]=RR_BSTrotateR(D,d)
+% Apply a right rotation to a RR_BST at record d (see Figure 7.7).  (RR_BSTrotateL is similar.)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RC_BSTinitialize, RC_BSTinsert, RC_BSTrotateLR, RC_BSTrotateL, RC_BSTbalance, RC_BSTenumerate,
-% RC_BSTsuccessor.  Verify with RC_BSTtest.
+% See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTbalance, RR_BSTenumerate,
+% RR_BSTsuccessor.  Verify with RR_BSTtest.
 
 b=D(d,end-3); a=D(b,end-3); c=D(b,end-1); e=D(d,end-1); p=D(d,end-2);
 if a>0, Dag=D(a,end);                else, Dag=-1; end 
@@ -16,4 +16,4 @@ s=sign(p); p=abs(p); if p>0, D(p,end-2+s)=b; end
 while p>0, a=D(p,end-3); if a>0, Dag=D(a,end); else, Dag=-1; end
            c=D(p,end-1); if c>0, Dcg=D(c,end); else, Dcg=-1; end, g=max(Dag+1,Dcg+1);
            if g<D(p,end), D(p,end)=g; p=abs(D(p,end-2)); else, p=0; end, end
-end % function RC_BSTrotateR                               
+end % function RR_BSTrotateR                               

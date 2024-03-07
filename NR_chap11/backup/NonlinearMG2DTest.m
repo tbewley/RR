@@ -1,4 +1,4 @@
-function RC_NonlinearMG2DTest                           % Numerical Renaissance Codebase 1.0
+function RR_NonlinearMG2DTest                           % Numerical Renaissance Codebase 1.0
 % Solve (11.62a) on a uniform mesh using nonlinear multigrid with N-R r/b G-S smoothing.
 % The RHS vector is assumed to be scaled such that the discretized Laplace operator has a
 % 1 on the diagonal element.  This code was formed by modification of PoissonMG2DTest.m,
@@ -11,15 +11,15 @@ NX=32; NY=32; XBC=1; YBC=1; N1=5; N2=3; N3=3; alpha=0.1, beta=0.5
 % ----------------------------------- END OF USER INPUT ----------------------------------
 fprintf('BCs:%2g,%2g. Smoothing:%2g,%2g,%2g.\nGrids:\n',XBC,YBC,N1,N2,N3);
 for verbose=1:2
-  RC_NonlinearMG2DInit(NX,NY), for l=1:nlev, betabar(l)=-beta/(4*g{l}.nx^2); end            
+  RR_NonlinearMG2DInit(NX,NY), for l=1:nlev, betabar(l)=-beta/(4*g{l}.nx^2); end            
   d{1}(3:g{1}.xm-2,3:g{1}.ym-2)=rand(g{1}.xm-4,g{1}.ym-4);
   i=sum(sum(d{1}(:,:)))/((g{1}.xm-4)*(g{1}.ym-4));
   d{1}(3:g{1}.xm-2,3:g{1}.ym-2)=d{1}(3:g{1}.xm-2,3:g{1}.ym-2)-i;
-  RC_NonlinearMG2D;
+  RR_NonlinearMG2D;
 end
-end % function RC_NonlinearMG2DTest
+end % function RR_NonlinearMG2DTest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function RC_NonlinearMG2DInit(NX,NY)
+function RR_NonlinearMG2DInit(NX,NY)
 global XBC YBC xo yo d v x g nlev
 switch XBC case 1, xo=1; case 2, xo=2; case 3, xo=2; end
 switch YBC case 1, yo=1; case 2, yo=2; case 3, yo=2; end
@@ -30,9 +30,9 @@ for l=1:nlev
    v{l}=zeros(g{l}.xm,g{l}.ym); d{l}=v{l}; x{l}=v{l};   % initialize x=solution
    fprintf('%5g%5g%5g\n',l,g{l}.nx,g{l}.ny)
 end 
-end % function RC_NonlinearMG2DInit
+end % function RR_NonlinearMG2DInit
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function RC_NonlinearMG2D
+function RR_NonlinearMG2D
 global N1 verbose
 e=MaxDefect(0); fprintf('Iter=0, max defect=%0.3e\n',e);
 for i=1:N1; Smooth(1); e = MaxDefect(i); end
@@ -42,7 +42,7 @@ tic; for iter=1:20   % Do up to 20 multigrid cycles (convergence slower than lin
    if e<1E-13,   fprintf('Converged\n'), break, end
 end; t=toc;
 fprintf('-> Total time: %0.3g sec; Time/iteration: %0.3g sec\n',t,t/iter);
-end % function RC_NonlinearMG2D
+end % function RR_NonlinearMG2D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Multigrid(l)
 global N2 N3 xo yo d v x g nlev alpha betabar
@@ -75,7 +75,7 @@ xm=g{l}.xm; ym=g{l}.ym; xmm=xm-1; ymm=ym-1; xmp=xm+1; ymp=ym+1;
 if verbose>1, figure(1); clf; axis([1 xm 1 ym]); hold on; end
 for irb=0:1;
   for i=2:xmm; m=2+mod(i+irb+xo+yo,2);  
-% Apply Newton-Raphson red/black RC_Gauss-Seidel smoothing.                      *** NOTE ***
+% Apply Newton-Raphson red/black RR_Gauss-Seidel smoothing.                      *** NOTE ***
 v{l}(i,m:2:ymm)=v{l}(i,m:2:ymm)-(v{l}(i,m:2:ymm)-d{l}(i,m:2:ymm)                       ... 
 -(v{l}(i,m+1:2:ymm+1)+v{l}(i,m-1:2:ymm-1)+v{l}(i+1,m:2:ymm)+v{l}(i-1,m:2:ymm))/4       ...
 -((v{l}(i,m+1:2:ymm+1)-v{l}(i,m-1:2:ymm-1)).^2+(v{l}(i+1,m:2:ymm)-v{l}(i-1,m:2:ymm)).^2...

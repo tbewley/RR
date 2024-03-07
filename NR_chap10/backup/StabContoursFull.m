@@ -1,6 +1,6 @@
-% script RC_StabContoursFull.m                          % Numerical Renaissance Codebase 1.0
+% script RR_StabContoursFull.m                          % Numerical Renaissance Codebase 1.0
 Np=101; V=[1 1.0000000001];
-name = strvcat('EE','IE','CN','RK2','RK3','RK4','AB2','AB3','AB4','AB5','RC_AB6', ...
+name = strvcat('EE','IE','CN','RK2','RK3','RK4','AB2','AB3','AB4','AB5','RR_AB6', ...
                'AM3','AM4','AM5','AM6','BDF2','BDF3','BDF4','BDF5','BDF6', ...
                'ESD2','ESD3','ESD4','ESD5','ESD6','ESD7','ESD8','ESD9', ...
                'GLRK4','GLRK6','DIRK4','DIRK42p','RK4352R','RK4353R','RK5483R','CNtheta','CNphi','IMEXDIRK','IMEXERK');
@@ -77,7 +77,7 @@ for k=38:39
       case  8, sig(i,j)=max(abs(roots([1 -1 0 0]-[0 23 -16 5]*L/12)));                                % AB3
       case  9, sig(i,j)=max(abs(roots([1 -1 0 0 0]-[0 55 -59 37 -9]*L/24)));                          % AB4 
       case 10, sig(i,j)=max(abs(roots([1 -1 0 0 0 0]-[0 1901 -2774 2616 -1274 251]*L/720)));          % AB5
-      case 11, sig(i,j)=max(abs(roots([1 -1 0 0 0 0 0]-[0 4277 -7923 9982 -7298 2877 -475]*L/1440))); % RC_AB6
+      case 11, sig(i,j)=max(abs(roots([1 -1 0 0 0 0 0]-[0 4277 -7923 9982 -7298 2877 -475]*L/1440))); % RR_AB6
       case 12, sig(i,j)=max(abs(roots([1 -1 0]-[5 8 -1]*L/12)));                                      % AM3
       case 13, sig(i,j)=max(abs(roots([1 -1 0 0]-[9 19 -5 1]*L/24)));                                 % AM4
       case 14, sig(i,j)=max(abs(roots([1 -1 0 0 0]-[251 646 -264 106 -19]*L/720)));                   % AM5
@@ -133,4 +133,4 @@ for k=38:39
   plot([B(1) B(2)],[0,0],'k-'); plot([0,0],[B(3) B(4)],'k-');
   hold off;  pause(1); eval(['print -depsc ',sprintf('stab%s',name(k,:))])
 end % for k
-% end script RC_StabContoursFull.m
+% end script RR_StabContoursFull.m

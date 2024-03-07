@@ -1,7 +1,7 @@
-% script <a href="matlab:FS_RC_CSD_Test">FS_Relaxation_Test</a>
+% script <a href="matlab:FS_RR_CSD_Test">FS_Relaxation_Test</a>
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.7.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also FS_Bisection_Test, FS_RC_CSD_Test.  Depends on Penta from Exercise 2.3!
+% See also FS_Bisection_Test, FS_RR_CSD_Test.  Depends on Penta from Exercise 2.3!
 
 if exist('Penta')~=2, disp('You must do Exercise 2.3 before running this code'), break, end
 m=-.08; beta=2*m/(m+1); h=0.01; etamax=10; figure(1); clf; axis([-0 1.1 0 6]); hold on

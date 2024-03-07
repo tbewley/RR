@@ -1,9 +1,9 @@
-function [X]=RC_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
-% function [X] = RC_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
+function [X]=RR_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
+% function [X] = RR_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
 % Apply a fast Givens transform F(gamma;a,b), embedded in elements (i,k) and (k,i) of
-% an identiy matrix, to the matrix X, with {gamma,a,b} as given by RC_Fast_Givens_Compute.  
+% an identiy matrix, to the matrix X, with {gamma,a,b} as given by RR_Fast_Givens_Compute.  
 % INPUT:  X     = matrix to which reflection is to be applied
-%         [gamma,a,b] = parameters defining the rotation, as determined by RC_Fast_Givens_Compute
+%         [gamma,a,b] = parameters defining the rotation, as determined by RR_Fast_Givens_Compute
 %         donothing = flag to, umm, just return X with doing nothing.
 %         [i,k] = (i,k) and (k,i) are the 2 elements of F that are different than the identity matrix
 %         [p:q] = range outside of which the columns (if premultiplying), and/or
@@ -14,7 +14,7 @@ function [X]=RC_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
 %                 use which='R' to postmultiply by F  (that is, to compute X * F)
 %                 use which='B' to do both            (that is, to compute F^H * X * F)
 % OUTPUT: X     = the modified X, as specified by which (see above)
-% See also RC_fast_givens_compute. Verify with RC_fast_givens_test.
+% See also RR_fast_givens_compute. Verify with RR_fast_givens_test.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 

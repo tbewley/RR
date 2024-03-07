@@ -1,4 +1,4 @@
-function RC_Burgers_RKW3CN_FD                           % Numerical Renaissance Codebase 1.0
+function RR_Burgers_RKW3CN_FD                           % Numerical Renaissance Codebase 1.0
 % This function simulates Burgers equation with homogeneous Dirichlet BCs.
 % RKW3/CN timestepping is used (explicit on nonlinear terms, implicit on linear terms)
 % with a 2nd-order central FD method in space.
@@ -22,10 +22,10 @@ for k=1:Tmax/dt
         rhs=y(2:N) +d(rk)*(y(3:N+1)-2*y(2:N)+y(1:N-1)) +e(rk)*r +f(rk)*rhs; % ~ 9N
      end       
      % Solve for new y
-     y(2:N)=RC_ThomasTT(a(rk),b(rk),c(rk),rhs',N-1);                           % ~ 8N
+     y(2:N)=RR_ThomasTT(a(rk),b(rk),c(rk),rhs',N-1);                           % ~ 8N
      % Save r (in rhs) for the next timestep                            --------------
      if (rk<3) rhs=r; end                                               % Total: ~ 55N
   end %%%%%%%%%%%%%%%%%%%%%%%% END OF RK LOOP %%%%%%%%%%%%%%%%%%%%%%%%
   if (mod(k,PlotInterval)==0) PlotXY(x,y,k*dt,0,L,-3,3); end            
 end                                                                     
-end % function RC_Burgers_RKW3CN_FD.m
+end % function RR_Burgers_RKW3CN_FD.m

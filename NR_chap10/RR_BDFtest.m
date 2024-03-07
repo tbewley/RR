@@ -1,6 +1,6 @@
-function RC_BDFtest
-% function <a href="matlab:RC_BDFtest">RC_BDFtest</a>
-% Test <a href="matlab:help RC_IEiter">RC_IEiter</a>, <a href="matlab:help RC_BDF2iter">RC_BDF2iter</a>, <a href="matlab:help RC_BDF3iter">RC_BDF3iter</a>, <a href="matlab:help RC_BDF4iter">RC_BDF4iter</a>, <a href="matlab:help RC_BDF5iter">RC_BDF5iter</a>, and <a href="matlab:help RC_BDF6iter">RC_BDF6iter</a>
+function RR_BDFtest
+% function <a href="matlab:RR_BDFtest">RR_BDFtest</a>
+% Test <a href="matlab:help RR_IEiter">RR_IEiter</a>, <a href="matlab:help RR_BDF2iter">RR_BDF2iter</a>, <a href="matlab:help RR_BDF3iter">RR_BDF3iter</a>, <a href="matlab:help RR_BDF4iter">RR_BDF4iter</a>, <a href="matlab:help RR_BDF5iter">RR_BDF5iter</a>, and <a href="matlab:help RR_BDF6iter">RR_BDF6iter</a>
 % by simulating the Lorenz or Rossler equation.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.5.3.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
@@ -13,7 +13,7 @@ format long; while 1
     otherwise, break
   end
   s.MaxTime=input('  Over what time interval T (try, e.g., 10)? ');
-  disp('  Available methods: RC_IEiter, RC_BDF2iter, RC_BDF3iter, RC_BDF4iter, RC_BDF5iter, RC_BDF6iter')
+  disp('  Available methods: RR_IEiter, RR_BDF2iter, RR_BDF3iter, RR_BDF4iter, RR_BDF5iter, RR_BDF6iter')
   m  =input('  Which method? ','s'); order=1; if length(m)==8, order=str2num(m(4)); end
   s.h=input('  What is the timestep h (try, e.g., .01)? ');
   s.MaxIters=input('  How many iterations per timestep (try, e.g., 2)? ');
@@ -22,13 +22,13 @@ format long; while 1
           figure(1), plot3(x(1),x(2),x(3)), hold on, axis equal, view(-45,30), end
   if v>1, figure(2), plot(0,s.h), hold on, title('h_n versus t_n'), end  
 
-  t=0; s.MaxSteps=1;  % PERFORM (order-1) STEPS USING LOWER-ORC_RDER BDF SCHEMES TO SET UP s.f
-  if order>1, [x,t,s]=RC_IEiter  (strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>2, [x,t,s]=RC_BDF2iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>3, [x,t,s]=RC_BDF3iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>4, [x,t,s]=RC_BDF4iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
-  if order>5, [x,t,s]=RC_BDF5iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  t=0; s.MaxSteps=1;  % PERFORM (order-1) STEPS USING LOWER-ORR_RDER BDF SCHEMES TO SET UP s.f
+  if order>1, [x,t,s]=RR_IEiter  (strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>2, [x,t,s]=RR_BDF2iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>3, [x,t,s]=RR_BDF3iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>4, [x,t,s]=RR_BDF4iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
+  if order>5, [x,t,s]=RR_BDF5iter(strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); end
   s.MaxSteps=1e6;
   [x,t]=feval(m,strcat('RHS_',S),x,t,s,p,v,'PlotLorenzRossler'); x(:,1), t     % SIMULATE!
 end, disp(' '), format short
-end % function RC_BDFtest
+end % function RR_BDFtest

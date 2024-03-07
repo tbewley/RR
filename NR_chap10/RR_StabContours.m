@@ -1,9 +1,9 @@
-% script <a href="matlab:StabContours">RC_StabContours</a>
+% script <a href="matlab:StabContours">RR_StabContours</a>
 % Plot stability contours of several ODE marching methods in the complex plane lambda*h.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.2.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 
-clear; name = strvcat('EE','IE','CN','RK2','RK3','RK4','AB2','AB3','AB4','AB5','RC_AB6', ...
+clear; name = strvcat('EE','IE','CN','RK2','RK3','RK4','AB2','AB3','AB4','AB5','RR_AB6', ...
                'AM3','AM4','AM5','AM6','BDF2','BDF3','BDF4','BDF5','BDF6',            ...
                'ESD2','ESD3','ESD4','ESD5','ESD6','ESD7','ESD8','ESD9',               ...
                'GLRK4','GLRK6','DIRK4','DIRK42p','RK4352R','RK4353R','RK5483R',       ...
@@ -112,7 +112,7 @@ for k=1:6
       case  8, sig(i,j)=max(abs(roots([1 -1 0 0]-[0 23 -16 5]*L/12)));       % AB3
       case  9, sig(i,j)=max(abs(roots([1 -1 0 0 0]-[0 55 -59 37 -9]*L/24)));                          % AB4 
       case 10, sig(i,j)=max(abs(roots([1 -1 0 0 0 0]-[0 1901 -2774 2616 -1274 251]*L/720)));          % AB5
-      case 11, sig(i,j)=max(abs(roots([1 -1 0 0 0 0 0]-[0 4277 -7923 9982 -7298 2877 -475]*L/1440))); % RC_AB6
+      case 11, sig(i,j)=max(abs(roots([1 -1 0 0 0 0 0]-[0 4277 -7923 9982 -7298 2877 -475]*L/1440))); % RR_AB6
       case 12, sig(i,j)=max(abs(roots([1 -1 0]-[5 8 -1]*L/12)));                                      % AM3
       case 13, sig(i,j)=max(abs(roots([1 -1 0 0]-[9 19 -5 1]*L/24)));                                 % AM4
       case 14, sig(i,j)=max(abs(roots([1 -1 0 0 0]-[251 646 -264 106 -19]*L/720)));                   % AM5
@@ -176,4 +176,4 @@ for k=1:6
   set(gca,'FontSize',15), % title(name(k,:),'FontSize',18)
   hold off; % eval(['print -depsc ',sprintf('stab%s',name(k,:))])
 end
-% end script RC_StabContours
+% end script RR_StabContours

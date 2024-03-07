@@ -1,5 +1,5 @@
  
-% Calculating RC_Schur vectors from eigenvalues?  (orthogonalize an S matrix??)
+% Calculating RR_Schur vectors from eigenvalues?  (orthogonalize an S matrix??)
 % (or is it better to keep track of transformation matrices during the QR method?)
 
 Chapter \ref{chap01} reviewed the notation to be used throughout this text to frame efficient numerical methods for solving a variety of practical problems.
@@ -309,14 +309,14 @@ matrix by the formulae given for its inverse).
 Let $\tilde A=\begin{bmatrix} A & B \\ C & D \end{bmatrix}$
 and assume that $|\tilde A|\ne 0$.  Then:
 
-\noindent a) If $|A|\ne 0$, then define a {\bf RC_Schur complement} of
+\noindent a) If $|A|\ne 0$, then define a {\bf RR_Schur complement} of
 $\tilde A$ as $G=D-CA^{-1}B$.  By Fact \ref{fact.A.B.A.A}, $|G|\ne 0$, and thus
 \begin{equation*}
     \tilde A^{-1} = \begin{bmatrix} A & B \\ C & D \end{bmatrix}^{-1} =
     \begin{bmatrix} A^{-1}+A^{-1} B G^{-1} C A^{-1} & -A^{-1} B G^{-1} \\ -G^{-1} C A^{-1} & G^{-1} \end{bmatrix}.
 \end{equation*}
 
-\noindent b) If $|D|\ne 0$, define the other {\bf RC_Schur
+\noindent b) If $|D|\ne 0$, define the other {\bf RR_Schur
 complement} of $\tilde A$ as $H=A-BD^{-1}C$.  By Fact \ref{fact.A.B.A.A}, $|H|\ne 0$, and thus
 \begin{equation*}
     \tilde A^{-1} = \begin{bmatrix} A & B \\ C & D \end{bmatrix}^{-1} =
@@ -324,7 +324,7 @@ complement} of $\tilde A$ as $H=A-BD^{-1}C$.  By Fact \ref{fact.A.B.A.A}, $|H|\n
 \end{equation*}
 
 \noindent c) If both $|A|\ne 0$ and $|D|\ne 0$, then by (a) and (b) above and the uniqueness of the matrix inverse (Fact \ref{fact.A.A.J.B}),
-using both RC_Schur complements $G=D-CA^{-1}B$ and $H=A-BD^{-1}C$, we may write
+using both RR_Schur complements $G=D-CA^{-1}B$ and $H=A-BD^{-1}C$, we may write
 \begin{equation*}
     \tilde A^{-1} = \begin{bmatrix} A & B \\ C & D \end{bmatrix}^{-1} =
     \begin{bmatrix} H^{-1} & -H^{-1}BD^{-1} \\  -G^{-1}CA^{-1} & G^{-1} \end{bmatrix}.
@@ -377,7 +377,7 @@ Note that Fact \ref{fact.A.A.J.D} is a special case of Fact \ref{fact:inversefro
 For a large matrix $A$, the determinant is most easily computed by
 performing the row operations mentioned in Properties 1 and 2
 of \S \ref{sec.A.B.A} to reduce $A$ to an upper triangular
-matrix $U$.  (In fact, this is the heart of RC_Gaussian elimination
+matrix $U$.  (In fact, this is the heart of RR_Gaussian elimination
 procedure, described in \S \ref{chap02}.)  Taking Properties 1, 2, and
 3 of \S \ref{sec.A.B.A} together, it follows that
 \begin{equation*}
@@ -491,7 +491,7 @@ called effectively without knowing exactly how they work.  In order to use such 
 it is valuable to understand the fundamental algorithms upon which they are built.
 \enlargethispage{4pt}
 
-\subsection{RC_Eigenmode analysis of an oscillating string}\label{sec.A.C.B}
+\subsection{RR_Eigenmode analysis of an oscillating string}\label{sec.A.C.B}
 
 To demonstrate the significance of eigenvalues and eigenvectors for characterizing physical systems, and to foreshadow
 some of the developments in later chapters, it is enlightening at this
@@ -767,7 +767,7 @@ to the first time the array is modified within the subprogram).  With the 2007a 
 when a function calls another function with an identical argument in both the input and output lists (in both the calling function and the called function),
 a proper pass by reference is now initiated in Matlab, which leads to dramatic speed improvements for large problems.
 
-\subsection{RC_Eigenmode analysis of surface waves in a shallow rectangular pool}\label{sec.A.C.B.2d}
+\subsection{RR_Eigenmode analysis of surface waves in a shallow rectangular pool}\label{sec.A.C.B.2d}
 \enlargethispage{10pt}
 
 The analysis considered in \S \ref{sec.A.C.B} extends directly to multidimensional systems.  To illustrate, consider
@@ -871,9 +871,9 @@ numerical tools that are useful for a variety of tasks, including
 \endmylist
 Five of the decompositions we will consider,
 \beginmylistb
-\item the {\bf RC_Hessenberg decomposition} $A=V T_{0} V^{H}$ where $V$ is unitary and $T_0$ is upper RC_Hessenberg (\S \ref{sec.A.D.A}),
-\item the {\bf RC_Schur decomposition} $A=UTU^{H}$ where $U$ is unitary and $T$ is upper triangular (\S \ref{sec.A.D.C}),
-\item the {\bf real RC_Schur decomposition} $A=U{\hat T}U^{T}$, for real $A$, where $U$ is real and orthogonal and ${\hat T}$ is real and
+\item the {\bf RR_Hessenberg decomposition} $A=V T_{0} V^{H}$ where $V$ is unitary and $T_0$ is upper RR_Hessenberg (\S \ref{sec.A.D.A}),
+\item the {\bf RR_Schur decomposition} $A=UTU^{H}$ where $U$ is unitary and $T$ is upper triangular (\S \ref{sec.A.D.C}),
+\item the {\bf real RR_Schur decomposition} $A=U{\hat T}U^{T}$, for real $A$, where $U$ is real and orthogonal and ${\hat T}$ is real and
 {\it block} upper triangular with $1\times 1$ and $2\times 2$ blocks on the main diagonal (\S \ref{sec.A.D.Ca}),
 \item the {\bf eigen decomposition} $A=S\Lambda S^{-1}$ where $\Lambda$ is diagonal (\S \ref{sec.A.D.D}), and
 \item the {\bf Jordan decomposition} $A=MJM^{-1}$ where $J$ is in so-called Jordan form (\S \ref{sec.A.D.H}),
@@ -902,9 +902,9 @@ symmetric), then $B$ is also Hermitian (or symmetric).
 \noindent {\it Proof}\/: Follows immediately from:
 $B=C^{H}A C=C^{H}A^{H} C=(C^{H}A C)^{H}=B^{H}$. \endproof \medskip
 
-{\it The subsections that follow are intended to be read sequentially}: the RC_Hessenberg
+{\it The subsections that follow are intended to be read sequentially}: the RR_Hessenberg
 decomposition forms a valuable preparatory step for applying the QR
-method to compute the useful RC_Schur decomposition, from which the immensely useful
+method to compute the useful RR_Schur decomposition, from which the immensely useful
 eigen decomposition may readily be determined (if it exists).  The Jordan decomposition
 represents the matrix that is, in a sense, as close as you can get to a diagonalization of $A$
 via a similarity transformation when an eigen decomposition does not exist; unfortunately, as we will
@@ -917,7 +917,7 @@ generalization of the eigen decomposition that may be used even
 if an eigen decomposition of $A$ does not exist or, indeed, even if $A$ is nonsquare;
 it is shown in \S \ref{sec.A.E} that the singular value decomposition leads directly
 to an efficient construction of the Moore-Penrose pseudo"inverse $A^+$, as introduced in Figure \ref{cartoon3}.
-We also review the decompositions related to RC_Gaussian elimination, as introduced in \S \ref{chap02}, as they may
+We also review the decompositions related to RR_Gaussian elimination, as introduced in \S \ref{chap02}, as they may
 be understood a bit more deeply once the properties of positive definite and positive semidefinite
 matrices are established (as done in \S \ref{sec.posdef}).  
 
@@ -927,34 +927,34 @@ are Wilkenson (1965) and Golub \& Van Loan (1996), which significantly extend th
 
 \clearpage
 
-\subsection{The RC_Hessenberg decomposition}\label{sec.A.D.A}
+\subsection{The RR_Hessenberg decomposition}\label{sec.A.D.A}
 
-Every $n\times n$ matrix $A$ has a {\bf RC_Hessenberg decomposition} $A=V
-T_0 V^{H}$, where $V$ is unitary and $T_0$ is upper RC_Hessenberg.  The
-RC_Hessenberg decomposition, which is a unitary similarity transformation (see Fact \ref{fact.A.D.B}), is useful primarily as a preparatory
-step in the computation of the RC_Schur and eigen decompositions of
+Every $n\times n$ matrix $A$ has a {\bf RR_Hessenberg decomposition} $A=V
+T_0 V^{H}$, where $V$ is unitary and $T_0$ is upper RR_Hessenberg.  The
+RR_Hessenberg decomposition, which is a unitary similarity transformation (see Fact \ref{fact.A.D.B}), is useful primarily as a preparatory
+step in the computation of the RR_Schur and eigen decompositions of
 a square matrix $A$.  Recall from \S \ref{sec.A.A.K} that a
-RC_Hessenberg form $T_0$ is an upper triangular matrix with extra
-nonzero elements populating its first subdiagonal.  The RC_Hessenberg
+RR_Hessenberg form $T_0$ is an upper triangular matrix with extra
+nonzero elements populating its first subdiagonal.  The RR_Hessenberg
 decomposition is useful because it introduces many zero elements while
 preserving the eigenvalues (Fact \ref{fact.A.D.A}) and, if it exists,
 the Hermitian structure of the matrix $A$ (Fact \ref{fact.A.D.B}).
-Thus, if $A$ happens to be Hermitian, then $T_0$ is both RC_Hessenberg
+Thus, if $A$ happens to be Hermitian, then $T_0$ is both RR_Hessenberg
 and Hermitian---that is, $T_0$ is {\it tridiagonal\/}!  Further, the
-RC_Hessenberg decomposition can be completed with a finite
+RR_Hessenberg decomposition can be completed with a finite
 sequence of calculations, as described below.  Note that, by
 presenting this construction, we also effectively establish that the
-RC_Hessenberg decomposition itself exists.  As the RC_Hessenberg
-decomposition reduces a general square matrix $A$ to RC_Hessenberg form while preserving its eigenvalues, and it reduces a Hermitian
+RR_Hessenberg decomposition itself exists.  As the RR_Hessenberg
+decomposition reduces a general square matrix $A$ to RR_Hessenberg form while preserving its eigenvalues, and it reduces a Hermitian
 matrix $A$ to a tridiagonal form, this decomposition makes the problem of determining eigenvalues significantly easier.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingT[frame=single,label=alg.3.RC_Hessenberg,caption=Computation of the RC_Hessenberg decomposition.]{RCC1.0/chap04/RC_Hessenberg}
+\lstinputlistingT[frame=single,label=alg.3.RR_Hessenberg,caption=Computation of the RR_Hessenberg decomposition.]{RCC1.0/chap04/RR_Hessenberg}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The algorithm to construct a RC_Hessenberg decomposition of an $n\times
+The algorithm to construct a RR_Hessenberg decomposition of an $n\times
 n$ matrix $A$ is comprised of $n-2$ steps, each of which is based
 on an appropriately configured Householder reflector matrix (as
 described in \S \ref{sec.A.A.M}), embedded within an appropriately-sized identity matrix, to introduce zeros into the
@@ -973,7 +973,7 @@ transformed matrix.  Specifically, at the first step, define
 				      \vdots     & \vdots & \vdots & \vdots & \ddots \end{pmatrix}.
 \end{align*}
 Thus, via a unitary similarity transformation, we have reduced the first
-column of $A$ to upper RC_Hessenberg form.  Referring to the elements of the
+column of $A$ to upper RR_Hessenberg form.  Referring to the elements of the
 transformed matrix as $a_{ij}$ (that is, performing this
 transformation {\it in place} in the computer memory), we proceed by
 working next on the second column: define
@@ -991,7 +991,7 @@ working next on the second column: define
 				      \vdots     & \vdots & \vdots & \vdots & \ddots \end{pmatrix}.
 \end{align*}
 We continue this way for $n-2$ steps, after which the transformed
-matrix, which we denote by $T_0$, is in RC_Hessenberg form.  The
+matrix, which we denote by $T_0$, is in RR_Hessenberg form.  The
 sequence of operations that are performed in the process may be
 summarized in matrix notation as
 \begin{equation*}
@@ -1010,12 +1010,12 @@ us from taking this approach any further is that any transformation matrix, such
 via premultiplication by some convenient transformation matrix, then the corresponding columns must immediately also be combined in the subsequent
 postmultiplication by the 
 conjugate transpose of that transformation matrix.  Therefore, if we attempt, e.g., to apply a series of premultiplications by Givens rotation matricies in
-order to zero out the first subdiagonal of a RC_Hessenberg matrix $T_0$ in order to reduce it to a triangular form via a similarity transformation, the required
+order to zero out the first subdiagonal of a RR_Hessenberg matrix $T_0$ in order to reduce it to a triangular form via a similarity transformation, the required
 postmultiplications by the conjugate transpose of these rotation matrices immediately destroys certain subdiagonal zeros which we have worked so hard
 to create.  This is true no matter how much rotation we apply at each step or what sequence these steps are applied (try it!).  Thus,
 
 \begin{fact} \label{fact.abel1}
-In general, the RC_Schur and eigen decompositions must be computed iteratively.
+In general, the RR_Schur and eigen decompositions must be computed iteratively.
 \end{fact}
 
 \noindent This statement, which makes concrete the fundamental difficulty of the problem of determining eigenvalues,
@@ -1044,14 +1044,14 @@ eigenvalues of the following matrix in top companion form (see \S \ref{sec.block
 \end{equation*}
 It follows that any polynomial equation $p(\lambda) = 0$ is the characteristic equation of a matrix $A$ in companion form,
 thus allowing one to convert the problem of finding the roots of a polynomial into the problem of computing the eigenvalues of $A$,
-as illustrated in Algorithm \ref{alg.RC_Roots}.
+as illustrated in Algorithm \ref{alg.RR_Roots}.
 This relation also establishes that, if there are some polynomial equations that are not solvable
 via a finite number of additions, subtractions, multiplications, divisions, and root extractions,
 then there are some eigenvalue problems that are not solvable via a finite sequence of such operations as well.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingT[frame=single,label=alg.RC_Roots,caption=Code to convert the polynomial root finding problem into an equivalent eigenvalue problem.]{RCC1.0/chap04/RC_Roots}
+\lstinputlistingT[frame=single,label=alg.RR_Roots,caption=Code to convert the polynomial root finding problem into an equivalent eigenvalue problem.]{RCC1.0/chap04/RR_Roots}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1059,7 +1059,7 @@ In the following section, we thus step back from eigenvalue-preserving similarit
 and investigate how to triangularize a matrix when (only) premultiplying by a finite sequence of unitary transformation matrices,
 which we assemble into a unitary matrix $Q$, thereby constructing the decomposition $A=QR$.  It is then shown how the
 resulting $QR$ decomposition algorithms may be used as the core of efficient {\it iterative} algorithms for determining
-the RC_Schur and eigen decompositions.
+the RR_Schur and eigen decompositions.
 
 \subsection{The $QR$ decomposition}\label{sec.A.D.B}\enlargethispage{3pt}
 
@@ -1249,7 +1249,7 @@ column of $A_{i+1}$ simply by subtracting off $r_{i t}$; that is, $r_{tt} \lefta
 better than modified Gram-Schmidt in terms of the orthogonality of the
 resulting columns of $Q$, but is about twice as expensive, is to use a
 sequence of Householder reflections in a manner very similar to that
-used to compute the RC_Hessenberg decomposition in \S \ref{sec.A.D.A}.
+used to compute the RR_Hessenberg decomposition in \S \ref{sec.A.D.A}.
 
 The determination of the $QR$ decomposition of the matrix $A$ via this
 approach is comprised of $p=\min(n,m-1)$ steps.  The $k$'th step of this
@@ -1343,7 +1343,7 @@ $Q^{H}A=R$, and thus $A=QR$, where $Q=G_{1}G_{2}\cdots G_{p}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.3.RC_QRGivensHessenberg,caption=Compute a $QR$ decomposition of an upper RC_Hessenberg matrix $A$ via Givens rotations.]{RCC1.0/chap04/RC_QRGivensHessenberg.m}
+\lstinputlisting[frame=single,label=alg.3.RR_QRGivensHessenberg,caption=Compute a $QR$ decomposition of an upper RR_Hessenberg matrix $A$ via Givens rotations.]{RCC1.0/chap04/RR_QRGivensHessenberg.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1353,7 +1353,7 @@ simple algorithmn to compute $G^{H}X$ in \eqref{GTxa},
 both $Q$ and $R$ can be determined efficiently by working in
 place in the computer memory on $Q$ and $A$, applying the Givens
 rotations directly from the $\{i,k;c,s\}$ parameters defining each
-one, as illustrated in Algorithm \ref{alg.3.RC_QRGivensHessenberg}.
+one, as illustrated in Algorithm \ref{alg.3.RR_QRGivensHessenberg}.
 At the end of the procedure, $A$ is replaced by $R$.  Further, it is important to note that, in most algorithms
 that use the $QR$ decomposition, we do not even need the matrix
 $Q=G_{1}G_{2}\cdots G_{p}$ explicitly; we only need to be able to
@@ -1376,7 +1376,7 @@ the same number of elements as it takes to describe $A$ itself.
 The primary advantage of the Givens rotations approach to computing
 the $QR$ decomposition is that it can take advantage of any subdiagonal zeros $A$ already possesses by reducing the number of Givens
 rotations required to transform $A$ to an upper triangular form.  In particular,
-if $A$ is either RC_Hessenberg or tridiagonal, only $n-1$ Givens
+if $A$ is either RR_Hessenberg or tridiagonal, only $n-1$ Givens
 rotations need to be performed to compute the $QR$ decomposition of
 $A$ using this approach.
 
@@ -1385,7 +1385,7 @@ $A$ using this approach.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.3.RC_QRFastGivensHessenberg,caption=Compute a $QR$ decomposition of an upper RC_Hessenberg matrix $A$ via fast Givens transforms.]{RCC1.0/chap04/RC_QRFastGivensHessenberg.m}
+\lstinputlisting[frame=single,label=alg.3.RR_QRFastGivensHessenberg,caption=Compute a $QR$ decomposition of an upper RR_Hessenberg matrix $A$ via fast Givens transforms.]{RCC1.0/chap04/RR_QRFastGivensHessenberg.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1436,14 +1436,14 @@ to construct a nonunitary matrix $\overline Q_k$ via a series of $k$ fast Givens
 $\overline Q_k^H A= \overline R_k$ is upper triangular, where $\overline Q_k=F_1 F_2 \cdots F_k$ and $\overline Q_k^H \overline Q_k= D_k$ is diagonal. 
 Note (see \S \ref{sec.A.A.P}) that the iterative procedure to determine $D_{k}$ is computationally inexpensive. 
 By Fact \ref{fact.A.D.B.Ea}, it thus follows that $Q=\overline Q_k D_k^{-1/2}$ and $R_k=D_k^{-1/2} \overline R$ form a $QR$ decomposition of $A$,
-as implemented for RC_Hessenberg and tridiagonal $A$ in
-Algorithms \ref{alg.3.RC_QRFastGivensHessenberg} and \ref{alg.3.QRFastGivensTridiagonal}.
+as implemented for RR_Hessenberg and tridiagonal $A$ in
+Algorithms \ref{alg.3.RR_QRFastGivensHessenberg} and \ref{alg.3.QRFastGivensTridiagonal}.
 
-\subsection{Characterizing the RC_Schur decomposition}\label{sec.A.D.C}
+\subsection{Characterizing the RR_Schur decomposition}\label{sec.A.D.C}
 
-Every $n\times n$ matrix $A$ has a {\bf RC_Schur decomposition} $A=U T U^{H}$,
+Every $n\times n$ matrix $A$ has a {\bf RR_Schur decomposition} $A=U T U^{H}$,
 where $T$ is upper triangular and $U$ is unitary with columns $\u^k$, sometimes referred to as
-{\bf RC_Schur vectors}.  Proof of this
+{\bf RR_Schur vectors}.  Proof of this
 important statement builds up from two preliminary facts that are easy
 to verify:\medskip
 
@@ -1499,10 +1499,10 @@ $\underline{R}$ is nonsingular, the unique solution of this equation
 is $D=0$, thus establishing the existence of the decomposition
 \eqref{QHAQ=L0CS}.   \endproof
 
-\begin{fact}[The RC_Schur Decomposition Theorem] \label{fact.A.D.C.Bb} Every square
-matrix $A=A_{n\times n}$ has a RC_Schur decomposition $A=U T U^{H}$,
+\begin{fact}[The RR_Schur Decomposition Theorem] \label{fact.A.D.C.Bb} Every square
+matrix $A=A_{n\times n}$ has a RR_Schur decomposition $A=U T U^{H}$,
 where $U$ is unitary and $T$ is upper triangular.  Further, the matrix
-$T$ in the RC_Schur decomposition has the eigenvalues of $A$ listed (in
+$T$ in the RR_Schur decomposition has the eigenvalues of $A$ listed (in
 any desired order) on its main diagonal.
 \end{fact}
 
@@ -1516,7 +1516,7 @@ a unitary $Q_{n}$ such that
 \begin{equation*}
 Q_{n}^{H} A Q_{n} =\begin{bmatrix} \lambda & * \\ 0 & S \end{bmatrix},
 \end{equation*}
-where $S=S_{(n-1)\times (n-1)}$.  By the induction hypothesis, a RC_Schur
+where $S=S_{(n-1)\times (n-1)}$.  By the induction hypothesis, a RR_Schur
 decomposition exists for $S$, which we denote $S=U_{n-1} T_{n-1}
 U^{H}_{n-1}$, where $U_{n-1}$ is unitary and $T_{n-1}$ is upper
 triangular.  Thus, we may write
@@ -1537,27 +1537,27 @@ the eigenvalues of $A$ are listed on the main diagonal of $T$.  Note
 further that any desired eigenvalue may be selected to be in the
 upper-left corner of $T$ (and of $T_{n-1}$, etc.); thus, once the
 eigenvalues of $A$ are known, the above relations may be used to
-construct a RC_Schur decomposition with the eigenvalues appearing on the
+construct a RR_Schur decomposition with the eigenvalues appearing on the
 main diagonal of $T$ in any desired ordering.   \endproof \vskip0.1in
 
-As noted in Fact \ref{fact.abel1}, the RC_Schur decomposition cannot, in general, be
+As noted in Fact \ref{fact.abel1}, the RR_Schur decomposition cannot, in general, be
 computed exactly with a finite sequence of calculations, as could the
-closely-related RC_Hessenberg decomposition discussed in \S \ref{sec.A.D.A}.
+closely-related RR_Hessenberg decomposition discussed in \S \ref{sec.A.D.A}.
 A family of efficient iterative algorithms to determine
-the RC_Schur decomposition is presented in \S \ref{sec.A.D.E}.
+the RR_Schur decomposition is presented in \S \ref{sec.A.D.E}.
 
 Note that the first column of the equation $AU=UT$ is $A\u^1=\lambda_1\u^1$, and thus the
-first RC_Schur vector is, in fact, an eigenvector of $A$ corresponding to $\lambda_1$ (that is, $\u^1=\s^1$).
+first RR_Schur vector is, in fact, an eigenvector of $A$ corresponding to $\lambda_1$ (that is, $\u^1=\s^1$).
 
 Finally, note that, if $A$ is Hermitian, then $T$ is triangular and,
 by Fact \ref{fact.A.D.B}, $T$ is also Hermitian---that is, $T$ is diagonal.  In
-this case, we denote $T$ by $\Lambda$ and $U$ by $S$, and the RC_Schur
+this case, we denote $T$ by $\Lambda$ and $U$ by $S$, and the RR_Schur
 decomposition reduces to the {\bf eigen decomposition}, as described
 in \S \ref{sec.A.D.D}, with a unitary eigenvector matrix $S$.
 
-\subsubsubsection{Consequences of the existence of the RC_Schur decomposition}
+\subsubsubsection{Consequences of the existence of the RR_Schur decomposition}
 
-\noindent The existence of the RC_Schur decomposition allows us to prove some
+\noindent The existence of the RR_Schur decomposition allows us to prove some
 important results, such as the following.
 
 \begin{fact}[The Cayley-Hamilton Theorem] \label{fact.A.D.C.Bc} Any square
@@ -1576,7 +1576,7 @@ consider the quantity
     (A - \lambda_{1}I)(A -\lambda_{2}I)\cdots (A -\lambda_{n}I) = C.
     \label{intermediateCH}
 \end{equation}
-By the RC_Schur decomposition theorem, we know that $A=UTU^{H}$, that is,
+By the RR_Schur decomposition theorem, we know that $A=UTU^{H}$, that is,
 $A$ is unitarily similar to an upper triangular matrix $T$ with the eigenvalues of $A$
 on its main diagonal.  Thus \eqref{intermediateCH} may be written
 \begin{align*}
@@ -1597,7 +1597,7 @@ zero, etc.  Thus, $U^{H}CU=0\ \ \Rightarrow\ \ C=0$, and therefore, by
 \noindent {\it Proof}\/: By Fact \ref{fact.A.D.C.Bb}, $A=UTU^{H}$ where $T$ is triangular.  By
 Fact \ref{fact.A.A.J.C}, it follows that $A^{-1}=UT^{-1}U^{H}$ where, by Fact \ref{fact.inverse.triangular}, the
 diagonal elements of $T^{-1}$ are the reciprocal of the diagonal
-elements of $T$.  Thus, by the RC_Schur decomposition theorem, the eigenvalues of $A^{-1}$ are the
+elements of $T$.  Thus, by the RR_Schur decomposition theorem, the eigenvalues of $A^{-1}$ are the
 reciprocal of the eigenvalues of $A$. \endproof
 
 \begin{fact} \label{fact.A.D.C.Be} The determinant of $A$ is equal to the product of its eigenvalues:
@@ -1620,18 +1620,18 @@ That is, if $\lambda\in \lambda(A)$, then $\bar\lambda \in \lambda(A)$ with the 
 listed on its main diagonal.  Since $A$ is real, it follows that $A=\bar A=(\bar U) \bar T (\bar U)^{H}$.  Since $\bar T$ is also triangular,
 the eigenvalues of $A$ are listed on its main diagonal.  \endproof
 
-\subsubsection{The real RC_Schur decomposition} \label{sec.A.D.Ca}
+\subsubsection{The real RR_Schur decomposition} \label{sec.A.D.Ca}
 
 Complex arithmetic is significantly more expensive than real arithmetic.  If a real $n\times n$ matrix $A$ is known
 to have real eigenvalues (e.g., as established in Fact \ref{fact.A.D.D.B} for symmetric matrices), then the matrices forming its
-RC_Schur decomposition $A=UTU^H$ happen to be real, and may be computed using real arithmetic.  
+RR_Schur decomposition $A=UTU^H$ happen to be real, and may be computed using real arithmetic.  
 
-Unfortunately (from a computational perspective), the RC_Schur decomposition of a general real matrix is complex.
+Unfortunately (from a computational perspective), the RR_Schur decomposition of a general real matrix is complex.
 For such matrices, it is often desirable to compute a convenient eigenvalue-revealing form without resorting to
-complex arithmetic.  This may be accomplished by performing the {\bf real RC_Schur decomposition} $A=U \hat T U^T$, 
+complex arithmetic.  This may be accomplished by performing the {\bf real RR_Schur decomposition} $A=U \hat T U^T$, 
 where $U$ and $\hat T$ are real and $\hat T$ is in block upper triangular form with $1\times 1$ and $2\times 2$
-blocks (with complex conjugate eigenvalues) on the main diagonal, referred to as a {\bf real RC_Schur} form.  
-Essentially, the real RC_Schur decomposition is as close as you can get to a RC_Schur decomposition of a
+blocks (with complex conjugate eigenvalues) on the main diagonal, referred to as a {\bf real RR_Schur} form.  
+Essentially, the real RR_Schur decomposition is as close as you can get to a RR_Schur decomposition of a
 general real matrix without resorting to complex arithmetic.
 By Facts \ref{fact.A.D.A} and Fact \ref{fact.A.D.C.A}, the eigenvalues of $A$ are the
 union of the eigenvalues of the blocks on the main diagonal of $\hat T$.  By Fact \ref{fact.A.C.A.B}, the eigenvalues of
@@ -1641,8 +1641,8 @@ In particular, if the $2\times 2$ blocks on the main diagonal are rotated into t
 A=\begin{pmatrix} \alpha & \omega/k \\ -\omega k & \alpha \end{pmatrix},
 \label{2by2standardform}
 \end{equation}
-then $\lambda_{\pm}=\alpha\pm \imath \omega$.  Most of the algorithms that follow which leverage the RC_Schur decomposition may
-in fact be written to leverage the real RC_Schur decomposition in the case that the matrices setting up the problem are real, thereby
+then $\lambda_{\pm}=\alpha\pm \imath \omega$.  Most of the algorithms that follow which leverage the RR_Schur decomposition may
+in fact be written to leverage the real RR_Schur decomposition in the case that the matrices setting up the problem are real, thereby
 avoiding complex arithmetic for most of the computation.
 
 \subsection{Characterizing the eigen decomposition}\label{sec.A.D.D}
@@ -1673,7 +1673,7 @@ An eigen decomposition of a matrix $A$,
 though expensive to calculate if the matrix is large, is very revealing.
 As just one example, an eigen decomposition completely decouples
 a linear system of ODEs into its independent modes, as will be shown in \S
-\ref{sec.ModalCoordinateForm}. As with the RC_Schur decomposition
+\ref{sec.ModalCoordinateForm}. As with the RR_Schur decomposition
 described in \S \ref{sec.A.D.C}, the eigen decomposition cannot, in
 general, be computed exactly with a finite sequence of calculations;
 some efficient iterative algorithms to compute the eigen decomposition
@@ -1729,7 +1729,7 @@ A=S\Lambda S^H = \lambda_1 \s^1 (\s^1)^H + \lambda_2 \s^2 (\s^2)^H + \ldots + \l
 \end{equation*}
 \end{fact}
 
-\noindent {\it Proof}\/: By the RC_Schur decomposition theorem, there
+\noindent {\it Proof}\/: By the RR_Schur decomposition theorem, there
 exists a unitary matrix $U$ and an upper triangular matrix $T$ such
 that $U^{H}AU=T$.  If $A=A^{H}$, then $(U^{H}AU)^{H}=U^{H}AU$, and
 thus $T^{H}=T$, and therefore $T$ must be diagonal and its elements
@@ -1888,7 +1888,7 @@ Any principle submatrix of a Hermitian positive definite matrix, including its l
 individual diagonal elements, is itself Hermitian positive definite.
 \end{fact}
 
-Note that the first RC_Gauss transformation $M_1 A$ of the RC_Gaussian elimination procedure (see \S \ref{sec.B.Ab})
+Note that the first RR_Gauss transformation $M_1 A$ of the RR_Gaussian elimination procedure (see \S \ref{sec.B.Ab})
 applied to a Hermitian positive definite matrix $A$ may be written in the form
 \begin{equation}
   A=\begin{bmatrix} \alpha_1 & \v_1^H \\ \v_1 & B_1 \end{bmatrix} =
@@ -1896,8 +1896,8 @@ applied to a Hermitian positive definite matrix $A$ may be written in the form
   \begin{bmatrix} \alpha_1 & \v_1^H \\ 0 & B_1-\v_1 \v_1^H/ \alpha_1 \end{bmatrix}
   \label{CholeskyIdentitya}
 \end{equation}
-where, by Fact \ref{fact.A.D.D.Ef}, $\alpha_1>0$ and $B_1>0$.  That is, the RC_Gaussian elimination procedure without pivoting, when applied to a Hermitian positive definite matrix,
-will not encounter a zero pivot during the first RC_Gauss transformation.  Defining $\beta_1=\sqrt{\alpha_1}$, this relation may be further decomposed as
+where, by Fact \ref{fact.A.D.D.Ef}, $\alpha_1>0$ and $B_1>0$.  That is, the RR_Gaussian elimination procedure without pivoting, when applied to a Hermitian positive definite matrix,
+will not encounter a zero pivot during the first RR_Gauss transformation.  Defining $\beta_1=\sqrt{\alpha_1}$, this relation may be further decomposed as
 \begin{equation}
   A= \begin{bmatrix} \beta_1 & 0 \\ \v_1/ \beta_1 & I \end{bmatrix}
   \begin{bmatrix} 1 & 0 \\ 0 & B_1-\v_1 \v_1^H/ \alpha_1 \end{bmatrix}
@@ -1909,11 +1909,11 @@ The above decomposition may be written in the form\footnote{Note that $\tilde G_
 (that is, the eigenvalues of $A$ and $\tilde A$ are different).} $\tilde A=\tilde G_1^{-1} A \tilde G_1^{-H}$ where $A>0$, and thus $\tilde A>0$
 by Fact \ref{fact.A.D.D.Ea}.  Since $\tilde A>0$, $\tilde A$ has all positive eigenvalues; thus, since $\tilde A$ has a block diagonal decomposition,
 it follows that $A_1=B_1-\v_1 \v_1^H/ \alpha_1$, which is Hermitian, also has all positive eigenvalues, and therefore $A_1>0$.  Noting that \eqref{CholeskyIdentitya}
-represents the first step of RC_Gaussian elimination without pivoting, and that the matrix $A_1=B_1-\v_1 \v_1^H/ \alpha_1$ may be decomposed in an identical fashion (representing
-the second step of RC_Gaussian elimination without pivoting), we conclude the following:
+represents the first step of RR_Gaussian elimination without pivoting, and that the matrix $A_1=B_1-\v_1 \v_1^H/ \alpha_1$ may be decomposed in an identical fashion (representing
+the second step of RR_Gaussian elimination without pivoting), we conclude the following:
 
 \begin{fact} \label{fact.A.D.D.Eg}
-The RC_Gaussian elimination procedure without pivoting, when applied to a Hermitian positive definite matrix, will not encounter a zero pivot.
+The RR_Gaussian elimination procedure without pivoting, when applied to a Hermitian positive definite matrix, will not encounter a zero pivot.
 \end{fact}
 
 \subsubsection{Hamiltonian and symplectic matrices} \label{sec.A.D.D.B}
@@ -1951,7 +1951,7 @@ corrresponding eigenvalue in the RHP.
 corrresponding eigenvalue outside the unit circle.}\label{fig:symroot}
 \end{figure}
 
-\subsection{Computing the eigen and RC_Schur decompositions}\label{sec.A.D.E}
+\subsection{Computing the eigen and RR_Schur decompositions}\label{sec.A.D.E}
 
 \subsubsubsection{Power methods} \label{sec.A.D.E.A}
 
@@ -1978,7 +1978,7 @@ first term grows faster than the second, that is, by $|\lambda_1|/|\lambda_2|$.
 If this factor is relatively small (e.g., if $|\lambda_1|/|\lambda_2|=1.1$), convergence of the algorithm is relatively slow. 
 
 For problems in which $A$ might not have a complete set of linearly independent eigenvectors, the conclusion is the same (again, so long as
-$|\lambda_1|>|\lambda_j|$ for $j\ge 2$), but the analysis is slightly more involved.  We know by the RC_Schur decomposition theorem that
+$|\lambda_1|>|\lambda_j|$ for $j\ge 2$), but the analysis is slightly more involved.  We know by the RR_Schur decomposition theorem that
 the decomposition $A=UTU^H$ always exists, where $U$ is unitary, $T$ is triangular, and the eigenvalues of $A$ appear on the main diagonal
 of $T$ in any desired order.
 For the sake of analysis, we again select the ordering $|\lambda_1|>|\lambda_2|\ge|\lambda_3|\ge\ldots$  It follows immediately that
@@ -2004,14 +2004,14 @@ y_{1}^{(k)} &= y_{1}^{(k-1)} + c_{1,2} y_{2}^{(k-1)}+\ldots+c_{1,n} y_{n}^{(k-1)
 \end{alignat*}
 Thus, $\y^{(k)}\rightarrow C\e^1$ as $k\rightarrow\infty$, and therefore $\x^{(k)}/\lambda_1^k\rightarrow C\u^1$  as $k\rightarrow\infty$.
 In other words, unless $C=0$ (it usually is not; for more discussion on this point, see Footnote \ref{footnoteC} on page \pageref{footnoteC}),
-$\x^{(k)}$ eventually converges towards the direction of the first RC_Schur vector of $A$ (that is, the eigenvector of $A$ corresponding to $\lambda_1$).
+$\x^{(k)}$ eventually converges towards the direction of the first RR_Schur vector of $A$ (that is, the eigenvector of $A$ corresponding to $\lambda_1$).
 \vskip0.1in
 
 The {\bf inverse power method} is similar to the power method, but instead of marching the iterative equation $\x^{(k+1)}=A\x^{(k)}$, it marches the equation
 \begin{equation}
 \x^{(k+1)}=A^{-1}\x^{(k)} \quad \textrm{or, equivalently,} \quad A\x^{(k+1)}=\x^{(k)}.\label{eq.inversepowermethod}
 \end{equation}
-The latter form may be solved efficiently using the RC_Gaussian elimination techniques discussed in \S \ref{chap02}.
+The latter form may be solved efficiently using the RR_Gaussian elimination techniques discussed in \S \ref{chap02}.
 Following a similar analysis as for the power method,
 noting that the eigenvalues of $A^{-1}$ are the reciprocal of the eigenvalues of $A$ (Fact \ref{fact.A.D.C.Bd}),
 in the case of the inverse power method the magnitude of the term in the direction of $\s^n$
@@ -2032,7 +2032,7 @@ Thus, the factor of convergence of shifted inverse power method at each step is 
 is the next closest eigenvalue to $\mu_k$ (that is $\lambda_i$ is the eigenvalue which minimizes $|\lambda_{i}-\mu_k|$ for all $i\ne j$).
 If $\mu_k$ is a good approximation of $\lambda_{j}$, then this factor is large, and convergence of the scheme to $\s^j$ is quite rapid.
 In fact\footnote{In such a problem, a consistently good choice for $\x^{(0)}$ is given by solving $U\w=\e$ for $\w$, then taking $\x^{(0)}=\w/\Vert \w \Vert$, where
-$U$ is found via RC_Gaussian elimination with partial pivoting applied to the matrix $(A-\mu_0 I)$
+$U$ is found via RR_Gaussian elimination with partial pivoting applied to the matrix $(A-\mu_0 I)$
 such that $P(A-\mu_0 I)=LU$, and
 $\e=\begin{pmatrix} 1 & 1 & \ldots & 1\end{pmatrix}^T$. While other (perhaps, simpler) choices are often just as good,
 the reason that this choice is consistently good is that
@@ -2045,16 +2045,16 @@ In those isolated pathological examples in which it might fail, the techniques o
 bullet point of Fact \ref{fact.A.A.H.Aa}) could be used instead, thereby determining the eigenvector $\s^j$ from the exact value of the eigenvalue
 $\lambda_j$.},
 \beginmylistb
-\item if $\mu_0$ is an accurate approximation of an eigenvalue $\lambda_{j}$ obtained by some other method (e.g., via computation of a RC_Schur
+\item if $\mu_0$ is an accurate approximation of an eigenvalue $\lambda_{j}$ obtained by some other method (e.g., via computation of a RR_Schur
 decomposition $A=UTU^H$ using the $QR$ method, as developed below), convergence of the shifted inverse power method
 to the eigenvector $\s^j$ is obtained in just one or two steps.
 \endmylist
 Thus, {\it the primary difficulty lies with the computation of the eigenvalues}; once they are obtained, determination of the eigenvectors
-via the shifted inverse power method is relatively easy (see Algorithm \ref{alg.RC_ShiftedInversePower}).
+via the shifted inverse power method is relatively easy (see Algorithm \ref{alg.RR_ShiftedInversePower}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.RC_ShiftedInversePower,caption=Computation of the eigenvectors and RC_Schur vectors using the shifted inverse power method.]{RCC1.0/chap04/RC_ShiftedInversePower.m}
+\lstinputlisting[frame=single,label=alg.RR_ShiftedInversePower,caption=Computation of the eigenvectors and RR_Schur vectors using the shifted inverse power method.]{RCC1.0/chap04/RR_ShiftedInversePower.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2094,12 +2094,12 @@ lined up as columns in a matrix ${U_k}$.  This extended method scales each vecto
 a matrix $Z$, then orthogonalizes the resulting set of vectors (using, e.g., Modified Gram Schmidt in Algorithm \ref{alg.3.QRmgs}), and repeats.  
 Exactly as in the power method, the first vector $(\u^{1})^{(k)}$ of this extended method converges to the eigenvector $\s^1$
 corresponding to the eigenvalue $\lambda_1$ of $A$ with
-maximum amplitude; this eigenvector is in fact the same as the first RC_Schur vector $\u^1$ of $A$.  By a similar argument\footnote{In the notation
+maximum amplitude; this eigenvector is in fact the same as the first RR_Schur vector $\u^1$ of $A$.  By a similar argument\footnote{In the notation
 of the discussion in the second paragraph of \S \ref{sec.A.D.E}, defining $\y^{(k)}$ in this case as $\y^{(k)}=U^H\x^{(k)}/\lambda^k_2$,
 it is found that $\y^{(k)}\rightarrow C\e^2$ as $k\rightarrow\infty$, and therefore $\x^{(k)}/\lambda_2^k\rightarrow C\u^2$  as
 $k\rightarrow\infty$.} to that given in the second paragraph of \S \ref{sec.A.D.E}, assuming now that $|\lambda_2|>|\lambda_3|$,
 the next vector in the set $(\u^{2})^{(k)}$, which is constrained at each iteration to be orthogonal to the first vector in the set $(\u^{1})^{(k)}$,
-converges to the second RC_Schur vector $\u^2$ of $A$, corresponding to the eigenvalue of $A$ with the second largest amplitude, etc.
+converges to the second RR_Schur vector $\u^2$ of $A$, corresponding to the eigenvalue of $A$ with the second largest amplitude, etc.
 We now consider the case in which we work with $n$ vectors, which, for simplicity, we initialize as the Cartesian unit vectors.  
 Subject to only mild assumptions\footnote{The first assumption on the strict separation of the magnitudes of the eigenvalues
 is in fact somewhat restrictive (especially in the case of real matrices with eigenvalues in complex conjugate pairs),
@@ -2112,9 +2112,9 @@ small components in these directions even if they are initially lacking.  Conver
 presented later in this section are applied, is so rapid that such initialization of the necessary components
 via small numerical errors is, in fact, entirely adequate.} (specifically, that $|\lambda_1|>|\lambda_2|>|\lambda_3|>\ldots$ and
 also that the initialization chosen
-for each column does not happen to be lacking in the necessary components in each of the corresponding RC_Schur vector
+for each column does not happen to be lacking in the necessary components in each of the corresponding RR_Schur vector
 directions),
-this method converges to a RC_Schur decomposition of $A$.  In equations, this method,
+this method converges to a RR_Schur decomposition of $A$.  In equations, this method,
 called the {\bf block power method}, is defined by
 \begin{subeqnA}
 \label{blockpower}
@@ -2199,30 +2199,30 @@ value of $T_k$ directly.}. \vskip0.1in
 
 \subsubsubsection{Accelerating the $QR$ method: preliminary comments} %\label{sec.A.D.E.E}
 
-\noindent As shown above, the block power method \eqref{blockpower;a}-\eqref{blockpower;c} ultimately converges to a RC_Schur decomposition of $A$; thus, the unshifted
+\noindent As shown above, the block power method \eqref{blockpower;a}-\eqref{blockpower;c} ultimately converges to a RR_Schur decomposition of $A$; thus, the unshifted
 $QR$ method \eqref{QR;a}-\eqref{QR;c}, which is equivalent (as established in Facts \ref{fact.blockpower} and \ref{fact.unshiftedQR}), converges in an identical manner.
 Both methods, though elegant in their simplicity, are very slow to converge.
 However, leveraging various facts established above, we are now in an exceptional position to accelerate tremendously the $QR$ method in particular via the following
 four steps:\vskip0.1in
 
 \noindent (i)
-Note first that, before starting the $QR$ iterations to approximate the RC_Schur decomposition $A=UTU^H$, thereby determining (in the diagonal elements of $T$)
+Note first that, before starting the $QR$ iterations to approximate the RR_Schur decomposition $A=UTU^H$, thereby determining (in the diagonal elements of $T$)
 the eigenvalues of $A$, we actually don't have to start this iteration from ``scratch'' (that is, with the full matrix $A$), as indicated in
 \eqref{QR;a}.  Indeed, we have already identified an efficient technique to introduce {\it many} zeros into $A$ by reducing it all the way
-to RC_Hessenberg form $T_0$ via a unitary similarity tranformation in a finite number of steps (see \S \ref{sec.A.D.A}).
+to RR_Hessenberg form $T_0$ via a unitary similarity tranformation in a finite number of steps (see \S \ref{sec.A.D.A}).
 By Fact \ref{fact.A.D.A}, the $T_0$ so computed has the same eigenvalues as $A$.
-Thus, {the RC_Hessenberg form $T_0$ provided by Algorithm \ref{alg.3.RC_Hessenberg} is the preferred starting point for the $QR$ method.}
-Further, as easily verified, if $T_{k-1}$ is upper RC_Hessenberg, then, calculating its $QR$ decomposition $T_{k-1}={Q}_{k} {R}_{k}$
-via Algorithm \ref{alg.3.RC_QRGivensHessenberg} or \ref{alg.3.RC_QRFastGivensHessenberg},
-${Q}_{k}$ is also upper RC_Hessenberg.  As ${R}_{k}$ is upper triangular by construction, the product $T_{k} = {R}_{k} {Q}_{k}$
-is also upper Hessenenberg (Fact \ref{fact.matrixproducts}).  Thus, the upper RC_Hessenberg structure of $T_{k}$ may be leveraged at each step $k$, both when computing the
+Thus, {the RR_Hessenberg form $T_0$ provided by Algorithm \ref{alg.3.RR_Hessenberg} is the preferred starting point for the $QR$ method.}
+Further, as easily verified, if $T_{k-1}$ is upper RR_Hessenberg, then, calculating its $QR$ decomposition $T_{k-1}={Q}_{k} {R}_{k}$
+via Algorithm \ref{alg.3.RR_QRGivensHessenberg} or \ref{alg.3.RR_QRFastGivensHessenberg},
+${Q}_{k}$ is also upper RR_Hessenberg.  As ${R}_{k}$ is upper triangular by construction, the product $T_{k} = {R}_{k} {Q}_{k}$
+is also upper Hessenenberg (Fact \ref{fact.matrixproducts}).  Thus, the upper RR_Hessenberg structure of $T_{k}$ may be leveraged at each step $k$, both when computing the
 decomposition $T_{k-1}={Q}_{k} {R}_{k}$ and when calculating the product $T_{k} = {R}_{k} {Q}_{k}$.  It is thus seen that
-{\it the role of the $QR$ iterations is simply to diminish the elements in the first subdiagonal of the upper RC_Hessenberg matrix $T_{k}$ to (nearly) zero},
-thereby reducing it (iteratively) towards an eigenvalue-revealing RC_Schur form.\vskip0.1in
+{\it the role of the $QR$ iterations is simply to diminish the elements in the first subdiagonal of the upper RR_Hessenberg matrix $T_{k}$ to (nearly) zero},
+thereby reducing it (iteratively) towards an eigenvalue-revealing RR_Schur form.\vskip0.1in
 
 \noindent (ii)
 The second step in the refinement of the unshifted $QR$ method \eqref{QR} is to note that the shifting idea discussed previously may be applied to
-accelerate the convergence of one of the RC_Schur vectors being calculated (typically, the last in the set).  
+accelerate the convergence of one of the RR_Schur vectors being calculated (typically, the last in the set).  
 Note that, in the case of the unshifted $QR$ method, we may write
 \begin{equation*}
   T_{k-1} = (Q_k R_k) Q_k Q_k^H = Q_k (R_k Q_k) Q_k^H = Q_k T_k Q_k^H.
@@ -2231,7 +2231,7 @@ Thus, $T_k$ is unitarily similar to $T_{k-1}$.  In a similar fashion, if we cons
 \begin{subeqnA}
 \label{shQR}
 \begin{align}
-& T_{0}= \textrm{RC_Hessenberg form derived from a unitary similarity decomposition of $A$ via Algorithm \ref{alg.3.RC_Hessenberg}}, \label{shQR;a}\\
+& T_{0}= \textrm{RR_Hessenberg form derived from a unitary similarity decomposition of $A$ via Algorithm \ref{alg.3.RR_Hessenberg}}, \label{shQR;a}\\
 & (T_{k-1}-\mu_k I) = {Q}_{k} {R}_{k} \quad \textrm{[that is, determine a $QR$ decomposition of $(T_{k-1}-\mu_k I)$]},\label{shQR;b}\\
 & T_{k} = {R}_{k} {Q}_{k} + \mu_k I,\label{shQR;c}
 \end{align}
@@ -2243,16 +2243,16 @@ then it follows similarly that
 \end{equation}
 Thus, even when such shifts are applied, $T_k$ is unitarily similar to $T_{k-1}$.  It follows in turn that $T_k$ is unitarily similar to the original matrix $A$.
 If good shifts $\mu_k$ are selected (a topic that is deferred to the following three subsections),
-then the convergence of one of the eigenvalues [on the main diagonal of $T_k$] and the corresponding RC_Schur vector
+then the convergence of one of the eigenvalues [on the main diagonal of $T_k$] and the corresponding RR_Schur vector
 [which may be reconstructed via \eqref{QR;d}, if desired] is immensely accelerated,
 as explained in the case of the shifted inverse power method above\footnote{Recall that the convergence of the $QR$ method is identical to the convergence of the
 corresponding block power method.}.\vskip0.1in
 
 \noindent (iii)
 The third step in the refinement of the $QR$ method is to apply Fact \ref{fact.A.D.C.A} regarding the eigenvalues of a block upper triangular matrix.
-When one or more of the elements in the first subdiagonal of the upper RC_Hessenberg matrix $T_{k}$ is reduced to (nearly) zero, then $T_{k}$ may be partitioned in
-block upper triangular form, and the eigenvalues of the upper RC_Hessenberg blocks on the main diagonal of $T_{k}$ may be determined separately; the eigenvalues
-of $T_{k}$ are then given by the union of the eigenvalues of these upper RC_Hessenberg blocks.  This process of splitting the eigenvalue computation
+When one or more of the elements in the first subdiagonal of the upper RR_Hessenberg matrix $T_{k}$ is reduced to (nearly) zero, then $T_{k}$ may be partitioned in
+block upper triangular form, and the eigenvalues of the upper RR_Hessenberg blocks on the main diagonal of $T_{k}$ may be determined separately; the eigenvalues
+of $T_{k}$ are then given by the union of the eigenvalues of these upper RR_Hessenberg blocks.  This process of splitting the eigenvalue computation
 into smaller subproblems is referred to as {\bf deflation}.
 
 To achieve deflation efficiently in all of the cases we will consider, avoiding recursion and its associated overhead,
@@ -2270,15 +2270,15 @@ Finally, note that, to save computational effort, we do not bother accumulating 
 complete the (nearly) triangularizing unitary similarity transformation $A=U_k T_k U_k^H$, as the computations to determine this transformation matrix
 during the iteration are relatively expensive.  
 Once $T_k$ converges to an essentially triangular form (and, thus, the $\lambda_i$ are determined), computing the corresponding eigenvectors (that is, the columns of $S$) via the shifted inverse power method discussed previously is straightforward.
-If it is the corresponding RC_Schur vectors (that is, the columns of $U$) that are desired, a straightfoward modification of the shifted inverse power method discussed previously may be used,
-subtracting off the components of $\x^{k}$ at each iteration $k$ in the directions of each the previously computed RC_Schur vectors (see Algorithm \ref{alg.RC_ShiftedInversePower}). \vskip0.08in
+If it is the corresponding RR_Schur vectors (that is, the columns of $U$) that are desired, a straightfoward modification of the shifted inverse power method discussed previously may be used,
+subtracting off the components of $\x^{k}$ at each iteration $k$ in the directions of each the previously computed RR_Schur vectors (see Algorithm \ref{alg.RR_ShiftedInversePower}). \vskip0.08in
 
 \noindent To summarize, to calculate the eigenvalues of a matrix $A$:
 \beginmylistb
-\item[(a)] Start by taking the RC_Hessenberg decomposition using Algorithm \ref{alg.3.RC_Hessenberg}.
+\item[(a)] Start by taking the RR_Hessenberg decomposition using Algorithm \ref{alg.3.RR_Hessenberg}.
 \item[(b)] Identify the unreduced block $T_{22}$ on the main diagonal of a block upper triangular partitioning of $T$.
 \item[(c)] Apply the shifted $QR$ method to $T_{22}$, and repeat from step (b) until $T_{22}$ is empty. 
-\item[(d)] Compute the RC_Schur vectors or eigenvectors, as necessary, using Algorithm \ref{alg.RC_ShiftedInversePower}.
+\item[(d)] Compute the RR_Schur vectors or eigenvectors, as necessary, using Algorithm \ref{alg.RR_ShiftedInversePower}.
 \endmylist \vskip0.08in
 
 \clearpage
@@ -2292,7 +2292,7 @@ subtracting off the components of $\x^{k}$ at each iteration $k$ in the directio
 \subsubsubsection{Accelerating the $QR$ method: the general (non-Hermitian complex) case} %\label{sec.A.D.E.T}
 
 \noindent In this case, we may follow the $QR$ method with the four acceleration steps enumerated above without further embellishment,
-as illustrated in Algorithm \ref{alg.3.RC_EigGeneral}.
+as illustrated in Algorithm \ref{alg.3.RR_EigGeneral}.
 At each iteration $k$, we may shift simply by the lower-right element of $T_k$, which is usually the first eigenvalue to converge.
 
 Following the analysis of Golub \& van Loan (1996), if at one step of the shifted $QR$ method the matrix $T_{k-1}$ has the form
@@ -2314,15 +2314,15 @@ where $\delta \propto \epsilon^2$; that is, {\it convergence of the shifted $QR$
 \subsubsubsection{Accelerating the $QR$ method: the Hermitian/symmetric case} %\label{sec.A.D.E.U}
 
 \noindent We now consider the case in which $A$ is Hermitian (or, if it happens to be real, symmetric).  Note first that, in this case, $A$ has
-real eigenvalues.  The first step of \eqref{shQR} is to compute the RC_Hessenberg decomposition of $A$.
-Note that, since the RC_Hessenberg form $T_0$ is unitarily similar to $A$ (see Fact \ref{fact.A.D.B}), $T_0$ is also Hermitian.
-Thus, as $T_0$ is both RC_Hessenberg and Hermitian, it must be {\it tridiagonal}.
+real eigenvalues.  The first step of \eqref{shQR} is to compute the RR_Hessenberg decomposition of $A$.
+Note that, since the RR_Hessenberg form $T_0$ is unitarily similar to $A$ (see Fact \ref{fact.A.D.B}), $T_0$ is also Hermitian.
+Thus, as $T_0$ is both RR_Hessenberg and Hermitian, it must be {\it tridiagonal}.
 
 Further, as easily verified, if $T_{k-1}$ is tridiagonal then, calculating its shifted $QR$ decomposition $(T_{k-1}-\mu_k I)={Q}_{k} {R}_{k}$
 via Algorithm \ref{alg.3.QRFastGivensTridiagonal}, it turns out that ${R}_{k}$ is upper tridiagonal.
-By Fact \ref{fact.matrixproducts}, $T_k$ is upper RC_Hessenberg.
+By Fact \ref{fact.matrixproducts}, $T_k$ is upper RR_Hessenberg.
 Additionally, since $T_k$ is unitarily similar to the Hermitian matrix $T_0$ [see \eqref{result;b}],
-$T_{k}$ in this case is also Hermitian.  Thus, as $T_{k}$ is both RC_Hessenberg and Hermitian, it is also tridiagonal.
+$T_{k}$ in this case is also Hermitian.  Thus, as $T_{k}$ is both RR_Hessenberg and Hermitian, it is also tridiagonal.
 Thus, the tridiagonal structure of $T_{k}$ may be leveraged at each step $k$, both when computing the
 decomposition $(T_{k-1}-\mu_k I)={Q}_{k} {R}_{k}$ and when calculating $T_{k} = {R}_{k} {Q}_{k} + \mu_k I$.  Again,
 the role of the $QR$ iterations is simply to diminish the elements in the subdiagonal of the Hermitian tridiagonal matrix
@@ -2337,28 +2337,28 @@ and the corresponding eigenvalue in question, known as the {\bf Wilkenson shift}
 \begin{equation}
   \mu_k = b_n + t - \textrm{sgn}(t)\,\sqrt{|t|^2 + |a_n|^2} \quad \textrm{where} \quad t=(b_{n-1}-b_n)/2.
 \end{equation}
-Implementation is given in Algorithm \ref{alg.3.RC_EigHermitian}.
+Implementation is given in Algorithm \ref{alg.3.RR_EigHermitian}.
 \clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingplainB[frame=single,label=alg.3.RC_EigGeneral,caption={Compute the eigenvalues of a general complex matrix $A$ % with $|\lambda_1|>|\lambda_2|>\ldots$
-via RC_Hessenberg decomposition followed by an explicitly shifted $QR$ iteration, using the lower-right element for each shift.}]{RCC1.0/chap04/RC_EigGeneral.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_EigGeneralTest.m}
+\lstinputlistingplainB[frame=single,label=alg.3.RR_EigGeneral,caption={Compute the eigenvalues of a general complex matrix $A$ % with $|\lambda_1|>|\lambda_2|>\ldots$
+via RR_Hessenberg decomposition followed by an explicitly shifted $QR$ iteration, using the lower-right element for each shift.}]{RCC1.0/chap04/RR_EigGeneral.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_EigGeneralTest.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsubsection{Accelerating the $QR$ method: the non-symmetric real case} % \label{sec.A.D.E.V}
 
 \noindent The non-symmetric real case is more delicate.  In this case, any complex eigenvalues come in complex conjugate pairs (Fact \ref{fact.A.D.C.Bf}).
-We may again begin by computing the RC_Hessenberg decomposition, which is real because the initial matrix $A$ is real.  Neither of the approaches described above, however, is suitable:
+We may again begin by computing the RR_Hessenberg decomposition, which is real because the initial matrix $A$ is real.  Neither of the approaches described above, however, is suitable:
 \beginmylistb
 \item The approach of shifting each $QR$ iteration by the element in the lower-right corner of $T$, as done in the general (non-Hermitian complex) case above, is
 not a good idea, because all elements during the $QR$ iterations are real following this approach, though some of the eigenvalues we seek come in complex conjugate pairs.
 Thus, the (real) element in the lower-right corner of $T$ at any given step
 will be {\it exactly} equidistant from the two complex eigenvalues, and shifting by it will not distinguish one eigenvector from the other.  Stated another way,
 returning to the original description of the power method at the beginning of \S \ref{sec.A.D.E}, we do not get the necessary separation of the absolute value of the eigenvalues in the shifted problem
-in order to ensure convergence of the corresponding RC_Schur vectors when we use a real shift when the eigenvalues come in complex conjugate pairs. 
+in order to ensure convergence of the corresponding RR_Schur vectors when we use a real shift when the eigenvalues come in complex conjugate pairs. 
 \item The approach of shifting each $QR$ iteration by one of the eigenvalues of the $2\times 2$ submatrix in the
 lower-right corner of $T$ would in fact work.  However, this approach unnecessarily converts a real problem into a significantly more expensive complex one.  Furthermore, round-off errors accumulate following this approach
 such that the eigenvalues do not wind up being exact complex conjugates of each other.
@@ -2366,19 +2366,19 @@ such that the eigenvalues do not wind up being exact complex conjugates of each 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingplainB[frame=single,label=alg.3.RC_EigHermitian,caption={Compute the eigenvalues of a Hermitian (if real, symmetric) matrix $A$ % with $|\lambda_1|>|\lambda_2|>\ldots$
-via RC_Hessenberg decomposition followed by an explicitly shifted $QR$ iteration, using Wilkenson shifts.}]{RCC1.0/chap04/RC_EigHermitian.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_EigHermitianTest.m}
+\lstinputlistingplainB[frame=single,label=alg.3.RR_EigHermitian,caption={Compute the eigenvalues of a Hermitian (if real, symmetric) matrix $A$ % with $|\lambda_1|>|\lambda_2|>\ldots$
+via RR_Hessenberg decomposition followed by an explicitly shifted $QR$ iteration, using Wilkenson shifts.}]{RCC1.0/chap04/RR_EigHermitian.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_EigHermitianTest.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \noindent An alternative approach is thus preferred.  Instead of aiming to use a shifted $QR$ method to iterate towards a complex upper triangular form,
 we instead use a {\bf double-shift} method to iterate towards an eigenvalue-revealing {\it block} upper triangular form with $1\times 1$ and $2\times 2$ real blocks on the
-main diagonal, known as the {\bf real RC_Schur form} (see \S \ref{sec.A.D.Ca}).  At each step, we will take {\it two} shifted $QR$ steps, one based each of the eigenvalues of the $2\times 2$ submatrix in the
+main diagonal, known as the {\bf real RR_Schur form} (see \S \ref{sec.A.D.Ca}).  At each step, we will take {\it two} shifted $QR$ steps, one based each of the eigenvalues of the $2\times 2$ submatrix in the
 lower-right corner of $A$.  The challenge is to figure out a way to do this while keeping all arithmetic real.  To accomplish this, we appeal to the following.
 
 \begin{fact}[The Implicit $Q$ Theorem] \label{fact.implicitQ}
-Consider two unitary similarity transformations of $T_{n\times n}$ such that\break $T = U G U^H = V H V^H$, where both $G$ and $H$ are upper RC_Hessenberg and $G$ is {\bf unreduced} (that is, it has no zeros
+Consider two unitary similarity transformations of $T_{n\times n}$ such that\break $T = U G U^H = V H V^H$, where both $G$ and $H$ are upper RR_Hessenberg and $G$ is {\bf unreduced} (that is, it has no zeros
 in its subdiagonal).  If $\v^1=\u^1$ (that is, if the first columns of $V$ and $U$ are equal), then it follows that $\v^i=\pm\u^i$ and $h_{i,i-1}=\pm G_{i,i-1}$ (stated loosely, the two decompositions
 are ``essentially equivalent'').
 \end{fact}
@@ -2393,10 +2393,10 @@ Since $\w^i=V^H \u^i$ and $g_{i,i-1}=(\w^i)^H H \w^{i-1}$, it also follows that 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t!]
-\lstinputlistingplainC[frame=single,label=alg.3.RC_EigReal,caption={Compute the eigenvalues of a real nonsymmetric matrix $A$ % with
-via RC_Hessenberg decomposition followed by a double implicitly shifted $QR$ iteration, using the eigenvalues of the $2\times 2$ submatrix in the
-lower-right corner of $T_k$ as shifts.}]{RCC1.0/chap04/RC_EigReal.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_EigRealTest.m}
+\lstinputlistingplainC[frame=single,label=alg.3.RR_EigReal,caption={Compute the eigenvalues of a real nonsymmetric matrix $A$ % with
+via RR_Hessenberg decomposition followed by a double implicitly shifted $QR$ iteration, using the eigenvalues of the $2\times 2$ submatrix in the
+lower-right corner of $T_k$ as shifts.}]{RCC1.0/chap04/RR_EigReal.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_EigRealTest.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2418,7 +2418,7 @@ Pre- and post-multiplying the third relation by $Q_1$ and $R_1$ respectively, it
 Note that $t\triangleq a_1+a_2$ is real\footnote{By Fact \ref{fact.A.C.A.B}, $t$ is the sum of the eigenvalues of $T_{k-1}(n-1:n,n-1:n)$.  This statement is generalized in Fact \ref{fact.A.F.A.b}.} and
 $d\triangleq a_1\cdot a_2$ is real\footnote{By Fact \ref{fact.A.D.C.Be}, $d=|T_{k-1}(n-1:n,n-1:n)|$ is the product of the eigenvalues of $T_{k-1}(n-1:n,n-1:n)$.}; thus, $M$ is real.
 
-Recall from \eqref{eq:shQRsingle} that the shifted $QR$ method boils down to $T_k=Q_k^H T_{k-1} Q_k$; that is, the upper RC_Hessenberg matrix $T_k$ is found simply by pre-multiplying $T_{k-1}$ by
+Recall from \eqref{eq:shQRsingle} that the shifted $QR$ method boils down to $T_k=Q_k^H T_{k-1} Q_k$; that is, the upper RR_Hessenberg matrix $T_k$ is found simply by pre-multiplying $T_{k-1}$ by
 a unitary matrix $Q_k^H$ and post-multiplying the result by $Q_k$, where $Q_k$ itself is found by orthogonalization of the columns of a shifted version of $T_{k-1}$.
 The idea now is similar, but instead of transforming with a single $Q_k$, we
 will effectively pre-multiply by $U^H\triangleq (Q_2^H Q_1^H)$ and postmultiply by $U\triangleq (Q_1 Q_2)$, which is why this method is said to be based on a {\bf double shift}.
@@ -2427,9 +2427,9 @@ Unfortunately, computation of $M=T^2 - (a_1+a_2) T + (a_1\cdot a_2) I$ requires 
 compute $M$, orthogonalize its columns (denoting the resulting matrix $U$), then compute $U^H T U$.  Appealing to the Implicit $Q$ Theorem, however, we may instead build up a new unitary
 matrix $V$ (from a series of appropriately-constructed Householder transformation matrices embedded within identity matrices) to form a new unitary similarity transformation $V^H T V=H$.
 This new unitary similarity transformation will be ``essentially equivalent'' to the similarity transformation $U^H T U =G$ discussed above so long as the {\it first column} of $U$, denoted $\u^1$, matches the first column of $V$, denoted $\v^1$,
-and the rest of the transformation $V$ is constructed such that $H$ is upper RC_Hessenberg (as is $G$).  Thus, we perform an {\bf double implicitly shifted $QR$ iteration},
-achieving essentially the same effect as two shifted $QR$ iterations but without ever explicitly performing the shifts $(T-a_1 I)$ or $(T_1-a_2 I)$ [cf.~Algorithms \ref{alg.3.RC_EigGeneral} and
-\ref{alg.3.RC_EigHermitian}].  For matrices whose eigenvalues span a large range of magnitudes, this approach leads to a significant improvement in overall accuracy (see also Exercise
+and the rest of the transformation $V$ is constructed such that $H$ is upper RR_Hessenberg (as is $G$).  Thus, we perform an {\bf double implicitly shifted $QR$ iteration},
+achieving essentially the same effect as two shifted $QR$ iterations but without ever explicitly performing the shifts $(T-a_1 I)$ or $(T_1-a_2 I)$ [cf.~Algorithms \ref{alg.3.RR_EigGeneral} and
+\ref{alg.3.RR_EigHermitian}].  For matrices whose eigenvalues span a large range of magnitudes, this approach leads to a significant improvement in overall accuracy (see also Exercise
 \ref{ex:04.impshiftherm}).
 
 To proceed, it is first noted that $\m^1 = \begin{pmatrix} x & y & z & 0 & \ldots & 0 \end{pmatrix}$ where
@@ -2453,13 +2453,13 @@ transformed matrix by $V_0$.  Graphically, this process may be illustrated as fo
   V^H_3 V^H_2  V^H_1 V^H_0 T V_0 V_1 V_2 V_3 = {\footnotesize\begin{pmatrix} x & x & x & * & * & * \\ x & x & x & * & * & * \\ 0 & x & x & * & * & * \\ 0 & 0 & * & * & * & * \\ 0 & 0 & 0 & * & * & * \\ 0 & 0 & 0 & * & * & * \end{pmatrix}}, \\
   V^H T V = {\footnotesize\begin{pmatrix} x & x & x & x & * & * \\ x & x & x & x & * & * \\ 0 & x & x & x & * & * \\ 0 & 0 & x & x & * & * \\ 0 & 0 & 0 & * & * & * \\ 0 & 0 & 0 & 0 & * & * \end{pmatrix}},
 \end{gather*}
-where $V=V_0 V_1 \cdots V_{n-2}$.  Implementation is relatively straightforward, as shown in Algorithm \ref{alg.3.RC_EigReal}.  Note that two convenient {\bf wrapper} routines, {\tt RC_Eig.m} and {\tt RC_Schur.m},
+where $V=V_0 V_1 \cdots V_{n-2}$.  Implementation is relatively straightforward, as shown in Algorithm \ref{alg.3.RR_EigReal}.  Note that two convenient {\bf wrapper} routines, {\tt RR_Eig.m} and {\tt RR_Schur.m},
 are given in Algorithm \ref{alg.eig.schur}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t!]
-\lstinputlistingplain[frame=single,label=alg.eig.schur,caption={Convenient wrapper routines for computing the eigen and RC_Schur decompositions.}]{RCC1.0/chap04/RC_Eig.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_Schur.m}
+\lstinputlistingplain[frame=single,label=alg.eig.schur,caption={Convenient wrapper routines for computing the eigen and RR_Schur decompositions.}]{RCC1.0/chap04/RR_Eig.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_Schur.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2472,7 +2472,7 @@ are given in Algorithm \ref{alg.eig.schur}.
 %\noindent {\it This section still under construction.} ???
 %\subsubsubsection{The divide and conquer method} %\label{sec.A.D.E.J} ???
 %\noindent {\it This section still under construction.} ???
-%\subsubsubsection{Krylov methods and the implicitly-restarted RC_Arnoldi method} \label{sec.imp.res.arnoldi} ???
+%\subsubsubsection{Krylov methods and the implicitly-restarted RR_Arnoldi method} \label{sec.imp.res.arnoldi} ???
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2580,7 +2580,7 @@ decomposition $A=MJM^{-1}$ sudddenly switches to the eigen decomposition such th
 \end{equation*}
 Because of this {\bf ill-posedness} (that is, a lack of smooth
 dependence on the data in the problem formulation) in the definition
-of the Jordan decomposition, the RC_Schur decomposition and/or the
+of the Jordan decomposition, the RR_Schur decomposition and/or the
 singular value decomposition is usually be preferred over the Jordan
 decomposition for most large-scale numerical computations in cases for which $A$ is, or
 might be, nearly defective.
@@ -2650,7 +2650,7 @@ A)=V (\Sigma^{H}\Sigma) V^{H}$ and $(A A^{H})=U (\Sigma\Sigma^{H})
 U^{H}$.  Recall from Fact \ref{fact.A.D.D.B} that an eigen decomposition
 of a Hermitian matrix [such as $(A^{H} A)$ or $(A
 A^{H})$] always exists, and from \S \ref{sec.A.D.E} that there is a very efficient numerical algorithm for
-computing the eigen decomposition in this case (see Algorithm \ref{alg.3.RC_EigHermitian}).  Thus, this algorithm may be leveraged
+computing the eigen decomposition in this case (see Algorithm \ref{alg.3.RR_EigHermitian}).  Thus, this algorithm may be leveraged
 to find the singular value decomposition of any $m\times n$ matrix $A$
 in a straightforward manner, as shown below.  Note that the
 constructions given below also establish the existence of the SVD
@@ -2773,7 +2773,7 @@ Indicated graphically,
   U^H_3 U^H_2 U^H_1 A V_1 V_2 = {\footnotesize\begin{pmatrix} x & x & 0 & 0 \\ 0 & x & x & 0 \\ 0 & 0 & * & * \\ 0 & 0 & 0 & * \\ 0 & 0 & 0 & * \end{pmatrix}}, \quad
   B_0 = U^H_0 A V_0 = {\footnotesize\begin{pmatrix} x & x & 0 & 0 \\ 0 & x & x & 0 \\ 0 & 0 & x & x \\ 0 & 0 & 0 & * \\ 0 & 0 & 0 & 0 \end{pmatrix}},
 \end{gather*}
-where $U_0=U_1 U_2 \cdots U_n$ and $V_0=V_1 V_2\cdots V_{n-2}$.  Implementation is straightforward (see second code listed in Algorithm \ref{alg.4.SVD}; cf.~Algorithm \ref{alg.3.RC_Hessenberg}).
+where $U_0=U_1 U_2 \cdots U_n$ and $V_0=V_1 V_2\cdots V_{n-2}$.  Implementation is straightforward (see second code listed in Algorithm \ref{alg.4.SVD}; cf.~Algorithm \ref{alg.3.RR_Hessenberg}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
@@ -2785,8 +2785,8 @@ where $U_0=U_1 U_2 \cdots U_n$ and $V_0=V_1 V_2\cdots V_{n-2}$.  Implementation 
 
 Starting from this bidiagonalization, we now consider the application of the shifted $QR$ method to the
 tridiagonal Hermitian matrix $T_k=B_k^H B_k$.  At each step of this iterative method, we may apply a Wilkenson shift based on the lower-right corner of $T_k$,
-as done in Algorithm \ref{alg.3.RC_EigHermitian}.  However, instead of explicitly shifting the matrix $T_k$ at each step, we will apply an {\bf implicitly shifted $QR$ iteration},
-as done in non-symmetric real case discussed previously and illustrated in Algorithm \ref{alg.3.RC_EigReal} (see also Exercise \ref{ex:04.impshiftherm}).
+as done in Algorithm \ref{alg.3.RR_EigHermitian}.  However, instead of explicitly shifting the matrix $T_k$ at each step, we will apply an {\bf implicitly shifted $QR$ iteration},
+as done in non-symmetric real case discussed previously and illustrated in Algorithm \ref{alg.3.RR_EigReal} (see also Exercise \ref{ex:04.impshiftherm}).
 Further, instead of working on $T_k$, we will apply the rotations comprising $V_k$ that we would have applied to $T_k$ (via both pre- and postmultiplication, applied using the implicitly shifted $QR$ method)
 directly to the factor $B_k$ (via postmultiplication, again using the implicitly shifted $QR$ method), while applying compensating unitary rotations $U_k$ to the factor $B_k$
 (via premultiplication) in order to keep it upper bidiagonal at each step.
@@ -2822,14 +2822,14 @@ be zeroed by premultiplication by an appropriate sequence of Givens rotation mat
 Implementation of all of the steps described above is given in Algorithm \ref{alg.4.SVD}.
 
 \clearpage
-\subsection{Decompositions related to RC_Gaussian elimination: $LDM^{H}$, $LDL^{H}$, and Cholesky}\label{sec.A.D.I}
+\subsection{Decompositions related to RR_Gaussian elimination: $LDM^{H}$, $LDL^{H}$, and Cholesky}\label{sec.A.D.I}
 
-In the course of solving $A\x=\b$ via RC_Gaussian elimination
+In the course of solving $A\x=\b$ via RR_Gaussian elimination
 in \S \ref{sec.B.A}, a few useful matrix decompositions were already
 encountered.  In \S \ref{sec.B.Ab}, we presented a step-by-step
 procedure to construct an $LU$ decomposition, $A=LU$, where $L$ is
 unit lower triangular and $U$ is upper triangular, assuming that $A$
-is nonsingular and row swaps are not required in the RC_Gaussian
+is nonsingular and row swaps are not required in the RR_Gaussian
 elimination procedure.  If row swaps were required (\S \ref{sec.B.B}),
 we accounted for them with the permutaion matrix $P$ such that
 $A=PLU$.  If column swaps were also incorporated (\S \ref{sec.B.B.C}),
@@ -2886,7 +2886,7 @@ $(A^H A)=(\underline{QR})^H \underline{QR} = \underline{R}^H \underline{R}$, and
 
 \subsubsubsection{Direct determination of the Cholesky decomposition}%\label{sec:choleskydirect}
 
-\noindent If $A>0$, rather than performing RC_Gaussian elimination on $A$ and then backing out $G=LD^{1/2}$ afterwards,
+\noindent If $A>0$, rather than performing RR_Gaussian elimination on $A$ and then backing out $G=LD^{1/2}$ afterwards,
 or determining the $\underline{QR}$ decomposition of $A$ and then taking $G=\underline{R}^H$,
 we may instead leverage the Hermitian positive definite structure of $A$
 to determine the Cholesky decomposition directly, with only $\sim(n^3/3)$ flops.
@@ -2941,11 +2941,11 @@ We now consider the efficient solution of the unknown, $X$, in the {\bf differen
 \begin{equation*}
 \frac{dX}{dt} = A^H X + X A + Q
 \end{equation*}
-and its steady-state solution, the {\bf continuous-time algebraic Lyapunov equation} ({\bf RC_CALE})
+and its steady-state solution, the {\bf continuous-time algebraic Lyapunov equation} ({\bf RR_CALE})
 \begin{equation*}
 0 = A^H X + X A + Q,
 \end{equation*}
-the generalization of the RC_CALE known as the {\bf RC_Sylvester equation}
+the generalization of the RR_CALE known as the {\bf RR_Sylvester equation}
 \begin{equation*}
 0= A X - X B - C,
 \end{equation*}
@@ -2953,7 +2953,7 @@ and the {\bf differential Riccati equation} ({\bf DRE})
 \begin{equation*}
 - \frac{d X}{dt} = A^H X + X A - X S X + Q
 \end{equation*}
-and its steady-state solution, the {\bf continuous-time algebraic Riccati equation} ({\bf RC_CARE})
+and its steady-state solution, the {\bf continuous-time algebraic Riccati equation} ({\bf RR_CARE})
 \begin{equation*}
 0 = A^H X + X A - X S X + Q.
 \end{equation*}
@@ -2961,28 +2961,28 @@ We similarly consider the efficient solution of the unknown, $X$, in the {\bf Ly
 \begin{equation*}
 X_{k+1} = F^H X_k F + Q
 \end{equation*}
-and its steady-state solution, the {\bf discrete-time algebraic Lyapunov equation} ({\bf RC_DALE})
+and its steady-state solution, the {\bf discrete-time algebraic Lyapunov equation} ({\bf RR_DALE})
 \begin{equation*}
 X = F^H X F + Q,
 \end{equation*}
-the generalization of the RC_DALE known as the {\bf Stein equation}
+the generalization of the RR_DALE known as the {\bf Stein equation}
 \begin{equation*}
 X = A^H X B + C,
 \end{equation*}
-and the {\bf Riccati difference equation} ({\bf RC_RDE})
+and the {\bf Riccati difference equation} ({\bf RR_RDE})
 \begin{equation*}
   X_k = F^H X_{k+1} (I+ S X_{k+1})^{-1} F + Q, 
 \end{equation*}
-and its steady-state solution, the {\bf discrete-time algebraic Riccati equation} ({\bf RC_DARE})
+and its steady-state solution, the {\bf discrete-time algebraic Riccati equation} ({\bf RR_DARE})
 \begin{equation*}
 X = F^H X (I+ S X)^{-1} F + Q.
 \end{equation*}
-The DLE, RC_CALE, DRE, and RC_CARE arise in the analysis and control of continuous-time systems, whereas
-the LDE, RC_DALE, RC_RDE, and RC_DARE arise in the analysis and control of discrete-time systems.
-The DLE, DRE, LDE, and RC_RDE may be solved simply by marching, whereas all of the other above equations may be solved by clever appliciation
-of the RC_Schur decomposition. Some of these solution approaches require the eigenvalues on the main diagonal of $T$ in
-the relevant RC_Schur decomposition to be ordered in a particular way; this section thus concludes with an algorithm (based, in fact, on
-repeated computations of small RC_Sylvester equations) to reorder the RC_Schur decomposition in any desired fashion.
+The DLE, RR_CALE, DRE, and RR_CARE arise in the analysis and control of continuous-time systems, whereas
+the LDE, RR_DALE, RR_RDE, and RR_DARE arise in the analysis and control of discrete-time systems.
+The DLE, DRE, LDE, and RR_RDE may be solved simply by marching, whereas all of the other above equations may be solved by clever appliciation
+of the RR_Schur decomposition. Some of these solution approaches require the eigenvalues on the main diagonal of $T$ in
+the relevant RR_Schur decomposition to be ordered in a particular way; this section thus concludes with an algorithm (based, in fact, on
+repeated computations of small RR_Sylvester equations) to reorder the RR_Schur decomposition in any desired fashion.
 
 \subsection{Continuous-time Lyapunov equations}\label{sec:CTLE}
 
@@ -2998,26 +2998,26 @@ Equations of this form arise in the analysis of continuous-time linear systems, 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingplain[frame=single,label=alg.3.Cale,caption={Solve the RC_CALE, $A^H X + X A + Q = 0$, for
-(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_CALE.m}{full} and
-(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_CALEtri.m}{upper triangular} $A$.}]{RCC1.0/chap04/RC_CALE.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_CALEtri.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_CALE_RC_CARE_RC_DALE_RC_DARE_Test.m}
+\lstinputlistingplain[frame=single,label=alg.3.Cale,caption={Solve the RR_CALE, $A^H X + X A + Q = 0$, for
+(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_CALE.m}{full} and
+(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_CALEtri.m}{upper triangular} $A$.}]{RCC1.0/chap04/RR_CALE.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_CALEtri.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_CALE_RR_CARE_RR_DALE_RR_DARE_Test.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \enlargethispage{7pt}
-The {\bf continuous-time algebraic Lyapunov equation} ({\bf RC_CALE}) may be written
+The {\bf continuous-time algebraic Lyapunov equation} ({\bf RR_CALE}) may be written
 \begin{equation}
 0 = A^H X + X A + Q
-\label{eq:RC_CALE}
+\label{eq:RR_CALE}
 \end{equation}
-for given $A_{n\times n}$ and Hermitian $Q_{n\times n}$.  The RC_CALE is the steady-state solution of \eqref{eq:DLE} with $dX/dt=0$.  
-The RC_CALE may be solved by performing a RC_Schur decomposition $A=U A_0 U^{H}$, defining $Q_0=U^H Q U$ and $X_0=U^H X U$, and
-substituting into \eqref{eq:RC_CALE}, resulting in 
+for given $A_{n\times n}$ and Hermitian $Q_{n\times n}$.  The RR_CALE is the steady-state solution of \eqref{eq:DLE} with $dX/dt=0$.  
+The RR_CALE may be solved by performing a RR_Schur decomposition $A=U A_0 U^{H}$, defining $Q_0=U^H Q U$ and $X_0=U^H X U$, and
+substituting into \eqref{eq:RR_CALE}, resulting in 
 \begin{equation}
 0 = A_0^H X_0 + X_0 A_0 + Q_0,
-\label{eq:TRC_CALE}
+\label{eq:TRR_CALE}
 \end{equation}
 where $A_0$ is upper triangular and $Q_0$ is Hermitian.  Partitioning $A_0$, $X_0$, and $Q_0$ according to
 \begin{equation*}
@@ -3025,7 +3025,7 @@ where $A_0$ is upper triangular and $Q_0$ is Hermitian.  Partitioning $A_0$, $X_
    X_0=\begin{bmatrix} x_1 & \x_1^H \\ \x_1 & X_1 \end{bmatrix}, \quad
    Q_0=\begin{bmatrix} q_1 & \q_1^H \\ \q_1 & \tilde Q_1 \end{bmatrix},
 \end{equation*}
-it follows immediately from \eqref{eq:TRC_CALE} that
+it follows immediately from \eqref{eq:TRR_CALE} that
 \begin{subequations}
 \label{eq:calesol}
 \begin{align}
@@ -3034,37 +3034,37 @@ it follows immediately from \eqref{eq:TRC_CALE} that
 &  0 = A_1^H X_1 + X_1 A_1 + Q_1, \quad \textrm{where} \quad Q_1 = \tilde Q_1 + \a_1 \x_1^H + \x_1 \a_1^H. \label{eq:calesol;c}
 \end{align}
 \end{subequations}
-After $x_1$ is determined from \eqref{eq:calesol;a} and $\x_1$ is determined (using RC_Gaussian elimination) from \eqref{eq:calesol;b},
-the remaining problem to be solved for $X_1$, \eqref{eq:calesol;c}, is identical to \eqref{eq:TRC_CALE} but of order $(n-1)\times (n-1)$.  
+After $x_1$ is determined from \eqref{eq:calesol;a} and $\x_1$ is determined (using RR_Gaussian elimination) from \eqref{eq:calesol;b},
+the remaining problem to be solved for $X_1$, \eqref{eq:calesol;c}, is identical to \eqref{eq:TRR_CALE} but of order $(n-1)\times (n-1)$.  
 Thus, the process of partitioning $A_k$, $X_k$, and $Q_k$ and solving for the element and vector in the first
 column of $X_k$ may be repeated on progressively smaller matrices, ultimately building
 the entire Hermitian matrix $X_0$, from which it follows that $X = U X_0 U^H$.  Efficient implementation of these equations
 is provided in Algorithm \ref{alg.3.Cale}.
 
 \enlargethispage{7pt}
-\subsubsection{The RC_Sylvester equation}\label{sec:RC_Sylvester}
+\subsubsection{The RR_Sylvester equation}\label{sec:RR_Sylvester}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingplain[frame=single,label=alg.3.RC_Sylvester,caption={Solve the RC_Sylvester equation $A X - X B = g C$ for
-(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_Sylvester.m}{full} and
-(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_SylvesterTri.m}{upper triangular} $A$ and $B$.}]{RCC1.0/chap04/RC_Sylvester.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_SylvesterTri.m}
+\lstinputlistingplain[frame=single,label=alg.3.RR_Sylvester,caption={Solve the RR_Sylvester equation $A X - X B = g C$ for
+(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_Sylvester.m}{full} and
+(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_SylvesterTri.m}{upper triangular} $A$ and $B$.}]{RCC1.0/chap04/RR_Sylvester.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_SylvesterTri.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The RC_CALE is a special case of the {\bf RC_Sylvester equation}
+The RR_CALE is a special case of the {\bf RR_Sylvester equation}
 \begin{equation}
    A X - X B = C
-   \label{eq:RC_Sylvester;a}
+   \label{eq:RR_Sylvester;a}
 \end{equation}
 for the unknown $X_{m\times n}$ given $A_{m\times m}$, $B_{n \times n}$ and $C_{m \times n}$.
 As we now show, similar techniques to those seen in the previous section may be used to solve this more general form.  
-We begin by performing the RC_Schur decompositions $A=U A_0 U^H$ and $B=V B_0 V^H$
-and defining $C_0=U^H C V$ and $X_0=U^H X V$, thereby transforming \eqref{eq:RC_Sylvester;a} to the form
+We begin by performing the RR_Schur decompositions $A=U A_0 U^H$ and $B=V B_0 V^H$
+and defining $C_0=U^H C V$ and $X_0=U^H X V$, thereby transforming \eqref{eq:RR_Sylvester;a} to the form
 \begin{equation}
    A_0 X_0 - X_0 B_0 = C_0.
-   \label{eq:RC_Sylvester;b}
+   \label{eq:RR_Sylvester;b}
 \end{equation}
 where $A_0$ and $B_0$ are upper triangular.  Partitioning $A_0$, $X_0$, $B_0$, and $C_0$ according to
 \begin{equation*}
@@ -3073,7 +3073,7 @@ where $A_0$ and $B_0$ are upper triangular.  Partitioning $A_0$, $X_0$, $B_0$, a
   B_0 = \begin{bmatrix} b_1 & \b^H_1 \\ 0 & {B_1} \end{bmatrix}, \quad
   C_0 = \begin{bmatrix} \c_1 & \tilde C_1 \\ c_1 & \d^H_1 \end{bmatrix}, \quad
 \end{equation*}
-it follows immediately from \eqref{eq:RC_Sylvester;b} that
+it follows immediately from \eqref{eq:RR_Sylvester;b} that
 \begin{subequations}
 \label{eq:sylsol}
 \begin{align}
@@ -3083,13 +3083,13 @@ it follows immediately from \eqref{eq:RC_Sylvester;b} that
   & A_1 X_1 - X_1 B_1 = C_1, \quad \textrm{where} \quad C_1 = \tilde C_1 + \x_1 \b_1^H - \a_1 \y_1^H. \label{eq:sylsol;d}
 \end{align}
 \end{subequations}
-After $x_1$ is determined from \eqref{eq:sylsol;a} and $\x_1$ and $\y_1$ are determined (using RC_Gaussian elimination) from \eqref{eq:sylsol;b}
+After $x_1$ is determined from \eqref{eq:sylsol;a} and $\x_1$ and $\y_1$ are determined (using RR_Gaussian elimination) from \eqref{eq:sylsol;b}
 and \eqref{eq:sylsol;c},
-the remaining problem to be solved for $X_1$, \eqref{eq:sylsol;d}, is identical to \eqref{eq:RC_Sylvester;b} but of order $(n-1)\times (n-1)$.  
+the remaining problem to be solved for $X_1$, \eqref{eq:sylsol;d}, is identical to \eqref{eq:RR_Sylvester;b} but of order $(n-1)\times (n-1)$.  
 Thus, the process of partitioning $A_k$, $X_k$, $B_k$, and $C_k$ and solving for the element and vectors in the first
 column and last row of $X_k$ may be repeated on progressively smaller matrices, ultimately building
 the entire Hermitian matrix $X_0$, from which it follows that $X = U X_0 V^H$.  
-Efficient implementation of these equations is provided in Algorithm \ref{alg.3.RC_Sylvester} where, for later convenience, we have scaled all components of $C$ by a scalar $g$.
+Efficient implementation of these equations is provided in Algorithm \ref{alg.3.RR_Sylvester} where, for later convenience, we have scaled all components of $C$ by a scalar $g$.
 
 \clearpage
 \subsection{Continuous-time Riccati equations}\label{sec:CTRE}
@@ -3122,14 +3122,14 @@ for any $\z\in\Zss^u$, $\z(t)$ grows exponentially in time.
 
 We now seek to find an appropriate relation $\r=X\x$ that restricts the evolution of $\z$ in \eqref{eq:cont.time.system}
 to the stable subspace $\z\in\Zss^s$, and thus $\z\rightarrow 0$ as $t\rightarrow\infty$.  In terms of the DRE \eqref{eq:cont.time.hamil}, we seek the (finite) constant value of $X$ that
-\eqref{eq:cont.time.hamil} marches to for large time, thereby satisfying the {\bf continuous-time algebraic Riccati equation} ({\bf RC_CARE})
+\eqref{eq:cont.time.hamil} marches to for large time, thereby satisfying the {\bf continuous-time algebraic Riccati equation} ({\bf RR_CARE})
 \begin{equation}
 0 = A^H X + X A - X S X + Q.
-\label{eq:RC_CARE}
+\label{eq:RR_CARE}
 \end{equation}
 The following subsections discuss two ways to accomplish this.
 
-\subsubsubsection{Approach based on eigen decomposition}%\label{sec:RC_CAREsolution:eigen}
+\subsubsubsection{Approach based on eigen decomposition}%\label{sec:RR_CAREsolution:eigen}
 
 \noindent Assume now that an eigen decomposition of $H$ is available such that
 \begin{equation*}
@@ -3153,18 +3153,18 @@ Assembling these equations in matrix form, we have
 S_{21} = X S_{11}.
 \end{equation*}
 Unfortunately, an eigen decomposition of $H$ is {\it not} always available, and even when it is, it turns out that $S_{11}$ will be nearly singular
-when $H$ is nearly defective.  Thus, in general, {\it solution of the RC_CARE via eigen decomposition is not recommended in practice}; the method
+when $H$ is nearly defective.  Thus, in general, {\it solution of the RR_CARE via eigen decomposition is not recommended in practice}; the method
 described in the followed section is preferred.
 
-\subsubsubsection{Approach based on RC_Schur decomposition}%\label{sec:RC_CAREsolution:schur}
+\subsubsubsection{Approach based on RR_Schur decomposition}%\label{sec:RR_CAREsolution:schur}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.3.RC_CARE,caption={Solve the RC_CARE, $A^H X + X A - X S X + Q=0$.}]{RCC1.0/chap04/RC_CARE.m}
+\lstinputlisting[frame=single,label=alg.3.RR_CARE,caption={Solve the RR_CARE, $A^H X + X A - X S X + Q=0$.}]{RCC1.0/chap04/RR_CARE.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\noindent Now assume an RC_Schur decomposition of $H$ is available such that
+\noindent Now assume an RR_Schur decomposition of $H$ is available such that
 \begin{subequations}
 \begin{equation}
 H=U T U^{H}\quad \textrm{where} \quad 
@@ -3189,16 +3189,16 @@ U_{21} = X U_{11} \quad \Rightarrow \quad X = U_{21} U_{11}^{-1}.
 \end{equation}
 \end{subequations}
 In order for the last relation to be solvable for the unknown $X$, we must assume that $U_{11}$ is nonsingular.  
-To summarize, the RC_CARE \eqref{eq:RC_CARE} is solvable via the above approach under the following two assumptions:
+To summarize, the RR_CARE \eqref{eq:RR_CARE} is solvable via the above approach under the following two assumptions:
 \beginmylistb
 \item the matrix $H$ [see \eqref{eq:cont.time.system}] has no eigenvalues on the imaginary axis, and
-\item the upper-left factor $U_{11}$ [see \eqref{eq:shurdecompofH}] in the ordered RC_Schur decomposition of $H$ is nonsingular.
+\item the upper-left factor $U_{11}$ [see \eqref{eq:shurdecompofH}] in the ordered RR_Schur decomposition of $H$ is nonsingular.
 \endmylist
 Precise conditions under which these two assumptions are guaranteed to be satisfied are discussed in \S \ref{chap19}.  
 
-As opposed to the eigen decomposition, note that the RC_Schur decomposition is guaranteed to exist (Fact \ref{fact.A.D.C.Bb}),
+As opposed to the eigen decomposition, note that the RR_Schur decomposition is guaranteed to exist (Fact \ref{fact.A.D.C.Bb}),
 and that reliable algorithms are well developed to compute it (see \S \ref{sec.A.D.E}).
-Thus, the RC_Schur decomposition approach discussed here is the most common approach for solving the RC_CARE, as implemented in Algorithm \ref{alg.3.RC_CARE}.
+Thus, the RR_Schur decomposition approach discussed here is the most common approach for solving the RR_CARE, as implemented in Algorithm \ref{alg.3.RR_CARE}.
 
 \subsubsection{The Chandrasekhar method for approximate solution of DREs}\label{subsec:chan}
 
@@ -3256,17 +3256,17 @@ Starting from Hermitian initial conditions, solutions $X_k$ of this matrix equat
 and may easily be marched in $k$.
 Equations of this form arise in the analysis of discrete-time linear systems, as discussed further in \S \ref{chap17}.   
 
-The {\bf discrete-time algebraic Lyapunov equation} ({\bf RC_DALE}) may be written
+The {\bf discrete-time algebraic Lyapunov equation} ({\bf RR_DALE}) may be written
 \begin{equation}
 X = F^H X F + Q
-\label{eq:RC_DALE}
+\label{eq:RR_DALE}
 \end{equation}
-for given square $F$ and Hermitian $Q$.  The RC_DALE is the steady-state solution of \eqref{eq:LDE} with $X_{k+1}=X_k=X$.
-Following an analogous procedure as developed in \S \ref{sec:CTLE}, the RC_DALE may be solved by performing a RC_Schur decomposition $F=U F_0 U^{H}$,
-defining $Q_0=U^H Q U$ and $X_0=U^H X U$, and substituting into \eqref{eq:RC_DALE}, leading to 
+for given square $F$ and Hermitian $Q$.  The RR_DALE is the steady-state solution of \eqref{eq:LDE} with $X_{k+1}=X_k=X$.
+Following an analogous procedure as developed in \S \ref{sec:CTLE}, the RR_DALE may be solved by performing a RR_Schur decomposition $F=U F_0 U^{H}$,
+defining $Q_0=U^H Q U$ and $X_0=U^H X U$, and substituting into \eqref{eq:RR_DALE}, leading to 
 \begin{equation}
 X_0 = F_0^H X_0 F_0 + Q_0
-\label{eq:TRC_DALE}
+\label{eq:TRR_DALE}
 \end{equation}
 where $F_0$ is upper triangular and $Q_0$ is Hermitian.  Partitioning $F_0$, $X_0$, and $Q_0$ according to
 \begin{equation*}
@@ -3283,8 +3283,8 @@ it follows that
  &X_1 = F_1^H X_1 F_1 + Q_1 \quad \textrm{where} \quad Q_1 = \tilde Q_1 + x_1 \f_1 \f_1^H + \f_1 (F_1^H \x_1)^H + (F_1^H \x_1) \f_1^H.  \label{eq:dalesol;c}
 \end{align}
 \end{subequations}
-After $x_1$ is determined from \eqref{eq:dalesol;a} and $\x_1$ is determined (using RC_Gaussian elimination) from \eqref{eq:dalesol;b},
-the remaining problem to be solved for $X_1$, \eqref{eq:dalesol;c}, is identical to \eqref{eq:TRC_DALE} but of order $(n-1)\times (n-1)$.  
+After $x_1$ is determined from \eqref{eq:dalesol;a} and $\x_1$ is determined (using RR_Gaussian elimination) from \eqref{eq:dalesol;b},
+the remaining problem to be solved for $X_1$, \eqref{eq:dalesol;c}, is identical to \eqref{eq:TRR_DALE} but of order $(n-1)\times (n-1)$.  
 Thus, the process of partitioning $F_k$, $X_k$, and $Q_k$ and solving for the element and vector in the first
 column of $X_k$ may be repeated on progressively smaller matrices, ultimately building
 the entire Hermitian matrix $X_0$, from which we may determine $X = U X_0 U^H$.  Efficient implementation of these equations
@@ -3292,15 +3292,15 @@ is provided in Algorithm \ref{alg.3.Dale}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlistingplain[frame=single,label=alg.3.Dale,caption={Solve the RC_DALE, $X = F^H X F + Q$, for
-(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_DALE.m}{full} and
-(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RC_DALEtri.m}{upper triangular} $F$.}]{RCC1.0/chap04/RC_DALE.m}
-\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RC_DALEtri.m}
+\lstinputlistingplain[frame=single,label=alg.3.Dale,caption={Solve the RR_DALE, $X = F^H X F + Q$, for
+(a) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_DALE.m}{full} and
+(b) \href{http://renaissance.ucsd.edu/RCC1.0/chap04/RR_DALEtri.m}{upper triangular} $F$.}]{RCC1.0/chap04/RR_DALE.m}
+\lstinputlistingA[frame=single,aboveskip=-1pt]{RCC1.0/chap04/RR_DALEtri.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Extension of the above approach to the {\bf Stein equation} $X = A^H X B + C$ is similar to the extension from the RC_CALE to the RC_Sylvester equation
-(see \S \ref{sec:RC_Sylvester}), and is addressed in Exercise \ref{ex:04.stein}.
+Extension of the above approach to the {\bf Stein equation} $X = A^H X B + C$ is similar to the extension from the RR_CALE to the RR_Sylvester equation
+(see \S \ref{sec:RR_Sylvester}), and is addressed in Exercise \ref{ex:04.stein}.
 
 \subsection{Discrete-time Riccati equations}\label{sec:DTRE}
 
@@ -3312,31 +3312,31 @@ Consider the discrete-time system written in the block form
 \end{equation}
 where $S\ge 0$, $Q\ge 0$.  Assuming $\r_k=X_k\x_k$ and inserting this assumed form of the solution into the above
 to eliminate $\r_k$, combining rows to eliminate $\x_{k+1}$, factoring out $\x_k$ to the right, noting that this equation holds for all
-$\x_k$, it follows that $X_k$ obeys the {\bf Riccati difference equation} (RC_RDE)
+$\x_k$, it follows that $X_k$ obeys the {\bf Riccati difference equation} (RR_RDE)
 \begin{subequations}
-\label{eq:RC_RDE}
+\label{eq:RR_RDE}
 \begin{equation}
   X_{k+1} = [Q F^{-H} + (F + Q F^{-H} S) X_{k}] [F^{-H} + F^{-H} R X_{k}]^{-1} \triangleq [C+D X_k] [A+B X_k]^{-1},
-\label{eq:RC_RDE;z}
+\label{eq:RR_RDE;z}
 \end{equation}
 which may be rearranged and written
 \begin{equation}
   X_{k+1} = F X_{k} (I+ S X_{k})^{-1} F^H + Q.
-\label{eq:RC_RDE;a}
+\label{eq:RR_RDE;a}
 \end{equation}
-Under the assumption that $X$ is invertible, noting that $XY^{-1}=(YX^{-1})^{-1}$, the RC_RDE \eqref{eq:RC_RDE;a} may be written in the simpler form
+Under the assumption that $X$ is invertible, noting that $XY^{-1}=(YX^{-1})^{-1}$, the RR_RDE \eqref{eq:RR_RDE;a} may be written in the simpler form
 \begin{equation}
   X_{k+1} = F^H (X_{k}^{-1} +  S)^{-1} F + Q.
-  \label{eq:RC_RDE;b}
+  \label{eq:RR_RDE;b}
 \end{equation}
 Under the assumption that $S=G R^{-1} G^H$ for some $G$ and some $R>0$, but not assuming that $X$ is invertible,
-noting the matrix inversion lemma (Fact \ref{fact.A.A.J.E}), the RC_RDE \eqref{eq:RC_RDE;a} may be written in the form
+noting the matrix inversion lemma (Fact \ref{fact.A.A.J.E}), the RR_RDE \eqref{eq:RR_RDE;a} may be written in the form
 \begin{equation}
   X_{k+1} = F^{-H} X_{k} F - F^H X_{k} G (R + G^H X_{k} G)^{-1} G^H X_{k} F + Q.
-  \label{eq:RC_RDE;c}
+  \label{eq:RR_RDE;c}
 \end{equation}
 \end{subequations}
-Starting from Hermitian initial conditions on $X$, the forms \eqref{eq:RC_RDE;b} and \eqref{eq:RC_RDE;c}
+Starting from Hermitian initial conditions on $X$, the forms \eqref{eq:RR_RDE;b} and \eqref{eq:RR_RDE;c}
 reveal that solutions $X_k$ of these equations satisfy $X^H_k=X_k$.  Any of these four forms may easily be marched in $k$.
 Equations of this form arise in the estimation and control of discrete-time linear systems, as discussed further in
 \S \ref{sec:Driccati-based-estimation} and \S \ref{sec:Driccati-based-control}.
@@ -3349,13 +3349,13 @@ a stable subspace $\Zss^s$ and an unstable subspace $\Zss^u$.  For any $\z\in\Zs
 for any $\z\in\Zss^u$, $z_k$ grows exponentially with $k$.
 
 We now seek to find an appropriate relation $\r_k=X_k\x_k$ that restricts the evolution of $\z_k$ in \eqref{eq:D.time.system}
-to the stable subspace $\z\in\Zss^s$, and thus $\z_k\rightarrow 0$ as $k\rightarrow\infty$.  In terms of the RC_RDE \eqref{eq:RC_RDE}, we seek the (finite) constant value of $X_k=X_{k+1}=X$ that
-\eqref{eq:RC_RDE;a} marches to for large $k$, thereby satisfying the {\bf discrete-time algebraic Riccati equation} ({\bf RC_DARE})
+to the stable subspace $\z\in\Zss^s$, and thus $\z_k\rightarrow 0$ as $k\rightarrow\infty$.  In terms of the RR_RDE \eqref{eq:RR_RDE}, we seek the (finite) constant value of $X_k=X_{k+1}=X$ that
+\eqref{eq:RR_RDE;a} marches to for large $k$, thereby satisfying the {\bf discrete-time algebraic Riccati equation} ({\bf RR_DARE})
 \begin{equation}
 X = F^H X (I+ S X)^{-1} F + Q.
-\label{eq:RC_DARE}
+\label{eq:RR_DARE}
 \end{equation}
-Solution of the RC_DARE may be achieved via RC_Schur decomposition of $M$: first decompose
+Solution of the RR_DARE may be achieved via RR_Schur decomposition of $M$: first decompose
 \begin{subequations}
 \begin{equation}
 M=U T U^{H}\quad \textrm{where} \quad 
@@ -3369,20 +3369,20 @@ Following the same line of reasoning as in \S \ref{sec:CTRE}, the resulting expr
 U_{21} = X U_{11} \quad \Rightarrow \quad X = U_{21} U_{11}^{-1},
 \end{equation}
 \end{subequations}
-as implemented in Algorithm \ref{alg.3.RC_DARE}.  To summarize, the RC_DARE \eqref{eq:RC_DARE} is solvable via the above approach under the following two assumptions:
+as implemented in Algorithm \ref{alg.3.RR_DARE}.  To summarize, the RR_DARE \eqref{eq:RR_DARE} is solvable via the above approach under the following two assumptions:
 \beginmylistb
 \item the matrix $M$ [see \eqref{eq:cont.time.system}] has no eigenvalues on the unit circle, and
-\item the upper-left factor $U_{11}$ [see \eqref{eq:shurdecompofM}] in the ordered RC_Schur decomposition of $M$ is nonsingular.
+\item the upper-left factor $U_{11}$ [see \eqref{eq:shurdecompofM}] in the ordered RR_Schur decomposition of $M$ is nonsingular.
 \endmylist
 Precise conditions under which these two assumptions are guaranteed to be satisfied are discussed in \S \ref{chap19}.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.3.RC_DARE,caption={Solve the RC_DARE, $X = F^H X (I+ S X)^{-1} F + Q$.}]{RCC1.0/chap04/RC_DARE.m}
+\lstinputlisting[frame=single,label=alg.3.RR_DARE,caption={Solve the RR_DARE, $X = F^H X (I+ S X)^{-1} F + Q$.}]{RCC1.0/chap04/RR_DARE.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsubsection{The period doubling algorithm for solution of the RC_DARE}\label{subsec:Ddoubling}
+\subsubsection{The period doubling algorithm for solution of the RR_DARE}\label{subsec:Ddoubling}
 
 It is easily verified that we may write $M^k\cdot M^k = M^{2k}$ as
 \begin{equation}
@@ -3405,7 +3405,7 @@ Now assume $U_k$ is invertible, define $X_k \triangleq V_k U_k^{-1}$, and consid
 \Rightarrow \ldots \Rightarrow \quad X_{k+1}=[C+D X_k][A+B X_k]^{-1}; \label{eq:perdubev;b}
 \end{gather}
 \end{subequations}
-comparing \eqref{eq:perdubev;b} with \eqref{eq:RC_RDE;z}, it is seen that \eqref{eq:perdubev;a} is a valid expression for the evolution of $X_k \triangleq V_k U_k^{-1}$.  Initializing $U_1=I$ and $V_1=0$ and leveraging the identity \eqref{eq:idenperdub}, the
+comparing \eqref{eq:perdubev;b} with \eqref{eq:RR_RDE;z}, it is seen that \eqref{eq:perdubev;a} is a valid expression for the evolution of $X_k \triangleq V_k U_k^{-1}$.  Initializing $U_1=I$ and $V_1=0$ and leveraging the identity \eqref{eq:idenperdub}, the
 evolution equation \eqref{eq:perdubev;a} may now be marched to steady state quicky by {\bf period doubling}; that is,
 by marching $\ell=0,1,2,3,\ldots$ and thus $k\triangleq 2^\ell=1,2,4,8,\ldots$
 In fact, the intermediate $U_k$ and $V_k$ in this march need not be computed, as we may write simply
@@ -3415,18 +3415,18 @@ In fact, the intermediate $U_k$ and $V_k$ in this march need not be computed, as
 where $Q_{2^\ell}$ may be determined via the iteration proposed in \eqref{eq:perdubiter}, which converges rapidly as $\ell \rightarrow \infty$.
 
 \enlargethispage{7pt}
-\subsection{Reordering the RC_Schur decomposition}\label{sec:ReorderedRC_Schur}
+\subsection{Reordering the RR_Schur decomposition}\label{sec:ReorderedRR_Schur}
 
-The algorithms to solve the RC_CALE [in \S \ref{sec:CTLE}] and RC_DALE [in \S \ref{sec:DTLE}] were built on {\it any} RC_Schur decomposition of
-the matrix $A_{n\times n}$, whereas the algorithms to solve the RC_CARE [in \S \ref{sec:CTRE}] and RC_DARE [in \S \ref{sec:DTRE}] were built on appropriately {\it ordered} RC_Schur
+The algorithms to solve the RR_CALE [in \S \ref{sec:CTLE}] and RR_DALE [in \S \ref{sec:DTLE}] were built on {\it any} RR_Schur decomposition of
+the matrix $A_{n\times n}$, whereas the algorithms to solve the RR_CARE [in \S \ref{sec:CTRE}] and RR_DARE [in \S \ref{sec:DTRE}] were built on appropriately {\it ordered} RR_Schur
 decompositions of, respectively, a ${2n\times 2n}$ Hamiltonian matrix $H$ [see \eqref{eq:cont.time.system}] and ${2n\times 2n}$ symplectic matrix $M$ [see \eqref{eq:D.time.system}],
-where the stable eigenvalues of these ordered RC_Schur decompositions appear in the first $n$ elements on the main diagonal of $T$, followed by the unstable eigenvalues in the last $n$
-elements on the main diagonal of $T$.  (Recall that, for the RC_CARE, the stable eigenvalues are in the LHP, whereas for the RC_DARE, the stable eigenvalues are within the unit disk.)
-Of course, a general RC_Schur decomposition algorithm (for example, one based on the $QR$ method described in \S \ref{sec.A.D.E})
-will, in general, not return the elements of $T$ in these desired orderings.  Transforming an arbitrarily-ordered RC_Schur decomposition
+where the stable eigenvalues of these ordered RR_Schur decompositions appear in the first $n$ elements on the main diagonal of $T$, followed by the unstable eigenvalues in the last $n$
+elements on the main diagonal of $T$.  (Recall that, for the RR_CARE, the stable eigenvalues are in the LHP, whereas for the RR_DARE, the stable eigenvalues are within the unit disk.)
+Of course, a general RR_Schur decomposition algorithm (for example, one based on the $QR$ method described in \S \ref{sec.A.D.E})
+will, in general, not return the elements of $T$ in these desired orderings.  Transforming an arbitrarily-ordered RR_Schur decomposition
 to one of these desired orderings in an efficient manner is not trivial, and is thus discussed further here.
 
-The key building block of an efficient algorithm to accomplish the desired reordering of a RC_Schur decomposition is the computation of a unitary matrix $\tilde Q$ such that
+The key building block of an efficient algorithm to accomplish the desired reordering of a RR_Schur decomposition is the computation of a unitary matrix $\tilde Q$ such that
 \begin{equation}
   \tilde Q^H \begin{bmatrix} T_{11} & T_{12} \\  0 & T_{22} \end{bmatrix} \tilde Q = \begin{bmatrix} \tilde T_{11} & \tilde T_{12} \\  0 & \tilde T_{22} \end{bmatrix},
   \label{blockswap}
@@ -3444,14 +3444,14 @@ To build this transformation, consider the identity
 for some $g$ between zero and one\footnote{Note that $g$ is introduced simply to scale the transformation well for large $n$ when several swaps need
 to be performed, thereby keeping the norms
 of the blocks from getting large as several swaps are performed in succession.  Any of a number of heuristic strategies for selecting $g$ work well;
-for small $n$, $g=1$ is sufficient.}, where $X$ is the solution of the RC_Sylvester equation
+for small $n$, $g=1$ is sufficient.}, where $X$ is the solution of the RR_Sylvester equation
 \begin{subequations}
     \label{blockswap3}  
 \begin{equation}
   g\,T_{12} = T_{11} X - X T_{22},
       \label{blockswap3;a}  
 \end{equation}
-which may be solved using Algorithm \ref{alg.3.RC_Sylvester}.   Now consider the (complete) ${Q} {R}$ decomposition
+which may be solved using Algorithm \ref{alg.3.RR_Sylvester}.   Now consider the (complete) ${Q} {R}$ decomposition
 \begin{equation}
   \begin{bmatrix}  -X \\ g\, I \end{bmatrix} = {Q} {R} \quad \textrm{where} \quad
   {Q}=\begin{bmatrix} Q_{11} & Q_{12} \\ Q_{21} & Q_{22} \end{bmatrix}, \quad {R}=\begin{bmatrix} R_{11} \\ 0 \end{bmatrix}, \quad
@@ -3469,11 +3469,11 @@ it may be shown that this value for $Q$ almost accomplishes the swap sought in \
 \end{equation*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[t]
-\lstinputlisting[frame=single,label=alg.3.RC_ReorderSchur,caption={Reorder the RC_Schur decomposition, putting the stable eigenspace first.}]{RCC1.0/chap04/RC_ReorderSchur.m}
+\lstinputlisting[frame=single,label=alg.3.RR_ReorderSchur,caption={Reorder the RR_Schur decomposition, putting the stable eigenspace first.}]{RCC1.0/chap04/RR_ReorderSchur.m}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Note that the block $\tilde T_{11}$ of the matrix so generated is the product of upper triangular matrices, and is thus itself upper triangular.  However, the block
-$B$ of the matrix generated by this process is not yet upper triangular.  Performing a RC_Schur decomposition of this block, $B=V \tilde T_{22} V^H$,
+$B$ of the matrix generated by this process is not yet upper triangular.  Performing a RR_Schur decomposition of this block, $B=V \tilde T_{22} V^H$,
 finally leads us to the desired form
 \begin{equation}
    \tilde Q^H \begin{bmatrix} T_{11} & T_{12} \\  0 & T_{22} \end{bmatrix} \tilde Q = \begin{bmatrix} \tilde T_{11} & \tilde T_{12} \\  0 & \tilde T_{22} \end{bmatrix} \quad \textrm{where} \quad
@@ -3487,7 +3487,7 @@ which accomplishes the reordering is simply the permutation matrix
    \tilde Q=\begin{bmatrix} 0 & I \\ I & 0 \end{bmatrix}.
 \end{equation*}
 
-The $\tilde Q$ defined by the relations given in \eqref{blockswap3} may now be used to swap any two adjacent blocks of a RC_Schur decomposition $A=U T U^H$.
+The $\tilde Q$ defined by the relations given in \eqref{blockswap3} may now be used to swap any two adjacent blocks of a RR_Schur decomposition $A=U T U^H$.
 For example, partitioning $T$ and defining $P$, $\tilde T$ and $\tilde U$ such that
 \begin{equation*}
 T=\begin{bmatrix} T_{00} & T_{01} & T_{02} & T_{03} \\  & T_{11} & T_{12} & T_{13} \\ &  & T_{22} & T_{23} \\ 0 &  &  & T_{33} \end{bmatrix}, \quad
@@ -3496,8 +3496,8 @@ P=\begin{bmatrix} I & &  & 0 \\ & \tilde Q_{11} & \tilde Q_{12} & \\ & \tilde Q_
 \end{equation*}
 it follows that $A=\tilde U \tilde T \tilde U^H$, where $\tilde T$ is upper triangular with the eigenvalues of the $\tilde T_{11}$ and $\tilde T_{22}$ blocks swapped from those
 appearing in $T_{11}$ and $T_{22}$.
-Applying such swaps in succession, in a block insertion sort fashion (see \S \ref{sec:RC_BlockInsertionSort}),
-allows us to reorder a RC_Schur decomposition in any desired fashion, as implemented in Algorithm \ref{alg.3.RC_ReorderSchur}. 
+Applying such swaps in succession, in a block insertion sort fashion (see \S \ref{sec:RR_BlockInsertionSort}),
+allows us to reorder a RR_Schur decomposition in any desired fashion, as implemented in Algorithm \ref{alg.3.RR_ReorderSchur}. 
 
 \section{The Trace}\label{sec.A.F.A}
 
@@ -3513,7 +3513,7 @@ $\Trace(AB)= a_{ij} b_{ji} = \Trace(BA) = \Trace(B^T A^T) = \Trace(A^T B^T)$;\hf
 $\Trace(ABC)= a_{ij} b_{jk} c_{ki} =\Trace(CAB)=\Trace(BCA)=\Trace(C^T B^T A^T)=\Trace( A^T C^T B^T)=\Trace(B^T A^T C^T)$.
 \end{fact}
 
-\noindent By the RC_Schur decomposition theorem, $A$ may be decomposed
+\noindent By the RR_Schur decomposition theorem, $A$ may be decomposed
 such that $A=UTU^{H}$, and thus
 
 \begin{fact} \label{fact.A.F.A.b}
@@ -3794,7 +3794,7 @@ $A^{+}$ must now be determined from the reduced SVD of $A$; that is, $A^{+}=\und
 
 If $(A^{H} A)$ is invertible (that is, if $A=A_{m\times n}$ has rank
 $n$), there is a more economical way of finding the least-squares
-solution than by using $A^{+}$ or by applying RC_Gaussian elimination to
+solution than by using $A^{+}$ or by applying RR_Gaussian elimination to
 \eqref{AHAx=AHb}.  Starting from \eqref{AHAx=AHb} and performing the
 (reduced) decomposition $A=\underline{QR}$ described in \S
 \ref{sec.A.D.B} (noting that $\underline{R}$ also has rank $n$) we
@@ -3916,9 +3916,9 @@ deep.  The facts that
 \endmylist
 \noindent are all facets of the explanation of why linear algebra is both difficult and important.  In particular,
 we find there are several natural ways to decompose a matrix into the product of other matrices with
-special structure (RC_Hessenberg, tridiagonal, triangular, diagonal, unitary, etc.).  These decompositions
+special structure (RR_Hessenberg, tridiagonal, triangular, diagonal, unitary, etc.).  These decompositions
 may in fact be put to very good use by numerical algorithms that use such matrices.  The most
-important of these decompositions are the $LU$/$PLU$/Cholesky, RC_Hessenberg, $QR$, RC_Schur, real RC_Schur, eigen,
+important of these decompositions are the $LU$/$PLU$/Cholesky, RR_Hessenberg, $QR$, RR_Schur, real RR_Schur, eigen,
 Jordan, and singular value decompositions, all of which the reader should become very familiar with before proceeding.  
 Various useful measures of matrices have also been presented, including the determinant, trace, matrix norms,
 and condition number. A wide variety of useful facts have also be noted along the way that will all be leveraged later in this text.
@@ -4035,7 +4035,7 @@ $\g=[x_C\ y_C\ x_D\ y_D\ x_E\ y_E\ x_F\ y_F]^T$,
 write a function {\tt [f]=TrussForces(g)} which
 sets up the system of 10 equations listed above (in the order given)
 as $A\f = \b$, then solves this system for the member
-forces using one of the RC_Gaussian elimination routines of \S \ref{chap02}.  Is pivoting required to solve this system?
+forces using one of the RR_Gaussian elimination routines of \S \ref{chap02}.  Is pivoting required to solve this system?
 For $\g=[1\ 0\ 1\ 1\ 2\ 0\ 2\ 1]^T$ and
 $W=1000$, what are the forces in each member?  Compute the
 condition number of $A$.  Do you trust this numerical result?  Which
@@ -4262,7 +4262,7 @@ three mode shapes, and the corresponding frequencies of oscillation, in all thre
 {\it Under construction.}
 \end{exercise}
 
-\begin{exercise} \label{ex.4.Jacobi.RC_Gauss-Seidel} \rm {\it Convergence of the Jacobi and RC_Gauss-Seidel methods (see \S \ref{sec.C.A}).}\vskip0.05in
+\begin{exercise} \label{ex.4.Jacobi.RR_Gauss-Seidel} \rm {\it Convergence of the Jacobi and RR_Gauss-Seidel methods (see \S \ref{sec.C.A}).}\vskip0.05in
 
 \noindent ({\bf a}) Writing \eqref{eq:diagdominantdef} for the elements of the matrix $(\lambda A)$ rather than the elements of $A$,
 establish that, if $A$ is strictly diagonally dominant and
@@ -4274,7 +4274,7 @@ $\lambda$ of $P$ satisfy $|\lambda|\le 1$ and thus, by Fact \ref{fact.induced2no
 thereby proving that the Jacobi method is convergent [see \eqref{eq:convergent}] if $A$ is strictly diagonally dominant.\vskip0.1in
 
 \noindent ({\bf c}) Repeat parts (a) and (b) taking $B\triangleq \lambda (D+L)+U$ and $C\triangleq D+L$ and $P\triangleq -(D+L)^{-1} U$,
-thereby proving that the RC_Gauss-Seidel method is convergent if $A$ is strictly diagonally dominant.
+thereby proving that the RR_Gauss-Seidel method is convergent if $A$ is strictly diagonally dominant.
 \end{exercise}
 
 \begin{exercise} \label{ex:04.QRmgspivot} \rm Apply the Modified Gram-Schmidt method implemented in Algorithm \ref{alg.3.QRmgs} to a randomly-generated $4\times 4$ matrix in which the third column is an exact copy of the first.  Discuss.
@@ -4287,13 +4287,13 @@ thus establishing that convergence of the shifted $QR$ method is quadratic.
 \end{exercise}
 
 \begin{exercise} \label{ex:04.impshiftherm} \rm Noting the Implicit $Q$ Theorem (Fact \ref{fact.implicitQ}) and the development of the implicitly shifted $QR$ iteration
-applied in Algorithm \ref{alg.3.RC_EigReal}, modify Algorithm \ref{alg.3.RC_EigHermitian} to apply implicitly shifted $QR$ iterations rather than explicit shifts.  Apply as many
+applied in Algorithm \ref{alg.3.RR_EigReal}, modify Algorithm \ref{alg.3.RR_EigHermitian} to apply implicitly shifted $QR$ iterations rather than explicit shifts.  Apply as many
 techniques as possible to make this algorithm maximally efficient, and discuss each of them.  Test your code on a wide variety of singular and nonsingular matrices
-to make sure it works.  The resulting code will in fact be superior to Algorithm \ref{alg.3.RC_EigHermitian} for the Hermitian eigenvalue problem.
+to make sure it works.  The resulting code will in fact be superior to Algorithm \ref{alg.3.RR_EigHermitian} for the Hermitian eigenvalue problem.
 \end{exercise}
 
 \begin{exercise} \label{ex:04.det} \rm Leveraging Algorithm \ref{alg.2.4c} and the discussion in \S \ref{Algorithm},
-write an efficient code to calculate the determinant of a large RC_Circulant matrix.
+write an efficient code to calculate the determinant of a large RR_Circulant matrix.
 \end{exercise}
 
 \begin{exercise} \label{ex:04.stein} \rm Extending Algorithm \ref{alg.3.Dale}, write an efficient code to solve the Stein equation $X = A^H X B + C$.
@@ -4333,6 +4333,6 @@ an essay on the sources and meaning of mathematical unsolvability}.  MIT Press.
 
 \noindent Trefethen, LN, \& Bau, D (1997) \href{http://books.google.com/books?id=bj-Lu6zjWbEC&printsec=frontcover}{\it Numerical Linear Algebra}.  SIAM.\vskip0.1in
 
-\noindent Wilkenson, JH (1965) \href{http://books.google.com/books?id=5wsK1OP7UFgC&printsec=frontcover}{\it The Algebraic RC_Eigenvalue Problem}.  Oxford.\vskip0.1in
+\noindent Wilkenson, JH (1965) \href{http://books.google.com/books?id=5wsK1OP7UFgC&printsec=frontcover}{\it The Algebraic RR_Eigenvalue Problem}.  Oxford.\vskip0.1in
 
 \noindent Kailath, T (1973) Some New Algorithms for Recursive Estimation in Constant Linear Systems, {\it IEEE Trans. Information Theory}, {\bf 19}, 750-760.

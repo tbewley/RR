@@ -1,5 +1,5 @@
-function [a,b,gamma,donothing,dnew]=RC_fast_givens_compute(f,g,di,dk)
-% function [a,b,gamma,donothing,dnew]=RC_fast_givens_compute(f,g,di,dk)
+function [a,b,gamma,donothing,dnew]=RR_fast_givens_compute(f,g,di,dk)
+% function [a,b,gamma,donothing,dnew]=RR_fast_givens_compute(f,g,di,dk)
 % Compute the parameters {a,b,gamma,donothing} of a Fast Givens transformation matrix designed to transform
 % the (possibly complex) vector (f;g) to (*;0).
 % INPUT:  (f;g) =vector to be rotated
@@ -7,7 +7,7 @@ function [a,b,gamma,donothing,dnew]=RC_fast_givens_compute(f,g,di,dk)
 % NOTE:   This code works for both real and complex (f,g).
 %         In the fast Givens formulation, the scaling is applied at the very end of a series of Fast Givens
 %         transforms, thus saving some flops.
-% See also RC_fast_givens. Verify with RC_fast_givens_test.
+% See also RR_fast_givens. Verify with RR_fast_givens_test.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 

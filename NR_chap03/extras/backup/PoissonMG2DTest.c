@@ -1,5 +1,5 @@
 #include <stdio.h>             /* A 2D Poisson solver on uniform mesh using Multigrid   */
-#include <stdlib.h>            /* and Red/Black RC_Gauss-Seidel (C syntax).                */
+#include <stdlib.h>            /* and Red/Black RR_Gauss-Seidel (C syntax).                */
 #include <math.h>              /* By Paolo Luchini, Thomas Bewley and Anish Karandikar. */
 #include <sys/types.h>
 #include <time.h>
@@ -7,8 +7,8 @@
 #define max(A,B) ( (A) > (B) ? (A) : (B) )
 typedef struct {int xbc, ybc, nx, ny, xo, yo, xm, ym; } grid;
 void enforce_bcs(double **v, grid g);
-void RC_poisson_mg(double **v, double **d, grid g, int n2, int n3);
-void RC_poisson_rb(double **v, double **d, grid g);
+void RR_poisson_mg(double **v, double **d, grid g, int n2, int n3);
+void RR_poisson_rb(double **v, double **d, grid g);
 double max_error(double **v, double **d, grid g);
 
 int main() {
@@ -39,9 +39,9 @@ for(i=0; i<g.xm-4; ++i) free(di[i]); free(di);
 for(i=2; i<g.xm-2; ++i) for(j=2; j<=g.ym-3; ++j) 
    d[i][j] = di[i-2][j-2]-di_sum/((double)((g.xm-4)*(g.ym-4)));  
 e = max_error(v,d,g);  printf("\nIteration = %d, error = %f", 0, e);
-for (smooth=1; smooth<=n1; ++smooth) RC_poisson_rb(v,d,g);
+for (smooth=1; smooth<=n1; ++smooth) RR_poisson_rb(v,d,g);
 t0 = time(NULL); for (i=1; i<=15; ++i) {
-   o = e; RC_poisson_mg(v,d,g,n2,n3); e = max_error(v,d,g);
+   o = e; RR_poisson_mg(v,d,g,n2,n3); e = max_error(v,d,g);
    printf("\nIteration = %d, error = %.10f, factor = %.10f",i,e,o/e);
    if (o/e==1.0) { printf("\nConverged!\n"); break; } } t1 = time(NULL);
 printf("\nTotal wall time = %ld sec for %d iterations  -> time/iteration: %f sec\n",
@@ -57,7 +57,7 @@ switch (g.ybc) {
   case 2: n=g.xm-2; for (i=1;i<=n;++i) {v[i][0]=v[i][2];v[i][g.ym-1]=v[i][g.ym-3];} break;
   case 3: n=g.xm-2; for (i=1;i<=n;++i) {v[i][0]=v[i][g.ym-2];v[i][g.ym-1]=v[i][1];} break;}
 } /*------------------------------------------------------------------------------------*/
-void RC_poisson_mg(double **vf, double **df, grid gf, int n2, int n3) {
+void RR_poisson_mg(double **vf, double **df, grid gf, int n2, int n3) {
 int smooth, i, j, ic, jc, s;
 grid gc;
 double **vc, **dc;
@@ -68,7 +68,7 @@ switch(gc.xbc) {case 1: gc.xm=gc.nx+1; gc.xo=1; break;
 switch(gc.ybc) {case 1: gc.ym=gc.ny+1; gc.yo=1; break; 
                 case 2: gc.ym=gc.ny+3; gc.yo=2; break;
                 case 3: gc.ym=gc.ny+2; gc.yo=2; break; }
-for (smooth=1;smooth<=n2;++smooth) RC_poisson_rb(vf,df,gf);
+for (smooth=1;smooth<=n2;++smooth) RR_poisson_rb(vf,df,gf);
 vc=malloc((gc.xm)*s); for (i=0; i<gc.xm; ++i) vc[i]=malloc((gc.ym)*s);
 dc=malloc((gc.xm)*s); for (i=0; i<gc.xm; ++i) dc[i]=malloc((gc.ym)*s);
 for(i=0; i<gc.xm; ++i) for(j=0; j<gc.ym;++j) { vc[i][j]=0.0; dc[i][j]=0.0; }
@@ -78,17 +78,17 @@ for (ic=1;ic<=gc.xm-2;++ic) for (jc=1;jc<=gc.ym-2;++jc) {   /* Compute residual 
    vc[ic][jc]=dc[ic][jc];  }
 enforce_bcs(vc, gc);                                     
 if (gc.nx>3 && gc.ny>3 && (gf.nx % 4)==0 && (gf.ny % 4)==0)    /* Continue to even      */
-   RC_poisson_mg(vc,dc,gc,n2,n3);                                 /* coarser grid, or      */
-else for (smooth=1;smooth<=20;++smooth) RC_poisson_rb(vc,dc,gc);  /* solve coarsest system */
+   RR_poisson_mg(vc,dc,gc,n2,n3);                                 /* coarser grid, or      */
+else for (smooth=1;smooth<=20;++smooth) RR_poisson_rb(vc,dc,gc);  /* solve coarsest system */
 for (ic=1;ic<=gc.xm-1;++ic) for (jc=1;jc<=gc.ym-1;++jc) {     
    i=2*(ic-gc.xo)+gf.xo+1; j=2*(jc-gc.yo)+gf.yo+1;
    if (j<=gf.ym-1) vf[i-1][j]=vf[i-1][j]+(vc[ic-1][jc]+vc[ic][jc]);     /* Prolongation */
    if (i<=gf.xm-1) vf[i][j-1]=vf[i][j-1]+(vc[ic][jc-1]+vc[ic][jc]); }   /* to fine grid */
 enforce_bcs(vf,gf);
-for (smooth=1;smooth<=n3;++smooth) RC_poisson_rb(vf,df,gf);
+for (smooth=1;smooth<=n3;++smooth) RR_poisson_rb(vf,df,gf);
 for (i=0; i<gc.xm; ++i) { free(vc[i]); free(dc[i]); }  free(vc); free(dc);
 } /*------------------------------------------------------------------------------------*/
-void RC_poisson_rb(double **v, double **d, grid g) {
+void RR_poisson_rb(double **v, double **d, grid g) {
 int rb, i, j, m, n;                       /* update red points first, then black points */
 for (rb=0; rb<=1; ++rb) { for (i=1; i<=g.xm-2; ++i) { 
    m = 1+(1+i+rb+g.xo+g.yo) % 2; n=g.ym-2;  /* In C, inner loop should be on LAST index */

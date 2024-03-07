@@ -1,4 +1,4 @@
-function [g,delta] = RC_SplineSetup(x_data,y_data,n)    % Numerical Renaissance Codebase 1.0
+function [g,delta] = RR_SplineSetup(x_data,y_data,n)    % Numerical Renaissance Codebase 1.0
 % Determine the g=f'' for constructing the cubic spline interpolant of the n datapoints
 % {x_data,y_data}, assuming this data is already sorted in ascending order in x.
 delta(1:n-1)=x_data(2:n)-x_data(1:n-1);   % Calculate the delta_i = x_(i+1)-x_i
@@ -14,6 +14,6 @@ elseif end_conditions==2   % Free run-out ("natural" spline)
    b(n)=1;  a(n)=0;   g(n)=0;        [g]=Thomas(a,b,c,g,n);            
 elseif end_conditions==3   % Periodic end conditions
    a(1)=-1; b(1)=0; c(1)=1; g(1)=0;
-   a(n)=-1; b(n)=0; c(n)=1; g(n)=0;  [g]=RC_Circulant(a,b,c,g,n); 
+   a(n)=-1; b(n)=0; c(n)=1; g(n)=0;  [g]=RR_Circulant(a,b,c,g,n); 
 end
-end % function RC_SplineSetup.m
+end % function RR_SplineSetup.m

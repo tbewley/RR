@@ -1,4 +1,4 @@
-function RC_HeapSortVerbose                             % Numerical Renaissance Codebase 1.0
+function RR_HeapSortVerbose                             % Numerical Renaissance Codebase 1.0
 global D n speed frame
 for a=floor(n/2):-1:1, Sift(a,n); end;
 for b=n:-1:2, 
@@ -7,7 +7,7 @@ for b=n:-1:2,
     fn=['HSt/f' num2str(frame) '.tiff']; print('-dtiff','-r100',fn);
     fn=['HSe/f' num2str(frame) '.eps'];  print('-depsc',fn);   frame=frame+1;  pause(1/speed);
    Sift(1,b-1); end
-end % function RC_HeapSort
+end % function RR_HeapSort
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Sift(a,b)
 global D n speed frame

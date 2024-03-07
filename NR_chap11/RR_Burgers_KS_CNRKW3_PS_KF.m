@@ -1,5 +1,5 @@
-function RC_Burgers_KS_CRCKW3_PS_KF
-% function RC_Burgers_KS_CRCKW3_PS
+function RR_Burgers_KS_CRCKW3_PS_KF
+% function RR_Burgers_KS_CRCKW3_PS
 % *** UNFINISHED *** KF is for Kalman Filtering; the idea is to simulate both the state and the
 % estimate, and show that (with the appropriate KF feedback applied) the estimate converges
 % to the state.
@@ -10,8 +10,8 @@ function RC_Burgers_KS_CRCKW3_PS_KF
 
 %%%%%%%%%%%%%%%%%%%% Initialize the simulation paramters (user input) %%%%%%%%%%%%%%%%%%%%
 L=36.33; Tmax=100; N=64; dt=0.05; PlotInt=10; alpha=1; % alpha=0 for Burgers, alpha=1 for KS
-dx=L/N; x=(0:N-1)'*dx; u =0.15*randn(N,1); uhat =RC_RFFT(u,N);
-                       ub=0.15*randn(N,1); ubhat=RC_RFFT(ub,N);
+dx=L/N; x=(0:N-1)'*dx; u =0.15*randn(N,1); uhat =RR_RFFT(u,N);
+                       ub=0.15*randn(N,1); ubhat=RR_RFFT(ub,N);
 %%%%%%%%%%%% Precalculate the time-stepping coefficients used in the simulation %%%%%%%%%%
 h_bar=dt*[8/15 2/15 1/3]; beta_bar=[1 25/8 9/4]; zeta_bar=[0 -17/8 -5/4];
 kx=(2*pi/L)*[0:N/2-1]'; if alpha==0; Aop=-kx.^2; else Aop=kx.^2-kx.^4; end;
@@ -24,7 +24,7 @@ hb2=h_bar/2; hbbb=beta_bar.*h_bar; hbzb=zeta_bar.*h_bar; Imhb2=1-h_bar/2;
 for k=1:Tmax/dt
   for rk=1:3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ALL 3 RK SUBSTEPS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
     uhat(fix(N/3)+1:end)=0;  % Dealias (see Section 5.7).
-    r=RC_RFFTinv(uhat,N); r=-r.*r; rhat=i*kx.*RC_RFFT(r,N);          % Leading-order cost:
+    r=RR_RFFTinv(uhat,N); r=-r.*r; rhat=i*kx.*RR_RFFT(r,N);          % Leading-order cost:
     if (rk==1)                                                       % 2 FFTs per RK step
       uhat=(uhat+hb2(rk)*Aop.*uhat+hbbb(rk)*rhat)./(1-hb2(rk)*Aop);
     else        % Implement (10.64); note that the "solve" is now simply scalar division!
@@ -33,7 +33,7 @@ for k=1:Tmax/dt
     if (rk<3) rhat_old=rhat; end  % Save rhat for the next timestep
 
     ubhat(fix(N/3)+1:end)=0;  % Dealias (see Section 5.7).
-    rb=RC_RFFTinv(ubhat,N); rb=-rb.*rb; rbhat=i*kx.*RC_RFFT(rb,N);   % Leading-order cost:
+    rb=RR_RFFTinv(ubhat,N); rb=-rb.*rb; rbhat=i*kx.*RR_RFFT(rb,N);   % Leading-order cost:
     if (rk==1)                                                       % 2 FFTs per RK step
       ubhat=(ubhat+hb2(rk)*Aop.*ubhat+hbbb(rk)*rbhat)./(1-hb2(rk)*Aop);
     else        % Implement (10.64); note that the "solve" is now simply scalar division!
@@ -42,8 +42,8 @@ for k=1:Tmax/dt
     if (rk<3) rbhat_old=rbhat; end  % Save rbhat for the next timestep
   end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF RK LOOP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  rs(k,:)=RC_RFFTinv(uhat,N)'; ts(k)=k*dt; % These variables are just used for plotting...
-  rbs(k,:)=RC_RFFTinv(ubhat,N)';
+  rs(k,:)=RR_RFFTinv(uhat,N)'; ts(k)=k*dt; % These variables are just used for plotting...
+  rbs(k,:)=RR_RFFTinv(ubhat,N)';
   if (mod(k,PlotInt)==0) 
     % pause(0.001); figure(1); clf; plot(x,rs(k,:),'b-',x,rbs(k,:),'r-'); axis([0 L -1.5, 1.5]);
     %               xlabel('x'); ylabel('u'); title(sprintf('Time = %5.2f',k*dt));
@@ -54,4 +54,4 @@ for k=1:Tmax/dt
 end
 figure(4); rs(:,N+1)=rs(:,1); xs=[0:N]*L/N;
 contour(xs,ts,rs,[.25 .75 1.25],'r-'); hold on; contour(xs,ts,rs,[-.25 -.75 -1.25],'b-.')
-end % function RC_Burgers_KS_CRCKW3_PS_KF
+end % function RR_Burgers_KS_CRCKW3_PS_KF

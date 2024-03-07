@@ -21,13 +21,13 @@ elseif type==2         % insertion sort based on D(:,1);
   end
   plot(D(:,1),'x'); axis([0.5 n+.5 -1 1]); hold off; pause(10/speed);
 elseif type==3          % quicksort based on D(:,1);
-  RC_QuickSort(1,n);
+  RR_QuickSort(1,n);
   plot(D(:,1),'x'); axis([0.5 n+.5 -1 1]); hold off; pause(10/speed);
 elseif type==4
-  RC_MergeSort(1,n);
+  RR_MergeSort(1,n);
   plot(D(:,1),'x'); axis([0.5 n+.5 -1 1]); hold off; pause(10/speed);
 elseif type==5
-  RC_HeapSort;
+  RR_HeapSort;
   plot(D(:,1),'x'); axis([0.5 n+.5 -1 1]); hold off; pause(10/speed);
 end
 % end function Sort.m
@@ -52,7 +52,7 @@ plot([b b],[-1 1],'r-',[c c],[-1 1],'g-',[d d],[-1 1],'c-',[a a],[-1 1],'b-'); h
 plot(D(:,1),'x'); axis([0.5 n+.5 -1 1]); hold off; pause(1/speed);
 % end function Line
 
-function [left,right] = RC_QuickSort(left, right)  % This function is recursive.
+function [left,right] = RR_QuickSort(left, right)  % This function is recursive.
 global D n speed
 if right > left
   middle = left + floor((right-left)/2);  a=D(left,1);  b=D(middle,1);  c=D(right,1); 
@@ -71,17 +71,17 @@ if right > left
     end
   end
   D([right newpivot],:)=D([newpivot right],:);  % move pivot to where it belongs
-  RC_QuickSort(left, newpivot-1)
-  RC_QuickSort(newpivot+1, right)
+  RR_QuickSort(left, newpivot-1)
+  RR_QuickSort(newpivot+1, right)
 end
 % end function Quicksort
          
-function RC_MergeSort(left, right)
+function RR_MergeSort(left, right)
 global D n speed
 if right-left > 0
   rightA = left + floor((right-left)/2); leftB=rightA+1;
-  RC_MergeSort(left,rightA)
-  RC_MergeSort(leftB,right)
+  RR_MergeSort(left,rightA)
+  RR_MergeSort(leftB,right)
   while rightA-left >= 0 & right-leftB >= 0
     if D(leftB,1) < D(left,1)
       D(left:leftB,:)=[D(leftB,:); D(left:leftB-1,:)];  plot(D(:,1),'x');  pause(1/speed);
@@ -90,15 +90,15 @@ if right-left > 0
     left=left+1;
   end
 end
-% end function RC_MergeSort
+% end function RR_MergeSort
          
-function RC_HeapSort
+function RR_HeapSort
 global D n speed
 start = floor(n/2)-1;
 while start >= 0;  Sift(start+1, n); start = start - 1;  end;
 last = n;
 while last > 1;    D([1 last],:) = D([last 1],:);  plot(D(:,1),'x');  pause(1/speed);  last = last-1; Sift(1, last);  end
-% end function RC_HeapSort
+% end function RR_HeapSort
 
 function Sift(root, last)
 global D n speed

@@ -1,20 +1,20 @@
-function RC_WireTest               
-% function RC_WireTest
+function RR_WireTest               
+% function RR_WireTest
 % This function computes, plots, and animates the leading modes of vibration of a wire.
-% Uses RC_Eig.m from section 4.4.5, and RC_MergeSort.m from section 7.1.3, of RC.
+% Uses RR_Eig.m from section 4.4.5, and RR_MergeSort.m from section 7.1.3, of RC.
 % Numerical Renaissance Codebase 1.0, NRchap4; see text for copyleft info.
 
 clear; close all; c=1; L=1; n=256; numplots=3;  % Initialize the simulation parameters 
 DeltaX=L/n;  X=[0:DeltaX:L];                    % Set up grid and the A matrix
 A=(c^2/DeltaX^2)*(diag(ones(n-2,1),-1) - 2*diag(ones(n-1,1),0) + diag(ones(n-2,1),1));
 % Now solve the eigenvalue problem for the natural modes of vibration, sort, and plot. 
-[lam,S]=RC_Eig(A);  [scratch,index]=RC_MergeSort(abs(lam)); S=S(:,index); lam=lam(index);
+[lam,S]=RR_Eig(A);  [scratch,index]=RR_MergeSort(abs(lam)); S=S(:,index); lam=lam(index);
 omega_exact=[1:numplots]*pi*c/L, n, omega_numerical=sqrt(-lam(1:numplots))'
 for i=1:numplots; figure(i);
   amp=1/max(abs(S(:,i))); plot(X,amp*[0 S(:,i)' 0],'*'), axis([0 1 -1 1]), hold on
 end
 pause, figure(numplots+1), WireAnimate(lam,S,X,n,DeltaX)
-end % function RC_WireTest
+end % function RR_WireTest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function WireAnimate(Ds,Vs,X,n,DeltaX) 
 % This is an auxiliary function built in to Wire.m, isolating the animation functionality. 

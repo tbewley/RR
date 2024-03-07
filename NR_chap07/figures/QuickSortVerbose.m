@@ -1,4 +1,4 @@
-function RC_QuickSortVerbose(i, k)                      % Numerical Renaissance Codebase 1.0
+function RR_QuickSortVerbose(i, k)                      % Numerical Renaissance Codebase 1.0
 global D n speed frame
 if k > i       
   % Begin by identifying a pivot.  We take the median of i=left, j=middle, and k=right.
@@ -22,6 +22,6 @@ if k > i
   fn=['QSt/f' num2str(frame) '.tiff']; print('-dtiff','-r100',fn);
   fn=['QSe/f' num2str(frame) '.eps'];  print('-depsc',fn);   frame=frame+1;  pause(1/speed);
   D([k pivot],:)=D([pivot k],:);   % Move pivot (stored at k) to where it belongs.
-  RC_QuickSortVerbose(i,pivot-1); RC_QuickSortVerbose(pivot+1,k)    % Sort to the left and right of new pivot.
+  RR_QuickSortVerbose(i,pivot-1); RR_QuickSortVerbose(pivot+1,k)    % Sort to the left and right of new pivot.
 end
-end % function RC_QuickSortVerbose
+end % function RR_QuickSortVerbose

@@ -1,11 +1,11 @@
-function [bv] = RC_EigHermitian(A)
-% [lambda]=RC_EigHermitian(A) for an NxN Hermitian A with |lambda_1|>|lambda_2|>... 
+function [bv] = RR_EigHermitian(A)
+% [lambda]=RR_EigHermitian(A) for an NxN Hermitian A with |lambda_1|>|lambda_2|>... 
 % computes the eigenvalues lambda.  
-% After an initial RC_Hessenberg decomposition, several explicitly-shifted QR steps
+% After an initial RR_Hessenberg decomposition, several explicitly-shifted QR steps
 % are taken using the QRFastGivensTridiagonal algorithm.  
 % When T(m,m) converges, the shift is stepped from (m,m) to (m-1,m-1).
 n=size(A,1);  m=n;
-A=RC_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
+A=RR_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
 for step=1:20*n    % (Note that loop should break well before step=20*n.)
   d=ones(n,1); mu=bv(m); for i=1:m; bv(i)=bv(i)-mu; end   % Initialize d and shift A.
   [bv,cv,av,type,alpha,beta,d] = QRFastGivensTridiagonal(av,bv,cv,m); 
@@ -34,5 +34,5 @@ for step=1:20*n    % (Note that loop should break well before step=20*n.)
     if m>2, m=m-1;            % Shift by next diagonal element
     else  break, end 
   end
-end; if step==20*n, disp('RC_EigHermitian did not converge'), end
-% end function RC_EigHermitian.m
+end; if step==20*n, disp('RR_EigHermitian did not converge'), end
+% end function RR_EigHermitian.m

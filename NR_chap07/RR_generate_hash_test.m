@@ -1,5 +1,5 @@
-% script RC_generate_hash_test
-% Tests the code RC_generate_hash_fn
+% script RR_generate_hash_test
+% Tests the code RR_generate_hash_fn
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
@@ -8,7 +8,7 @@ q_bit=quantizer('fixed',[N_bits 0]);            % Prepare to make some N_bit 2's
 [lower_limit,upper_limit]=range(q_bit)          % These are integer limits within which the data must lie.
 data=randi([lower_limit upper_limit],N_data,1)  % Generate some random test data (integers) within these limits.
 
-hash=RC_generate_hash(data,N_bits,N_data)       % Generate the hash function as a single integer
+hash=RR_generate_hash(data,N_bits,N_data)       % Generate the hash function as a single integer
 
 q_hash=quantizer('fixed',[N_bits*N_data 0]);
 hash_check_b=num2bin(q_hash,hash)               % Convert hash back to binary form.
@@ -22,7 +22,7 @@ q_bit=quantizer('fixed',[N_bits 0]);            % Prepare to make some N_bit 2's
 [lower_limit,upper_limit]=range(q_bit)          % These are integer limits within which the data must lie.
 data=randi([lower_limit upper_limit],N_data,1)  % Generate some random test data (integers) within these limits.
 
-hash=RC_generate_hash(data,N_bits,N_data) % Generate the hash function as a single integer
+hash=RR_generate_hash(data,N_bits,N_data) % Generate the hash function as a single integer
 
 q_hash=quantizer('fixed',[N_bits*N_data/2 0]);
 hash_check_1=num2bin(q_hash,hash(1));

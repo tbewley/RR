@@ -147,7 +147,7 @@ classdef RR_ss < matlab.mixin.CustomDisplay
            if ~isempty(G.h); GR.h=G.h; end
         end
         function GM=minreal(G)
-           [A,B,C]=RC_SS2CanonicalForm(G.A,G.B,G.C,'Minimal');
+           [A,B,C]=RR_SS2CanonicalForm(G.A,G.B,G.C,'Minimal');
            GM=RR_ss(A,B,C,G.D);
            if ~isempty(G.h); GR.h=G.h; end
         end

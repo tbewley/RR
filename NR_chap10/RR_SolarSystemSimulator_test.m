@@ -9,14 +9,14 @@ for i=1:3
 			  case 3, kmax(i)=round(Tmax*sy);
 	end, h(i)=Tmax*sy/kmax(i);
 	fprintf('Do coarse SI4 and RK4 simulations with kmax=%g, and thus h=%0.5g days\n',kmax(i),h(i))
-	[q,e]=RC_SolarSystemSimulator('SI4',Tmax,kmax(i)); mars_SI4(:,i)=q(5,:,end)'; energy_SI4(i)=e(end);
-	[q,e]=RC_SolarSystemSimulator('RK4',Tmax,kmax(i)); mars_RK4(:,i)=q(5,:,end)'; energy_RK4(i)=e(end);
+	[q,e]=RR_SolarSystemSimulator('SI4',Tmax,kmax(i)); mars_SI4(:,i)=q(5,:,end)'; energy_SI4(i)=e(end);
+	[q,e]=RR_SolarSystemSimulator('RK4',Tmax,kmax(i)); mars_RK4(:,i)=q(5,:,end)'; energy_RK4(i)=e(end);
 end
 
 k_truth=round(Tmax*sy*24*60); h_truth=Tmax/k_truth*(sy*24*60);
 fprintf('Now, do an truth simulation with kmax=%g, and thus h=%0.6g minute\n',kmax,h_truth)
 disp('(Please be patient, this takes a while...)')
-[q_truth,energy_truth]=RC_SolarSystemSimulator('RK4',Tmax,k_truth); mars_truth=q_truth(5,:,end)';
+[q_truth,energy_truth]=RR_SolarSystemSimulator('RK4',Tmax,k_truth); mars_truth=q_truth(5,:,end)';
 energy_begin=energy_truth(1), energy_truth_end=energy_truth(end)
 
 for i=1:3

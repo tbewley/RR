@@ -1,5 +1,5 @@
-function [u,v]=RC_RFFT2inv(uhat,vhat,N)
-% function [u,v]=RC_RFFT2inv(uhat,vhat,N)
+function [u,v]=RR_RFFT2inv(uhat,vhat,N)
+% function [u,v]=RR_RFFT2inv(uhat,vhat,N)
 % INPUT: uhat & vhat are complex arrays of length N/2 containing half of the ffts of u & v,
 % for wavenumbers 0 to N/2, with the N/2 coefficients stored in the imaginary part of the
 % 0 coefficients.
@@ -16,6 +16,6 @@ for j=2:N/2
    what(j)   =uhat(j)+i*vhat(j);            % Combine uhat+i*vhat
    what(M-j)=conj(uhat(j))+i*conj(vhat(j));
 end
-w=RC_FFTdirect(what,N,1);                   % Transform to physical space.
+w=RR_FFTdirect(what,N,1);                   % Transform to physical space.
 u=real(w)';  v=imag(w)';                    % Extract u and v from the result.
-end % function RC_RFFT2inv
+end % function RR_RFFT2inv

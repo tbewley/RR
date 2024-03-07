@@ -1,10 +1,10 @@
-function [D,index]=RC_CocktailSort(D,v,n)
-% function [D,index]=RC_CocktailSort(D,v,n)
+function [D,index]=RR_CocktailSort(D,v,n)
+% function [D,index]=RR_CocktailSort(D,v,n)
 % Reorder a matrix D based on the elements in its first column using a cocktail sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RC_InsertionSort, RC_BlockInsertionSort, RC_MergeSort, RC_QuickSort, RC_HeapSort,
-% RC_BitonicSort, RC_OddEvenRC_MergeSort.  Verify with RC_CocktailSortTest.
+% See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort,
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_CocktailSortTest.
 
 n=size(D,1); if nargout==2, D=[D, [1:n]']; end, l=1; r=n;
 while r>l
@@ -20,4 +20,4 @@ while r>l
   end, l=a+1;
 end
 if nargout==2, index=round(D(:,end)); D=D(:,1:end-1); end
-end % function RC_CocktailSort
+end % function RR_CocktailSort

@@ -1,10 +1,10 @@
-function RC_Burgers_KS_CRCKW3_PS
-% function <a href="matlab:RC_Burgers_KS_CRCKW3_PS">RC_Burgers_KS_CRCKW3_PS</a>
+function RR_Burgers_KS_CRCKW3_PS
+% function <a href="matlab:RR_Burgers_KS_CRCKW3_PS">RR_Burgers_KS_CRCKW3_PS</a>
 % Simulate the 1D Burgers or KS equation on 0<x<L with periodic BCs using CN/RKW3 in time
 % (explicit on nonlinear terms, implicit on linear terms) & pseudospectral in space.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 11.2.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap11">Chapter 11</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RC_Burgers_CRCKW3_FD and RC_Burgers_CRCKW3_FD_RS with FD implementations.
+% See also RR_Burgers_CRCKW3_FD and RR_Burgers_CRCKW3_FD_RS with FD implementations.
 
 %%%%%%%%%%%%%%%%%%%% Initialize the simulation paramters (user input) %%%%%%%%%%%%%%%%%%%%
 L=200; Tmax=80; N=256; dt=0.1; PlotInt=10; alpha=1; % alpha=0 for Burgers, alpha=1 for KS
@@ -30,4 +30,4 @@ for k=1:Tmax/dt
     figure(3); loglog(kx(1:fix(N/3)),abs(uhat(1:fix(N/3))).^2);   axis([3e-2 4 1e-8 1e-1])
   end
 end                                         
-end % function RC_Burgers_KS_CRCKW3_PS
+end % function RR_Burgers_KS_CRCKW3_PS

@@ -1,5 +1,5 @@
-function [x,evals]=RC_Bisection(x1,x2,Compute_f,tol,verbose,p)     
-% function [x,evals]=RC_Bisection(x1,x2,Compute_f,tol,verbose,p)
+function [x,evals]=RR_Bisection(x1,x2,Compute_f,tol,verbose,p)     
+% function [x,evals]=RR_Bisection(x1,x2,Compute_f,tol,verbose,p)
 % This function refines the bracket of a root with the bisection algorithm.
 % See also FindRootBracket, FalsePosition.  Verify with BisectionTest.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap03
@@ -12,4 +12,4 @@ while x2-x1>tol
    else,      x1=x; f1=f; end
 end
 x=(x2+x1)/2;
-end % function RC_Bisection
+end % function RR_Bisection

@@ -1,23 +1,23 @@
-function [U,S,V,r] = RC_SVD(A,type)
-% function [U,S,V,r] = RC_SVD(A,type)
+function [U,S,V,r] = RR_SVD(A,type)
+% function [U,S,V,r] = RR_SVD(A,type)
 % Compute the rank and reduced (by default) or complete (if type='complete') SVD of A.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.4.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % Depends on <a href="matlab:help RotateCompute">RotateCompute</a>, <a href="matlab:help Rotate">Rotate</a>.
 
-[m,n]=size(A); if m<n, [V,S,U,r]=RC_SVD(A'); else
-tol=1e-15; p=1; q=n; [A,U,V]=RC_Bidiagonalization(A,m,n);
+[m,n]=size(A); if m<n, [V,S,U,r]=RR_SVD(A'); else
+tol=1e-15; p=1; q=n; [A,U,V]=RR_Bidiagonalization(A,m,n);
 while q>1           % Note: diagonal of B_22 block extends from {p,p} to {q,q} elements.
   if abs(A(q,q))<tol;                             % If necessary, zero out last column...
     for i=q-1:-1:1; 
-     [c,s]=RC_rotate_compute(conj(A(i,i)),conj(A(i,q)));
-     [A]=RC_rotate(A,c,s,i,q,max(i-1,1),i,'R'); [V]=RC_rotate(V,c,s,i,q,1,n,'R');
+     [c,s]=RR_rotate_compute(conj(A(i,i)),conj(A(i,q)));
+     [A]=RR_rotate(A,c,s,i,q,max(i-1,1),i,'R'); [V]=RR_rotate(V,c,s,i,q,1,n,'R');
     end
   end                  
   for k=q-1:-1:p, if abs(A(k,k))<tol, A(k,k)=0;   % ...or zero out an intermediate row.
     for j=k+1:q,    
-     [c,s]=RC_rotate_compute(A(j,j),A(k,j));
-     [A]=RC_rotate(A,c,s,j,k,j,min(j+1,q),'L'); [U]=RC_rotate(U,c,s,j,k,1,m,'R');
+     [c,s]=RR_rotate_compute(A(j,j),A(k,j));
+     [A]=RR_rotate(A,c,s,j,k,j,min(j+1,q),'L'); [U]=RR_rotate(U,c,s,j,k,1,m,'R');
     end
   end, end,                                                         % Compute p and q
   for i=1:n-1; if abs(A(i,i+1))< tol*(abs(A(i,i))+abs(A(i+1,i+1))); A(i,i+1)=0; end; end
@@ -30,11 +30,11 @@ while q>1           % Note: diagonal of B_22 block extends from {p,p} to {q,q} e
   t=real(bm-bq)/2.; mu=bq+t-sign(t)*sqrt(t*t+conj(aq)*aq);     % Set up first rotation
   f=real(dp)^2+imag(dp)^2-mu; g=dp*conj(fp);                   % using this shift.
   for i=p:q-1                                      % Then apply implicit Q to return the
-    [c,s]=RC_rotate_compute(f,g);                      % B_22 matrix to upperbidiagonal form.                          
-    [A]=RC_rotate(A,c,s,i,i+1,max(p,i-1),i+1,'R'); [V]=RC_rotate(V,c,s,i,i+1,1,n,'R');                          
+    [c,s]=RR_rotate_compute(f,g);                      % B_22 matrix to upperbidiagonal form.                          
+    [A]=RR_rotate(A,c,s,i,i+1,max(p,i-1),i+1,'R'); [V]=RR_rotate(V,c,s,i,i+1,1,n,'R');                          
     f=A(i,i); g=A(i+1,i);                               
-    [c,s]=RC_rotate_compute(f,g);
-    [A]=RC_rotate(A,c,s,i,i+1,i,min(i+2,q),'L');   [U]=RC_rotate(U,c,s,i,i+1,1,m,'R');
+    [c,s]=RR_rotate_compute(f,g);
+    [A]=RR_rotate(A,c,s,i,i+1,i,min(i+2,q),'L');   [U]=RR_rotate(U,c,s,i,i+1,1,m,'R');
     if i<q-1, f=conj(A(i,i+1)); g=conj(A(i,i+2)); end
   end
 end

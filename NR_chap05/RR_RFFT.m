@@ -1,11 +1,11 @@
-function [uh]=RC_RFFT(u,N)
-% function [uh]=RC_RFFT(u,N)
+function [uh]=RR_RFFT(u,N)
+% function [uh]=RR_RFFT(u,N)
 % This routine was written by substituting RFFT2 into RFFT1 and simplifying.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RFFTinv, RFFT1, RFFT2.  Verify with: RFFTtest.
 
-wh=RC_FFTdirect(u(1:2:N-1)+i*u(2:2:N),N/2,-1);
+wh=RR_FFTdirect(u(1:2:N-1)+i*u(2:2:N),N/2,-1);
 M=N/2+2;
 for n=2:N/4
   uh(n,1)  =(wh(n)+conj(wh(M-n))-i*exp(-2*pi*i*(n-1)/N)*(wh(n)-conj(wh(M-n))))/4;
@@ -13,4 +13,4 @@ for n=2:N/4
 end
 uh(1,1)=(real(wh(1))+imag(wh(1)))/2 + i*(real(wh(1))-imag(wh(1)))/2;
 uh(N/4+1,1)=(real(wh(N/4+1))-i*imag(wh(N/4+1)))/2;
-end % function RC_RFFT
+end % function RR_RFFT

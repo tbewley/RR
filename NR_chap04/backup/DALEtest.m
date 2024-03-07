@@ -1,8 +1,8 @@
-% script RC_DALEtest
-% Test RC_DALE with random F and random Q>0.
+% script RR_DALEtest
+% Test RR_DALE with random F and random Q>0.
 % Numerical Renaissance Codebase 1.0, NRchap4; see text for copyleft info.
 
 clear; n=40; Q=randn(n); Q=Q*Q'; F=randn(n);
-X=RC_DALE(F,Q,n); error_RC_DALE=norm(F*X*F'-X+Q)
+X=RR_DALE(F,Q,n); error_RR_DALE=norm(F*X*F'-X+Q)
 
-% end script RC_DALEtest
+% end script RR_DALEtest

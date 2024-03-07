@@ -1,4 +1,4 @@
-function RC_dbees                                   % Numerical Renaissance Codebase 1.0      
+function RR_dbees                                   % Numerical Renaissance Codebase 1.0      
 %%%%%%%%%%%%%%%%% begin user input %%%%%%%%%%%%%%%% 
 T=1; G.thresh=0.00002; G.max=10000; start=[-11.5; -10; 9.5];
 G.dt=.0005; dt=.005; G.dx=0.4; G.d=3; G.sigma=4; G.b=1; G.r=48; G.L=30;
@@ -57,7 +57,7 @@ end
 function [D]=Initialize_D(G)
 D.P=zeros(G.max,1);   D.j=zeros(G.max,G.d,'int16'); D.k=ones(G.max,G.d,'int16');
 D.v=zeros(G.max,G.d); D.i=D.k; D.w=D.v; D.u=D.v; D.f=D.v; l=1;
-% ------------------------------------- 3D RC_Gaussian -----------------------------------
+% ------------------------------------- 3D RR_Gaussian -----------------------------------
 for i=round(-13.5/G.dx):round(-9.5/G.dx),
  for j=round(-12/G.dx):round(-8/G.dx),
   for k=round(7.5/G.dx):round(11.5/G.dx),

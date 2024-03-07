@@ -1,8 +1,8 @@
-function [A] = RC_SchurHermetian(A,p)
+function [A] = RR_SchurHermetian(A,p)
 % Apply the QR algorithm p times to the Hermetian matrix A, leveraging the fact that 
-% RC_Hessenberg.m returns a tridiagonal matrix, so the QR algorithm can be performed 
+% RR_Hessenberg.m returns a tridiagonal matrix, so the QR algorithm can be performed 
 % just on the [av,bv,cv] vectors that make up the (tridiagonal) A at each step.
-A=RC_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
+A=RR_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
 for i=1:p;
    [bv,cv,av,c,s]=QRGivensTridiagonal(av,bv,cv);
    % Now calculate R*Q, given the N-1 values of [c,s] comprising each rotation (rather
@@ -18,4 +18,4 @@ for i=1:p;
 end;
 % now put the av, bv, cv back into the matrix where A used to be.
 A=diag(av(2:end),-1)+diag(bv)+diag(cv(1:end-1),1);
-% end function RC_SchurHermetian.m
+% end function RR_SchurHermetian.m

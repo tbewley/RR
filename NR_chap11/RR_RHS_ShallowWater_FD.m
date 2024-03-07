@@ -1,4 +1,4 @@
-function f=RC_RHS_ShallowWater_FD(y,p,t)          % Numerical Renaissance Codebase 1.0
+function f=RR_RHS_ShallowWater_FD(y,p,t)          % Numerical Renaissance Codebase 1.0
 % The RHS of the SWE, with u=y(:,:,1), v=y(:,:,2), h=y(:,:,3), approximated with FD.
 % Note: this code takes k=nu=0.
 for i=2:p.Nx, for j=2:p.Ny       % Interior
@@ -44,4 +44,4 @@ switch p.excitation_case          % Implement excitation from BCs.
     error('Unknown excitation method.')
 end
 
-end % function RC_RHS_ShallowWater_FD
+end % function RR_RHS_ShallowWater_FD

@@ -1,12 +1,12 @@
-function [bv] = RC_EigHermetian(A)
-% [lambda]=RC_EigHermetian(A) for an NxN Hermetian A with |lambda_1|>|lambda_2|>... 
+function [bv] = RR_EigHermetian(A)
+% [lambda]=RR_EigHermetian(A) for an NxN Hermetian A with |lambda_1|>|lambda_2|>... 
 % computes the eigenvalues lambda.  
-% After an initial RC_Hessenberg decomposition, several explicitly-shifted QR steps
+% After an initial RR_Hessenberg decomposition, several explicitly-shifted QR steps
 % are taken using the QRFastGivensTridiagonal algorithm.  
 % When T(m,m) converges, the shift is stepped from (m,m) to (m-1,m-1).
 
 n=size(A,1);  m=n;
-A=RC_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
+A=RR_Hessenberg(A); av=[0; diag(A,-1)]; bv=diag(A,0); cv=[diag(A,1); 0]; N=size(A,1);
 
 for step=1:20*n    % (Note that loop should break well before step=20*n.)
   d=ones(n,1); mu=bv(m); for i=1:m; bv(i)=bv(i)-mu; end   % Initialize d and shift A.
@@ -38,4 +38,4 @@ for step=1:20*n    % (Note that loop should break well before step=20*n.)
     else break, end 
   end
 end
-% end function RC_EigHermetian.m
+% end function RR_EigHermetian.m

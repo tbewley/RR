@@ -1,9 +1,9 @@
-function [qs,es,ts]=RC_MassSpring(method,Tmax,max_iterations)
-% function [qs,energy]=RC_MassSpring(method,Tmax,max_iterations)
+function [qs,es,ts]=RR_MassSpring(method,Tmax,max_iterations)
+% function [qs,energy]=RR_MassSpring(method,Tmax,max_iterations)
 % Simulate the evolution of an undamped mass-spring oscillator using method=SI4 or method=RK4.
-% SIMPLE TEST: clear; global m k, m=1; k=1; Tmax=(2*pi)*20; [qs,es,ts]=RC_MassSpring('RK4',Tmax,Tmax*1);
+% SIMPLE TEST: clear; global m k, m=1; k=1; Tmax=(2*pi)*20; [qs,es,ts]=RR_MassSpring('RK4',Tmax,Tmax*1);
 %              figure(1), plot(ts,qs,'k*-'), hold on, figure(2), plot(ts,es,'k*-'), hold on
-%              [qs,es,ts]=RC_MassSpring('SI4',Tmax,Tmax*1);
+%              [qs,es,ts]=RR_MassSpring('SI4',Tmax,Tmax*1);
 %              figure(1), plot(ts,qs,'ro-'),          figure(2), plot(ts,es,'ro-.')
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.6.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
@@ -28,7 +28,7 @@ for i=1:max_iterations, t=i*h;                    % Now perform time march using
   end
   qs(i+1)=q; es(i+1)=CheckEnergy(p,q); ts(i+1)=t;
 end
-end % function RC_MassSpringSimulation
+end % function RR_MassSpringSimulation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [out] = dqdt(p);  % dq/dt=dT/dp
 global m k

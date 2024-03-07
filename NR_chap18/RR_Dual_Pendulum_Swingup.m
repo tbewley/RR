@@ -1,4 +1,4 @@
-function [u_k,x_k]=RC_Dual_Pendulum_Swingup(T,u_k)
+function [u_k,x_k]=RR_Dual_Pendulum_Swingup(T,u_k)
 if nargin<1, T=3; end                 % Default value of T
 s.h=0.01; s.N=T/s.h; 
 if nargin<2, u_k=zeros(s.N+1,1); end  % Default value of initial u (a pretty bad guess!)
@@ -29,7 +29,7 @@ end
 s.mc=1; for n=1:s.N+1      % Compute u_k corresponding to different s.mc to give same x_k
   E=Compute_E(x_k(1:6,n),s); N=Compute_N(x_k(1:6,n),0,s); u_k(n,1)=s.B'*(E*x_k(4:9,n)-N);
 end
-end % function RC_Dual_Pendulum_Swingup
+end % function RR_Dual_Pendulum_Swingup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function R=RHS(x,u,s);  E=Compute_E(x,s); N=Compute_N(x,u,s); R=E\N;
 end % function RHS

@@ -1,10 +1,10 @@
-function [B,A] = RC_Gauss(A,B,n)
-% function [B,A] = RC_Gauss(A,B,n)
-% Solve AX=B for X using RC_Gaussian elimination without pivoting.  The matrix B is replaced
+function [B,A] = RR_Gauss(A,B,n)
+% function [B,A] = RR_Gauss(A,B,n)
+% Solve AX=B for X using RR_Gaussian elimination without pivoting.  The matrix B is replaced
 % by the solution X on exit, and (if requested) the matrix A is replaced by the m_ij and U.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RC_GaussLU. Verify with RC_GaussTest.
+% See also RR_GaussLU. Verify with RR_GaussTest.
 
 for j = 1:n-1,                                                  % FORWARD SWEEP
    % Looping through each column j<n, compute the m_ij=-a_ij/a_jj for j+1<=i<=n.
@@ -17,7 +17,7 @@ for j = 1:n-1,                                                  % FORWARD SWEEP
    A(j+1:n,j+1:n) = A(j+1:n,j+1:n) + A(j+1:n,j) * A(j,j+1:n);   % (Outer product update)
    B(j+1:n,:)     = B(j+1:n,:)     + A(j+1:n,j) * B(j,:);
 end
-for i = n:-1:1,                                                 % BACK SURC_BSTITUTION
+for i = n:-1:1,                                                 % BACK SURR_BSTITUTION
    B(i,:) = ( B(i,:) - A(i,i+1:n) * B(i+1:n,:) ) / A(i,i);      % (Inner product update)
 end
-end % function RC_Gauss
+end % function RR_Gauss

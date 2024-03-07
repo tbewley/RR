@@ -1,4 +1,4 @@
-% script <a href="matlab:SVDTest">RC_SVDTest</a>
+% script <a href="matlab:SVDTest">RR_SVDTest</a>
 % Test SVD on a random complex matrix.
 % Numerical Renaissance Codebase 1.0, NRchap4; see text for copyleft info.
 

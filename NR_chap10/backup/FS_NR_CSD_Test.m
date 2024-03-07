@@ -1,4 +1,4 @@
-% script <a href="matlab:FS_RC_CSD_Test">FS_RC_CSD_Test</a>
+% script <a href="matlab:FS_RR_CSD_Test">FS_RR_CSD_Test</a>
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.7.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also FS_Bisection_Test, FS_Relaxation_Test.  Depends on FSmarch.
@@ -15,4 +15,4 @@ for j=1:size(m,1);       % Loop over several interesting values of m;
   end
   disp(sprintf('Error in terminal condition = %0.5g',FSmarch(f3,1,m(j)))); pause(0.001);
 end
-% end script FS_RC_CSD_Test
+% end script FS_RR_CSD_Test

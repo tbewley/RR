@@ -1,5 +1,5 @@
-function x=RC_FFTnonreordered(x,N,g)
-% function x=RC_FFTnonreordered(x,N,g)
+function x=RR_FFTnonreordered(x,N,g)
+% function x=RR_FFTnonreordered(x,N,g)
 % Compute the FFT (g=-1) or inverse FFT (g=1) of a vector x of order N=2^s.  NOTE: as
 % opposed to Algorithm 5.2, this algorithm does not bother reordering the Fourier
 % representation out of, and then back into, bit reversed order, thereby reducing both
@@ -32,4 +32,4 @@ else             % INVERSE TRANSFORM (Fourier space input expected in bit revers
     end
   end            % Note: Physical space output is returned in standard order.
 end
-end % function RC_FFTnonreordered
+end % function RR_FFTnonreordered

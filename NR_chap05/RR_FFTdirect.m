@@ -1,5 +1,5 @@
-function x=RC_FFTdirect(x,N,g)
-% function x=RC_FFTdirect(x,N,g)
+function x=RR_FFTdirect(x,N,g)
+% function x=RR_FFTdirect(x,N,g)
 % Compute the forward FFT (g=-1) or inverse FFT (g=1) of a vector x of order N=2^s.
 % At each stage, defining Ns=2^stage, the elements divide into N/Ns groups, each with Ns
 % elements.  Each group is split in half and combined as in Fig 5.2.
@@ -21,4 +21,4 @@ for stage=1:s           % For each stage...
    end
 end
 if g==-1, x=x/N; end              % Scale the forward version of the transform by 1/N.
-end % function RC_FFTdirect
+end % function RR_FFTdirect
