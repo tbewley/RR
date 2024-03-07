@@ -1,5 +1,6 @@
 % script RR_path_init
-% Initialize the path environment for using the Renaissance Robotics (RR) codebase.
+% Initialize the path environment for using the Renaissance Repository.
+% All codes in this repository are prefixed with RR, so you'll know when you are using it.
 % You can check your path in Matlab at any time by typing "path".
 %
 % You should call the RR path init codes automatically when firing up Matlab on your computer,
@@ -14,7 +15,7 @@
 % that you have installed the RR codebase on your computer.  Note that forward slashes (/),
 % as shown above, are used on Macs, whereas backslashes (\) are used in Windows; on a Windows machine,
 % the full path to this directory might look something like, e.g., 'C:\Users\bewley\RR'
-% Note you can also put other commonly needed Matlab initialization commands in your startup.m file.
+% You can also put other commonly needed Matlab initialization commands in your startup.m file.
 %
 % Renaissance Robotics codebase, https://github.com/tbewley/RR
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
@@ -29,7 +30,8 @@ addpath(strcat(RRbase,'/chap01'),strcat(RRbase,'/chap02'),strcat(RRbase,'/chap03
         strcat(RRbase,'/chap13'),strcat(RRbase,'/chap14'),strcat(RRbase,'/chap15'), ...
         strcat(RRbase,'/chap16'),strcat(RRbase,'/chap17'),strcat(RRbase,'/chap18'), ...
         strcat(RRbase,'/chapAA'),strcat(RRbase,'/chapAB'),RRbase) 
-disp("Path set for using the Renaissance Robotics (RR) codebase.")
+disp("Path set for using the Renaissance Repository (RR), including codes discussed")
+disp("in the forthcoming texts Renaissance Robotics and Numerical Renaissance.")
 disp("Note: please use GitHub Desktop to keep "+RRbase)
 disp("in sync with the main RR repository at https://github.com/tbewley/RR"+newline)
 % end script RR_path_init
