@@ -1,5 +1,4 @@
 # the Renaissance Repository
-one repo to rule them all<BR>
 The codes in this repository are associated with two forthcoming texts,<BR>
 <a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> (RR) and
 <a href="http://robotics.ucsd.edu/RR.pdf">Numerical Renaissance</a> (NR),
