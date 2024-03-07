@@ -5,7 +5,7 @@ function [A,p,r,v,R] = RR_GaussEchelon(A)
 % an extension of RR_Gaussian elimination with partial pivoting.  The matrix A is replaced by
 % the m_ij and U on exit, p is the permutation vector, r is the rank, and v is a vector
 % containing the column of each pivot.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Verify with <a href="matlab:help RR_GaussEchelonTest">RR_GaussEchelonTest</a>.
 

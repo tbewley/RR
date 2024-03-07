@@ -6,7 +6,7 @@
 % also, a production code need not extract L and U out separately - note that the
 % RR_GaussLU code solves Ly=b for y, then Ux=y for x, referencing the nontrivial elements
 % of L and U as they sit in the modified A matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_GaussPPTest, RR_GaussCPTest, RR_GaussEchelonTest.
 

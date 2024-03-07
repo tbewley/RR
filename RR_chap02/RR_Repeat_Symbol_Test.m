@@ -5,7 +5,7 @@
 % This test plots the histogram of minimum j>0 for which x_i=x_(i+j),
 % normalized to reflect the corresponding pdf, and compares to the
 % exponential distribution of this result that is predicted by theory.  
-%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all, N=10^6, b=6  % <- fiddle with N and b to test

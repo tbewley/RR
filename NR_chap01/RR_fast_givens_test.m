@@ -1,6 +1,6 @@
 % script RR_fast_givens_test
 % Tests RR_fast_givens_compute and RR_fast_givens on a random matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 RR_rotate_test

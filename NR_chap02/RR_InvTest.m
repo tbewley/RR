@@ -1,6 +1,6 @@
 % script <a href="matlab:InvTest">RR_InvTest</a>
 % Test <a href="matlab:help Inv">Inv</a> on a random matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_GaussPPTest.
 

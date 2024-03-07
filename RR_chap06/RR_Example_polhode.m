@@ -1,6 +1,6 @@
 
 % polhode drawings
-%% Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 M=1; nframes=4

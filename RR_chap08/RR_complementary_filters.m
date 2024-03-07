@@ -19,7 +19,7 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 %            g.ls='b-'; RR_bode(LPF,g), g.ls='r-.'; 
 %            if n>2, g.phase_shift=1; end, RR_bode(HPF,g), axis([1 100 -90*n 90*n])
 %          end
-%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<1, omegac=1, end, if nargin<2, n=1, end

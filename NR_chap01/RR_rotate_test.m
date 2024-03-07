@@ -1,6 +1,6 @@
 % script RR_rotate_test
 % Test RR_rotate_compute & RR_rotate on a random matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('These two tests take i=2 and k=3 and which=B (i.e., it computes G^H * X * G),')

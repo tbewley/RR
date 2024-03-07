@@ -8,7 +8,7 @@ function [d,b]=RR_PolyDiv(b,a)
 %          check=RR_PolyAdd(RR_PolyProd(div,den),rem)
 % TEST2:   syms K, num=[1 K 2*K 3*K], den=[1 K], [div,rem]=RR_PolyDiv(num,den)
 %          check=RR_PolyAdd(RR_PolyProd(div,den),rem)
-% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 m=length(b); n=length(a); if m<n d=0; else

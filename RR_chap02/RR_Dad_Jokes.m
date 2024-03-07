@@ -6,7 +6,7 @@ function RR_Dad_Jokes(i_max)
 %       RR_Dad_Jokes(64)  % tells 64 jokes, without recent repeats
 % TODO: replace the "jokes" below with jokes that are actually funny.
 %       (left as an exercise by the discerning reader...)
-%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<1, i_max=1; end

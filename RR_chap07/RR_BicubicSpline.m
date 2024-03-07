@@ -3,7 +3,7 @@ function [f]=RR_BicubicSpline(x,y,xd,yd,fd,fx,fy,fxy,Ainv)
 % Given the grid of datapoints {xd,yd,fd}, as well as the derivatives {fx,fy,fxy} on this
 % same grid and Ainv (as computed by RR_BicubicSplineSetup), determine the bicubic spline
 % interpolant f on the grid {x,y}.
-%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_BilinearSpline.  Verify with RR_BicubicSplineTest.
       

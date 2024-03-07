@@ -1,6 +1,6 @@
 function LagTest                                     % Numerical Renaissance Codebase 1.0
 
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 zbar=0.99; pbar=0; numG=[1 zbar]; denG=[1 pbar];

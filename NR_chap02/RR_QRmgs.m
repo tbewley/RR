@@ -3,7 +3,7 @@ function [A,R,pi,r] = QRmgs(A,s)
 % Compute an ordered complete QR decomposition A*Pi=Q*R, and rank, of ANY mxn matrix A via
 % Modified Gram-Schmidt (Q is returned in the modified A).  Pivoting is implemented, but
 % note that, if s is specified, pivoting is not applied to the first s columns of A.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 [m,n]=size(A);  R=zeros(n,n);  pi=[1:n]'; tol=1e-8; if nargin==1, s=0; end

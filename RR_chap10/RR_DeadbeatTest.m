@@ -1,5 +1,5 @@
 % script <a href="matlab:RouthSimplifiedTest">RouthSimplifiedTest</a>
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 p=[1 4 2 5 3 6],       RouthSimplified(p); check_roots_of_p=roots(p), disp(' ');

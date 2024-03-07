@@ -1,6 +1,6 @@
 % script <a href="matlab:QRcgsTest">QRcgsTest</a>
 % Test <a href="matlab:help QRcgs">QRcgs</a> on a random matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('Now testing QRcgs on a random matrix')

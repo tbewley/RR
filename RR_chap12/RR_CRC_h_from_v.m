@@ -13,7 +13,7 @@ function h = RR_CRR_h_from_v(v,k,r,verbose)
 %     k=26; r=5; v=0b100101u64; h=RR_CRR_h_from_v(v,k,r,true);
 % EXAMPLE CALL [computes h(z) for v(z) corresponding to CRC-5-ITU, for k=10, d=4]:
 %     k=10; r=5; v=0b101011u64; h=RR_CRR_h_from_v(v,k,r,true);
-%% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 n=k+r;

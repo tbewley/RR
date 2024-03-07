@@ -1,6 +1,6 @@
 % script <a href="matlab:QRHouseholderTest">QRHouseholderTest</a>
 % Test <a href="matlab:help QRHouseholder">QRHouseholder</a> on a random matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('Now testing QRHouseholder on a random matrix')

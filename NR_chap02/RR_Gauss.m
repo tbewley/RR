@@ -2,7 +2,7 @@ function [B,A] = RR_Gauss(A,B,n)
 % function [B,A] = RR_Gauss(A,B,n)
 % Solve AX=B for X using RR_Gaussian elimination without pivoting.  The matrix B is replaced
 % by the solution X on exit, and (if requested) the matrix A is replaced by the m_ij and U.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_GaussLU. Verify with RR_GaussTest.
 

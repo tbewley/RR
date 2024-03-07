@@ -1,6 +1,6 @@
 % script RR_Ex10_11_LC_tank_oscillator
 % Solve the equations of an LC tank oscillator.
-% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 % Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % Simple LC tank: computation of Vout(s)

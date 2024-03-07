@@ -2,7 +2,7 @@ function [G] = RR_ThomasLU(a,b,c,G,n)
 % function [G] = RR_ThomasLU(a,b,c,G,n)
 % This function uses the LU decomposition returned [in the modified (a,b,c) vectors] by a
 % prior call to Thomas.m to solve the system AX=G using forward / back substitution.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also Thomas. Verify with RR_ThomasTest.
 

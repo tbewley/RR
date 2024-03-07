@@ -7,7 +7,7 @@ function [sig,w] = RR_reflect_compute(x)
 % NOTE:   This code uses the Householder reflections formulation that works for both real and complex x.
 %         It does NOT reduce to the "simple and logical" case, with sig=2, in the real case.
 % See also RR_reflect. Verify with RR_reflect_test.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if real(x(1))<0, s=-1; else, s=1; end, nu=s*norm(x);   % (1.8b)

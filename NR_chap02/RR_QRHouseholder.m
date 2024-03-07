@@ -3,7 +3,7 @@ function [A,Q,pi,r] = QRHouseholder(A)
 % Compute a (full) QR decomposition A=Q*R of ANY mxn matrix A using a sequence of
 % Householder reflections (R is returned in the modified A).  IF pi and r are
 % requested, then pivoting is implemented and the decomposition is ordered, A*Pi=Q*R.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Depends on <a href="matlab:help ReflectCompute">ReflectCompute</a>, <a href="matlab:help Reflect">Reflect</a>.
 

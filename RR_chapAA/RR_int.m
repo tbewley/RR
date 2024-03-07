@@ -15,7 +15,7 @@
 %   sum=a+b, diff=b-a, product=a*b, q=b/a, [q,rem]=b/a    % (self explanatory)
 %   check=(a*q+rem)-b, check_norm=norm(check)             % note: check should be zero
 %   a^3                                                   % (self explanatory)
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_poly, RR_tf.
 

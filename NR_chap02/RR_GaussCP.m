@@ -3,7 +3,7 @@ function [X,A,p,q] = RR_GaussCP(A,B,n)
 % This function solves AX=B for X using RR_Gaussian elimination with complete pivoting.
 % The solution X is returned on exit, and (if requested) the matrix A
 % is replaced by m_ij and U on exit, with the vectors of pivots returned in p and q.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_GaussPLUQT. Verify with RR_GaussCPTest.
 

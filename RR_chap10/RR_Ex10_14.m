@@ -1,5 +1,5 @@
 % Example_10_14
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 numG=[1]; denG=PolyConv([1 10],[1 -10]);

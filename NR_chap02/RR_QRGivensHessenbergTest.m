@@ -1,6 +1,6 @@
 % script <a href="matlab:RR_QRGivensHessenbergTest">RR_QRGivensHessenbergTest</a>
 % Test <a href="matlab:help RR_QRGivensHessenberg">RR_QRGivensHessenberg</a> on a random (rectangular) RR_Hessenberg matrix.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('Now testing RR_QRGivensHessenberg on a random (rectangular) RR_Hessenberg matrix.')

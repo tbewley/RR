@@ -41,7 +41,7 @@
 %   figure(4), RR_impulse(T), figure(5), RR_step(T)
 %   NOTE: type "help RR_*", for any of the above-listed ADDITIONAL OPERATIONS, for further info.
 %
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_int, RR_poly.
 
@@ -63,7 +63,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   called with 3 arguments, generates from vectors of zeros (num) and poles (den), and the overall gain K
         % Automatically performs pole/zero cancellations as necessary.
         % To define a DT RR_tf object G(z), define G as above, then set, e.g., G.h=0.01.
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
     		switch nargin
     			case 1  
@@ -102,7 +102,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function sum = plus(G1,G2)          
         % Defines G1+G2, where G1 and/or G2 are of class RR_tf
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
             [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
             sum  = RR_tf(trim(G1.num*(G2.den/g)+G2.num*(G1.den/g)),trim(G1.den*(G2.den/g)));
@@ -112,7 +112,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function diff = minus(G1,G2)       
         % Defines G1-G2, where G1 and/or G2 are of class RR_tf
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             [G1,G2]=check(G1,G2);  g=RR_gcd(G1.den,G2.den);  % (Dividing out the gcd improves accuracy)
             diff = RR_tf(G1.num*(G2.den/g)-G2.num*(G1.den/g),G1.den*(G2.den/g));
@@ -122,7 +122,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function prod = mtimes(G1,G2)       
         % Defines G1*G2, where G1 and/or G2 are of class RR_tf
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             [G1,G2]=check(G1,G2);
             prod = RR_tf(G1.num*G2.num,G1.den*G2.den);
@@ -132,7 +132,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function quo = mrdivide(G1,G2)
         % Defines G1/G2, where G1 and/or G2 are of class RR_tf
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_tf   
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             [G1,G2]=check(G1,G2); quo  = RR_tf(G1.num*G2.den,G1.den*G2.num);
             if ~isempty(G1.h); quo.h=G1.h; end
@@ -140,7 +140,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         function pow = mpower(G,n)
         % function pow = mpower(G,n)
         % Defines G^n, where G is of class RR_tf
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
              if n==0, pow=RR_tf([1]); else, pow=G; for i=2:n, pow=pow*G; end, end
             if ~isempty(G.h); pow.h=G.h; end
@@ -149,7 +149,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function [G1,G2]=check(G1,G2)
         % Converts G1 or G2, as necessary, to the class RR_tf
         % NOTE: this routine is just used internally in this class definition.
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if ~isa(G1,'RR_tf'), G1=RR_tf(G1); if ~isempty(G2.h), G1.h=G2.h; end, end
             if ~isa(G2,'RR_tf'), G2=RR_tf(G2); if ~isempty(G1.h), G2.h=G1.h; end, end
@@ -172,7 +172,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %          F=RR_tf([1 z],[1 p]); phi(k)=phase(RR_evaluate(F,omegac*i))*180/pi; 
         %       end, semilogx(beta,phi), grid, axis([beta(1) beta(end) -90 90])
         %       title('Phase lead (if beta>1) or lag (if beta<1) of F(s)=(s+z)/(s+p) for beta=p/z')     
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             for i=1:length(s)
                 n=0; for k=1:G.num.n+1; n=n+G.num.poly(k)*s(i)^(G.num.n+1-k); end
@@ -199,7 +199,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %          G=RR_tf([1 2 2 3 5],[1 7 7],1), [p,d,k,n]=RR_partial_fraction_expansion(G)
         %          G1=RR_tf(0); for i=1:n, if k(i)>0, G1=G1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
         %             else, G1=G1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end, G1
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             m=G.num.n; n=G.den.n; flag=0; if m>=n, [div,rem]=G.num/G.den; flag=1; m=rem.n; else, rem=G.num; end
             k=ones(1,n); p=G.p; if nargin<2, tol=1e-3; end
@@ -234,7 +234,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
         % Convenient defaults are defined for each of these fields of g if not provided.
         % TEST: omegac=1; F=RR_tf([omegac^2],[1 2*0.707*omegac omegac^2]); close all, RR_bode(F)
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==1, g=[]; end,     % Convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
@@ -288,7 +288,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
         % Convenient defaults are defined for each of these fields of g if not provided.
         % TEST: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode_linear(F)
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
@@ -325,7 +325,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %         figure(2), g.K=logspace(-2,4,1500);  RR_rlocus(G2,Ds,g)
         %         G3z=RR_C2D_zoh(G1,h), Dz=Ds; Dz.h=h;
         %         figure(3), RR_rlocus(G3z,Dz,g)
-        % Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<3, g={}; end   % Set up convenient defaults for plotting
             if nargin<2; D=RR_tf(1); if ~isempty(G.h), D.h=G.h; end, end        
@@ -355,7 +355,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Compute (exactly) the Gz(z) corresponding to a D/A-Gs(s)-A/D cascade with timestep h.
         % TEST: bs=[1]; as=[1 2 1]; h=0.01; Gs=RR_tf(bs,as), [Gz]=RR_C2D_zoh(Gs,h)
         %       disp('Corresponding Matlab solution:'), c2d(tf(bs,as),h,'zoh')
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
             HATz=RR_tf([1 -1],[1 0]); HATz.h=h;
             STEPs=RR_tf(1,[1 0]);
@@ -366,7 +366,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % function [Yz]=RR_Z(Ys,h)
         % Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at timesteps
         % t_k = h k) the CT signal y(t) with a strictly proper Laplace transform Ys(s).
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             [a,d,k,n]=RR_partial_fraction_expansion(Ys); r=exp(a*h); Yz=RR_tf(0,1);
             for i=1:n,  if     k(i)<1,   error('CT TF considered must be strictly proper!')
@@ -382,7 +382,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % TEST: ys=20*[1 1]; xs=[1 10]; h=0.01; Ds=RR_tf(ys,xs); omegac=sqrt(10); [Dz]=RR_C2D_tustin(Ds,h,omegac)
         %       disp('Corresponding Matlab solution:')
         %       opt = c2dOptions('Method','tustin','PrewarpFrequency',omegac); c2d(tf(ys,xs),h,opt)
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin==2, f=1; else, f=2*(1-cos(omegac*h))/(omegac*h*sin(omegac*h)); end
             c=2/(f*h); m=Ds.num.n; n=Ds.den.n; b=RR_poly(0); a=b;
@@ -397,7 +397,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
         % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_impulse(G*D/(1+G*D))
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; g={}; end, RR_plot_response(G,-1,g); grid
         end % function RR_impulse
@@ -408,7 +408,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
         % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_step(G*D/(1+G*D))
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; g={}; end, RR_plot_response(G,0,g); grid on
         end % function RR_step
@@ -419,7 +419,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % The (optional) derived type g groups together convenient parameters for plotting
         % (see RR_plot_response for details).
         % TEST: G=RR_tf([1],[1 0 0]), D=RR_tf(20*[1 1],[1 10]), close all, RR_ramp(G*D/(1+G*D))
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2; g={}; end, RR_plot_response(G,1,g); grid on
         end % function RR_step
@@ -437,7 +437,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   {g.ls_u,g.ls_y} are the linestyles used for the input u and the output y
         %   g.tol     defines the tolerance used when checking for repeated roots in the partial fraction expansion. 
         % Some convenient defaults are defined for each of these fields if they are not provided. You're welcome.
-        % Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
             if nargin<2, m=0; end, if nargin<3, g=[]; end      % Set up convenient defaults
             if isempty(G.h),                                   % some defaults for the CT case
@@ -499,7 +499,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         % Note: form is OPTIONAL, and set to 'Controller' in SISO case if not specified
         %       form is automatically set to 'Controller' in SIMO case
         %       form is automatically set to 'Observer'   in MISO case
-        % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+        % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
         % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
         b=Gtf.num.poly; a=Gtf.den.poly; n=Gtf.den.n;
@@ -535,7 +535,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     % function markov=RR_tf2markov(G)
     % Computes the first n+1 Markov parameters of a CT or DT SISO system G (of type RR_tf).
     % TEST:   m=2; n=4; G=RR_tf(rand(1,m+1),rand(1,n+1)), markov=RR_tf2markov(G)
-    % Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+    % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
     % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
        b=G.num.poly; a=G.den.poly; m=G.num.n; n=G.den.n;
        b=[zeros(1,n-m) b]; u=[1; zeros(n,1)]; y=zeros(n+1,1);

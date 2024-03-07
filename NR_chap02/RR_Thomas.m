@@ -3,7 +3,7 @@ function [G,a,b,c] = RR_Thomas(a,b,c,G,n)
 % This function solves AX=G for X using the Thomas algorithm, where A = tridiag(a,b,c).
 % The solution X is returned on exit, and (if requested), the three diagonals of A are
 % replaced by the m_ij and U.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_ThomasLU. Verify with RR_ThomasTest.
 

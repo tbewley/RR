@@ -1,7 +1,7 @@
 % script RR_bode_plot_tests
 % This script just plots a few Bode plots, for practice.  :)
 % Recommend you space out figures 1,2,3 so you can see all three on your screen.
-%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear, disp('high-pass, low-pass, band-pass')

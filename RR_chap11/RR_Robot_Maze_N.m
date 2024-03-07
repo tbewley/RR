@@ -4,7 +4,7 @@ function RR_Robot_Maze_N(RR,v,x0)                                               
 % [x0]: initial condition
 % Notes: 1=true, 0=false. As p is built as we go; its ordering is different from truth.
 % MKS units used throughout, all angles in radians.
-%% Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 global ver; if nargin==1, ver=0; else, ver=v; end        % ver=verbosity (how much output)

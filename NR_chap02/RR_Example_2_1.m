@@ -1,6 +1,6 @@
 % script RR_Example_2_1
 % Computes the static loads in the three-story building considered in Example 2.1 of RC. 
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Depends on RR_GaussPP
 

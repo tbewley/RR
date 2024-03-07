@@ -3,7 +3,7 @@ function [G] = RR_ThomasTT(a,b,c,G,n)
 % Solves the system AX=G for X using the Thomas algorithm, assuming A is tridiagonal,
 % Toeplitz, and diagonally dominant, with (a,b,c) the scalars on the subdiagonal, main
 % diagonal, and superdiagonal of A.  On exit, the matrix G is replaced by the solution X.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Verify with <a href="matlab:help RR_ThomasTTTest">RR_ThomasTTTest</a>.
 

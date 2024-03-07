@@ -1,7 +1,7 @@
 % script <a href="matlab:ConditionNumberTest">RR_ConditionNumberTest</a>
 % Calculate the perturbation dx to the solution x due to a perturbation db to the RHS b
 % in the problem A*x=b for a matrix A with a large condition number.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 % Set up a random A matrix and b vector, where A has a bad condition number.

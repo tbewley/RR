@@ -1,7 +1,7 @@
 function [g] = RR_ThomasParallel(a,b,c,g,n,p)
 % function [g] = RR_ThomasParallel(a,b,c,g,n,p)
 % This function solves AX=g for X using the parallel Thomas algorithm on p proessors.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % Verify with <a href="matlab:help RR_ThomasParallelTest">RR_ThomasParallelTest</a>.
 

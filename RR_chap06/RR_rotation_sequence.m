@@ -22,7 +22,7 @@
 %   r1=RR_rotation_sequence([3 2 1],an)          % a 321 Tait-Bryan rotation with random angles
 %   r2=RR_rotation_sequence([1 2 3],-an(3:-1:1)) % a 123 Tait-Bryan rotation with the opposite angles
 %   b =rotate(a,r1), a1=rotate(b,r2)             % rotate a to b, then rotate back.
-%% Renaissance Robotics codebase, Chapter 6, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_quaternion.
 

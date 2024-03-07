@@ -5,7 +5,7 @@
 %   root2, root3, ...
 % and many other constants from physics (all listed in SI units) which are
 % stored in a derived type named RR_PHYSICAL (including units and names).
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 clear

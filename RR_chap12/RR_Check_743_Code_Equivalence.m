@@ -1,7 +1,7 @@
 % script RR_Check_743_Code_Equivalence
 % This code checks the equivalence between the cyclic and systematic
 % forms of the [7,4,3] LBC Renaissance Robotics.
-%% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 disp('Cyclic form of the [7,4,3]_2 code:')

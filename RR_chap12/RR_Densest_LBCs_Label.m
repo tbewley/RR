@@ -1,6 +1,6 @@
 % script RR_Densest_LBCs_Label
 % This code labels Figure 7.3 in Renaissance Robotics.
-%% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; figure(1); RR_Densest_LBCs_Plot; d{01}={	'1'};

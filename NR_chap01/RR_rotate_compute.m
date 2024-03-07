@@ -9,7 +9,7 @@ function [c,s] = RR_rotate_compute(f,g)
 %         For computational efficiency, however, this code avoids the computation of
 %         trigonometric functions altogether.
 % See also RR_rotate. Verify with RR_rotate_test.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 gs=real(g)^2+imag(g)^2;

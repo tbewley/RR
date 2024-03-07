@@ -3,7 +3,7 @@
 % This example is easy to solve by hand, but illustrates how
 % to put three linear equations into A*x=b form and solve using Matlab.
 % This idea is quite valuable for larger systems of linear equations.
-% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 % Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 clear, close all, syms s V1 V2 R1 R2

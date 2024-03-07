@@ -1,6 +1,6 @@
 % script RR_Ex10_05_Wheatstone_resistors
 % Computes all currents and nodal voltages in a Wheatstone Bridge of resistors.
-% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 % Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
 
 % Note: the following compact method of solution applies only to linear systems.

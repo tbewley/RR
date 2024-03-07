@@ -2,7 +2,7 @@
 % Illustrate how to use the fundamental tools of classical control design (that is,
 % root locus, open-loop Bode, Nyquist, closed-loop Bode, and step response) on a
 % representative control design problem, as considered in the text.
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 close all;

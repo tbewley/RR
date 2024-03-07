@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_ThomasTTTest">RR_ThomasTTTest</a>
 % Test <a href="matlab:help RR_ThomasTT">RR_ThomasTT</a> on a random tridiagonal Toeplitz matrix.
 % Note that this test script is NOT efficient, and is meant for TESTING PURPOSES ONLY.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_ThomasTest, RR_CirculantTest, RR_ThomasParallelTest.
 

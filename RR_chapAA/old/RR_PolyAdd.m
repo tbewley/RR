@@ -5,7 +5,7 @@ function a=RR_PolyAdd(a,b,c,d,e,f,g,h,i,j)
 % INPUT:  a,b,c,d,e,f,g,h,i,j = vectors of polynimal coefficients
 % OUTPUT: a = vector of polynomial coefficients, given by sum of input polynomials
 % TEST:   a=[1 2 3], b=[1 2 3 4 5 6], c=[1 2], sum=RR_PolyAdd(a,b,c)
-% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if nargin>9, a=RR_PolyAdd(a,j); end, if nargin>8, a=RR_PolyAdd(a,i); end

@@ -3,7 +3,7 @@
 % Note that this test script is NOT efficient, and is meant for TESTING PURPOSES ONLY.
 % Any production code leveraging the Thomas.m and RR_ThomasLU.m algorithms should not actually
 % build the (sparse) A, L, and U matrices.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_ThomasTTTest, RR_CirculantTest, RR_ThomasParallelTest.
 

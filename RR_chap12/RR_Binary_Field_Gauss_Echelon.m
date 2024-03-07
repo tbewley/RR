@@ -10,7 +10,7 @@ function [A,p,r,v,R] = RR_Binary_Field_Gauss_Echelon(A)
 %         p=the permutation vector
 %         v=a vector containing the column of each pivot.
 % EXAMPLE CALL: see RR_Binary_Field_Gauss_Echelon_Test
-%% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 A=cast(A,'single'); % Work around a matlab bug related to A(r+1:m,j) * A(r,j+1:n) for integer A

@@ -1,6 +1,6 @@
 % script RR_Ex10_33_telegraphers_eqns_termination
 % Simulates the Telegraphers equations, for different possibilities of termination.
-%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; termination=true      % try both termination=true and termination=false

@@ -1,6 +1,6 @@
 function LeadTest                                    % Numerical Renaissance Codebase 1.0
 
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 alpha=-1; m=1; pbar=sqrt(2*abs(alpha)*9.8); numG=[1/m]; denG=Conv([1 pbar],[1 -pbar]);

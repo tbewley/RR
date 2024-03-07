@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_GaussEchelonTest">RR_GaussEchelonTest</a>
 % Test <a href="matlab:help RR_GaussEchelon">RR_GaussEchelon</a> on a matrix with m=4, n=5, and r=3.
 % Note that this test script is NOT efficient, and is meant for TESTING PURPOSES ONLY.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_GaussPPTest.
 

@@ -14,7 +14,7 @@ function [X] = RR_rotate(X,c,s,i,k,p,q,which)
 %                 use which='B' to do both            (that is, to compute G^H * X * G)
 % OUTPUT: X     = the modified X, as specified by which (see above)
 % See also RR_rotate_compute. Verify with RR_rotate_test.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap01
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if or(which=='L',which=='B')

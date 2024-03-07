@@ -2,7 +2,7 @@
 % (SLC) framework using classical control techniques in the preferred SLC formulation
 % (with theta closed on inner loop, and phi closed on outer loop), with simplified
 % constants as suggested in the UCSD MAE143b S2 2013 final exam (version 1)
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; k1=100, k2=1, z1=10

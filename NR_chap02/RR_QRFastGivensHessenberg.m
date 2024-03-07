@@ -3,7 +3,7 @@ function [A,Q] = RR_QRFastGivensHessenberg(A)
 % Compute a QR decomposition A=QR by applying a sequence of min(n,m-1) fast Givens
 % transforms to an mxn upper RR_Hessenberg matrix A to reduce it to upper triangular form.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 2.3.4.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 [m,n]=size(A);  Q=eye(m,m); d=ones(m,1);

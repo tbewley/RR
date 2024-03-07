@@ -17,7 +17,7 @@ function b = RR_CRR_encode(a,v,k,r,verbose)
 %     k=32; r=32; as=sprintf('%d',rand(1,k)>.5), a=eval(strcat('0b',as,'u64'));
 %     v=0b100000100110000010001110110110111u64;  % (note the extra 1 at the lsb!)
 %     [b]=RR_CRR_encode(a,v,k,r,false)
-%% Renaissance Robotics codebase, Chapter 12, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 n=k+r

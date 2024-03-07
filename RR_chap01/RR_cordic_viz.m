@@ -1,6 +1,6 @@
 % script RR_cordic_viz
 % Just draws some pretty pictures illustrating CORDIC at work.
-%% Renaissance Robotics codebase, Chapter 1, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap01
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 R=1.05; width=[2 1 1 1 1 2];

@@ -2,7 +2,7 @@ function [B] = RR_GaussLU(Amod,B,n)
 % function [B] = RR_GaussLU(Amod,B,n)
 % This function uses the LU decomposition returned (in the modified A matrix) by a prior
 % call to RR_Gauss.m to solve the system AX=B using forward and back substitution.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 % See also RR_Gauss. Verify with RR_GaussTest.
 

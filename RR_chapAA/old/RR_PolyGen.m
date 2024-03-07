@@ -4,7 +4,7 @@ function p=RR_Poly(r)
 % INPUT:  r=vector of roots of a polynomial
 % OUTPUT: p=vector of coefficients of polynomial with roots r
 % TEST:   r=[1 -2 -3], p=RR_Poly(r), roots(p)
-% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 n=length(r); p=1; for i=1:n; p=RR_PolyConv(p,[1 -r(i)]); end

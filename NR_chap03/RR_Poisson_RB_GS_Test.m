@@ -3,7 +3,7 @@ function RR_Poisson_RB_GS_Test
 % Apply 50 steps of red/black RR_Gauss-Seidel "smoothing" with a (checkerboard) A matrix 
 % from a SOFD approximation of the 2D Poisson equation on a square grid (Example 3.3).
 % The set of points updated first, which we label as "red", includes the corners.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap02
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 disp('Now applying 50 steps of red/black RR_Gauss-Seidel smoothing to a checkerboard system.')

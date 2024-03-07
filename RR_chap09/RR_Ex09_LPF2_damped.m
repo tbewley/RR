@@ -1,7 +1,7 @@
 % script RR_Ex10_LPF2_damped
 % This code implements the equations of a damped 2nd-order LPF,
 % as discussed in problems 1-4 of the 2024 HW1 in MAE40.
-%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave

@@ -1,7 +1,7 @@
 function [f]=RR_LinearSpline(x,xd,fd)
 % function [f]=RR_LinearSpline(x,xd,fd)
 % Perform linear interpolation based on the {xd,fd} and evaluate at the points in x.
-%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % See also RR_Lagrange, RR_CubicSpline.  Verify with RR_LinearSplineTest.
 

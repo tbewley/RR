@@ -6,7 +6,7 @@ function x=RR_LCG64(i_max,reverse)
 %         reverse (OPTIONAL) set to true to run backward, omit to run forward
 % OUTPUT: x
 % TEST:   RR_LCG64(7), RR_LCG64(6,true)
-%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 persistent XOLD, if nargin<1, i_max=1; end

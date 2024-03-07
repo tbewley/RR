@@ -1,6 +1,6 @@
 % script RR_Sim_Duffing
 % A simple RK4 simulation of the Duffing oscillator.
-%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear, close all, T=200; h=0.05; x=5*rand(2,1);              % Set up simulation

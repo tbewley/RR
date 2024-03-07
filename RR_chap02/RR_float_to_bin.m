@@ -3,7 +3,7 @@ function [b]=RR_float_to_bin(f)
 % INPUT:  f, a Matlab double-precision floating-point number
 % OUTPUT: b, the corresponding IEEE 754 floating-point form
 % TEST:   b=RR_float_to_bin(0.1)
-%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
 %% Code written by Eric Verner, with minor formatting changes here. Downloaded from, and explanation at:
 %% https://matlabgeeks.com/tips-tutorials/conversion-of-floating-point-numbers-in-matlab/
 

@@ -2,7 +2,7 @@ function [d,c]=Deadbeat(b,a)
 % function [d,c]=Deadbeat(b,a)
 % Find a ripple-free deadbeat controller D(z)=d(z)/c(z) for a stable plant G(z)=b(z)/a(z).
 % Algorithm due to Sirisena (1985).
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 % Verify with DeadbeatTest.
 

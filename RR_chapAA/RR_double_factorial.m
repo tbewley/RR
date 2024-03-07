@@ -3,7 +3,7 @@
 % n!!=n*(n-2)*(n-4)*...*6*4*2 for odd n
 % n!!=n*(n-2)*(n-4)*...*5*3*1 for even n
 % TEST: for i=1:12; disp(sprintf('i=%0.3g, i!!=%0.5g',i,RR_double_factorial(i))), end
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 if n<2,             d=1;

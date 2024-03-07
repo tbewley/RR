@@ -2,7 +2,7 @@ function [x,evals]=RR_Bisection(x1,x2,Compute_f,tol,verbose,p)
 % function [x,evals]=RR_Bisection(x1,x2,Compute_f,tol,verbose,p)
 % This function refines the bracket of a root with the bisection algorithm.
 % See also FindRootBracket, FalsePosition.  Verify with BisectionTest.
-% Renaissance Codebase, https://github.com/tbewley/RC/NRchap03
+% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap03
 % Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 f1=Compute_f(x1,verbose,p); f2=Compute_f(x2,verbose,p); evals=2;

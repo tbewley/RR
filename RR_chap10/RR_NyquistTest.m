@@ -1,7 +1,7 @@
 % script <a href="matlab:NyquistTest">NyquistTest</a>
 % Illustrate the mapping of a Nyquist contour from the s-plane to the L plane for a few
 % representative systems.
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; close all; g.figs=1; g.figL=2; g.eps=.2; g.R=4;

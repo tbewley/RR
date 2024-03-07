@@ -27,7 +27,7 @@
 %   RR_step:    Plots the step    response of a CT or DT plant G.
 %   RR_plot_response: General algorithm for plotting system responce
 %
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 classdef RR_ss < matlab.mixin.CustomDisplay

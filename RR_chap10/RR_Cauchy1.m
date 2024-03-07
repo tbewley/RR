@@ -1,5 +1,5 @@
 % Script Cauchy.m
-%% Renaissance Robotics codebase, Chapter 10, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear;  num=21.5239*[1 0.3]; den=[1 12 20 0 0]; w=720; R=9; eps=1/3;

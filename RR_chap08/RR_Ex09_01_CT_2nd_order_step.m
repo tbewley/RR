@@ -4,7 +4,7 @@
 %   G(s)=b0/(s^2+a1*s+a0).
 % It then plugs in values for omega_n, b0, and several values of zeta, and plots,
 % and compares against the corresponding numerical solutions determined by RR_step.
-%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear; syms zeta om_n b0;          % Compute solution analytically

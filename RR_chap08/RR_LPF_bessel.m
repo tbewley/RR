@@ -4,7 +4,7 @@ function F=RR_LPF_bessel(n,omegac)
 %          omegac=cutoff frequency of filter [OPTIONAL, taken as 1 if omitted]
 % OUTPUT:  F=n'th order Bessel filter of type RR_tf
 % TEST:    F=RR_LPF_bessel(4,0.1), close all, RR_bode(F)
-%% Renaissance Robotics codebase, Chapter 8, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 if nargin<2, omegac=1; end, if nargin<1, n=4; end

@@ -12,7 +12,7 @@ function x=RR_PCG(thread)
 % it initializes the state using the time/date.
 % DEPENDENCIES: This Matlab code uses the RR_uint64 class defined by the code at:
 %   https://github.com/tbewley/RR/blob/main/chapAA/RR_uint64.m
-%% Renaissance Robotics codebase, Chapter 2, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
 %% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
 %%    https://www.pcg-random.org/download.html
 %% Matlab translation (meant for pedagogical purposes only) by Thomas Bewley.

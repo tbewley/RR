@@ -1,6 +1,6 @@
 % script RR_sudoku_solve_test
 % Solves a couple of SuDoku problems.
-%% Renaissance Robotics codebase, Appendix A, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
 
 format compact

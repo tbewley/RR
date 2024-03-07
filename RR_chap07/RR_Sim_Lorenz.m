@@ -1,6 +1,6 @@
 % script RR_Sim_Lorenz
 % A simple RK4 simulation of the Lorenz attractor.
-%% Renaissance Robotics codebase, Chapter 7, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 clear, close all, T=100; h=0.01; x=2*randn(3,1);             % Set up simulation

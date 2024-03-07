@@ -7,7 +7,7 @@ function [seq,length]=RR_min_pair_length(D,n)
 % TEST:  n=16; D=randn(n,n); D=D.*D; for i=1:n; D(i,i)=0; end, D
 %        tic, [seq,length]=RR_min_pair_length(D,n), toc
 %        check=0; for i=1:2:n-1, check=check+D(seq(i),seq(i+1)); end, check
-%% Renaissance Robotics codebase, Chapter 11, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 length=Inf;  new_seq(1)=1;

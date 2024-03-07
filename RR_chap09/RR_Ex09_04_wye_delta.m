@@ -2,7 +2,7 @@
 % Compute the Wye Delta transformation, and apply it to compute the
 % equivalent resistance of a Wheatstone Bridge of resistors.
 % [If you don't use a computer to do such algebra, it can get messy!]
-%% Renaissance Robotics codebase, Chapter 9, https://github.com/tbewley/RR
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
 %% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
