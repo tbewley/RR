@@ -1,6 +1,5 @@
 % script RR_path_init
 % Initialize the path environment for using the Renaissance Repository.
-% All codes in this repository are prefixed with RR, so you'll know when you are using it.
 % You can check your path in Matlab at any time by typing "path".
 %
 % You should call the RR path init codes automatically when firing up Matlab on your computer,
