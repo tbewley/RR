@@ -1,4 +1,5 @@
-
+%% Renaissance_Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear; syms t phi(t) phidot(t) m g L0 C
 

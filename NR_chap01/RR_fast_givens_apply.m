@@ -17,7 +17,7 @@ function [X]=RR_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
 % TEST:     RR_fast_givens_test
 % SEE ALSO: RR_fast_givens_compute
 %% Renaissance_Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-%% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if ~donothing, if or(which=='L',which=='B')
     if gamma<=1

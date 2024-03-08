@@ -1,7 +1,7 @@
-% script RR_fast_givens_test
+function RR_fast_givens_test
 % Tests RR_fast_givens_compute and RR_fast_givens on a random matrix.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-%% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+%% Renaissance_Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 RR_rotate_test
 disp('Now testing RR_fast_givens_compute & RR_fast_givens_apply on the same matrix.'),  d=ones(4,1);
