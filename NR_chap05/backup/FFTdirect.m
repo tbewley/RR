@@ -6,7 +6,7 @@ function x=FFTdirect(x,N,g)
 % The corresponding wavenumber vector is:  k=(2*pi/L)*[[0:N/2]';[-N/2+1:-1]'].
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.4.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also FFTrecursive, FFTnonreordered.  Verify with: FFTdirectTest.
+% See also FFTrecursive, FFTnonreordered.  Trial: FFTdirectTest.
 
 s=log2(N);              % number of stages 
 ind=bin2dec(fliplr(dec2bin([0:N-1]',s))); x=x(ind+1); % Put input into bit reversed order.

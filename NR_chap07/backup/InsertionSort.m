@@ -4,7 +4,7 @@ function [D,index]=RR_InsertionSort(D,v,n)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_InsertionSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_InsertionSortTest.
 
 if nargout==2; D=[D, [1:n]']; end, for i=n-1:-1:1, a=i+1; b=n;  
   % The following 2 lines search the ordered part of the list, [a,b], using a bisection

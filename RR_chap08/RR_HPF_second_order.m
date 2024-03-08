@@ -5,7 +5,7 @@ function F=RR_HPF_second_order(omegac,zeta)
 % OUTPUT: F=second order high-pass filter of type RR_tf
 % TEST:   F=RR_HPF_second_order(10,0.707), close all, RR_bode(F)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<1, omegac=1;   end
 if nargin<2, zeta=sqrt(2)/2; end

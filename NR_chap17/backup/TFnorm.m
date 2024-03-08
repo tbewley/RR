@@ -4,7 +4,7 @@ function x=RR_TFnorm(A,B,C,p,MODE)
 % and for MODE='CT' (default) or MODE='DT'.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.2.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_TFnormTest">RR_TFnormTest</a>.
+% Trial: <a href="matlab:help RR_TFnormTest">RR_TFnormTest</a>.
 
 if nargin<5, MODE='CT'; end, if nargin<4, p='2'; end
 if p=='2', P=RR_CtrbGrammian(A,B,MODE); x=sqrt(sum(diag(C*P*C')));

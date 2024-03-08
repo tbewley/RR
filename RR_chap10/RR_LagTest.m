@@ -1,7 +1,7 @@
 function LagTest                                     % Numerical Renaissance Codebase 1.0
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 zbar=0.99; pbar=0; numG=[1 zbar]; denG=[1 pbar];
 for i=2:4, figure(i), clf, end, g.verbose=0; g.omega=logspace(-2,2,100);

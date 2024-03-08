@@ -2,9 +2,9 @@ function [D,b]=RR_BSTrotateR(D,d)
 % function [D,b]=RR_BSTrotateR(D,d)
 % Apply a right rotation to a RR_BST at record d (see Figure 7.7).  (RR_BSTrotateL is similar.)
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTbalance, RR_BSTenumerate,
-% RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 b=D(d,end-3); a=D(b,end-3); c=D(b,end-1); e=D(d,end-1); p=D(d,end-2);
 if a>0, Dag=D(a,end);                else, Dag=-1; end 

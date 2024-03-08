@@ -4,7 +4,7 @@ function [D,index]=RR_QuickSort(D,v,i,k)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_QuickSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_QuickSortTest.
 
 if nargout==2, D=[D, [1:size(D,1)]']; end, if nargin==3, k=i; i=1; end
 if k>i  % Begin by identifying a pivot.  Take the median of i=left, j=middle, and k=right.

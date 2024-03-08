@@ -2,9 +2,9 @@ function [D,index]=RR_HeapSort(D,v,n)
 % function [D,index]=RR_HeapSort(D,v,n)
 % Reorder a matrix D based on the elements in its first column using a heap sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_HeapSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_HeapSortTest.
 
 if nargout==2, D=[D, [1:n]']; end, for a=floor(n/2):-1:1, D=Sift(D,a,n,v); end   % Heapify
 for b=n:-1:2, D([1 b],:)=D([b 1],:);        % Peel off max record & put grandchild at root

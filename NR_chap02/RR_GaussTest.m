@@ -7,7 +7,7 @@
 % RR_GaussLU code solves Ly=b for y, then Ux=y for x, referencing the nontrivial elements
 % of L and U as they sit in the modified A matrix.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_GaussPPTest, RR_GaussCPTest, RR_GaussEchelonTest.
 
 disp('Now testing RR_Gauss & RR_GaussLU on a random matrix.')

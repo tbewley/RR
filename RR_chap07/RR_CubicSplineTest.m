@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_CubicSplineTest">RR_CubicSplineTest</a>
 % Test <a href="matlab:help RR_CubicSpline">RR_CubicSpline</a> on data from a smooth nonperiodic function.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all, clear, L=4*pi; xmin=0; xmax=L; ep=.0001;
 xd=[xmin:L/10:xmax]; fd=sin(xd+ep)./(xd+ep); x=[xmin:L/1000:xmax]; f=sin(x+ep)./(x+ep);

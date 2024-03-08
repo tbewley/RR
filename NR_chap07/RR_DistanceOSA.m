@@ -3,8 +3,8 @@ function dist=RR_DistanceOSA(s,t,verbose)
 % Compute the Optimal String Alignment distance between two strings, with equal cost for
 % Deletion (D), Insertion (I), Substitution (S), and Exchange of adjacent symbols (E).
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_DistanceDL.  Verify with RR_DistanceOSAtest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_DistanceDL.  Trial: RR_DistanceOSAtest.
 
 sl=length(s); tl=length(t); if sl==0 | tl==0, dist=sl+tl; return, end, d=zeros(sl+1,tl+1);
 for i=0:sl, d(i+1,1)=i; end, for j=0:tl, d(1,j+1)=j; end   % Initialize pure D and pure I.

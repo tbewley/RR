@@ -14,7 +14,8 @@ function [X]=RR_fast_givens_apply(X,a,b,gamma,donothing,i,k,p,q,which)
 %                 use which='R' to postmultiply by F  (that is, to compute X * F)
 %                 use which='B' to do both            (that is, to compute F^H * X * F)
 % OUTPUT: X     = the modified X, as specified by which (see above)
-% See also RR_fast_givens_compute. Verify with RR_fast_givens_test.
+% TEST:     RR_fast_givens_test
+% SEE ALSO: RR_fast_givens_compute
 %% Renaissance_Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
 %% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 

@@ -1,6 +1,6 @@
 % script RR_tf2ss_test
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear, disp('Original transfer function:')
 % b=randn(1,5), a=[1 randn(1,4)], disp(' ')

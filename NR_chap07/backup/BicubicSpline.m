@@ -4,8 +4,8 @@ function [f]=RR_BicubicSpline(x,y,xd,yd,fd,fx,fy,fxy,Ainv)
 % same grid and Ainv (as computed by RR_BicubicSplineSetup), determine the bicubic spline
 % interpolant f on the grid of points defined by x and y.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_BilinearSpline.  Verify with RR_BicubicSplineTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_BilinearSpline.  Trial: RR_BicubicSplineTest.
       
 ndx=length(xd); ndy=length(yd); nx=length(x); ny=length(y); i=1; 
 for ii=1:nx; j=1;

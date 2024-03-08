@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_Stretch1DMeshTest">RR_Stretch1DMeshTest</a>
 % Test <a href="matlab:help RR_Stretch1DMesh">RR_Stretch1DMesh</a> by constructing a few interesting 1D grids.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_Plot2DMeshTest.
 
 clear; x=[0:.1:1]; n=length(x); a=ones(n,1); off=1.5; xmin=0; xmax=1; close all

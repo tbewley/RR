@@ -11,7 +11,7 @@ function [b,a]=RR_RationalSimplify(b,a)
 %         [num,den]=RR_RationalSimplify(num,den)
 %         roots_num_after=roots(num)', roots_den_after=roots(den)', num, den
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 f=1; while f; x=roots(a); y=roots(b); f=0; for i=1:length(x); for j=1:length(y);
   if abs(x(i)-y(j))<1e-6, f=1; a=RR_PolyDiv(a,[1 -x(i)]); b=RR_PolyDiv(b,[1 -x(i)]); break, end

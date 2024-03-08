@@ -2,7 +2,7 @@ function RR_ShowSys(A,B,C,D)
 % function RR_ShowSys(A,B,C,[D])
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.1
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_ShowSysTest">RR_ShowSysTest</a>.
+% Trial: <a href="matlab:help RR_ShowSysTest">RR_ShowSysTest</a>.
 
 [n,n1]=size(A); [n2,ni]=size(B); % First, check inputs and create B, C, D as needed.
 if nargin==2; if n2==n, no=1; n3=n; C=zeros(no,n); D=zeros(no,ni);

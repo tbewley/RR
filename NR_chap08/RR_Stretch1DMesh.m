@@ -6,8 +6,8 @@ function x=RR_Stretch1DMesh(x,kind,xmin,xmax,c0,c1)
 % For 'p' (polynomial) stretching, increasing c0,c1 increases clustering near xmin,xmax.
 % For 'c' (cosine) stretching, we "correct" the orientation, so gridpoints increase in x.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also Plot2DMesh.  Verify with: Stretch1DMeshTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also Plot2DMesh.  Trial: Stretch1DMeshTest.
 
 xint=xmax-xmin; switch kind
  case 'h', x=xmin+xint*(tanh(c0*(2*x-1))/tanh(c0)+1)/2;

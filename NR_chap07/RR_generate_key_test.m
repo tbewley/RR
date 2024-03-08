@@ -1,7 +1,7 @@
 % script RR_generate_key_test
 % Generates a "key" from some signed integer data, for use in a dictionary (hash) function
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear, N_bits=10, N_data=6   % Setup.  Need N_bits*N_data<=64.
 lower_limit=-2^(N_bits-1)+1  % The (signed) integer limits within which data must lie.

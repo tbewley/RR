@@ -1,7 +1,7 @@
 % script RR_generate_hash_test
 % Tests the code RR_generate_hash_fn
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear, N_bits=13, N_data=4   % FIRST, a small example, which generates a single integer hash.
 q_bit=quantizer('fixed',[N_bits 0]);            % Prepare to make some N_bit 2's complement numbers. 

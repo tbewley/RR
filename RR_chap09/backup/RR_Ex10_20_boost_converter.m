@@ -1,7 +1,7 @@
 % script RR_Ex10_20_boost_converter
 % Solves the equations of a boost converter.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 % Solve for the initial conditions of the periodic cycle.  Note that problem is linear!
 clear; Vs=5; Vd=0.5; L=10e-6; C=4.7e-6; R=250; f=1.6e6; D=0.600016

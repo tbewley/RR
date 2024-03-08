@@ -8,8 +8,8 @@ function Nyquist(num,den,g)
 % Practical recommendation: do not make g.eps too small, or g.R too big, until you see
 % where the corresponding curves are in both the s plane and the L plane!
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
-% Verify with: <a href="matlab:help NyquistTest">NyquistTest</a>.  Depends on <a href="matlab:help PolyVal">PolyVal</a>.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+% Trial: <a href="matlab:help NyquistTest">NyquistTest</a>.  Depends on <a href="matlab:help PolyVal">PolyVal</a>.
 
 L=PolyVal(num,0)./PolyVal(den,0); P=Roots(den); Z=Roots(num); tol=.0001;  
 figure(g.figs), clf, plot(real(P),imag(P),'kx'), hold on, plot(real(Z),imag(Z),'ko') 

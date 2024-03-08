@@ -6,7 +6,7 @@ function [b,c,a,cc,ss] = RR_QRGivensTridiag(a,b,c)
 % matrix R, and the n-1 values of c and s for each of the n-1 rotations performed, which
 % is more efficient in this case than returning Q itself (which is upper RR_Hessenberg).
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % Depends on <a href="matlab:help RotateCompute">RotateCompute</a>, <a href="matlab:help Rotate">Rotate</a>.
 
 n=size(b); for i=1:n-1, [cc(i),ss(i)]=RR_rotate_compute(b(i),a(i+1)); if cc(i)~=1

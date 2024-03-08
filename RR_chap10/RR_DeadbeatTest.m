@@ -1,6 +1,6 @@
 % script <a href="matlab:RouthSimplifiedTest">RouthSimplifiedTest</a>
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 p=[1 4 2 5 3 6],       RouthSimplified(p); check_roots_of_p=roots(p), disp(' ');
 

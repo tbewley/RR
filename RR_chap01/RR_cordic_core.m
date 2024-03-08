@@ -19,7 +19,7 @@ function v = RR_cordic_core(v,n,rot,mode,cordic_tables)
 % See RR_cordic.m and RR_cordic_derived.m for how to set up the input v,
 % and how to process the output v, to approximate various specific functions.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap01
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 switch rot  % Initialize {mu,f,ang} for different types of rotations 
   case 1, mu= 1; f=1;   ang=cordic_tables.ang(1,1); % Circular rotations

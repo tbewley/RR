@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_TaylorTableTest">RR_TaylorTableTest</a>
 % Test <a href="matlab:help TaylorTable">RR_TaylorTable</a> by constructing various differentiation formulae.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 disp('Now computing the BDF formulae (Table 10.3)'), w=1; format short
 x=[0 -1];                [c]=RR_TaylorTable(x,w)'; d=-c(2:end)/c(1),     f=1/c(1)

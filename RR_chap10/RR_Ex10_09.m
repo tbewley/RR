@@ -1,7 +1,7 @@
 function Example_10_09
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all; syms a4 a3 a2 a1 a0 b2 b1 b0; format long;
 

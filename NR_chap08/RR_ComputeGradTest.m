@@ -3,7 +3,7 @@ function RR_ComputeGradTest
 % Test <a href="matlab:help RR_ComputeGrad">RR_ComputeGrad</a> by calculating (analytically) the gradient
 % of a known function, and comparing against the 2nd-order FD and CSD approximations of the same.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 format long; x=randn(2,1),
 g_analytic=Compute_Grad_Test(x)

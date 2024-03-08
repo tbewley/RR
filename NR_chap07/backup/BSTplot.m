@@ -4,7 +4,7 @@ function RR_BSTplot(D,r,x,y)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTbalance,
-% RR_BSTenumerate, RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTenumerate, RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 if nargin==2;
   x=0; y=0; figure(2); clf; axis([-4.09 4.09 -10.21 0.5]); axis off; hold on;

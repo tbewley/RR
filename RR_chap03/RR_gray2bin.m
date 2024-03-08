@@ -5,7 +5,7 @@ function b=RR_gray2bin(g)
 % OUTPUT: b=corresponding binary number
 % EXAMPLE CALL: d=87, b=dec2bin(d), g=RR_bin2gray(b), b1=RR_gray2bin(g)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap03
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 b(1)=g(1);
 for j=1:length(g)-1

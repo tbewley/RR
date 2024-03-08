@@ -7,7 +7,7 @@ function x=RR_MRG64(i_max)
 % OUTPUT: x
 % TEST:   RR_MRG64(7)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 persistent XOLD, if nargin<1, i_max=1; end
 m=uint64(2147483629); a1=uint64(1071064); a7=uint64(2113664);

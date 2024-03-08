@@ -12,7 +12,7 @@ function [g,x,y] = RR_bezout(a,b)
 %          a=RR_poly([1 2 3 5 7],1), b=RR_poly([1 2 3 4 6],1)                   % Test over the polynomials
 %          [g,x,y] = RR_bezout(a,b), test=a*x+b*y, residual=norm(g-test)
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if b>a, disp('ERROR: Need a>=b!'), return, end
 [g,q,n] = RR_gcd(a,b);      % Start by calling the GCD algorithm

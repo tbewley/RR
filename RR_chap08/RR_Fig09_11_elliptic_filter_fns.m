@@ -1,5 +1,5 @@
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, xx=[-2:.001:2]; TT9=256*xx.^9-576*xx.^7 +432*xx.^5 -120*xx.^3 +9*xx;
 

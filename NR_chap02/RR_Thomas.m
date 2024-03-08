@@ -4,8 +4,8 @@ function [G,a,b,c] = RR_Thomas(a,b,c,G,n)
 % The solution X is returned on exit, and (if requested), the three diagonals of A are
 % replaced by the m_ij and U.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_ThomasLU. Verify with RR_ThomasTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_ThomasLU. Trial: RR_ThomasTest.
 
 for j = 1:n-1,                               % FORWARD SWEEP
    a(j+1)   = - a(j+1) / b(j);               % This code is just a simplified version of

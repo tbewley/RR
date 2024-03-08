@@ -4,7 +4,7 @@ function [D,index]=RR_BitonicSort(D,v,n)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.2.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_OddEvenRR_MergeSort.  Verify with RR_BitonicSortTest.
+% RR_OddEvenRR_MergeSort.  Trial: RR_BitonicSortTest.
 
 s=log2(n); if nargout==2, D=[D, [1:n]']; end
 for stage=1:s, N=2^stage; Nsets=n/N;

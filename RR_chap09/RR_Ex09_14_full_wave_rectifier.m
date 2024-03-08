@@ -1,6 +1,6 @@
 % script RR_Ex10_14_zener_clipper
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, close all, R=1000; Tmax=7; N=1000; omega=Tmax/N; A=18;
 Vd=0.7; Vbr=12; Vmax=Vbr+Vd;

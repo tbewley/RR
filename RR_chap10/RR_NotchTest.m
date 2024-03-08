@@ -1,7 +1,7 @@
 function NotchTest                                   % Numerical Renaissance Codebase 1.0
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 alpha=1; m=1; a=sqrt(2*alpha*9.8); numG=[1/m]; denG=PolyConv([1 sqrt(-1)*a],[1 -sqrt(-1)*a]);
 for i=1:4, figure(i), clf, end, g.verbose=0; g.omega=logspace(-1,2,10000);

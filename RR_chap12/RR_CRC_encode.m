@@ -18,7 +18,7 @@ function b = RR_CRR_encode(a,v,k,r,verbose)
 %     v=0b100000100110000010001110110110111u64;  % (note the extra 1 at the lsb!)
 %     [b]=RR_CRR_encode(a,v,k,r,false)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 n=k+r
 if ~verbose

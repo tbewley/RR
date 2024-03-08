@@ -1,6 +1,6 @@
 % Script Cauchy.m
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 num=[1 1]; den=[1 0 .25 -1.25]; w=330;
 

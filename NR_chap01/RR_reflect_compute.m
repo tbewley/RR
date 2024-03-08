@@ -6,9 +6,9 @@ function [sig,w] = RR_reflect_compute(x)
 % OUTPUT: {sig,w}=parameters of the relection matrix sought
 % NOTE:   This code uses the Householder reflections formulation that works for both real and complex x.
 %         It does NOT reduce to the "simple and logical" case, with sig=2, in the real case.
-% See also RR_reflect. Verify with RR_reflect_test.
+% See also RR_reflect. Trial: RR_reflect_test.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if real(x(1))<0, s=-1; else, s=1; end, nu=s*norm(x);   % (1.8b)
 if nu==0, sig=0; w=0;  else, sig=(x(1)+nu)/nu; w=[x(1)+nu; x(2:end)]/(x(1)+nu); end

@@ -1,7 +1,7 @@
 function LeadTest                                    % Numerical Renaissance Codebase 1.0
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 alpha=-1; m=1; pbar=sqrt(2*abs(alpha)*9.8); numG=[1/m]; denG=Conv([1 pbar],[1 -pbar]);
 for i=1:4, figure(i), clf, end, g.verbose=0; g.omega=logspace(0,3,100); g.fix=0;

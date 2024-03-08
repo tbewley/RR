@@ -9,7 +9,7 @@ function [x,y,r,t] = RR_IntDiophantine(a,b,f)
 %          k=randi([-10 10]), x1k=x1+r*k, y1k=y1+t*k, residual1k=a*x1k+b*y1k-f1
 %          f2=int32(25), [x2,y2,r,t]=RR_IntDiophantine(a,b,f2)
 % Numerical Renaissance codebase, Appendix B, https://github.com/tbewley/NR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 [g,xg,yg]=RR_IntBezout(a,b); c=idivide(f,g); re=rem(f,g); 
 if abs(re)>0, fprintf('ERROR! f=%i must be a multple of the greatest common factor g=%i\n',f,g), return, end

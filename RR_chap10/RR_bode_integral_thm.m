@@ -2,7 +2,7 @@
 % Plot ln|S(i*omega)| where S=1/[1+L(s)], and L is of type RR_tf,
 % thereby demonstrating Bode's integral theorem, for nr>1
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; num=RR_poly(10); den=RR_poly([-1 -10],1);
 %%%%%%%% edit above to change input transfer function %%%%%%%% 

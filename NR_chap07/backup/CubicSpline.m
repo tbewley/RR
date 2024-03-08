@@ -5,7 +5,7 @@ function [f,fp]=RR_CubicSpline(x,xd,fd,fpp,h)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.3.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_Lagrange, RR_LinearSpline. Depends on result from RR_CubicSplineSetup.
-% Verify with RR_CubicSplineTest.
+% Trial: RR_CubicSplineTest.
 
 n=length(xd); m=length(x); i=1; for j=1:m
   for i=i:n-1, if xd(i+1) > x(j), break, end, end  % Find the i such that xd(i)<=x<=xd(i+1)

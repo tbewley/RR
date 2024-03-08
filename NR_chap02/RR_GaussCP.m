@@ -4,8 +4,8 @@ function [X,A,p,q] = RR_GaussCP(A,B,n)
 % The solution X is returned on exit, and (if requested) the matrix A
 % is replaced by m_ij and U on exit, with the vectors of pivots returned in p and q.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_GaussPLUQT. Verify with RR_GaussCPTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_GaussPLUQT. Trial: RR_GaussCPTest.
 
 p=[1:n]';  q=[1:n]';                              % initialize permutation vectors
 for j = 1:n-1,                                    % FORWARD SWEEP

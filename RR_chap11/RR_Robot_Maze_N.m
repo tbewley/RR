@@ -5,7 +5,7 @@ function RR_Robot_Maze_N(RR,v,x0)                                               
 % Notes: 1=true, 0=false. As p is built as we go; its ordering is different from truth.
 % MKS units used throughout, all angles in radians.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 global ver; if nargin==1, ver=0; else, ver=v; end        % ver=verbosity (how much output)
 if ver==2, system('mkdir temp'); end   % if ver==2, we make a movie in directory 'temp'

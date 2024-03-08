@@ -4,7 +4,7 @@
 % Any production code leveraging the RR_Circulant.m and RR_CirculantLU.m codes should not
 % actually build the (sparse) A, L, and U matrices.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_ThomasTest, RR_ThomasTTTest, RR_ThomasParallelTest.
 
 disp('Now testing RR_Circulant & RR_CirculantLU on a random circulant matrix.')

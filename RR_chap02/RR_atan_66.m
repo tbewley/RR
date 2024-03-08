@@ -4,7 +4,7 @@ function [out]=RR_atan_66(x)
 % OUTPUT: atan(x), with about 6.6 digits of precision
 % TEST:   x=randn, a=atan(x), b=RR_atan_66(x), residual=norm(a-b)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 tan_pi_over_12=0.267949192431123;
 if     x<0, out=-RR_atan_66(-x);

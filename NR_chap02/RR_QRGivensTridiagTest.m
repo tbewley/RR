@@ -1,7 +1,7 @@
 % script <a href="matlab:QRGivensTridiagTest">QRGivensTridiagTest</a>
 % Test <a href="matlab:help QRGivensTridiag">QRGivensTridiag</a> on a random (square) tridiagonal matrix.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 disp('Now testing QRGivensTridiag on a random (square) tridiagonal matrix.')
 clear; n=10; a=[0; randn(n-1,1)]; b=randn(n,1); c=[randn(n-1,1); 0];

@@ -2,7 +2,7 @@
 % Test <a href="matlab:help FindRootBracket">FindRootBracket</a> on the function in <a href="matlab:help Example_3_2_Compute_f">Example_3_2_Compute_f</a>.
 % See also BisectionTest, FalsePositionTest. 
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear; p=[1 1 -20 50];
 

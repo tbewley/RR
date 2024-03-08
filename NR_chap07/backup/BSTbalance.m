@@ -5,7 +5,7 @@ function [D,q]=RR_BSTbalance(D,q)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTenumerate,
-% RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 [D,q]=RR_BSTrotateLR(D,q);
 p=D(q,end-3); if p>0 & D(p,end)>1, [D,p]=RR_BSTbalance(D,p); end  

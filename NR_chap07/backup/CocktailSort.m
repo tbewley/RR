@@ -4,7 +4,7 @@ function [D,index]=RR_CocktailSort(D,v,n)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_CocktailSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_CocktailSortTest.
 
 n=size(D,1); if nargout==2, D=[D, [1:n]']; end, l=1; r=n;
 while r>l

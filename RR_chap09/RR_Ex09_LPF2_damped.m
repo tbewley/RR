@@ -2,7 +2,7 @@
 % This code implements the equations of a damped 2nd-order LPF,
 % as discussed in problems 1-4 of the 2024 HW1 in MAE40.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

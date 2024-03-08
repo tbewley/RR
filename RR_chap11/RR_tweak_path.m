@@ -1,7 +1,7 @@
 function [node,path]=RR_tweak_path(node,n,path,objective)
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % initialize logic tables
 pair_flips{1}=[0; 1];

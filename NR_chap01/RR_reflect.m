@@ -13,9 +13,9 @@ function [X] = RR_reflect(X,sig,w,i,k,p,q,which)
 %                   use which='R' to postmultiply by H  (that is, to compute X * H)
 %                   use which='B' to do both            (that is, to compute H^H * X * H)
 % OUTPUT: X       = the modified X, as specified by which (see above)
-% See also RR_reflect_compute. Verify with RR_reflect_test.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% See also RR_reflect_compute. Trial: RR_reflect_test.
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
+%% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if or(which=='L',which=='B')
   X(i:k,p:q)=X(i:k,p:q)-(conj(sig)*w)*(w'*X(i:k,p:q));  % (1.10a)

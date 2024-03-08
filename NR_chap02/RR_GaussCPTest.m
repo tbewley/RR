@@ -2,7 +2,7 @@
 % Test <a href="matlab:help RR_GaussCP">RR_GaussCP</a> and <a href="matlab:help RR_GaussPLUQT">RR_GaussPLUQT</a> on a random matrix.
 % This test script is NOT efficient, and is meant for TESTING PURPOSES ONLY.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_GaussTest, RR_GaussPPTest, RR_GaussEchelonTest.
 
 disp('Now testing RR_GaussCP & RR_GaussPLUQT on a random matrix.')

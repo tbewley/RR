@@ -4,7 +4,7 @@ function RR_Wave2D
 % (using the shallow water equations) in the 2023 MAE207 final exam, available here:
 %        http://robotics.ucsd.edu/mae207/final_207_22.pdf
 % Numerical Robotics codebase, https://github.com/tbewley/RC/NRchap11
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License.
 T=500; h=0.002; p.Nx=10; p.Ny=50; p.g=9.8; v=true;  % Simulation paramters
 p.Lx=50; p.Ly=25; p.b_max=3; p.b_min=3;             % Dimensions and depth of pool 
 p.excitation_case='earthquake';                     % Which excitation case to consider

@@ -4,7 +4,7 @@ function X=RR_DALE(F,Q)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.5.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_CALE, RR_CARE, RR_DARE. Depends on RR_Schur, RR_GaussPP.
-% Verify with RR_DALEtest.
+% Trial: RR_DALEtest.
 
 n=length(F); [U,T]=RR_Schur(F'); F0=T'; Q0=U'*Q*U; X0=RR_DALEtri(F0,Q0,n); X=U*X0*U';
 end % function RR_DALE

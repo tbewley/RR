@@ -6,7 +6,7 @@ function [u]=RR_RFFT1inv(uhat,N)
 % This routine was written by inverting the steps of RFFT1 and doing them in reverse.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RR_RFFT1.  Verify with: RR_RFFT1Test.
+% See also RR_RFFT1.  Trial: RR_RFFT1Test.
 
 uehat(1)=real(uhat(1))+imag(uhat(1))+i*real(uhat(N/4+1))*2;
 uohat(1)=real(uhat(1))-imag(uhat(1))-i*imag(uhat(N/4+1))*2;

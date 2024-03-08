@@ -6,7 +6,7 @@
 % and many other constants from physics (all listed in SI units) which are
 % stored in a derived type named RR_PHYSICAL (including units and names).
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear
 global RR_e RR_phi RR_gamma RR_zeta3 RR_delta RR_alpha RR_zeta3 RR_root2 RR_root3

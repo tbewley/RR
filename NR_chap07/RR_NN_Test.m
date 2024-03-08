@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_NN_Test">RR_NN_Test</a>
 % Test the convergence of the neural network algorithm based on some random training data.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_NN_BackPropagate, RR_NN_ComputeCost, RR_NN_ForwardPropagate, RR_NN_SequentialTrain.
 
 clear, in=60; out=1; h=2;

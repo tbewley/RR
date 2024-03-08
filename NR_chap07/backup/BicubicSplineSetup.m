@@ -3,9 +3,9 @@ function [fx,fy,fxy,Ainv]=RR_BicubicSplineSetup(xd,yd,fd,ec)
 % Determine the derivatives {fx,fy,fxy} and Ainv for constructing the bicubic interpolant
 % of the uniform grid of datapoints {xd,yd,fd}.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_BilinearSpline. Sets up subsequent call to RR_BicubicSpline.
-% Verify with RR_BicubicSplineTest.
+% Trial: RR_BicubicSplineTest.
 
 Nx=length(xd); Ny=length(yd);  
 for j=1:Ny                                            % Compute the necessary derivatives

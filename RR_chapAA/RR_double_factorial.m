@@ -4,7 +4,7 @@
 % n!!=n*(n-2)*(n-4)*...*5*3*1 for even n
 % TEST: for i=1:12; disp(sprintf('i=%0.3g, i!!=%0.5g',i,RR_double_factorial(i))), end
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if n<2,             d=1;
 elseif mod(n,2)==0, d=2^(n/2)*factorial(n/2);

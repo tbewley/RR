@@ -6,7 +6,7 @@ function [out,sign]=RR_range_reduce(in)
 % OUTPUT: out=in-2*pi*n+pi*(1-sign)/2, with -pi/2<=out<=pi/2
 %             (thus, sign=-1 corresponds to input angle in quadrant 2 or 3)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap01
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 twopi=2*pi;                % Range reduction to 0<=t<2*pi
 c=floor(in/twopi); out=in-twopi*c;

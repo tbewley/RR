@@ -7,7 +7,7 @@ function x=FFTnonreordered(x,N,g)
 % t=(2*pi/L)*[[0:N/2]';[-N/2+1:-1]']; k=t(1+bin2dec(fliplr(dec2bin([0:N-1]',s))))
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.4.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also FFTrecursive, FFTdirect.  Verify with: FFTnonreorderedTest.
+% See also FFTrecursive, FFTdirect.  Trial: FFTnonreorderedTest.
 
 s=log2(N);       % Number of stages.
 if g==-1         % FORWARD TRANSFORM (physical space input expected in standard order).

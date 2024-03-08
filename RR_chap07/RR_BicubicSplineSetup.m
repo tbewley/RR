@@ -4,8 +4,8 @@ function [fx,fy,fxy,Ainv]=RR_BicubicSplineSetup(xd,yd,fd,ec)
 % of the uniform grid of datapoints {xd,yd,fd}.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
-% Verify with RR_BicubicSplineTest.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+% Trial: RR_BicubicSplineTest.
 
 Nx=length(xd); Ny=length(yd);  
 for j=1:Ny                                            % Compute the necessary derivatives

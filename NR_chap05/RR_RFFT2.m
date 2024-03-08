@@ -8,7 +8,7 @@ function [uhat,vhat]=RR_RFFT2(u,v,N)
 % To remove them, just set, e.g., uhat(1)=real(uhat(1)).
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RFFT2inv, RFFT1, RFFT.  Verify with: RFFT2Test.
+% See also RFFT2inv, RFFT1, RFFT.  Trial: RFFT2Test.
 
 w=u+i*v;                                      % Combine u and v into a single complex
 what=RR_FFTdirect(w,N,-1);                    % vector and transform to Fourier space.

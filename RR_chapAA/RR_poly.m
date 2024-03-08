@@ -58,7 +58,7 @@
 %   fprintf('\nCheck the range of stability of closed-loop DT system using simplified Bistritz test\n')
 %
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_int, RR_tf.
 
 classdef RR_poly < matlab.mixin.CustomDisplay
@@ -115,7 +115,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Converts a or b, as necessary, to the class RR_poly
         % NOTE: this routine is just used internally in this class definition.
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if ~isa(a,'RR_poly'), a=RR_poly(a); end,  if ~isa(b,'RR_poly'), b=RR_poly(b); end
         end
 
@@ -124,7 +124,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Computes the n norm of the coefficients of a polynomial p, of type RR_poly.
         % TEST: p=RR_poly([1 1 1]), norm(p)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if nargin<2, option=2; end    % Second argument is optional [see "help norm"]
             n = norm(p.poly,option);
         end
@@ -134,7 +134,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Compute the roots of a polynomial p, of type RR_poly (calls Matlab's "roots" command and sorts).
         % TEST: p=RR_poly([1 2 1]), RR_roots(p)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             r=sort(roots(p.poly)).';
         end
 
@@ -143,7 +143,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Evaluate a polynomial p(s), of type RR_poly, at a given values of s.
         % TEST: p=RR_poly([1 2 1]), RR_evaluate(p,2)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             z=0; for k=1:p.n+1; z=z+p.poly(k)*s^(p.n+1-k); end
         end
 
@@ -152,7 +152,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Computes the m'th derivative of the polynomial p, of type RR_poly.
         % TEST: p=RR_poly([1 2 3 4]), RR_derivative(p,2)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if m==0, return, elseif nargin<2, m=1; end
             p.poly=[p.n:-1:1].*p.poly(1:p.n); p.n=length(p.poly)-1;
             if p.n<0, p=RR_poly(0);  end
@@ -169,7 +169,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % TESTS:  p=RR_poly([0 0 0 1 2 3 4]), trim(p)
         %         p=RR_poly([1e-9 0 0 1 2 3 4]), trim(p,1e-8)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if nargin<2, eps=1e-10; end
             index=find(abs(p.poly(1:end-1))>eps,1);   
             if isempty(index), index=length(p.poly); end 
@@ -182,7 +182,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % Reverse the order of the coefficients of the polynomial p, of type RR_poly.
         % TEST: p=RR_poly([1 2 3 4]), RR_invert(p)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
              out = RR_poly(p.poly(end:-1:1));
         end
 
@@ -196,7 +196,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % TEST:   clear, a1=RR_poly([-3 -2 -1+i -1-i 0 0 3 4],1), RR_routh(a1)
         % TEST:          a2=RR_poly([-3 -2 -1+i -1-i -1 -0.1],1), RR_routh(a2)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
             p=a.poly; deg=a.n; inertia=[0 0 0]; flag=0; show_routh('Routh',deg,p(1:2:end))
             for n=deg:-1:1    % Note: implementation follows that in Meinsma (SCL, 1995)
                 k=find(abs(p(2:2:n+1))>1e-14,1); show_routh('Routh',n-1,p(2:2:end))  
@@ -229,7 +229,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         % TEST:   clear, a1=RR_poly([-3 -2 -1+i -1-i 0],1), RR_routh_simplified(a1)
         %                a2=RR_poly([-3 -2 -1+i -1-i  ],1), RR_routh_simplified(a2)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
             p=a.poly; n=a.n; s=strcmp(class(p),'sym'); R=0; disp(p(1:2:end));
             for i=n:-1:1
                disp(p(2:2:end)), if p(2)==0, disp('Not Hurwitz.'), return, end
@@ -253,7 +253,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         %         a1=RR_poly([0.5 -0.9 c+i*s c-i*s 1.3],1), RR_bistritz(a1)
         %         a2=RR_poly([0.5 -0.9 c+i*s c-i*s 1],  1), RR_bistritz(a2)
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.  
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.  
             z1roots=0;
             while abs(RR_evaluate(a,1))<1e-12, a=a/[1 -1]; z1roots=z1roots+1; end  % roots at z=1
             disp(['  Simplified a:',sprintf(' %7.4g',a.poly)])
@@ -305,7 +305,7 @@ classdef RR_poly < matlab.mixin.CustomDisplay
         %         syms K, den=RR_poly(K)*b+a, RR_bistritz_simplified(den)
         %         K_range=eval(solve(K+(18*K)/(5*(K/12-20))==0,K))
         % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-        % Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
             s=strcmp(class(a.poly),'sym')
             if ~s & abs(RR_evaluate(a,1))<1e-12, disp('Not Schur stable (root at z=1).'), return, end
             R=0; disp('Simplified Bistritz table:')

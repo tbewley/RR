@@ -8,9 +8,9 @@ function [c,s] = RR_rotate_compute(f,g)
 %         In the real case, c and s work out to be the cosine and sine of some angle.
 %         For computational efficiency, however, this code avoids the computation of
 %         trigonometric functions altogether.
-% See also RR_rotate. Verify with RR_rotate_test.
+% See also RR_rotate. Trial: RR_rotate_test.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 gs=real(g)^2+imag(g)^2;
 if gs==0, c=1; s=0; else, fs=real(f)^2+imag(f)^2;

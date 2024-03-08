@@ -1,7 +1,7 @@
 % script RR_Ex10_11_LC_tank_oscillator
 % Solve the equations of an LC tank oscillator.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 % Simple LC tank: computation of Vout(s)
 clear; syms C1 C2 L3 R4 I Va Vb Vout Vs s

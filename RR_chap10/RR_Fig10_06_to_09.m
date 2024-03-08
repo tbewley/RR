@@ -3,7 +3,7 @@
 % root locus, open-loop Bode, Nyquist, closed-loop Bode, and step response) on a
 % representative control design problem, as considered in the text.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all;
 numG=[1 .3]; denG=[1 12 20 0 0];    % Plant      = G(s) = (s+.3)/[s^2(s+2)(s+10)]

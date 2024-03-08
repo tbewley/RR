@@ -7,9 +7,9 @@ function F=RR_LPF_elliptic(n,epsilon,delta,omegac)
 % OUTPUT:  F=n'th order elliptic low-pass filter of type RR_tf
 % EXAMPLE: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode(F), figure(2), RR_bode_linear(F) 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 % Note: uses codes from the NR database https://github.com/tbewley/NR
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 s=log2(n); z=0; p.n=n; p.target=1/(epsilon*delta); xi=RR_Bisection(1.0001,100,@Func,1e-6,0,p);
 for r=s-1:-1:0, z=1./sqrt(1+sqrt(1-1./(CRF(2^r,xi,xi))^2)*(1-z)./(1+z)); z=[z; -z]; end

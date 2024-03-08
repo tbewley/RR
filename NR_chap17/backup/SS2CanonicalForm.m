@@ -27,7 +27,7 @@ function [A,B,C,r1,r2,r3,r4]=RR_SS2CanonicalForm(A,B,C,FORM)
 %
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, NRchap20.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_SS2CanonicalFormTest">RR_SS2CanonicalFormTest</a>.
+% Trial: <a href="matlab:help RR_SS2CanonicalFormTest">RR_SS2CanonicalFormTest</a>.
 
 disp(' '), r1=0; r2=0; r3=0; r4=0; [n,ni]=size(B); [no,n]=size(C);
 forms={'Controller','Reachability', 'DTControllability', ...

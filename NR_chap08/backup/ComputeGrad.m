@@ -5,7 +5,7 @@ function [g] = ComputeGrad(x,N,Compute_f,method,e)
 % if method="FD", or the complex step derivative approach if method="CSD".
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 8.3.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap08">Chapter 8</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help ComputeGradTest">ComputeGradTest</a>.
+% Trial: <a href="matlab:help ComputeGradTest">ComputeGradTest</a>.
 
 for k=1:N, switch method
   case 'FD'

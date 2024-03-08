@@ -11,7 +11,7 @@ function [A]=RR_tridiag_matrix(a,b,c)
 %       A_tridiagonal_circulant=RR_tridiag_matrix(a,b,c), disp(' ')
 %       A_tridiagonal=RR_tridiag_matrix([0; a(2:n)], b, [c(1:n-1); 0])
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 n=length(b); A=diag(a(2:n),-1)+diag(b,0)+diag(c(1:n-1),1); A(1,n)=a(1); A(n,1)=c(n);
 end

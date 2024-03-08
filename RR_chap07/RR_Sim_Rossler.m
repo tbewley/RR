@@ -1,7 +1,7 @@
 % script RR_Sim_Rossler
 % A simple RK4 simulation of the Rossler attractor.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, close all, T=100; h=0.04; x=[10*randn; 10*randn; 0];  % Set up simulation
 plot3(x(1),x(2),x(3),'kx'); view([-65 23]); hold on          % Set up plot

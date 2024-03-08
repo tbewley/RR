@@ -8,7 +8,7 @@ function [x,t]=RK435_3R(R,x,t,s,p,v,SimPlot)
 % If v<>0, SimPlot is called at each timestep to make interactive plots.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.4.1.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RK2, RK4, RK45, RKW3_2R, RK435_2R, RK548_3R.  Verify with RKtest.
+% See also RK2, RK4, RK45, RKW3_2R, RK435_2R, RK548_3R.  Trial: RKtest.
 
 a21= 2365592473904/ 8146167614645; a32=  4278267785271/ 6823155464066;
 a43= 2789585899612/ 8986505720531; a54= 15310836689591/24358012670437;

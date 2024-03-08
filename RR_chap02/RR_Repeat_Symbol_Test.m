@@ -6,7 +6,7 @@
 % normalized to reflect the corresponding pdf, and compares to the
 % exponential distribution of this result that is predicted by theory.  
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all, N=10^6, b=6  % <- fiddle with N and b to test
 max=30; x=randi(b,N+max,1);

@@ -4,7 +4,7 @@ function RR_Poisson_RB_GS_Test
 % from a SOFD approximation of the 2D Poisson equation on a square grid (Example 3.3).
 % The set of points updated first, which we label as "red", includes the corners.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 disp('Now applying 50 steps of red/black RR_Gauss-Seidel smoothing to a checkerboard system.')
 n=32; L=1; h=L/n; z=[2:2:n]*h; b=zeros(n+1); x=zeros(n+1); b(2:n,2:n)=randn(n-1); close all

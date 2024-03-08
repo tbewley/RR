@@ -3,7 +3,7 @@
 % These examples are also easy to solve by hand, but illustrate how
 % to put a few linear equations into A*x=b form and solve using Matlab.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

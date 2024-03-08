@@ -7,7 +7,7 @@ function [u,v]=RR_RFFT2inv(uhat,vhat,N)
 % This routine was written by inverting the steps of RFFT2 and doing them in reverse.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RFFT2.  Verify with: RFFT2Test.
+% See also RFFT2.  Trial: RFFT2Test.
 
 what(1)    =real(uhat(1)) +i*real(vhat(1)); 
 what(N/2+1)=imag(uhat(1)) +i*imag(vhat(1));  

@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_BilinearSplineTest">RR_BilinearSplineTest</a>
 % Test <a href="matlab:help RR_BilinearSpline">RR_BilinearSpline</a> on data from a smooth fn.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 close all, clear; Lx=17; Ly=30; ep=.00001; xmin=-Lx/2; xmax=Lx/2; ymin=-Ly/2; ymax=Ly/2;
 ndx=10;  ndy=20;  xd=[xmin:Lx/(ndx-1):xmax]; yd=[ymin:Ly/(ndy-1):ymax];

@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_SCGridTest">RR_SCGridTest</a>
 % Test <a href="matlab:help RR_SCGrid">RR_SCGrid</a> by producing a C-grid, an O-grid, and an H-grid around a NACA0012 airfoil.
 % Renaissance Codebase, Appendix B, https://github.com/tbewley/RC
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_CMGridTest.  Depends on RR_OrthGrid.
 
 clear; close all; cin=-1; cout=2; 

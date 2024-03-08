@@ -8,7 +8,7 @@ function RR_encoders(m,Rmin,Rmax,Rgap)
 % OUTPUT: (none)
 % EXAMPLE CALL: RR_encoders(6,0.2,1,0.01)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap03
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 DeltaR=Rmax-Rmin; dr=DeltaR/(m+1);
 

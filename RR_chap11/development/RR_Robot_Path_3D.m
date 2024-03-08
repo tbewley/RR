@@ -1,6 +1,6 @@
 function RobotPath3D
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 U=2;                  % target forward velocity (MKS units)
 ell=.1;               % look ahead distance (increase for smoother, sloppier response)

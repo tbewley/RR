@@ -2,9 +2,9 @@ function [D,index]=RR_QuickSort(D,v,i,k)
 % function [D,index]=RR_QuickSort(D,v,i,k)
 % Reorder a matrix D based on the elements in its first column using a quick sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_QuickSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_QuickSortTest.
 
 if nargout==2, D=[D, [1:size(D,1)]']; end, if nargin==3, k=i; i=1; end
 if k>i  % Begin by identifying a pivot.  Take the median of i=left, j=middle, and k=right.

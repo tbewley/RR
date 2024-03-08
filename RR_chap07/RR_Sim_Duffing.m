@@ -1,7 +1,7 @@
 % script RR_Sim_Duffing
 % A simple RK4 simulation of the Duffing oscillator.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, close all, T=200; h=0.05; x=5*rand(2,1);              % Set up simulation
 plot3(x(1),x(2),0,'kx'); view([-0.45 90]); hold on           % Set up plot

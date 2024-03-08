@@ -4,7 +4,7 @@ function [D,d]=RR_BSTrotateL(D,b)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateR, RR_BSTbalance, RR_BSTenumerate,
-% RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 a=D(b,end-3); d=D(b,end-1); c=D(d,end-3); e=D(d,end-1); p=D(b,end-2);
 if a>0, Dag=D(a,end);                else, Dag=-1; end 

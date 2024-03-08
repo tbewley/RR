@@ -1,7 +1,7 @@
 % script RR_Binary_Field_Gauss_Echelon_Test
 % Test RR_Binary_Field_Gauss_Echelon on a binary matrix with m=4, n=5, and r=3.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 disp('Now testing RR_Binary_Field_Gauss_Echelon on a matrix with m=4, n=5, and r=3.')
 A=[1  0  0  0  0  1;  0 0 1 1 1 1; 0 0 0 0 1 1;  0 1 1 1 1 1; 0 0 0 1 0 1]

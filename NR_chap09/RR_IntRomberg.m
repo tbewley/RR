@@ -4,7 +4,7 @@ function [int,evals] = IntRomberg(f,L,R,toplevel)
 % and higher order of accuracy as the grid is refined.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 9.3.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap09">Chapter 9</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also IntTrapezoidal, IntAdaptive.  Verify with: IntRombergTest.
+% See also IntTrapezoidal, IntAdaptive.  Trial: IntRombergTest.
 
 fi=[];     % note: fi stores the previous evaluations of f(x), so they may be reused.
 for level=1:toplevel

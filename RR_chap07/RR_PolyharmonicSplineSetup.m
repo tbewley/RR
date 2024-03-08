@@ -3,9 +3,9 @@ function [w,v]=RR_PolyharmonicSplineSetup(c,y,k)
 % Given the centers c, the value of the function at these centers, y, and the order of the
 % radial basis functions, k, calculate the weights {w,v} of the polyharmonic spline.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap07
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 % See also RR_InvDistanceInterp. Sets up subsequent call to RR_PolyharmonicSpline.
-% Verify with RR_PolyharmonicSplineTest.
+% Trial: RR_PolyharmonicSplineTest.
 
 [n,N]=size(c); A=zeros(N,N); V=[ones(1,N); c]; % N=number of points, n=dimension of system
 if mod(k,2)==1

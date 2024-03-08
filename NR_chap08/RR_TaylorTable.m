@@ -21,8 +21,8 @@ function [c]=RR_TaylorTable(x,w)
 %         c_uniform_case=subs(c,{xp,xpp},[h,2*h])  % Gives same result as TEST6
 
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% Verify with: <a href="matlab:help RR_TaylorTableTest">TaylorTableTest</a>.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% Trial: <a href="matlab:help RR_TaylorTableTest">TaylorTableTest</a>.
 
 n=length(x); for i=1:n; for j=1:n; A(i,j)=x(j)^(i-1)/factorial(i-1); end; end
 b=zeros(n,1); b(w+1)=1; c=A\b; 

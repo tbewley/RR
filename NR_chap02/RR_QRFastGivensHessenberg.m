@@ -4,7 +4,7 @@ function [A,Q] = RR_QRFastGivensHessenberg(A)
 % transforms to an mxn upper RR_Hessenberg matrix A to reduce it to upper triangular form.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 2.3.4.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 [m,n]=size(A);  Q=eye(m,m); d=ones(m,1);
 for i=1:min(n,m-1)

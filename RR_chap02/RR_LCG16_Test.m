@@ -2,7 +2,7 @@
 % Tests 3 very simply LCGs with m=2^8-5=251, and plots the adjacent pairs
 % of the random numbers generated to detect k-tuple clustering.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear
 m=251, a=33, x(1)=1, for i=2:255, x(i)=mod(a*x(i-1),m); end, x

@@ -14,7 +14,7 @@ function h = RR_CRR_h_from_v(v,k,r,verbose)
 % EXAMPLE CALL [computes h(z) for v(z) corresponding to CRC-5-ITU, for k=10, d=4]:
 %     k=10; r=5; v=0b101011u64; h=RR_CRR_h_from_v(v,k,r,true);
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 n=k+r;
 if ~verbose

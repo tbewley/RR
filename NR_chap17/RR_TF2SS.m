@@ -5,7 +5,7 @@ function [A,B,C,D]=RR_TF2SS(b,a,form)
 % handled with observer canonical form, and SISO is handled with the FORM specified.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Sections 20.3.1 and 20.3.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_TF2SSTest">RR_TF2SSTest</a>.
+% Trial: <a href="matlab:help RR_TF2SSTest">RR_TF2SSTest</a>.
 
 b=b/a(1); a=a/a(1); p=size(a,2); n=p-1; if nargin<3, form='Controller'; end, s=size(b);
 if size(s,1)==2                           % Standardize inputs for the various cases.

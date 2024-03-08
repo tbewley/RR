@@ -1,6 +1,6 @@
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; xim=logspace(-4,2,800); xi=xim+1;
 for i=1:length(xi); r2(i)=CRF(2,xi(i),xi(i)); r4(i)=CRF(4,xi(i),xi(i)); r8(i)=CRF(8,xi(i),xi(i)); r16(i)=CRF(16,xi(i),xi(i)); end

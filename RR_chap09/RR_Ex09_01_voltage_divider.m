@@ -4,7 +4,7 @@
 % to put three linear equations into A*x=b form and solve using Matlab.
 % This idea is quite valuable for larger systems of linear equations.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

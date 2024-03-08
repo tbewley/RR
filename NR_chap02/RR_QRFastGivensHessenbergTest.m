@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_QRFastGivensHessenbergTest">RR_QRFastGivensHessenbergTest</a>
 % Test <a href="matlab:help RR_QRFastGivensHessenberg">RR_QRFastGivensHessenberg</a> on a random complex RR_Hessenberg matrix.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 disp('Now testing RR_QRFastGivensHessenberg on a random complex RR_Hessenberg matrix.')
 clear; m=5; n=4; A=randn(m,n)+i*randn(m,n);

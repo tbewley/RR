@@ -5,7 +5,7 @@ function p=RR_Prod(a)
 % OUTPUT: p = product of the elements in the vector a
 % TEST:   a=[2 4 5], p=RR_Prod(a)
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 p=a(1); for i=2:length(a); p=p*a(i); end
 end % function RR_Prod

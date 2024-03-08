@@ -2,7 +2,7 @@
 % Calculate the perturbation dx to the solution x due to a perturbation db to the RHS b
 % in the problem A*x=b for a matrix A with a large condition number.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 % Set up a random A matrix and b vector, where A has a bad condition number.
 clear; N=20; b=randn(N,1); A=randn(N)^7; condition_number_of_A=cond(A)

@@ -3,7 +3,7 @@ function RR_Example_Conveyer_Belt
 % Simulates the motion of the elastic conveyer belt system, initially at rest and centered,
 % with a unit step input to phi, using an RK4 method with reduced timestep where neceesary.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 p.m=1; p.g=9.8; p.r=0.1; p.muk=0.5; p.mus=1.0; p.ko=500; p.L=10; h=0.02; figure(1); clf;
 x=[0; 0]; t=0; xs=x; ts=t; while x<0.95*p.L/2

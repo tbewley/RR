@@ -4,8 +4,8 @@ function dist=RR_DistanceDL(a,b,W,verbose)
 % are the weights on Deletion, Insertion, Substitution, and Exchange (of adjacent symbols
 % only), all taken as 1 by default.  Implements Algorithm S of Lowrance & Wagner (1975).
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_DistanceOSA.  Verify with RR_DistanceDLtest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_DistanceOSA.  Trial: RR_DistanceDLtest.
 
 Al=length(a); Bl=length(b); if Al==0 | Bl==0, dist=Al+Bl; return, end
 if nargin<3, W.D=1; W.I=1; W.S=1; W.C=1; W.E=1; end, INF=Al+Bl+1; H=INF*ones(Al+2,Bl+2);

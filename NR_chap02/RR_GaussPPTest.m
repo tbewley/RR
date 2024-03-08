@@ -2,7 +2,7 @@
 % Test RR_GaussPP and RR_GaussPLU on a random matrix.
 % This test script is NOT efficient, and is meant for TESTING PURPOSES ONLY.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also InvTest, RR_GaussTest, RR_GaussCPTest, RR_GaussEchelonTest.
 
 disp('Now testing RR_GaussPP & RR_GaussPLU on a random matrix.')

@@ -4,7 +4,7 @@ function [x]=RR_Chebyshev(n,x,derivative,kind)
 % well as the Chebyshev polynomial of the 2nd kind, U, and its derivative (see Wikipedia).
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.13.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help ChebyshevTest">ChebyshevTest</a>.
+% Trial: <a href="matlab:help ChebyshevTest">ChebyshevTest</a>.
 
 if nargin<4, kind=1; if nargin<3, derivative=0; end, end
 switch kind

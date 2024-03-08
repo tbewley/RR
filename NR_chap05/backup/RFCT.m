@@ -6,7 +6,7 @@ function [uhatC]=RFCT(u,N)
 % then extracts the uhat^c_n according to (5.48b).
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.11.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RFCTinv, RFST, RFFT.  Verify with: RFSTtest.
+% See also RFCTinv, RFST, RFFT.  Trial: RFSTtest.
 
 w(1:N)=(u(1:N)+u(N+1:-1:2))+(u(N+1:-1:2)-u(1:N)).*sin([0:N-1]'*pi/N);
 what=RFFT(w,N); 

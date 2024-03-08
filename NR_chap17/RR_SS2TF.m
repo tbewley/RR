@@ -7,7 +7,7 @@ function [b,a]=RR_SS2TF(A,B,C,D)
 % are enumerated in the opposite order here than in the textbook derivation.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.1.5.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_SS2TFTest">RR_SS2TFTest</a>.
+% Trial: <a href="matlab:help RR_SS2TFTest">RR_SS2TFTest</a>.
 
 n=size(A,1); ni=size(B,2); no=size(C,1); if nargin<4, D=zeros(no,ni); end
 S(:,:,1)=zeros(n); a(1,1)=1; b(:,:,1)=D;

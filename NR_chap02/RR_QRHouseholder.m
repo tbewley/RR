@@ -4,7 +4,7 @@ function [A,Q,pi,r] = QRHouseholder(A)
 % Householder reflections (R is returned in the modified A).  IF pi and r are
 % requested, then pivoting is implemented and the decomposition is ordered, A*Pi=Q*R.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % Depends on <a href="matlab:help ReflectCompute">ReflectCompute</a>, <a href="matlab:help Reflect">Reflect</a>.
 
 [m,n]=size(A); pi=[1:n]'; tol=1e-8; Q=eye(m,m);

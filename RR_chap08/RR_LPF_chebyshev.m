@@ -6,7 +6,7 @@ function F=RR_LPF_chebyshev(n,epsilon,omegac)
 % OUTPUT:  F=n'th order Chebyshev low-pass filter of type RR_tf
 % EXAMPLE: F=RR_LPF_chebyshev(4,0.3,10), close all, RR_bode(F), figure(2), RR_bode_linear(F)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<3, omegac=1; end 
 p=i*cos(acos(i/epsilon)/n+[0:n-1]*pi/n); den=RR_poly(p,1);

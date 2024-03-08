@@ -4,7 +4,7 @@ function X=RR_CALE(A,Q)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.5.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_Sylvester, RR_CARE, RR_DALE, RR_DARE. Depends on RR_Schur, RR_GaussPP.
-% Verify with RR_CALEtest.
+% Trial: RR_CALEtest.
 
 n=length(A); [U,T]=schur(A','complex'); A0=T'; Q0=U'*Q*U; X0=RR_CALEtri(A0,Q0,n); X=U*X0*U';
 end % function RR_CALE

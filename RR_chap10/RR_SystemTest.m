@@ -1,6 +1,6 @@
 function TestSystem(numG,denG,numD,denD,g)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 num=PolyConv(numG,numD); den=PolyConv(denG,denD); num=[zeros(1,length(den)-length(num)) num];
 figure(1); RLocus(numG,denG,numD,denD,g); figure(2); Bode(num,den,g)

@@ -7,7 +7,7 @@ function x=RR_LCG64(i_max,reverse)
 % OUTPUT: x
 % TEST:   RR_LCG64(7), RR_LCG64(6,true)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 persistent XOLD, if nargin<1, i_max=1; end
 m=uint64(4294967291); if nargin<2, a=uint64(1815976680); else, a=uint64(279470273); end

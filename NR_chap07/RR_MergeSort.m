@@ -2,9 +2,9 @@ function [D,index]=RR_MergeSort(D,v,a,b)
 % function [D,index]=RR_MergeSort(D,v,a,b)
 % Reorder a matrix D based on the elements in its first column using a merge sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_MergeSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_MergeSortTest.
 
 if nargout==2, D=[D, [1:size(D,1)]']; end, if nargin==3, b=a; a=1; end
 if b-a > 0

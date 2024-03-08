@@ -4,9 +4,9 @@ function [x,y,r,t] = RR_diophantine(a,b,f)
 % INPUTS:  a,b,f can be of RR_int class or RR_poly class with a >= b, (a,b) must have no common factors
 % OUTPUTS: x,y = solution of integer or polynomial Diophantine eqn with the lowest order for y
 %          r,t (OPTIONAL) = terms used to generate the general solution, {x+r*k,y-t*k} for any polynomial k.
-% TEST:    Test with <a href="matlab:RR_diophantine_test">RR_diophantine_test</a>.
+% TEST:    Trial: <a href="matlab:RR_diophantine_test">RR_diophantine_test</a>.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 [g,xg,yg]=RR_bezout(a,b);  % Start by calling the Bezout algorithm
 [c,rem]=f/g;               % c is found by dividing f by g.

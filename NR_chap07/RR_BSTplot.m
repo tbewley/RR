@@ -2,9 +2,9 @@ function RR_BSTplot(D,r,x,y)
 % function RR_BSTplot(D,r,x,y)
 % Plot a RR_BST so that the user can understand its structure and watch it evolve.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTbalance,
-% RR_BSTenumerate, RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTenumerate, RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 if nargin==2;
   x=0; y=0; figure(2); clf; axis([-4.09 4.09 -10.21 0.5]); axis off; hold on;

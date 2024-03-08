@@ -2,7 +2,7 @@
 % Compare the order n Butterworth, Chebyshev, Inverse Chebyshev, and elliptic filters
 % NOTE: linear Bode plots are used here, which is nonstandard.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear all, close all, omegac=10; n=8; epsilon=0.3; delta=0.04; g.omega_max=omegac*2;
 % Edit the above quantities (in particular, try n=4 and n=8) to explore

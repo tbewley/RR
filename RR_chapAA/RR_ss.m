@@ -28,7 +28,7 @@
 %   RR_plot_response: General algorithm for plotting system responce
 %
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 classdef RR_ss < matlab.mixin.CustomDisplay
     properties

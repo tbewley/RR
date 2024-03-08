@@ -8,7 +8,7 @@ function [A,B,C,rco,rcno,rnco,rncno] = RR_KalmanDecomposition(A,B,C)
 %                                      C_co     0     C_nc,o    0     |   0
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.6.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_CtrbGrammianTest">RR_KalmanDecompositionTest</a>.
+% Trial: <a href="matlab:help RR_CtrbGrammianTest">RR_KalmanDecompositionTest</a>.
 
 % First, find orthogonal bases for the controllable/null-controllable subspaces,
 % and for the observable/null-observable subspaces.

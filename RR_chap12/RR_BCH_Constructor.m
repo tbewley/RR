@@ -7,7 +7,7 @@ function [v_binary,v_shorthand] = RR_BCH_Constructor(m,t)
 %         v_shorthand=implicit+1 format for v(z)
 % EXAMPLE CALL: [v_binary,v_shorthand] = RR_BCH_Constructor(4,2)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % First, define the minimum primitive polynomial f(z) for this m (with 1<=m<=50)
 P=[ 1  0  0  0  0;  2  1  0  0  0;  3  1  0  0  0;  4  1  0  0  0;  5  2  0  0  0; ...

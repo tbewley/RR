@@ -9,7 +9,7 @@ function [x,t,s]=RR_BDF6iter(R,x,t,s,p,v,SimPlot)
 % If v<>0, SimPlot is called at each timestep to make interactive plots.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.5.3.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RR_IEiter, RR_BDF2iter, RR_BDF3iter, RR_BDF4iter, RR_BDF5iter.  Verify with RR_BDFtest.
+% See also RR_IEiter, RR_BDF2iter, RR_BDF3iter, RR_BDF4iter, RR_BDF5iter.  Trial: RR_BDFtest.
 
 for n=1:min((s.MaxTime-t)/s.h,s.MaxSteps)
   x(:,2:7)=x(:,1:6); f=feval(R,x(:,2),p);                  % Predict with eBDF6

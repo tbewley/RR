@@ -2,7 +2,7 @@
 % Test <a href="matlab:help RR_OrthGrid">RR_OrthGrid</a> by producing a few locally-orthognal grids with various stretching
 % functions applied.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_CMGridTest, RR_SCGridTest.
 
 clear; II=30; JJ=30; figure(1); g.x0=0; g.x1=2; g.y1=1.5; 

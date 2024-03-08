@@ -4,7 +4,7 @@ function tfn=RR_TFnorm(A,B,C,D,p,MODE)
 % and for MODE='CT' (default) or MODE='DT'.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.2.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_TFnormTest">RR_TFnormTest</a>.
+% Trial: <a href="matlab:help RR_TFnormTest">RR_TFnormTest</a>.
 
 if nargin<6, MODE='CT'; end, if nargin<5, p='2'; end
 [n,ni]=size(B); [no,n]=size(C); if nargin<4, D=zeros(no,ni); end

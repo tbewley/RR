@@ -1,5 +1,5 @@
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 syms c1 s1 c2 s2 c3 s3 adot bdot gdot
 G23gamma=[1 0 0; 0 c3 s3; 0 -s3 c3];

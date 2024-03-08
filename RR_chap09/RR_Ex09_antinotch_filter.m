@@ -2,7 +2,7 @@
 % This code implments the equations governing the so-called "anti-notch" filter,
 % as discussed in problem 1 of the 2024 midterm in MAE40.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave
 

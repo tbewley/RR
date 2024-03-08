@@ -1,7 +1,7 @@
 function SLCTest                                    % Numerical Renaissance Codebase 1.0
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % Set up necessary plotting variables
 for i=1:2, figure(i), clf, end, g.verbose=0;

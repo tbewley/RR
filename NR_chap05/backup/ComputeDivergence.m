@@ -4,7 +4,7 @@ function [div]=ComputeDivergence(u1hat,u2hat,u3hat,NX,NY,NZ,KX,KY,KZ)
 % Input and output are in Fourier space, where the operations performed are quite simple.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.10.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RemoveDivergence.  Verify with: RemoveDivergenceTest.
+% See also RemoveDivergence.  Trial: RemoveDivergenceTest.
 
 div=0;
 for I=1:NX/2; for J=1:NY; for K=1:NZ

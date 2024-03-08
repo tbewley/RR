@@ -2,7 +2,7 @@
 % Illustrate the mapping of a Nyquist contour from the s-plane to the L plane for a few
 % representative systems.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all; g.figs=1; g.figL=2; g.eps=.2; g.R=4;
 num=15*[1 .3]; den=[1 12 20 0 0];           roots(den), Nyquist(num,den,g); pause

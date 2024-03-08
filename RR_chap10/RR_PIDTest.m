@@ -1,6 +1,6 @@
 function PIDTest                            % Numerical Renaissance Codebase 1.0
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 Kp=1; Ti=10; Td=.01; num=Kp*Td*[1 1/Td 1/(Ti*Td)]; den=[1 0];
 figure(1); clf; Bode(num,den,logspace(-3,4,10000),'k',0);

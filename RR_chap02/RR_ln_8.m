@@ -4,7 +4,7 @@ function [out]=RR_ln_8(x)
 % OUTPUT: ln(x), with 8 digits of precision or better
 % TEST:   x=(2*randn)^4, a=log(x), b=RR_ln_8(x), residual=norm(a-b)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 ln2=0.69314718055994531;
 x_b=RR_float_to_bin(x); n=bin2dec(x_b(2:12))-1023; r=x/2^n;

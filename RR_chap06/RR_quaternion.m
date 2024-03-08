@@ -28,7 +28,7 @@
 %   R=rotation_matrix(q)           % rotation matrix equivalent to quaternion q
 %   b1=R*a                         % an alternate calculation of b
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 % See also RR_rotation_sequence.
 
 classdef RR_quaternion < matlab.mixin.CustomDisplay

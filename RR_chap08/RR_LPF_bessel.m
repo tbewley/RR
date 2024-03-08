@@ -5,7 +5,7 @@ function F=RR_LPF_bessel(n,omegac)
 % OUTPUT:  F=n'th order Bessel filter of type RR_tf
 % TEST:    F=RR_LPF_bessel(4,0.1), close all, RR_bode(F)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<2, omegac=1; end, if nargin<1, n=4; end
 k=[n:-1:0]; den=RR_poly(factorial(2*n-k)./factorial(n-k)./factorial(k)./2.^(n-k));

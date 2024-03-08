@@ -16,7 +16,7 @@
 %   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
 %
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 classdef RR_uint64 < matlab.mixin.CustomDisplay
     properties % Each RR_poly object consists of the just one field:

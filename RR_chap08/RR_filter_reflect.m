@@ -7,7 +7,7 @@ function HPF=RR_filter_reflect(LPF)
 % TEST:   LPF=RR_LPF_butterworth(4,2), figure(1), RR_bode(LPF)
 %         HPF=RR_filter_reflect(LPF),  figure(2), RR_bode(HPF)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 nr=LPF.den.n-LPF.num.n;          den=LPF.den.poly(end:-1:1);
 temp=[zeros(1,nr) LPF.num.poly]; num=temp(end:-1:1);   HPF=RR_tf(num,den);

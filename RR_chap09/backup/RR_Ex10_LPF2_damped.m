@@ -2,7 +2,7 @@
 % This code implements the equations of a damped 2nd-order LPF,
 % as discussed in problems 1-4 of the 2024 HW1 in MAE40.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License. 
+% Copyright 2024 by Thomas Bewley, published under Modified BSD License. 
 
 clear, clc, close all
 disp('PROBLEM 1: LPF2 damped with Rd between Vo and GND.')

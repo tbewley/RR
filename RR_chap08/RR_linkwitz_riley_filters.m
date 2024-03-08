@@ -6,7 +6,7 @@
 % audio reproduction too noticably, but if using for control you gotta be aware of
 % it, especially in the vicinity of crossover]
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all; omegac=1;
 

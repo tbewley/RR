@@ -2,7 +2,7 @@
 % This script just plots a few Bode plots, for practice.  :)
 % Recommend you space out figures 1,2,3 so you can see all three on your screen.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, disp('high-pass, low-pass, band-pass')
 figure(1), clf, F_HPa=RR_tf([1 0],[1 1]);          RR_bode(F_HPa)

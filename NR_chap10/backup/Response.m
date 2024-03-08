@@ -8,7 +8,7 @@ function RR_Response(A,B,C,D,type,g)
 % interval over which the response is plotted, and g.linestyle is the linestyle used.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Depends on <a href="matlab:help RR_Gauss">RR_Gauss</a>, <a href="matlab:help RR_GaussLU">RR_GaussLU</a>.  Verify with: <a href="matlab:help RR_ResponseTest">RR_ResponseTest</a>.
+% Depends on <a href="matlab:help RR_Gauss">RR_Gauss</a>, <a href="matlab:help RR_GaussLU">RR_GaussLU</a>.  Trial: <a href="matlab:help RR_ResponseTest">RR_ResponseTest</a>.
 
 N=length(A); M=size(B,2); P=size(C,1); x=zeros(N,1); km=1000; h=g.T/km; t=[0:km]*h;
 switch type, case 0, u=[2/h, zeros(1,km)]; case 1, u=ones(1,km+1); otherwise, u=t.^w; end

@@ -10,7 +10,7 @@ function r = RR_Binary_Field_Mod(b,a)
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10011u64); end
 %    for i=1:15, a=0b0u64; a=bitset(a,i); r=RR_Binary_Field_Mod(a,0b10101u64); end
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap12
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 n=length(dec2bin(b)); m=length(dec2bin(a));
 r=b;

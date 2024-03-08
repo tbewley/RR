@@ -1,7 +1,7 @@
 % script plot_encoder_signals
 % Plot the signals from quadrature (AB) and commutation (UVW) encoders
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap03
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 figure(1); clf
 plot([0 1 1 2 2 3 3 4 4 5 5 6 6 7],[1 1 0 0 1 1 0 0 1 1 0 0 1 1],'b-','LineWidth',2);

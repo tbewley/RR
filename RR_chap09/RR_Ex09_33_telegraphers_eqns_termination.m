@@ -1,7 +1,7 @@
 % script RR_Ex10_33_telegraphers_eqns_termination
 % Simulates the Telegraphers equations, for different possibilities of termination.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap09
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; termination=true      % try both termination=true and termination=false
 % R=10; G=0.002;               % Try R=0 and G=0.  Also try R=10 and/or G=0.001.

@@ -1,6 +1,6 @@
 % script RR_riemann_surface
 %%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAB
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear; close all; R=[0:.1:1.5]; ii=i;
 theta=[-180:10:1.5*360]*pi/180;

@@ -2,7 +2,7 @@
 % This code implments the equations governing the notch filter,
 % as discussed in problem 1 of the 2024 midterm in MAE40.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License. 
+% Copyright 2024 by Thomas Bewley, published under Modified BSD License. 
 
 clear; syms s R L C c1 V0      % NOTE: We will solve for V1 as a fn of V0
 % x={Ir; Il; Ic; Iload; V1; V2}  <-- unknown vector   

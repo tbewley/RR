@@ -5,7 +5,7 @@ function ResponseTFripple(bs,as,yz,xz,h,r,g)
 
 % See <a href="matlab:NRweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 18.?
 % Part of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help NRchap17">Chapter 18</a>; please read the <a href="matlab:help NRcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help ResponseTFrippleTest">ResponseTFrippleTest</a>.
+% Trial: <a href="matlab:help ResponseTFrippleTest">ResponseTFrippleTest</a>.
 
 [A,B,C,D]=TF2SS(bs,as,'Observer'); S=40; H=h/S; N=length(A); M=size(B,2); x=zeros(N,1);
 AA=[A B; zeros(M,N+M)]; MM=expm(AA*H); F=MM(1:N,1:N), G=MM(1:N,N+1:N+M)

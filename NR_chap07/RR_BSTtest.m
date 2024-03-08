@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_BSTtest">RR_BSTtest</a>
 % Test the Binary Search Tree (RR_BST) routines on a set of random data.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_BSTinitialize, RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTbalance,
 % RR_BSTenumerate, RR_BSTsuccessor.
 

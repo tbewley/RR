@@ -2,9 +2,9 @@ function [D,r]=RR_BSTinsert(D,n,r)
 % function [D,r]=RR_BSTinsert(D,n,r)
 % Insert record n into a RR_BST in D with root r, balancing the affected ancestors as needed.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_BSTinitialize, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTbalance, RR_BSTenumerate,
-% RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 flag=1; m=r; while flag, if D(n,1)<D(m,1) % Find appropriate open child slot & place record
   if D(m,end-3)==0, D(m,end-3)=n; D(n,end-2)=-m; flag=0; else, m=D(m,end-3); end

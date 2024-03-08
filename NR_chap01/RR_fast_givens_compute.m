@@ -4,12 +4,13 @@ function [a,b,gamma,donothing,dnew]=RR_fast_givens_compute(f,g,di,dk)
 % the (possibly complex) vector (f;g) to (*;0).
 % INPUT:  (f;g) =vector to be rotated
 % OUTPUT: (c,s) =parameters of the rotation matrix sought
-% NOTE:   This code works for both real and complex (f,g).
-%         In the fast Givens formulation, the scaling is applied at the very end of a series of Fast Givens
-%         transforms, thus saving some flops.
-% See also RR_fast_givens. Verify with RR_fast_givens_test.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% TEST:   RR_fast_givens_test
+% NOTE:     This code works for both real and complex (f,g).
+%           In the fast Givens formulation, the scaling is applied at the very end of a series of Fast Givens
+%           transforms, thus saving some flops.
+% SEE ALSO: RR_fast_givens. 
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
+%% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if g==0, donothing=1; else                                  % see sentence before (1.16)
   a=-f/g; b=-a*dk/di; gamma=-(real(a)*real(b)+imag(a)*imag(b)); donothing=0;

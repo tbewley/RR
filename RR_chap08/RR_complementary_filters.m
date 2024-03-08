@@ -20,7 +20,7 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 %            if n>2, g.phase_shift=1; end, RR_bode(HPF,g), axis([1 100 -90*n 90*n])
 %          end
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap08
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<1, omegac=1, end, if nargin<2, n=1, end
 t=RR_poly([1 omegac])^(2*n-1); LPF=RR_tf(t.poly(n+1:2*n),t.poly); HPF=1-LPF;

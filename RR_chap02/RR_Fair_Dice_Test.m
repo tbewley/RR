@@ -2,7 +2,7 @@
 % Demonstrates the use of the matlab's randi function to simulate
 % the sum of two fair dice, and plots a histogram of the result.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all; N=10^3  % <- Fiddle with N to test
 y=randi(6,N)+randi(6,N);

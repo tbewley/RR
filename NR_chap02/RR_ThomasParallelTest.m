@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_ThomasParallelTest">RR_ThomasParallelTest</a>
 % Test <a href="matlab:help RR_ThomasParallel">RR_ThomasParallel</a> on a random tridiagonal matrix.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_ThomasTest, RR_ThomasTTTest, RR_CirculantTest.
 
 disp('Now testing RR_ThomasParallel on a random tridiagonal matrix.')

@@ -2,9 +2,9 @@ function [G,a,b,c,d,e] = RR_Circulant(a,b,c,G,n)
 % function [G,a,b,c,d,e] = RR_Circulant(a,b,c,G,n)
 % This function solves the tridiagonal circulant system AX=G for X.  On exit, the matrix G
 % is replaced by the solution X and (if requested), {a,b,c,d,e} contain the m_ij and U.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_CirculantLU.  Verify with RR_CirculantTest.
+%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
+%% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_CirculantLU.  Trial: RR_CirculantTest.
 
 d(1) = a(1);    e(1) = c(n);            % Initialize d and e vectors
 for j = 1:n-2,                          % FORWARD SWEEP

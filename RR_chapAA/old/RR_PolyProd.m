@@ -5,7 +5,7 @@
 % OUTPUT: a = vector of polynomial coefficients, given by product of input polynomials
 % TEST:   a=[1 2], b=[2 3 4], pab=RR_PolyProd(a,b), pba=RR_PolyProd(b,a)
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if nargin>19, a=RR_PolyProd(a,t); end, if nargin>18, a=RR_PolyProd(a,s); end
 if nargin>17, a=RR_PolyProd(a,r); end, if nargin>16, a=RR_PolyProd(a,q); end

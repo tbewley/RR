@@ -4,7 +4,7 @@ function [D,index]=RR_BlockInsertionSort(D,v,n)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_InsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Verify with RR_BlockInsertionSortTest.
+% RR_BitonicSort, RR_OddEvenRR_MergeSort.  Trial: RR_BlockInsertionSortTest.
 
 n=size(D,1); if nargout==2, D=[D, [1:n]']; end
 k=n; while k>1 & D(k,1)>=0, k=k-1; end, j=k-1; i=j;

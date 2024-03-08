@@ -6,7 +6,7 @@ function [A,B,C,HankelSingValues]=RR_BalancedForm(A,B,C,MODE)
 % Works for MODE='CT' (default) or 'DT'.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 20.6.2.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap20">Chapter 20</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Verify with: <a href="matlab:help RR_BalancedFormTest">RR_BalancedFormTest</a>.
+% Trial: <a href="matlab:help RR_BalancedFormTest">RR_BalancedFormTest</a>.
 
 if nargin==3, MODE='CT'; end,   P=RR_CtrbGramian(A,B,MODE); Q=RR_ObsvGramian(A,C,MODE);
 n=length(A); GP=RR_Cholesky(P,n); GQ=RR_Cholesky(Q,n); [U,HankelSingValues,V]=svd(GP'*GQ);

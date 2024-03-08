@@ -7,7 +7,7 @@ function stationarity=RR_PolyStationarity(p)
 % OUTPUT: stationarity = vector quantifying number of roots [inside on outside] the unit circle   
 % TEST:   i=sqrt(-1); p=RR_poly([-.77 -0.5 i -i 0.99 3],1), RR_PolyStationarity(p.poly)
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAB
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_PolyInertia for CT analog.
 
 i=find(abs(p)>1e-12,1); p=p(i:end); z1roots=0;           % strip off leading zeros, remove

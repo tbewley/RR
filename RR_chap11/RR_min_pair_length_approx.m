@@ -15,7 +15,7 @@ function [seq,length]=RR_min_pair_length_approx(D,n)
 %        tic, seq=RR_min_pair_length(D,n), disp('Time to construct the best solution:'), toc
 %        best_sol=0; for i=1:2:n-1, best_sol=best_sol+D(seq(i),seq(i+1)); end, best_sol, end
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 remaining=[1:n]; length=0;
 for i=1:2:n-3

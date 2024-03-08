@@ -1,6 +1,6 @@
 % Example_??
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % Motor Parameters
 K=0.0525;     % Motor torque constant [measured in N*m/A = V/(rad/s)] for the 50:1 Pololu Motors

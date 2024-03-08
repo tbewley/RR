@@ -7,7 +7,7 @@
 % reflect the corresponding pdf, and compares to the normal distribution
 % of this result that is predicted by the central limit theorem.  
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all, N=10^7, M=100  % <- fiddle with N and M to test
 x=rand(N+M,1); for j=1:N, y(j)=sum(x(j:j+M-1)); end

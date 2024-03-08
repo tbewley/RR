@@ -1,6 +1,6 @@
 % script RR_Ex06_02_cascade_mass_spring
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap06
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; syms L1 L2 L3 L4 x1 x2 u
 eqn1= L1*x1+L2*x2==u;

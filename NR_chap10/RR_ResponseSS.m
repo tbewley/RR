@@ -8,7 +8,7 @@ function RR_ResponseSS(A,B,C,D,w,g,Input)
 % over which the response is plotted, and {g.styleu,g.styley} are the linestyles used.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 10.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap10">Chapter 10</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% Depends on <a href="matlab:help RR_Gauss">RR_Gauss</a>, <a href="matlab:help RR_GaussLU">RR_GaussLU</a>.  Verify with: <a href="matlab:help RR_ResponseSSTest">RR_ResponseSSTest</a>.
+% Depends on <a href="matlab:help RR_Gauss">RR_Gauss</a>, <a href="matlab:help RR_GaussLU">RR_GaussLU</a>.  Trial: <a href="matlab:help RR_ResponseSSTest">RR_ResponseSSTest</a>.
 
 N=length(A); M=size(B,2); P=size(C,1); x=zeros(N,1); K=1000; h=g.T/K; t=[0:K]*h;
 if w==0; u(1,:)=[2/h, zeros(1,K)]; elseif w>0, u(1,:)=t.^(w-1);

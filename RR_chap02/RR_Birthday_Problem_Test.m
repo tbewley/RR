@@ -6,7 +6,7 @@
 % groupings for 2 people to have the same birthday, and compares to the
 % distribution (as a CDF) of this result that is predicted by theory.  
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all, N=10^6   % <- fiddle with N to test
 b=365; max=70; x=randi(b,N+max,1);

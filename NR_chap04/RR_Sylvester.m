@@ -5,7 +5,7 @@ function X=RR_Sylvester(A,B,C,g,m,n)
 % See <a href="matlab:web('http://numerical-renaissance.com')">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.5.1.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_Sylvester. Depends on RR_Schur, RR_GaussPP.
-% Verify with RR_SylvesterTest.
+% Trial: RR_SylvesterTest.
 
 [U,A0]=RR_Schur(A); [V,B0]=RR_Schur(B); C0=U'*C*V; X0=RR_SylvesterTri(A0,B0,C0,g,m,n); X=U*X0*V';
 end % function RR_Sylvester

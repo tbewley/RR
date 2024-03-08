@@ -5,7 +5,7 @@
 % RC develops, from first principles, alternatives to matlab's built-in commands, such as
 % <a href="matlab:help RR_Eig">RR_Eig</a> and <a href="matlab:help RR_Inv">RR_Inv</a> (mixed case).
 % Renaissance Codebase, Appendix A, https://github.com/tbewley/RC
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear, R = randn(4), [S,Lambda] = eig(R), S_times_Sprime=S*S'
 disp('As R has random real entries, it may have real or complex-conjugate pairs of eigenvalues,')

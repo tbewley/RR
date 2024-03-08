@@ -7,7 +7,7 @@ function x=RR_LCG32(i_max,reverse)
 % OUTPUT: x
 % TESTs:  RR_LCG32(7), RR_LCG32(6,true)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap02
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 persistent XOLD, if nargin<1, i_max=1; end
 m=65521; if nargin<2, a=32236; else, a=17364; end

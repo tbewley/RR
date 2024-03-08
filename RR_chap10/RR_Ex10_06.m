@@ -1,6 +1,6 @@
 function RR_Ex10_06
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all;
 A= [0 0 1 0 0; 0 0 .199 1 0; 0 -.002 -.194 -.167 .748;

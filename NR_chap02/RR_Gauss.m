@@ -3,8 +3,8 @@ function [B,A] = RR_Gauss(A,B,n)
 % Solve AX=B for X using RR_Gaussian elimination without pivoting.  The matrix B is replaced
 % by the solution X on exit, and (if requested) the matrix A is replaced by the m_ij and U.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_GaussLU. Verify with RR_GaussTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_GaussLU. Trial: RR_GaussTest.
 
 for j = 1:n-1,                                                  % FORWARD SWEEP
    % Looping through each column j<n, compute the m_ij=-a_ij/a_jj for j+1<=i<=n.

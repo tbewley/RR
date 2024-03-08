@@ -3,7 +3,7 @@
 % (with theta closed on inner loop, and phi closed on outer loop), with simplified
 % constants as suggested in the UCSD MAE143b S2 2013 final exam (version 1)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; k1=100, k2=1, z1=10
 p(1)=-10; p(2)=-1; p(3)=10; p,  disp('den_G1=[s-p(1)][s-p(2)][s-p(3)]; note signs!')

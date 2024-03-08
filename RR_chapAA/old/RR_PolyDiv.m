@@ -9,7 +9,7 @@ function [d,b]=RR_PolyDiv(b,a)
 % TEST2:   syms K, num=[1 K 2*K 3*K], den=[1 K], [div,rem]=RR_PolyDiv(num,den)
 %          check=RR_PolyAdd(RR_PolyProd(div,den),rem)
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chapAA
-% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 m=length(b); n=length(a); if m<n d=0; else
   if strcmp(class(b),'sym')|strcmp(class(a),'sym'), syms d, end

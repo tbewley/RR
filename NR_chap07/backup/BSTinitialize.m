@@ -4,7 +4,7 @@ function [D,r]=RR_BSTinitialize(D)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 7.1.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap07">Chapter 7</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_BSTinsert, RR_BSTrotateLR, RR_BSTrotateL, RR_BSTrotateR, RR_BSTbalance, RR_BSTenumerate,
-% RR_BSTsuccessor.  Verify with RR_BSTtest.
+% RR_BSTsuccessor.  Trial: RR_BSTtest.
 
 [n,m]=size(D); D=[D zeros(n,5)]; r=1;
 for i=2:n, [D,r]=RR_BSTinsert(D,i,r); if mod(i,1)==0, RR_BSTplot(D,r), pause(.01), end, end

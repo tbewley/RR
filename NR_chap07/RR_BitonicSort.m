@@ -2,9 +2,9 @@ function [D,index]=RR_BitonicSort(D,v,n)
 % function [D,index]=RR_BitonicSort(D,v,n)
 % Reorder a matrix D based on the n=2^s elements in its first column using a bitonic sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_OddEvenRR_MergeSort.  Verify with RR_BitonicSortTest.
+% RR_OddEvenRR_MergeSort.  Trial: RR_BitonicSortTest.
 
 s=log2(n); if nargout==2, D=[D, [1:n]']; end
 for stage=1:s, N=2^stage; Nsets=n/N;

@@ -1,7 +1,7 @@
 function RR_Robot_Path
 
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap11
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 U=.3;                     % U=(U_right+U_left)/2 = target forward velocity (MKS units)
 Udiff=0;                  % U_diff=U_right-U_left = steering control variable

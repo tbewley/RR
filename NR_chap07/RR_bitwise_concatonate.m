@@ -9,7 +9,7 @@ function hash_fn=RR_generate_hash_fn(data,N_bits,N_data)
 %              N_hash <= 54 generates hash_fn as a single integer
 %              54 < N_hash <= 108 generates hash_fn as a pair of integers
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap01
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 N_hash=N_bits*N_data;                    % PART A: Calculate total length of hash function.
 data_b=num2bin(q_bit,data);              % Convert this data to binary form

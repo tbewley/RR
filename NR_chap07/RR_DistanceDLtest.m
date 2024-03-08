@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_DistanceDLtest">RR_DistanceDLtest</a>
 % Test <a href="matlab:help RR_DistanceDL">RR_DistanceDL</a> on a couple of string pairs.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 W.S=1; W.I=1; W.D=1; W.C=1; W.E=1;
 a='CA', b='ABC', DL1=RR_DistanceDL(a,b,W,1), disp(' ')  % Test from Wikipedia's DL page.

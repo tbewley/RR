@@ -3,8 +3,8 @@ function [G] = RR_CirculantLU(a,b,c,d,e,G,n)
 % This function uses the LU decomposition returned [in the (a,b,c,d,e) vectors] by a
 % prior call to RR_Circulant.m to solve the system AX=G using forward / back substitution.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% See also RR_Circulant. Verify with RR_CirculantTest.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% See also RR_Circulant. Trial: RR_CirculantTest.
 
 for j = 1:n-1,
    G(j+1,:) = G(j+1,:) + a(j+1)*G(j,:);                     % FORWARD SURR_BSTITUTION

@@ -7,7 +7,7 @@ function [r,y,t]=ResponseTF(gs,fs,type,g)
 % g.N is the number of timesteps, and {g.styleu,g.styley} are the linestyles used.
 % See <a href="matlab:NRweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 17.3.3.
 % Part of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help NRchap17">Chapter 17</a>; please read the <a href="matlab:help NRcopyleft">copyleft</a>.
-% Depends on <a href="matlab:help PartialFractionExpansion">PartialFractionExpansion</a>, <a href="matlab:help Fac">Fac</a>.  Verify with: <a href="matlab:help ResponseTFtest">ResponseTFtest</a>.
+% Depends on <a href="matlab:help PartialFractionExpansion">PartialFractionExpansion</a>, <a href="matlab:help Fac">Fac</a>.  Trial: <a href="matlab:help ResponseTFtest">ResponseTFtest</a>.
 
 numR=Fac(type-1); denR=1; for i=1:type, denR=[denR 0]; end,  gs=gs/fs(1);
 [rp,rd,rk]=PartialFractionExpansion(numR,denR);              fs=fs/fs(1);

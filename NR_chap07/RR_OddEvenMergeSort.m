@@ -2,9 +2,9 @@ function [D,index]=RR_OddEvenRR_MergeSort(D,v,a,n)
 % function [D,index]=RR_OddEvenRR_MergeSort(D,v,a,n)
 % Reorder D based on the n=2^s elements in its first column using an odd/even merge sort.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_InsertionSort, RR_BlockInsertionSort, RR_MergeSort, RR_QuickSort, RR_HeapSort, RR_CocktailSort,
-% RR_BitonicSort.  Verify with RR_OddEvenRR_MergeSortTest.
+% RR_BitonicSort.  Trial: RR_OddEvenRR_MergeSortTest.
 
 if nargin==3, n=a; a=1; end, if nargout==2, D=[D, [1:n]']; end
 if n>1, m=round(n/2);

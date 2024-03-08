@@ -1,7 +1,7 @@
 % script <a href="matlab:RR_PODtest">RR_PODtest</a>
 % Test the POD algorithm on a random set of periodic training data with a given spectra.
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap07
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
 
 L=2*pi; m=200; n1=30; n2=3; n=n1+n2; kmax=100; x=[0:L/(m-1):L]'; p=6; A=zeros(m,n);  
 for j=1:n, for k=1:kmax      % Initialize n vectors (n1 for training, n2 for testing)

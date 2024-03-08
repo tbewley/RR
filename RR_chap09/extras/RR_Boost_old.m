@@ -1,7 +1,7 @@
 % script RR_Boost
 % Solves the basic equations of a boost converter.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap10
-% Copyright 2024 by Thomas Bewley, distributed under Modified BSD License.
+% Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 clear; syms C L R Vs Vd VoutB ILB IL IC IR Vm Vout s
 eqn1= Vm-Vout==Vd/s; eqn2= Vout==R*IR; eqn3= IC==C*(s*Vout-VoutB);

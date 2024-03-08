@@ -23,7 +23,7 @@ function out = RR_cordic_derived(func,in,n,cordic_tables)
 %         x=0.5, RR_cordic_derived('asinh',x,40,cordic_tables), ash=asinh(x), RR_pause
 %         x=2, y=0.25, RR_cordic_derived('power',[x,y],40,cordic_tables), apy=x^y
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap01
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 switch func
   case 'tan'

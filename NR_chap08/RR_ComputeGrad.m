@@ -11,8 +11,8 @@ function [g] = RR_ComputeGrad(x,N,Compute_f,method,e)
 % OUTPUTS: g = gradient of the function Compute_f(x) in the vicinity of x
 % TEST:    use RR_ComputeGradTest
 % Renaissance Codebase, https://github.com/tbewley/RC/NRchap08
-% Copyright 2023 by Thomas Bewley, distributed under BSD 3-Clause License. 
-% Verify with: <a href="matlab:help ComputeGradTest">ComputeGradTest</a>.
+% Copyright 2023 by Thomas Bewley, published under BSD 3-Clause License. 
+% Trial: <a href="matlab:help ComputeGradTest">ComputeGradTest</a>.
 
 for k=1:N, switch method
   case 'FD'

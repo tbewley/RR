@@ -7,7 +7,7 @@ function [uhat]=RR_RFFT3D(u,NX,NY,NZ)
 % This code also computes the 2D FFT of u if NZ=1.
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.10.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
-% See also RFFT3Dinv, RFFT.  Verify with: RFFT3Dtest.
+% See also RFFT3Dinv, RFFT.  Trial: RFFT3Dtest.
 
 for J=1:NY,   for K=1:NZ, uhat(:,J,K)=RR_RFFT(u(:,J,K),NX); end, end
 uhat(1,:,:)=real(uhat(1,:,:)); 

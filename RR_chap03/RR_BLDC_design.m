@@ -5,7 +5,7 @@ function RR_BLDC_design(ns_min,ns_max,np_min,np_max)
 %         np_min,np_max=range for number of poles (multiples of 2)
 % EXAMPLE CALL: RR_BLDC_design(6,36,4,34)
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/RR_chap03
-%% Copyright 2024 by Thomas Bewley, distributed under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 ns=[ns_min:3:ns_max]; np=[np_min:2:np_max];
 n_ns=length(ns); n_np=length(np); n=1; sigma=pi/3;

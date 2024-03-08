@@ -5,7 +5,7 @@ function [A,U,V] = RR_Bidiagonalization(A,m,n)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 4.4.7.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap04">Chapter 4</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_Hessenberg. Depends on ReflectCompute, Reflect.
-% Verify with BidiagonalizationTest.
+% Trial: BidiagonalizationTest.
 
 V=eye(n,n); U=eye(m,m); 
 for i=1:min(m,n)

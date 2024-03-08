@@ -9,7 +9,7 @@ function [x] = RR_FFTrecursive(x,N,g)
 % See <a href="matlab:RCweb">Numerical Renaissance: simulation, optimization, & control</a>, Section 5.4.1.
 % Part of <a href="matlab:help RCC">Numerical Renaissance Codebase 1.0</a>, <a href="matlab:help RCchap05">Chapter 5</a>; please read the <a href="matlab:help RCcopyleft">copyleft</a>.
 % See also RR_FFTdirect, RR_FFTnonreordered. Depends on <a href="matlab:help RR_FFTrecursive">FFTrecursive</a> (that is, it's recursive...)
-% Verify with: RR_FFTrecursiveTest.
+% Trial: RR_FFTrecursiveTest.
                                                                                                        
 if N>1                                        % If N=1, do nothing, else...
    M=N/2; w=exp(g*2*pi*i/N); xe=x(1:2:N-1); xo=x(2:2:N);
