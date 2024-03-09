@@ -1,8 +1,8 @@
 # the Renaissance Repository (RR)
 The codes in this consolidated repository are associated with two forthcoming texts,<BR>
-<a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> (also abbreviated RR) and
-<a href="http://robotics.ucsd.edu/RR.pdf">Numerical Renaissance</a> (NR),<BR>
-by Thomas Bewley.  The RR text is intended to be accessible by advanced undergraduates, but the first several chapters of it are likely also accessible by advanced high school students; the NR text, which builds directly on the RR text,
+<a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> and
+<a href="http://robotics.ucsd.edu/RR.pdf">Numerical Renaissance</a>,
+by Thomas Bewley.<BR>  The former is intended to be accessible by advanced undergraduates; the first several chapters of it are likely also accessible by advanced high school students; the latter, which builds directly on the former,
 is designed primarily for students in graduate school or beyond. Drafts of these texts are maintained at the above two links; to see what they are about, please read their frontmatter.<BR>
 
 The various pedagogical codes in the Renaissance Repository (all prefixed by RR_, and mostly written in Matlab/Octave though there are also a few codes in Fortran and C) are organized in this repo by the individual chapters of these two (RR and NR) texts.
