@@ -12,4 +12,4 @@ To set your Matlab/Octave path in a way that will streamline your use of these c
 please call <a href="https://github.com/tbewley/RR/blob/main/RR_path_init.m">RR_path_init.m</a> from your startup.m file, and discussed in sections A.4-A.5 of <a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a>.<BR><BR>
 To suggest a bug fix, please submit a <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests">pull request</a>.
   
-All files in the the Renaissance Repository are Copyright 2024 by Thomas Bewley, published under <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.<BR>
+All files in the the Renaissance Repository are Copyright 2024 by Thomas Bewley, and published under the <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.<BR>

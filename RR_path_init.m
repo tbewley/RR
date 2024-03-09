@@ -17,7 +17,7 @@
 % You can also put other commonly needed Matlab initialization commands in your startup.m file.
 %
 % Renaissance Repository, https://github.com/tbewley/RR
-% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+% Copyright 2024 by Thomas Bewley, and published under the BSD 3-Clause License
 
 format compact, close all
 % IMPORTANT: modify the definition of RRbase in the startup.m code (see above) to indicate the
@@ -42,7 +42,8 @@ addpath(strcat(RRbase,'/Renaissance_Robotics/chap01'),strcat(RRbase,'/Renaissanc
         strcat(RRbase,'/Numerical_Renaissance/chap13'),strcat(RRbase,'/Numerical_Renaissance/chap14'),...
         strcat(RRbase,'/Numerical_Renaissance/chap15'),strcat(RRbase,'/Numerical_Renaissance/chap16'),...
         strcat(RRbase,'/Numerical_Renaissance/chap17'),strcat(RRbase,'/Numerical_Renaissance/chap18'),...
-        strcat(RRbase,'/Numerical_Renaissance/chap19'),RRbase) 
+        strcat(RRbase,'/Numerical_Renaissance/chap19'),...
+        strcat(RRbase,'/Renaissance_Robotics'),strcat(RRbase,'/Numerical_Renaissance'),RRbase) 
 disp("Path set for using the Renaissance Repository (RR), including codes discussed")
 disp("in the forthcoming texts Renaissance Robotics and Numerical Renaissance.")
 disp("Note: please use GitHub Desktop to keep "+RRbase)
