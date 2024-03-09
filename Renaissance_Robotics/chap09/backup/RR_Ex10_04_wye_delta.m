@@ -3,7 +3,7 @@
 % to compute the equivalent resistance of a Wheatstone Bridge of resistors.
 % [If you don't use a computer to do such algebra, it gets messy!  Instead,
 % just state the equations, as done below, and have the computer solve them!]
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 % Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 % The following method of symbolic solution extends easily to many simple

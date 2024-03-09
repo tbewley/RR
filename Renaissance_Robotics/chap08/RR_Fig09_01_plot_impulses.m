@@ -1,7 +1,7 @@
 % script RR_Fig09_01_plot_impulses
 % This script just plots a few of impulses that, in the appropriate limits,
 % form finite approximations of the Dirac Delta. 
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap08
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 8)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all; x=[-0.3:.00025:.3];

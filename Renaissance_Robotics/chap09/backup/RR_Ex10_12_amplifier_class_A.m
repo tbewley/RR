@@ -1,6 +1,6 @@
 % script RR_Ex10_12_amplifier_class_A
 % Solves the equations of a simple Class A amplifier.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 % Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 clear, syms s C0 R1 R2 V_in V_s

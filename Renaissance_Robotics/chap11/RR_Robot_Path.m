@@ -1,6 +1,6 @@
 function RR_Robot_Path
 
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap11
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 11)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 U=.3;                     % U=(U_right+U_left)/2 = target forward velocity (MKS units)

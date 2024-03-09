@@ -1,7 +1,7 @@
 % script RR_Ex10_antinotch_filter
 % This code implments the equations governing the so-called "anti-notch" filter,
 % as discussed in problem 1 of the 2024 midterm in MAE40.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap09
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave

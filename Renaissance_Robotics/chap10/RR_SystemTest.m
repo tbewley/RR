@@ -1,5 +1,5 @@
 function TestSystem(numG,denG,numD,denD,g)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 num=PolyConv(numG,numD); den=PolyConv(denG,denD); num=[zeros(1,length(den)-length(num)) num];

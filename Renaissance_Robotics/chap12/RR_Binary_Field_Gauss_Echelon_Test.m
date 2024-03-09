@@ -1,6 +1,6 @@
 % script RR_Binary_Field_Gauss_Echelon_Test
 % Test RR_Binary_Field_Gauss_Echelon on a binary matrix with m=4, n=5, and r=3.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap12
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 12)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 disp('Now testing RR_Binary_Field_Gauss_Echelon on a matrix with m=4, n=5, and r=3.')

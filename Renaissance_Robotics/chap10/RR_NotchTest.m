@@ -1,6 +1,6 @@
 function NotchTest                                   % Numerical Renaissance Codebase 1.0
 
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 alpha=1; m=1; a=sqrt(2*alpha*9.8); numG=[1/m]; denG=PolyConv([1 sqrt(-1)*a],[1 -sqrt(-1)*a]);

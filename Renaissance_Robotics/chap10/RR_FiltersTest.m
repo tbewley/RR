@@ -1,4 +1,4 @@
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; w=linspace(.01,2.5,1000)';

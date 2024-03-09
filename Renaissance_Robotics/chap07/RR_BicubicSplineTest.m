@@ -1,6 +1,6 @@
 % script <a href="matlab:RR_BicubicSplineTest">RR_BicubicSplineTest</a>
 % Test <a href="matlab:help RR_BicubicSpline">RR_BicubicSpline</a> on data from a smooth fn.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap07
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all, clear; Lx=17; Ly=30; ep=.00001; xmin=-Lx/2; xmax=Lx/2; ymin=-Ly/2; ymax=Ly/2;

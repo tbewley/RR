@@ -1,5 +1,5 @@
 % script RR_riemann_surface
-%%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAB
+%%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix B)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 clear; close all; R=[0:.1:1.5]; ii=i;

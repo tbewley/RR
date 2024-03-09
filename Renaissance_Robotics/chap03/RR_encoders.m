@@ -7,7 +7,7 @@ function RR_encoders(m,Rmin,Rmax,Rgap)
 %         Rgap=gap between marks
 % OUTPUT: (none)
 % EXAMPLE CALL: RR_encoders(6,0.2,1,0.01)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap03
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 3)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 DeltaR=Rmax-Rmin; dr=DeltaR/(m+1);

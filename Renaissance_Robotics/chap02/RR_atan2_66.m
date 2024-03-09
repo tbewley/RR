@@ -5,7 +5,7 @@ function [out]=RR_atan2_66(b,a)
 % with about 6.6 digits of precision
 % TEST:   a=randn, b=randn, x=atan2(b,a), y=RR_atan2_66(b,a), residual=norm(x-y)
 %         (also try changing a and/or b to zero and rerunning the test!)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if     (b~=0 & a>0 ), out=sign(b)*RR_atan_66(abs(b/a));

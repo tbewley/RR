@@ -1,7 +1,7 @@
 % script RR_bode_integral_thm
 % Plot ln|S(i*omega)| where S=1/[1+L(s)], and L is of type RR_tf,
 % thereby demonstrating Bode's integral theorem, for nr>1
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; num=RR_poly(10); den=RR_poly([-1 -10],1);

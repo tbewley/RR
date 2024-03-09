@@ -1,6 +1,6 @@
 % script RR_Ex10_20_boost_converter
 % Solves the equations of a boost converter.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 % Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 % Solve for the initial conditions of the periodic cycle.  Note that problem is linear!

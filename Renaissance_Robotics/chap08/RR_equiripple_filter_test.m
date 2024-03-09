@@ -1,7 +1,7 @@
 % script RR_equiripple_filter_test
 % Compare the order n Butterworth, Chebyshev, Inverse Chebyshev, and elliptic filters
 % NOTE: linear Bode plots are used here, which is nonstandard.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap08
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 8)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear all, close all, omegac=10; n=8; epsilon=0.3; delta=0.04; g.omega_max=omegac*2;

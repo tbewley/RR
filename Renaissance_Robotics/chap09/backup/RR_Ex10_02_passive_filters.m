@@ -2,7 +2,7 @@
 % Solves the basic equations of four simple passive filters.
 % These examples are easy to solve by hand, but illustrate how
 % to put a few linear equations into A*x=b form and solve using Matlab.
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 % Copyright 2024 by Thomas Bewley, published under Modified BSD License.
 
 clear, close all, syms s Vi Vs C L R R1 R2

@@ -1,6 +1,6 @@
 % script RR_diophantine_test
 % Tests the Diophantine code on both integers and polynomials
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
   
 clc, disp('Set up a simple integer Diophantine problem (solve a*x+b*y=f for x and y)')

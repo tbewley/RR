@@ -6,7 +6,7 @@ function [c,overflow]=RR_binary_add(a,b)
 % TEST:    [c,overflow]=RR_binary_add('1001','1011')
 % NOTE! This code is NOT AT ALL efficient, and is meant for pedagogical purposes only.
 % To accomplish binary addition efficiently, lower-level commands (in C or assembler) are required.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Original code by Eric Verner, reproduced here with only minor tweaks.
 
 a=[repmat('0',1,length(b)-length(a)) a]; % Make a and b of same length

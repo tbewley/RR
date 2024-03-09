@@ -7,7 +7,7 @@ function Nyquist(num,den,g)
 % pole on the imaginary axis, and g.R is the (large) radius of the D contour.
 % Practical recommendation: do not make g.eps too small, or g.R too big, until you see
 % where the corresponding curves are in both the s plane and the L plane!
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 % Trial: <a href="matlab:help NyquistTest">NyquistTest</a>.  Depends on <a href="matlab:help PolyVal">PolyVal</a>.
 

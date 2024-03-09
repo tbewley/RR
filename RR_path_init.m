@@ -16,7 +16,7 @@
 % the full path to this directory might look something like, e.g., 'C:\Users\bewley\RR'
 % You can also put other commonly needed Matlab initialization commands in your startup.m file.
 %
-% Renaissance Robotics codebase, https://github.com/tbewley/RR
+% Renaissance Repository, https://github.com/tbewley/RR
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 format compact, close all

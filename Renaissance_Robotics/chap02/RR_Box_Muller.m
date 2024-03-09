@@ -4,7 +4,7 @@
 % to a sequence of normally-distrubuted real numbers z
 % with specified mean mu and standard deviation sigma, and
 % plots histograms of both, normalized to reflect the corresponding pdf.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 N=10^6, mu=5, sigma=4  % <- fiddle with N, mu, and sigma to test

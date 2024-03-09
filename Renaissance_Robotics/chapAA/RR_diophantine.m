@@ -5,7 +5,7 @@ function [x,y,r,t] = RR_diophantine(a,b,f)
 % OUTPUTS: x,y = solution of integer or polynomial Diophantine eqn with the lowest order for y
 %          r,t (OPTIONAL) = terms used to generate the general solution, {x+r*k,y-t*k} for any polynomial k.
 % TEST:    Trial: <a href="matlab:RR_diophantine_test">RR_diophantine_test</a>.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 [g,xg,yg]=RR_bezout(a,b);  % Start by calling the Bezout algorithm

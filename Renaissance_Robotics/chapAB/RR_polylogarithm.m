@@ -8,7 +8,7 @@ function [Li]=RR_polylogarithm(p,r)
 % TEST1:  syms r; Li=RR_polylogarithm(1,r)
 % TEST2:  syms r; Li=RR_polylogarithm(2,r)  % Compare these entries to those in Table 9.1
 % TEST3:  syms r; Li=RR_polylogarithm(3,r)
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAB
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix B)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 Li_den=RR_poly([1/r -1])^(p+1); Li_num=RR_poly(0);

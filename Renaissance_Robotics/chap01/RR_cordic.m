@@ -19,7 +19,7 @@ function out = RR_cordic(func,in,n,cordic_tables)
 %              moh=sqrt(x^2-y^2), ath=z+atanh(y/x), RR_pause
 %         x=1.1, y=0.1, z=0.6, RR_cordic('MAC',[x;y;z],30,cordic_tables), mac=y+z*x, RR_pause
 %         x=1.1, y=0.1, z=0.6, RR_cordic('DAC',[x;y;z],30,cordic_tables), dac=z+y/x
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap01
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 1)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 switch func

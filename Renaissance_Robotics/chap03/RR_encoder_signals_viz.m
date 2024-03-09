@@ -1,6 +1,6 @@
 % script plot_encoder_signals
 % Plot the signals from quadrature (AB) and commutation (UVW) encoders
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap03
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 3)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 figure(1); clf

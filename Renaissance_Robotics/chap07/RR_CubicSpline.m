@@ -2,7 +2,7 @@ function [f,fp]=RR_CubicSpline(x,xd,fd,fpp,h)
 % function [f,fp]=RR_CubicSpline(x,xd,fd,fpp,h)
 % Perform cubic spline interpolation based on the {xd,fd} and evaluate at the points in x.
 % Note: the initialization data {fpp,h} must be computed first using RR_CubicSplineSetup.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap07
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 % See also RR_Lagrange, RR_LinearSpline. Depends on result from RR_CubicSplineSetup.
 % Trial: RR_CubicSplineTest.

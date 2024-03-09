@@ -1,5 +1,5 @@
 function RR_Robot_Maze  % Goal: traverse every path of a maze, build a map, exit once finished.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap11
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 11)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % We build up in p a model of all points known so far, and their connectivity,

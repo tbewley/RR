@@ -4,7 +4,7 @@ function [X,node,n,tri]=RR_random_pipe_network(n,L)
 %       [node,num_pipes]=RR_eulerize(distance,node,route,X,num_nodes);
 %       [circuit]=RR_hierholzer(node,X,num_nodes,num_pipes);
 %       [circuit]=RR_northstar(node,X,num_nodes,num_pipes,route);
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap11
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 11)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 X=[randi(L,n-1,2); 1 1]-[(L-1)/2+1 (L-1)/2]; X=sortrows(sortrows(X,2));

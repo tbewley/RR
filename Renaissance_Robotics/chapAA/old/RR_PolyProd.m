@@ -4,7 +4,7 @@
 % INPUT:  a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v = vectors of polynimal coefficients
 % OUTPUT: a = vector of polynomial coefficients, given by product of input polynomials
 % TEST:   a=[1 2], b=[2 3 4], pab=RR_PolyProd(a,b), pba=RR_PolyProd(b,a)
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if nargin>19, a=RR_PolyProd(a,t); end, if nargin>18, a=RR_PolyProd(a,s); end

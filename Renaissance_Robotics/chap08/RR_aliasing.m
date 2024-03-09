@@ -1,6 +1,6 @@
 % script RR_aliasing 
 % A simple demonstration of the aliasing phenomenon.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap08
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 8)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clf; h=.1; om1=(9/8)*pi/h; om2=-(7/8)*pi/h;

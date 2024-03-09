@@ -1,5 +1,5 @@
 function [node,num_pipes]=RR_eulerize(distance,node,route,X,n)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap11
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 11)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 odd=[]; for i=1:n, if node(i).odd, odd=[odd i]; end, end, num_odd_modes=size(odd,2)

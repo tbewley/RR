@@ -1,5 +1,5 @@
 function RobotPath3D
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap12
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 12)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 U=2;                  % target forward velocity (MKS units)

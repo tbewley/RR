@@ -8,7 +8,7 @@ function [roots]=RR_roots(p)
 %         rr_solution=RR_roots(cpoly)
 %         matlab_solution=sort(roots(cpoly),'descend','ComparisonMethod','real'), disp(' ')
 %       pause, end
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAB
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix B)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 p=p/p(1);                                     % simplify by first making p monic

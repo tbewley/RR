@@ -6,7 +6,7 @@ function p=RR_PolyDiff(p,d,n)
 %         n= order of polynomial p (optional)
 % OUTPUT: p= vector of polynomial coefficients, given by d'th derivative of input polynomial
 % TEST:   a=[4 4 4 4], p0=RR_PolyDiff(a,0), p1=RR_PolyDiff(a,1), p2=RR_PolyDiff(a,2), p3=RR_PolyDiff(a,3)
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if nargin<2, d=1; end, if nargin<3, n=length(p)-1; end

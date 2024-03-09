@@ -3,7 +3,7 @@ function [out]=RR_atan_66(x)
 % INPUT:  any real x
 % OUTPUT: atan(x), with about 6.6 digits of precision
 % TEST:   x=randn, a=atan(x), b=RR_atan_66(x), residual=norm(a-b)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 tan_pi_over_12=0.267949192431123;

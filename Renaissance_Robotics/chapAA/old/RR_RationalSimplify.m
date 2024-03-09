@@ -10,7 +10,7 @@ function [b,a]=RR_RationalSimplify(b,a)
 %         roots_num_before=roots(num)', roots_den_before=roots(den)'
 %         [num,den]=RR_RationalSimplify(num,den)
 %         roots_num_after=roots(num)', roots_den_after=roots(den)', num, den
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 f=1; while f; x=roots(a); y=roots(b); f=0; for i=1:length(x); for j=1:length(y);

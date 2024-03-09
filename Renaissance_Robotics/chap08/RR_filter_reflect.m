@@ -6,7 +6,7 @@ function HPF=RR_filter_reflect(LPF)
 % OUTPUT: HPF=the corresponding HPF, of type RR_tf
 % TEST:   LPF=RR_LPF_butterworth(4,2), figure(1), RR_bode(LPF)
 %         HPF=RR_filter_reflect(LPF),  figure(2), RR_bode(HPF)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap08
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 8)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 nr=LPF.den.n-LPF.num.n;          den=LPF.den.poly(end:-1:1);

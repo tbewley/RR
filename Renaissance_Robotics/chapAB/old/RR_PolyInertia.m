@@ -7,7 +7,7 @@ function inertia=RR_PolyInertia(p)
 % OUTPUT: inertia = vector quantifying number of [LHP pure-imaginary RHP] roots 
 % TEST:   p=RR_PolyConv([1 2.3],[1 1.7],[1 0 1],[1 0.99]), RR_PolyInertia(p);
 %         check_roots_of_p=roots(p)
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAB
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix B)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 % See also RR_PolyStationarity for DT analog.
 

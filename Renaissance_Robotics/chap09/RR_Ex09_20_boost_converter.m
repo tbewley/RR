@@ -1,6 +1,6 @@
 % script RR_Ex10_20_boost_converter
 % Solves the equations of a boost converter.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap09
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % pkg load symbolic  % uncomment this line if running in octave

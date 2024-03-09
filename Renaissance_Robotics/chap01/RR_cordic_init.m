@@ -3,7 +3,7 @@
 % INPUT: (none)
 % OUTPUT: cordic_tables.{K,ang,N}
 % See RR_cordic.m and RR_cordic_core.m for how these tables are used.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap01
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 1)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 N=26;

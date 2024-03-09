@@ -3,7 +3,7 @@ function [out]=RR_ln_8(x)
 % INPUT:  any x>0
 % OUTPUT: ln(x), with 8 digits of precision or better
 % TEST:   x=(2*randn)^4, a=log(x), b=RR_ln_8(x), residual=norm(a-b)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 ln2=0.69314718055994531;

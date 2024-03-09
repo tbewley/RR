@@ -1,5 +1,5 @@
 % script RR_Ex10_14_zener_clipper
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap09
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, close all, R=1000; Tmax=7; N=1000; omega=Tmax/N; A=18;

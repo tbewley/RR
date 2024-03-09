@@ -1,4 +1,4 @@
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap06
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 6)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 syms gamma beta alpha

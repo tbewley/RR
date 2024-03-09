@@ -1,7 +1,7 @@
 % RR_LCG16_Test
 % Tests 3 very simply LCGs with m=2^8-5=251, and plots the adjacent pairs
 % of the random numbers generated to detect k-tuple clustering.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear

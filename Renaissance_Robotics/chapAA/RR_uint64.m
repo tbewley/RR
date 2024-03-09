@@ -15,7 +15,7 @@
 %   mpower:   a^n  gives the n'th power of a polynomial
 %   Note that the relations <, >, <=, >=, ~=, == are all based just on the order of the polynomials.
 %
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 classdef RR_uint64 < matlab.mixin.CustomDisplay

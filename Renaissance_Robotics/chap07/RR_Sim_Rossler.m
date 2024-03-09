@@ -1,6 +1,6 @@
 % script RR_Sim_Rossler
 % A simple RK4 simulation of the Rossler attractor.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap07
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear, close all, T=100; h=0.04; x=[10*randn; 10*randn; 0];  % Set up simulation

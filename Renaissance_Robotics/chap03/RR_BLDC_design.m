@@ -4,7 +4,7 @@ function RR_BLDC_design(ns_min,ns_max,np_min,np_max)
 % INPUT:  ns_min,ns_max=range for number of slots (multiples of 3)
 %         np_min,np_max=range for number of poles (multiples of 2)
 % EXAMPLE CALL: RR_BLDC_design(6,36,4,34)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap03
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 3)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 ns=[ns_min:3:ns_max]; np=[np_min:2:np_max];

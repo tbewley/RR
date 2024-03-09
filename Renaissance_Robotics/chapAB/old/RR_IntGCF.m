@@ -7,7 +7,7 @@ function [g,q,n] = RR_IntGCF(a,b)
 %          n   = number of steps taken by Euclid's algorithm
 % TEST:    a=int32(385),  b=int32(357), [g,q,n] = RR_IntGCF(a,b)  % Apply Euclid's alorithm to find the GCF g
 %          g_normalized=g/g(1)    % Note that g comes out with arbitrary scaling
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAB
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix B)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if abs(b)>abs(a), disp('ERROR: Need |a|>|b|.'); return; end

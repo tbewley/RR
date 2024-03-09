@@ -1,6 +1,6 @@
 % script <a href="matlab:RR_LinearSplineTest">RR_LinearSplineTest</a>
 % Test <a href="matlab:help RR_LinearSpline">RR_LinearSpline</a> on data from a smooth function.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap07
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 close all, clear, L=4*pi; xmin=0; xmax=L; ep=.0001; nd=10; n=100;

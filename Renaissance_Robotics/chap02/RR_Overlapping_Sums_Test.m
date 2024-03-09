@@ -6,7 +6,7 @@
 % then plots the histogram of the values of y computed, normalized to
 % reflect the corresponding pdf, and compares to the normal distribution
 % of this result that is predicted by the central limit theorem.  
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; close all, N=10^7, M=100  % <- fiddle with N and M to test

@@ -1,5 +1,5 @@
 function [distance,route]=RR_dijkstra(node,X,n)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap11
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 11)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n, for j=1:n, route{i,j}=[]; if i==j, distance(i,j)=0; else, distance(i,j)=Inf; end, end, end

@@ -10,7 +10,7 @@ function [a,b,c,d,e,f,g,h,i,j]=RR_permute(a,b,c,d,e,f,g,h,i,j)
 %          [c,a,b]=RR_permute(a,b,c)             % Permute a->c, b->a, c->b
 %          pause; d=randn(1,4), e='dude this is so cool', disp(' ')
 %          [b,c,d,e,a]=RR_permute(a,b,c,d,e) % Permute a->b, b->c, c->d, d->e, e->a
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chapAA
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if nargin~=nargout, error('RR_permute should have the same # of inputs & outpus')

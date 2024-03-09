@@ -7,7 +7,7 @@ function Rcom=RR_common_resistor_values(R,n,direction)
 % OUTPUT: Rcom=closest resistor value in the series selected.
 % TESTS:  Rcom=RR_common_resistor_values(7000,24,'closest')
 %         Rcom=RR_common_resistor_values(6000,12,'down')
-% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 % Copyright 2024 by Thomas Bewley, published under Modified BSD License. 
 
 switch n

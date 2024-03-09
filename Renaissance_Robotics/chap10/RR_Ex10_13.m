@@ -1,5 +1,5 @@
 % script Example_10_13
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap10
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 clear; bs=[1]; as=[1 -6 5]; h=.2; g.T=2;

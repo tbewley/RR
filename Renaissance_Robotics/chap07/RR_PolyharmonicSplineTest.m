@@ -1,6 +1,6 @@
 % script <a href="matlab:RR_PolyharmonicSplineTest">RR_PolyharmonicSplineTest</a>
 % Test <a href="matlab:help RR_PolyharmonicSpline">RR_PolyharmonicSpline</a> on data from a smooth fn.
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap07
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
  
 clear; Lx=17; Ly=30; Nx=85; Ny=150; N=150; kmax=6;   % Lx*Ly domain, k=order of RBFs

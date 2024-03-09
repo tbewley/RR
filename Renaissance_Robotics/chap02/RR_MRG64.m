@@ -6,7 +6,7 @@ function x=RR_MRG64(i_max)
 % INPUT:  i_max (OPTIONAL) number of random numbers to return.  default=1
 % OUTPUT: x
 % TEST:   RR_MRG64(7)
-%% Renaissance Repository, https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/RR_chap02
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 persistent XOLD, if nargin<1, i_max=1; end
