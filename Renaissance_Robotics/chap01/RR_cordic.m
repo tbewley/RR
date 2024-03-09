@@ -7,7 +7,7 @@ function out = RR_cordic(func,in,n,cordic_tables)
 %         n=number of iterations (with increased precision for larger n; try n<40)
 %         cordic_tables=tables of values initialized using RR_cordic_init
 % OUTPUT: v, modified by n shift/add iterations of the generalized CORDIC algorithm,
-% TESTS:  x=1, RR_cordic('cos_sin',x,30,cordic_tables), c=cos(x), s=sin(x), RR_pause
+% TESTS:  format long, x=1, RR_cordic('cos_sin',x,30,cordic_tables), c=cos(x), s=sin(x), RR_pause
 %         x=2, y=3, z=1, RR_cordic('Givens',[x;y;z],30,cordic_tables)
 %              G=[cos(z) -sin(z); sin(z) cos(z)], rot=G*[x;y], RR_pause
 %         x=1, y=2, z=3, RR_cordic('mod_atan',[x;y;z],30,cordic_tables)
@@ -18,7 +18,7 @@ function out = RR_cordic(func,in,n,cordic_tables)
 %         x=3, y=1, z=2, RR_cordic('modh_atanh',[x;y;z],30,cordic_tables)
 %              moh=sqrt(x^2-y^2), ath=z+atanh(y/x), RR_pause
 %         x=1.1, y=0.1, z=0.6, RR_cordic('MAC',[x;y;z],30,cordic_tables), mac=y+z*x, RR_pause
-%         x=1.1, y=0.1, z=0.6, RR_cordic('DAC',[x;y;z],30,cordic_tables), dac=z+y/x
+%         x=0.5, y=0.9, z=0.6, RR_cordic('DAC',[x;y;z],30,cordic_tables), dac=z+y/x, format short
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 1)
 %% Copyright 2024 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
@@ -78,3 +78,24 @@ switch func
 end
 out=RR_cordic_core(v,n,rot,mode,cordic_tables);
 end 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [out,sign]=RR_range_reduce(in)
+% function [out,sign]=RR_range_reduce(in)
+% Performs range reduction.
+% NOTE:   initialize cordic_tables by calling RR_cordic_init script (just once)
+% INPUT:  in=any real angle
+% OUTPUT: out=in-2*pi*n+pi*(1-sign)/2, with -pi/2<=out<=pi/2
+%             (thus, sign=-1 corresponds to input angle in quadrant 2 or 3)
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 1)
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+
+twopi=2*pi;                % Range reduction to 0<=t<2*pi
+c=floor(in/twopi); out=in-twopi*c;
+q=1+floor(out/(pi/2));     % Further range reduction to -pi/2<=t<pi/2
+switch q
+  case 1, sign= 1;          
+  case 2, sign=-1; out=out-pi;    
+  case 3, sign=-1; out=out+pi;
+  case 4, sign= 1; out=out-twopi;
+end
+end
