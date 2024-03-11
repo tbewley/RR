@@ -19,6 +19,10 @@ function x=RR_PCG(stream,skip)
 %%    https://www.pcg-random.org/download.html
 %% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
 
+
+% TODO: implement skip!
+
+
 persistent state inc % Matlab will hold these 2 RR_uint64 variables as "persistent" for each stream of RR_PCG
 if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case makes use of stream=1
 if length(state)<s                             % INITIALIZATION OF {state,inc} FOR THIS STREAM
