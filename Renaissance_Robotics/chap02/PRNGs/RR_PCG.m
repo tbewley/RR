@@ -4,7 +4,7 @@ function x=RR_PCG(stream,skip)
 % must be initialized in numerical order, but can be called in arbitrary order after that.
 % Initialization is based on the number of microseconds since midnight on New Years Eve in 2023.
 % INPUT: stream = which independent stream to pull random number from (OPTIONAL, stream=1 by default)
-%        skip = the number of steps to skip forward or backward in stream (OPTIONAL, skip=1 by default)
+%        skip = the number of steps to skip forward or backward in stream (OPTIONAL, skip=0 by default)
 % TEST:  RR_PCG(1), RR_PCG(1), RR_PCG(1)  % Begin stream 1
 %        RR_PCG(2), RR_PCG(2), RR_PCG(2)  % Begin stream 2
 %        RR_PCG(1), RR_PCG(1), RR_PCG(1)  % continue random sequence in stream 1
