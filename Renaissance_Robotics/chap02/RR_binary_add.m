@@ -4,7 +4,7 @@ function [c,overflow]=RR_binary_add(a,b)
 % OUTPUTS: c         corresponding sum of a and b
 %          overflow  flag that indicates if the sum is larger than the input character arrays.
 % TEST:    [c,overflow]=RR_binary_add('1001','1011')
-% NOTE! This code is NOT AT ALL efficient, and is meant for pedagogical purposes only.
+% NOTE! This simplistic code is NOT AT ALL efficient, and is meant for pedagogical purposes only.
 % To accomplish binary addition efficiently, lower-level commands (in C or assembler) are required.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Original code by Eric Verner, reproduced here with only minor tweaks.

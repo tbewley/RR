@@ -2,14 +2,14 @@ function x=RR_PCG(thread)
 % PRNG using Melissa O'Neill's Permuted Congruential Generator (PCG), with 64 bit state and 32 bit output
 % for each thread; many many independent threads are possible. NOTE: for code simplicity, multiple threads
 % must be initialized in numerical order, but can be called in arbitrary order after that.
-% INPUT: thread = which independent thread to pull random number from (optional, thread=1 by default)
+% INPUT: thread = which independent thread to pull random number from (OPTIONAL, thread=1 by default)
 % TEST:  RR_PCG(1), RR_PCG(1), RR_PCG(1)  % Begin thread=1
 %        RR_PCG(2), RR_PCG(2), RR_PCG(2)  % Begin thread=2
 %        RR_PCG(1), RR_PCG(1), RR_PCG(1)  % continue random sequence in thread=1
 %        clear RR_PCG, for i=1:100, RR_PCG(i); end  % inspect the random initilization of 100 threads
 %        % The following test recovers the 32bit output (in hex) of Round 1 of O'Neill's pcg32-demo code
 %        clear RR_PCG; for i=1:6, dec2hex(RR_PCG(0)), end  
-% DEPENDENCIES: This Matlab code uses the RR_uint64 class defined by the code at:
+% DEPENDENCIES: This Matlab code uses the RR_uint64 class defined by:
 %   https://github.com/tbewley/RR/blob/main/chapAA/RR_uint64.m
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at

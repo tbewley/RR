@@ -99,9 +99,10 @@ classdef RR_ss < matlab.mixin.CustomDisplay
             end
             prod.s=G.s|D.s;
         end
-        function sol = mldivide(G1,G2)
+        function sol = mrdivide(G1,G2)
         % function sol = mrdivide(G1,G2)
-        % Defines G1\G2=inv(G1)*G2, where G1 and/or G2 are of class RR_ss
+        % Defines inv(G2)*G1 (in the scalar case, G1/G2), where G2 and/or G1 are of class RR_ss,
+        % assuming G1.ni=G1.no=G2.ni=G2.no and G2.D is invertible 
         % If G1 or G2 is a scalar, vector, or of class RR_poly, it is first converted to class RR_ss   
             [G1,G2]=check(G1,G2);
             if (isempty(G1.h)+isempty(G2.h)==1), error('Both ss forms must be CT or DT'), end
@@ -109,7 +110,7 @@ classdef RR_ss < matlab.mixin.CustomDisplay
               if G1.h~=G2.h, error('Sample times of DT forms do not match'),
               else, sol.h=G2.h; end
             end
-            sol=inv(G1)*G2;
+            sol=inv(G2)*G1;
             sol.s=G1.s|G2.s;
         end
         function inverse = inv(G)
@@ -206,7 +207,7 @@ classdef RR_ss < matlab.mixin.CustomDisplay
                   end, disp(t)
                 end
               end  
-              fprintf('with %d input%s, %d output%s, and %d state%s,', G.ni,ci,G.no,co,G.n,c)
+              fprintf('with %d input%s, %d output%s, and %d state%s\n', G.ni,ci,G.no,co,G.n,c)
               if G.n>1 & G.n<=9
                 if isempty(G.h),
                   e=sort(eig(G.A),'ComparisonMethod','real');

@@ -11,7 +11,7 @@ for i=1:length(R), for j=1:length(theta)
    c(i,j)=theta(j)/2;
 end; end
 figure(1); colormap(hsv(128)); surf(x,y,f,c), axis tight; view(-112,12);
-print -depsc RiemannSqrt.eps
+% print -depsc RiemannSqrt.eps
 
 R=[0.001:.1:1.501]; theta=[0:10:3*360]*pi/180;
 for i=1:length(R), for j=1:length(theta)
@@ -22,4 +22,4 @@ for i=1:length(R), for j=1:length(theta)
 end; end
 figure(2); colormap(jet(128)); surf(x,y,f,c); h=gca;
 set(gca,'ztick',[]); axis tight; view(-112,18);
-print -depsc RiemannLog.eps
+% print -depsc RiemannLog.eps
