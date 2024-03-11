@@ -68,6 +68,6 @@ addpath(strcat(RRbase,'/Numerical_Renaissance/chap01'),...
 addpath(strcat(RRbase,'/Renaissance_Robotics'),strcat(RRbase,'/Numerical_Renaissance'),RRbase);
 disp("Path set for using the Renaissance Repository (RR), including codes discussed")
 disp("in the forthcoming texts Renaissance Robotics and Numerical Renaissance.")
-disp("Note: please use GitHub Desktop to keep "+RRbase)
+disp("Note: please use GitHub Desktop to keep "+RRbase+" on your computer")
 disp("in sync with the main RR repository at https://github.com/tbewley/RR"+newline)
 % end script path_init
