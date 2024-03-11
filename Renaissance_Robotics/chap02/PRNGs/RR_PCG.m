@@ -14,10 +14,10 @@ function x=RR_PCG(stream,skip)
 %        clear RR_PCG; for i=1:6, dec2hex(RR_PCG(0)), end  
 % DEPENDENCIES: This Matlab code depends, internally, on the RR_uint64 class defined by:
 %   https://github.com/tbewley/RR/blob/main/Renaissance_Robotics/chapAA/classes/RR_uint64.m
-%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
-%% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
-%%    https://www.pcg-random.org/download.html
-%% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
+% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
+% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
+%    https://www.pcg-random.org/download.html
+% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
 
 
 % TODO: implement skip!
