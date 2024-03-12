@@ -1,4 +1,5 @@
 function x=RR_PCG(stream,skip)
+% function x=RR_PCG(stream,skip)
 % PRNG using Melissa O'Neill's Permuted Congruential Generator (PCG), with 64 bit state and 32 bit output
 % for each stream; zillions of independent streams are possible. NOTE: for code simplicity, multiple streams
 % must be initialized in numerical order, but can be called in arbitrary order after that.
@@ -15,9 +16,9 @@ function x=RR_PCG(stream,skip)
 % DEPENDENCIES: This Matlab code depends, internally, on the RR_uint64 class defined by:
 %   https://github.com/tbewley/RR/blob/main/Renaissance_Robotics/chapAA/classes/RR_uint64.m
 % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
-% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
-%    https://www.pcg-random.org/download.html
-% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
+%% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
+%%    https://www.pcg-random.org/download.html
+%% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
 
 
 % TODO: implement skip!
