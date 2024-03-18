@@ -28,7 +28,7 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
             obj.v = uint64(abs(v));
             if sign(v)==-1, obj.v=bitcmp(obj.v)+1; end
         end
-        function [sum,carry] = plus(a,b)               % Defines a+b
+        function [sum,carry] = plus(a,b)  % Defines a+b
             [a,b]=check(a,b); c=uint64(9223372036854775807);
             sum=bitand(a.v,c) +bitand(b.v,c);   % add the first 63 bits
             MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64);
@@ -36,8 +36,15 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
             carry=bitget(MSB,2);
         end
         function diff = minus(a,b)        % Defines a-b
-            diff=plus(a,-b);
-        end    
+            [a,b]=check(a,b);
+            if a.v>b.v, diff=RR_uint64(a.v-b.v), else,
+                diff=RR_uint64(b.v-a.v),
+                if diff>4294967295, error('overflow in RR_uint64 subtraction'),
+                else diff=-diff;
+            end
+        end
+        function diff = uminus(a)
+            
         function prod = mtimes(a,b)       % Defines a*b
             [a,b]=check(a,b); cl=uint64(4294967295);
             al=bitand(a.v,cl); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
