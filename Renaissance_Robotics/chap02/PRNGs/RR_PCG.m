@@ -64,4 +64,4 @@ x   = bitor(bitsra(x,rot),bitsll(x,(bitand(bitcmp(rot)+1,31))));
 % a&b      AND       bitand(a,b)
 % a^b      XOR       bitxor(a,b)
 % a|b      OR        bitor(a,b)
-% -a     2's comp.   bitcmp(a
+% -a     2's comp.   bitcmp(a)+1
