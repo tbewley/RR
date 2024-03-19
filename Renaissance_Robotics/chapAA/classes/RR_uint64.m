@@ -37,14 +37,11 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         end
         function diff = minus(a,b)        % Defines a-b
             [a,b]=check(a,b);
-            if a.v>b.v, diff=RR_uint64(a.v-b.v), else,
-                diff=RR_uint64(b.v-a.v),
-                if diff>4294967295, error('overflow in RR_uint64 subtraction'),
-                else diff=-diff;
-            end
+            diff=a+(-b);
         end
-        function diff = uminus(a)
-            
+        function out = uminus(a)
+            out=RR_uint64(bitcmp(a.v)+1);
+        end    
         function prod = mtimes(a,b)       % Defines a*b
             [a,b]=check(a,b); cl=uint64(4294967295);
             al=bitand(a.v,cl); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
