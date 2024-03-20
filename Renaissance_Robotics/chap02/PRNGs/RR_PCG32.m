@@ -1,6 +1,6 @@
 function x=RR_PCG(stream,skip)
 % function x=RR_PCG(stream,skip)
-% PRNG using Melissa O'Neill's Permuted Congruential Generator (PCG), with 64 bit state and 32 bit output
+% PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output
 % for each stream; zillions of independent streams are possible. NOTE: for code simplicity, multiple streams
 % must be initialized in numerical order, but can be called in arbitrary order after that.
 % Initialization is based on the number of microseconds since midnight on New Years Eve in 2023.
@@ -48,9 +48,9 @@ else
   old_state=state{s};  % Continuing computation in stream t
 end
 
-% Update internal 64-bit state of PCG for this stream
+% Update internal 64-bit state of LCG for this stream
 state{s}=old_state*0x5851F42D4C957F2D+inc{s};
-% Then, calculate a 32-bit output using XSH RR method, performing PCG output bit permutations.
+% Then, calculate a 32-bit PCG output using XSH RR method, performing PCG output bit permutations.
 % See section 6.3.1 of https://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf 
 x   = uint32(bitand(bitsra(bitxor(bitsra(old_state.v,18),old_state.v),27),0x00000000FFFFFFFF));
 rot = uint32(bitsra(old_state.v,59));
