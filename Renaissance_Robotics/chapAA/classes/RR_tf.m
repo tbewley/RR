@@ -344,7 +344,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             plot(real(T.p),imag(T.p),'r*',MS,17)
             for j=1:length(g.K); Ls=L*g.K(j); Tj=Ls/(1+Ls); plot(real(Tj.p),imag(Tj.p),'k.',MS,10); end
             if isempty(G.h)
-                grid, plot(5*[a(1) a(2)],[0 0],'k-'), plot([0 0],5*[a(3) a(4)],'k-')
+                grid, plot(5*[g.axes(1) g.axes(2)],[0 0],'k-'), plot([0 0],5*[g.axes(3) g.axes(4)],'k-')
             else
                 axis([-1.3 1.3 -1.3 1.3]), zgrid, 
             end

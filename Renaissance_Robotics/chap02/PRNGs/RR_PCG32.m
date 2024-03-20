@@ -1,18 +1,18 @@
-function x=RR_PCG(stream,skip)
-% function x=RR_PCG(stream,skip)
+function x=RR_PCG32(stream,skip)
+% function x=RR_PCG32(stream,skip)
 % PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output
 % for each stream; zillions of independent streams are possible. NOTE: for code simplicity, multiple streams
 % must be initialized in numerical order, but can be called in arbitrary order after that.
 % Initialization is based on the number of microseconds since midnight on New Years Eve in 2023.
 % INPUT: stream = which independent stream to pull random number from (OPTIONAL, stream=1 by default)
 %        skip = the number of steps to skip forward or backward in stream (OPTIONAL, skip=0 by default)
-% TEST:  RR_PCG(1), RR_PCG(1), RR_PCG(1)  % Begin stream 1
-%        RR_PCG(2), RR_PCG(2), RR_PCG(2)  % Begin stream 2
-%        RR_PCG(1), RR_PCG(1), RR_PCG(1)  % continue random sequence in stream 1
-%        RR_PCG(1,-6)                     % skip backwards 6 steps in PCG stream 1
-%        clear RR_PCG, for i=1:100, RR_PCG(i); end  % inspect the random initilization of 100 streams
+% TEST:  RR_PCG32(1), RR_PCG32(1), RR_PCG32(1)  % Begin stream 1
+%        RR_PCG32(2), RR_PCG32(2), RR_PCG32(2)  % Begin stream 2
+%        RR_PCG32(1), RR_PCG32(1), RR_PCG32(1)  % continue random sequence in stream 1
+%        RR_PCG32(1,-6)                     % skip backwards 6 steps in PCG stream 1
+%        clear RR_PCG, for i=1:100, RR_PCG32(i); end  % inspect the random initilization of 100 streams
 %        % The following test recovers the 32bit output (in hex) of Round 1 of O'Neill's pcg32-demo code
-%        clear RR_PCG; for i=1:6, dec2hex(RR_PCG(0)), end  
+%        clear RR_PCG32; for i=1:6, dec2hex(RR_PCG32(0)), end  
 % DEPENDENCIES: This Matlab code depends, internally, on the RR_uint64 class defined by:
 %   https://github.com/tbewley/RR/blob/main/Renaissance_Robotics/chapAA/classes/RR_uint64.m
 % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
@@ -20,9 +20,7 @@ function x=RR_PCG(stream,skip)
 %%    https://www.pcg-random.org/download.html
 %% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
 
-
 % TODO: implement skip!
-
 
 persistent state inc % Matlab will hold these 2 RR_uint64 variables as "persistent" for each stream of RR_PCG
 if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case makes use of stream=1
@@ -50,7 +48,7 @@ end
 
 % Update internal 64-bit state of LCG for this stream
 state{s}=old_state*0x5851F42D4C957F2D+inc{s};
-% Then, calculate a 32-bit PCG output using XSH RR method, performing PCG output bit permutations.
+% Then, calculate a 32-bit PCG output using XSH RR method, performing output bit permutations.
 % See section 6.3.1 of https://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf 
 x   = uint32(bitand(bitsra(bitxor(bitsra(old_state.v,18),old_state.v),27),0x00000000FFFFFFFF));
 rot = uint32(bitsra(old_state.v,59));
