@@ -13,6 +13,7 @@ figure(2), clf, RR_bode(D_PID),                    % print -depsc final_exam_24_
 pause
 
 disp('Problem 1d'), figure(1), clf, RR_bode(G)     % print -depsc final_exam_24_1d.eps
+figure(2), clf
 pause
 
 disp('Problem 4b'), 
@@ -22,19 +23,18 @@ f_tilde=f*h/2; z_p_tilde=f_tilde*z_p; z_m_tilde=f_tilde*z_m;
 a=1+z_p_tilde; b=1-z_p_tilde; c=1+z_m_tilde; d=1-z_m_tilde;
 disp('  PID transfer function parameters:'),     b_tilde=b/a, d_tilde=d/c, K_tilde=K*a*c/f_tilde
 disp('  PID difference equation coefficients:'), b_0=K_tilde, b_1=-K_tilde*(b_tilde+d_tilde), b_2=K_tilde*b_tilde*d_tilde
-pause
 
 omega_c=omega_N/2; K_c=K*omega_c; omega_c_tilde=f_tilde*omega_c; p=1+omega_c_tilde; q=1-omega_c_tilde;
 disp('  LPF2_PID transfer function parameters:'),     q_tilde=q/p, K_c_tilde= K*a*c/p
 disp('  LPF2_PID difference equation coefficients:'), a_1_bar=1+q_tilde, a_2_bar=-q_tilde
                                                      b_0_bar=K_c_tilde, b_1_bar=-K_c_tilde*(b_tilde+d_tilde), b_2_bar=K_c_tilde*b_tilde*d_tilde
-pause
-
 disp('  Root locus plot w.r.t. K in z plane')
-Gz=RR_tf([-1],[1 1],h^2/2)
-D_LPF2_PID_z=RR_tf([b_tilde d_tilde],[1 q_tilde],K_c_tilde)
+Gz=RR_tf([-1],[1 1],h^2/2); Gz.h=h;
+D_LPF2_PID_z=RR_tf([b_tilde d_tilde],[1 q_tilde],K_c_tilde); D_LPF2_PID_z.h=h
+figure(1), clf, g.K=logspace(-3,3,2000); RR_rlocus(Gz,D_LPF2_PID_z,g)
+axis([-3.5 1.1 -1.65 1.65]), print -vector -depsc final_exam_24_4b1.eps
+figure(2), clf, g.K=logspace(-5,2,2000); RR_rlocus(Gz,D_LPF2_PID_z,g)
+axis([0.92 1.005 -0.037 .037]),  print -vector -depsc final_exam_24_4b2.eps
+figure(3), clf, g.K=logspace(-6,1,1000); RR_rlocus(Gz,D_LPF2_PID_z,g)
+axis([0.99 1.005 -0.02 .02]), print -vector -depsc final_exam_24_4b3.eps
 
-figure(1), clf, g.K=logspace(-3,4,2000); RR_rlocus(Gz,D_LPF2_PID_z,g)
-axis([-3.5 1.1 -1.75 1.75]), zgrid, % print -vector -depsc final_exam_24_4b1.eps
-figure(2), clf, RR_rlocus(Gz,D_LPF2_PID_z,g)
-axis([-0.1 1.1 -0.4 .4]), zgrid,    % print -vector -depsc final_exam_24_4b2.eps
