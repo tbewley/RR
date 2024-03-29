@@ -20,10 +20,11 @@ function [out,X]=RR_PCG32(stream,skip)
 %%    https://www.pcg-random.org/download.html 
 %% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
 
-persistent a astar  % initialize {a,astar} (multipliers) just once (they are the same for each stream)
+persistent a astar  % initialize {a,astar} (forward and backward multipliers) just once
 persistent x c % hold RR_uint64 variables x (state) and c (increment) as "persistent" for each stream of RR_PCG
 if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case makes use of stream=1
-if length(x)<s                             % INITIALIZATION OF {state,inc} FOR THIS STREAM
+
+if length(x)<s       % INITIALIZATION OF {state,inc} FOR THIS STREAM
   if length(x)==0;
     x={}; inc={}; a=RR_uint64(0x5851F42D4C957F2D) % set up x, inc, a
               astar=RR_uint64(0xC097EF87329E28A5) % astar was found by solving z*2^m+a*astar=g (with g=1),
@@ -48,7 +49,7 @@ else
   x_old=x{s};  % Continuing computation in stream s 
 end
 
-% Implement skip algorithnm from Forrest Brown (1994) Random number generation with arbitrary strides,
+% IMPLEMENT SKIP ALGORITHM from Forrest Brown (1994) Random number generation with arbitrary strides,
 % as summarized at https://mcnp.lanl.gov/pdf_files/TechReport_2007_LANL_LA-UR-07-07961_Brown.pdf
 % Noting that x_{k_n}=A*x_n+C, we first need to calculate A=mod(a^k,2^m) and C=mod(c*(a^k-1)/(a-1),2^m) 
 % Use astar and cstar instead of a and c if skipping backwards (reduces the number of steps used!)
@@ -59,9 +60,9 @@ if nargin==2 & skip~=0
    x_old=A*x_old+C;   % Do the skip 
 end
 
-x{s}=a*x_old+c{s};   % Update internal 64-bit state of LCG for this stream
+x{s}=a*x_old+c{s};   % UPDATE INTERNAL 64-BIT STATE of LCG for this stream
 
-% Then, calculate a 32-bit PCG output using O'Neill's XSH_RR output bit permutations.
+% Finally, calculate the 32-bit PCG output using O'Neill's XSH_RR output bit permutations.
 % See section 6.3.1 of https://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf 
 out = uint32(bitand(bitsra(bitxor(bitsra(x_old.v,18),x_old.v),27),0x00000000FFFFFFFF));
 rot = uint32(bitsra(x_old.v,59));
@@ -78,19 +79,3 @@ if nargout==2, X=x{s}; end  % If requested, also return current state
 %    XOR        a^b   bitxor(a,b)
 %    OR         a|b   bitor(a,b)
 % 2's comp.     -a    bitcmp(a)+1
-
-% Initializing some deterministic values of {x,c}, for TEST PURPOSES ONLY
-%   3118741472915405573
-%   10030406343644371790
-%   17800363335834976035
-%   16987470693695682196
-%   9440484487994590321
-%   13742400798436595530
-%   17113982732917624431
-%   518186974999665392
-%   10480504684531518621
-
-
-
-
-
