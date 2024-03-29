@@ -1,5 +1,5 @@
 function [out,X]=RR_PCG32(stream,skip)
-% function out=RR_PCG32(stream,skip)
+% function [out,X]=RR_PCG32(stream,skip)
 % PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output for
 % each stream; zillions of independent streams are possible, as is skipping forward/backard in any given stream.
 % NOTE: for code simplicity, multiple streams  must be initialized in numerical order,
@@ -24,7 +24,7 @@ function [out,X]=RR_PCG32(stream,skip)
 
 persistent a astar  % initialize {a,astar} (forward and backward multipliers) just once, and keep "persistent"
 persistent x c % hold RR_uint64 variables x (state) and c (increment) as "persistent" for each stream of RR_PCG
-if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case makes use of stream=1
+if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case actually makes use of stream=1
 
 if length(x)<s       % INITIALIZATION OF {state,inc} FOR THIS STREAM
   if length(x)==0;
@@ -70,7 +70,7 @@ out = uint32(bitand(bitsra(bitxor(bitsra(x_old.v,18),x_old.v),27),0x00000000FFFF
 rot = uint32(bitsra(x_old.v,59));
 out = bitor(bitsra(out,rot),bitsll(out,(bitand(bitcmp(rot)+1,31))));
 
-if nargout==2, X=x{s}; end  % If requested, also return current state
+if nargout==2, X=x{s}; end  % If requested, also return current internal state (which usually stays hidden...)
 
 % For comparison to O'Neill's PCG code, here are some bitwise operations on integers, in both C and Matlab:
 % Bit Operation  C      Matlab
