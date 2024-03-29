@@ -42,8 +42,8 @@ if length(x)<s       % INITIALIZATION OF {state,inc} FOR THIS STREAM
       x_old = x_old*0x2545F4914F6CDD1D; c{1}.v=bitset(c{1}.v,1);
       fprintf('Initializing PCG stream   1 with x_old=%20u and odd increment=%20u\n',x_old.v,c{1}.v)
     otherwise % initialize x_old and c of stream s>1 based on x and c of stream s-1
-      % note: take a=dec2hex(uint64(a)) for a=3935559000370003845 and 2685821657736338717 from L’Ecuyer (1999) 
-      x_old = x{s-1} *0x369DEA0F31A53F85+1;    % initialize x{s} using x{s-1}
+      % note: takes a=dec2hex(uint64(a)) for a=3935559000370003845 and 2685821657736338717 from L’Ecuyer (1999) 
+      x_old = x{s-1}    *0x369DEA0F31A53F85+1; % initialize x{s} using x{s-1}
       c{s}  = (c{s-1}-1)*0x2545F4914F6CDD1D+1; % (subtracting/adding 1 keeps each c{s} odd)
     fprintf('Initializing PCG stream %3d with x_old=%20u and odd increment=%20u\n',s,x_old.v,c{s}.v)
   end
@@ -53,8 +53,8 @@ end
 
 % IMPLEMENT SKIP ALGORITHM from Forrest Brown (1994) Random number generation with arbitrary strides,
 % as summarized at https://mcnp.lanl.gov/pdf_files/TechReport_2007_LANL_LA-UR-07-07961_Brown.pdf
-% Noting that x_{k_n}=A*x_n+C, we first need to calculate A=mod(a^k,2^m) and C=mod(c*(a^k-1)/(a-1),2^m) 
-% Use astar and cstar instead of a and c if skipping backwards (reduces the number of steps used!)
+% Noting that x_{n+k}=A*x_n+C, we first need to calculate A=mod(a^k,2^m) and C=mod(c*(a^k-1)/(a-1),2^m) 
+% Also, we use astar and cstar instead of a and c to skip backwards, reducing the number of steps required.
 if nargin==2 & skip~=0
    A=RR_uint64(1); C=RR_uint64(0); ib=dec2bin(abs(skip)); imax=length(ib);
    if skip>0, h=a; f=c{s}; else, h=astar; f=c{s}*(-astar); end, 
