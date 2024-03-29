@@ -28,9 +28,9 @@ if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case actual
 
 if length(x)<s       % INITIALIZATION OF {state,inc} FOR THIS STREAM
   if length(x)==0;
-    x={}; inc={}; a=RR_uint64(0x5851F42D4C957F2D) % set up x, inc, a
-              astar=RR_uint64(0xC097EF87329E28A5) % astar was found by solving z*2^m+a*astar=g (with g=1),
-  end                                             % which was done using [g,z,astar] = RR_bezout(RR_uint64(0),a);
+    x={}; inc={}; a=RR_uint64(0x5851F42D4C957F2D); % set up x, inc, a, and astar, noting that
+              astar=RR_uint64(0xC097EF87329E28A5); % astar was found by solving z*2^m+a*astar=g (with g=1),
+  end                                              % which was done using [g,z,astar] = RR_bezout(RR_uint64(0),a);
   if s>1 & length(x)<s-1, error('RR_PCG streams must be initialized sequentially'), end
   switch stream
     case 0, disp('Initializing some deterministic values of {x,c}, for TEST PURPOSES ONLY')
