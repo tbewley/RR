@@ -1,8 +1,9 @@
 function [out,X]=RR_PCG32(stream,skip)
 % function out=RR_PCG32(stream,skip)
-% PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output
-% for each stream; zillions of independent streams are possible. NOTE: for code simplicity, multiple streams
-% must be initialized in numerical order, but can be called in arbitrary order after that.
+% PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output for
+% each stream; zillions of independent streams are possible, as is skipping forward/backard in any given stream.
+% NOTE: for code simplicity, multiple streams  must be initialized in numerical order,
+% but they can be called in arbitrary order after that.
 % Initialization is based on the number of microseconds since midnight on New Years Eve in 2023.
 % INPUT: stream = which independent stream to pull random number from     (OPTIONAL, stream=1 by default)
 %        skip = the number of steps to skip forward or backward in stream (OPTIONAL, skip=0   by default)
@@ -18,7 +19,8 @@ function [out,X]=RR_PCG32(stream,skip)
 % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Efficient PCG algorithm (in C and C++) due to Melissa O'Neill, available at
 %%    https://www.pcg-random.org/download.html 
-%% Matlab translation (meant primarily for pedagogical purposes) by Thomas Bewley.
+%% Matlab implementation Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+%% (This Matlab implementation is meant primarily for pedagogical purposes, it is not fast.)
 
 persistent a astar  % initialize {a,astar} (forward and backward multipliers) just once
 persistent x c % hold RR_uint64 variables x (state) and c (increment) as "persistent" for each stream of RR_PCG
