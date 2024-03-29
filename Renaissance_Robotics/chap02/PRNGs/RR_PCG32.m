@@ -22,7 +22,7 @@ function [out,X]=RR_PCG32(stream,skip)
 %% Matlab implementation Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 %% (This Matlab implementation is meant primarily for pedagogical purposes, it is not fast.)
 
-persistent a astar  % initialize {a,astar} (forward and backward multipliers) just once
+persistent a astar  % initialize {a,astar} (forward and backward multipliers) just once, and keep "persistent"
 persistent x c % hold RR_uint64 variables x (state) and c (increment) as "persistent" for each stream of RR_PCG
 if nargin==0, stream=1, end, s=max(stream,1);  % note: stream=0 test case makes use of stream=1
 
