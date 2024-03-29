@@ -2,7 +2,7 @@ function [out,X]=RR_PCG32(stream,skip)
 % function [out,X]=RR_PCG32(stream,skip)
 % PRNG using Melissa O'Neill's Permuted Congruential Generator PCG32, with 64 bit state and 32 bit output for
 % each stream; zillions of independent streams are possible, as is skipping forward/backard in any given stream.
-% NOTE: for code simplicity, multiple streams  must be initialized in numerical order,
+% NOTE: for code simplicity, multiple streams must be initialized in numerical order,
 % but they can be called in arbitrary order after that.
 % Initialization is based on the number of microseconds since midnight on New Years Eve in 2023.
 % INPUT: stream = which independent stream to pull random number from     (OPTIONAL, stream=1 by default)

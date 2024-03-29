@@ -1,5 +1,5 @@
 function x=RR_MCG4294967291(i_max,reverse)
-% Simple PRNG with an MCG with period m=2^32-5=4294967291
+% Simple PRNG with an MCG with (prime) period m=2^32-5=4294967291
 % Note: if this routine hasn't been run yet in this Matlab session, it
 % initializes the previous state using the fractional seconds of the clock.
 % INPUTS: i_max   (OPTIONAL) number of random numbers to return.  default=1
