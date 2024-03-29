@@ -62,9 +62,9 @@ if nargin==2 & skip~=0
    x_old=A*x_old+C;   % Do the skip 
 end
 
-x{s}=a*x_old+c{s};   % UPDATE INTERNAL 64-BIT STATE of LCG for this stream
+x{s}=a*x_old+c{s};   % UPDATE INTERNAL 64-BIT STATE of LCG for stream s
 
-% Finally, calculate the 32-bit PCG output using O'Neill's XSH_RR output bit permutations.
+% Finally, calculate a 32-bit PCG output using O'Neill's XSH_RR output bit permutations.
 % See section 6.3.1 of https://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf 
 out = uint32(bitand(bitsra(bitxor(bitsra(x_old.v,18),x_old.v),27),0x00000000FFFFFFFF));
 rot = uint32(bitsra(x_old.v,59));
