@@ -8,7 +8,7 @@
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 N=10^6, mu=5, sigma=4  % <- fiddle with N, mu, and sigma to test
-x=rand(N,1); for i=1:N/2
+x=rand(N,1); for i=1:2:N-1
   a=sqrt(-2*log(x(i))); b=2*pi*x(i+1); z(i)=a*cos(b); z(i+1)=a*sin(b);
 end
 z=z*sigma+mu;

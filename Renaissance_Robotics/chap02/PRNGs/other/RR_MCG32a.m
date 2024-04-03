@@ -1,11 +1,12 @@
-function x=RR_MCG4294967291(i_max,reverse)
+function x=RR_MCG32a(i_max,reverse)
+% function x=RR_MCG32a(i_max,reverse)
 % Simple PRNG with an MCG with (prime) period m=2^32-5=4294967291
 % Note: if this routine hasn't been run yet in this Matlab session, it
 % initializes the previous state using the fractional seconds of the clock.
 % INPUTS: i_max   (OPTIONAL) number of random numbers to return.  default=1
 %         reverse (OPTIONAL) set to true to run backward, omit to run forward
 % OUTPUT: x
-% TEST:   RR_MCG4294967291(7), RR_MCG4294967291(6,true)
+% TEST:   RR_MCG32a(7), RR_MCG32a(6,true)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 

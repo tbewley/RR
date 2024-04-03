@@ -1,4 +1,4 @@
-% script RR_LCG256_test.m
+% script RR_LCG8_test.m
 % Script illustrating the behavior of simple PRNGs with LCGs of period m=2^8=256.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
