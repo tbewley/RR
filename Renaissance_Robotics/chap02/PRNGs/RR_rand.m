@@ -7,7 +7,7 @@ function X=RR_rand(M,N,P)
 % TEST: X=RR_rand(10,10)                   % 10x10 array of real numbers on (0,1)
 %         Min=min(min(X)), Max=max(max(X)) 
 %       Y=-2+4*RR_rand(10000);             % 10000 real numbers on (-2,2)
-%         histogram(Y,[-2:0.2:2],'Normalization','probability')      
+%         histogram(Y,[-2:0.2:2],'Normalization','probability')     
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 

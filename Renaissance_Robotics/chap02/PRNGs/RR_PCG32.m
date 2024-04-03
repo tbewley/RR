@@ -36,8 +36,8 @@ if length(x)<s       % INITIALIZATION OF {state,inc} FOR THIS STREAM
   if s>1 & length(x)<s-1, error('RR_PCG streams must be initialized sequentially'), end
   switch stream
     case 0, disp('Initializing some deterministic values of {x,c}, for TEST PURPOSES ONLY')
-      x{1} = RR_uint64(0x185706B82C2E03F8); % Generates values identical to Round 1
-      c{1}  = RR_uint64(109);                % of O'Neill's pcg32-demo.c code
+      x{1} = RR_uint64(151);  % Generates values identical to Round 1
+      c{1} = RR_uint64(109);  % of O'Neill's pcg32-demo.c code
     case 1, % initialize stream s=1 based on the number of microseconds since midnight on 31 Dec 2023
       x{1} = RR_uint64(convertTo(datetime,'epochtime','Epoch','1-Jan-2024','TicksPerSecond',1e6));
       c{1} = RR_uint64(bin2dec(fliplr(dec2bin(x{1}.v,50))))*0x372AAF131886F61A;
