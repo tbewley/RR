@@ -11,10 +11,13 @@ function RR_Dad_Jokes(i_max)
 
 if nargin<1, i_max=1; end
 told=[]; rng('shuffle'), j=randi([0,15]); n=7; for i=1:i_max 
-  while ~isempty(find(told(max(end-n,1):end)==j)), j=randi([0,15]); end
+  while ~isempty(find(told(max(end-n,1):end)==j)), j=-1+RR_randi(16); end
   told=[told,j];
 end
-if i_max>8, told, end
+if i_max>8, 
+  disp('Without removal of recent repeats:'), dec2hex(-1+RR_randi(16,i_max))'
+  disp('WITH removal of recent repeats:'),    dec2hex(told-1)'
+end
 
 dictionary=[...
 "Why doesn’t anybody talk to circles? Because there's no point.";...

@@ -73,13 +73,3 @@ for i=1:num
 end
 
 if nargout==2, X=x{s}; end  % If requested, also return current internal state (which usually stays hidden...)
-
-% For comparison to O'Neill's PCG code, here are some bitwise operations on integers, in both C and Matlab:
-% Bit Operation  C      Matlab
-% -------------------------------
-% rightshift    a>>k  bitsra(a,k)
-% leftshift     a<<k  bitsll(a,k)
-%    AND        a&b   bitand(a,b)
-%    XOR        a^b   bitxor(a,b)
-%    OR         a|b   bitor(a,b)
-% 2's comp.     -a    bitcmp(a)+1
