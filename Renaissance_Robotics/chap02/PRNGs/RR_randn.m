@@ -6,7 +6,7 @@ function X=RR_randn(M,N,P)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array of random real numbers
 % TEST: X=RR_randn(10,10)                  % 10x10 array of real numbers (mean=0, stddev=1)
 %         Min=min(min(X)), Max=max(max(X))                   
-%       Y=3+2*RR_randn(10000);             % vector of 10000 real numbers (mean=3, stddev=2)
+%       Y=5+2*RR_randn(10000);             % vector of 10000 real numbers (mean=3, stddev=2)
 %         histogram(Y,40,'Normalization','probability') 
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.

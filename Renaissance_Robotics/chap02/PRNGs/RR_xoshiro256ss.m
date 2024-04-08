@@ -20,15 +20,15 @@ s=1; % Take just one stream (for now).  TODO: implement multiple streams.
 global RR_PRNG_GENERATOR RR_PRNG_x
 if ~strcmp(RR_PRNG_GENERATOR,'xoshiro256**'), RR_prng('stochastic','xoshiro256**'), end
 
-% Prep to calculate using local values {x1,x2,x3,x4} (faster)
-x1=RR_PRNG_x(1,s); x2=RR_PRNG_x(2,s); x3=RR_PRNG_x(3,s); x4=RR_PRNG_x(4,s);
+% Prep to calculate using local values {s0,s1,s2,s3} (faster) [follow Vigna's notation]
+s0=RR_PRNG_x(1,s); s1=RR_PRNG_x(2,s); s2=RR_PRNG_x(3,s); s3=RR_PRNG_x(4,s);
 
 % Below is the RR implementation of the xoshiro256** algorithm by Sebastiano Vigna
 for i=1:n
-  out(i)=RR_prod64s(RR_rol64(RR_prod64s(x2,0x5u64),7),0x9u64);  % two multiplications
-  t=bitsll(x2,17); x3=bitxor(x3,x1); x4=bitxor(x4,x2); x2=bitxor(x2,x3);  % five XORs
-                   x1=bitxor(x1,x4); x3=bitxor(x3,t ); x4=RR_rol64(x4,45);
+  out(i)=RR_prod64s(RR_rotl64(RR_prod64s(s1,0x5u64),7),0x9u64);  % two multiplications
+  t=bitsll(s1,17); s2=bitxor(s2,s0); s3=bitxor(s3,s1); s1=bitxor(s1,s2);  % five XORs
+                   s0=bitxor(s0,s3); s2=bitxor(s2,t ); s3=RR_rotl64(s3,45);
 end
 
 % Save current value of state for next time
-RR_PRNG_x(1,s)=x1; RR_PRNG_x(2,s)=x2; RR_PRNG_x(3,s)=x3; RR_PRNG_x(4,s)=x4;
+RR_PRNG_x(1,s)=s0; RR_PRNG_x(2,s)=s1; RR_PRNG_x(3,s)=s2; RR_PRNG_x(4,s)=s3;
