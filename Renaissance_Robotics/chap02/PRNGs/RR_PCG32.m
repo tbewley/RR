@@ -7,13 +7,13 @@ function out=RR_PCG32(n,s,skip)
 % Initialize with RR_prng('stochastic','PCG32') or RR_prng('deterministic','PCG32')
 % This Matlab implementation is meant primarily for pedagogical purposes, it is not fast.
 %
-% INPUT: n = number of pseudorandom numbers to generate               (OPTIONAL, n=1 by default)
-%        s = which independent stream to pull random number from      (OPTIONAL, s=1 by default)
-%        skip = number of steps to skip forward or backward in stream (OPTIONAL, skip=0 by default)
-% TEST:  stream1=RR_PCG32(10)                   % Generate 10 pseudorandom numbers in stream s=1
-%        stream2=RR_PCG32(20,2)                 % Generate 20 pseudorandom numbers in stream s=2
-%        stream1_skipped_back=RR_PCG32(1,1,-10) % Skip backwards 10 steps in stream s=1
-%        RR_prng('deterministic'); dec2hex(RR_PCG32(6)) % Round 1 of O'Neill's pcg32-demo code
+% INPUTS: n = number of pseudorandom numbers to generate               (OPTIONAL, n=1 by default)
+%         s = which independent stream to pull random number from      (OPTIONAL, s=1 by default)
+%         skip = number of steps to skip forward or backward in stream (OPTIONAL, skip=0 by default)
+% TEST:   stream1=RR_PCG32(10)                   % Generate 10 pseudorandom numbers in stream s=1
+%         stream2=RR_PCG32(20,2)                 % Generate 20 pseudorandom numbers in stream s=2
+%         stream1_skipped_back=RR_PCG32(1,1,-10) % Skip backwards 10 steps in stream s=1
+%         RR_prng('deterministic'); dec2hex(RR_PCG32(6)) % Round 1 of O'Neill's pcg32-demo code
 %
 % Dependencies: RR_prod32, RR_prod64, RR_sum64 (replace calls to these functions with simple
 % * and + if converting to a language that can be set natively to wrap on integer overflow)
