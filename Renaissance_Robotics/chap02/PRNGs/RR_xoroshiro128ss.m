@@ -22,13 +22,13 @@ global RR_PRNG_GENERATOR RR_PRNG_x
 if ~strcmp(RR_PRNG_GENERATOR,'xoroshiro128**'), RR_prng('stochastic','xoroshiro128**'), end
 
 % Prep to calculate using local values {s0,s1,s2,s3} [follow Vigna's notation]
-s0=RR_PRNG_x(1,s); s1=RR_PRNG_x(2,s); s2=RR_PRNG_x(3,s); s3=RR_PRNG_x(4,s);
+s0=RR_PRNG_x(1,s); s1=RR_PRNG_x(2,s);
 
-% Below is the RR implementation of the xoroshiro128** algorithm by Sebastiano Vigna
+% Below is the RR implementation of the xoroshiro128** algorithm by Sebastiano Vigna:
+% out(i)=((s0*5)<<<7)*9;  s1=s1^s0;  s0=(s0<<<24)^s1^(s1<<16);  s1=(s1<<<37);
 for i=1:n
-  out(i)=RR_prod64s(RR_rotl64(RR_prod64s(s1,0x5u64),7),0x9u64); % two multiplications
-  t=bitsll(s1,17); s2=bitxor(s2,s0); s3=bitxor(s3,s1); s1=bitxor(s1,s2);  % five XORs
-                   s0=bitxor(s0,s3); s2=bitxor(s2,t ); s3=RR_rotl64(s3,45);
+  out(i)=RR_prod64s(RR_rotl64(RR_prod64s(s0,0x5u64),7),0x9u64); s1=bitxor(s1,s0);
+  s0=bitxor(bitxor(RR_rotl64(s0,24),s1),bitsll(s1,16)); s1=RR_rotl64(s1,37); 
 end
 
 % Save current value of state for next time
