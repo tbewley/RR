@@ -6,12 +6,12 @@ function X=RR_randn(M,N,P)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array of random real numbers
 % TEST: X=RR_randn(10,10)                  % 10x10 array of real numbers (mean=0, stddev=1)
 %         Min=min(min(X)), Max=max(max(X))                   
-%       Y=3+2*RR_randn(100000);            % vector of 100000 real numbers (mean=3, stddev=2)
+%       Y=3+2*RR_randn(10000);             % vector of 10000 real numbers (mean=3, stddev=2)
 %         histogram(Y,40,'Normalization','probability') 
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-% Calculate M, N, and P from input data
+% Calculate {M,N,P} from input data
 if nargin==1 & length(M)>1, N=M(2); if length(M)>2, P=M(3); end, M=M(1); end
 if ~exist('M'), M=1; end, if ~exist('N'), N=1; end, if ~exist('P'), P=1; end
 

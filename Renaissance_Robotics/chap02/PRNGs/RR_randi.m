@@ -12,15 +12,21 @@ function X=RR_randi(IMAX,M,N,P)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-% Calculate IMAX, M, N, and P from input data
+% Calculate IMAX and {M,N,P} from input data
 if nargin==0, IMAX=1, end
 if nargin==2 & length(M)>1, N=M(2); if length(M)>2, P=M(3); end, M=M(1); end
 if ~exist('M'), M=1; end, if ~exist('N'), N=1; end, if ~exist('P'), P=1; end
 
-cat_total=double(floor(4294967295/IMAX)); % total number of integers per catagory
-draw_max=cat_total*IMAX-1;                % prepare to draw integers from [0,draw_max]
+global RR_PRNG_OUTPUT
+if RR_PRNG_OUTPUT=='32bit', intmax=0xFFFFFFFF; else, intmax=0xFFFFFFFFFFFFFFFF; end
 
-% Then, select a random uint32 integer on [0,draw_max] using RR_PCG32, normalize X by cat_total
-% and round down to generate integers on 1:IMAX, and reshape into the desired matrix form
-Z=RR_PCG32(M*N*P); for i=1:M*N*P, while Z(i)>draw_max, Z(i)=RR_PCG32; end, end
-X=reshape(uint32(floor(double(Z)/cat_total))+1,M,N,P);
+cat_total=double(floor(intmax/IMAX)); % total number of integers per catagory
+draw_max=cat_total*IMAX-1;            % prepare to draw integers from [0,draw_max]
+
+Z=RR_prng_draw(M*N*P);                % Select random integers on [0,draw_max]
+% Normalize X by cat_total, round down to range 1:IMAX, and reshape to desired matrix form
+for i=1:M*N*P, while Z(i)>draw_max,
+	Z(i)=RR_prng_draw(1); % Replace those (few) draws that are greater than draw_max
+end, end
+if RR_PRNG_OUTPUT=='32bit', X=reshape(uint32(floor(double(Z)/cat_total))+1,M,N,P);
+else,                       X=reshape(uint64(floor(double(Z)/cat_total))+1,M,N,P); end
