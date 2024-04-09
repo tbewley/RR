@@ -25,7 +25,7 @@ if ~strcmp(RR_PRNG_GENERATOR,'xoroshiro128**'), RR_prng('stochastic','xoroshiro1
 s0=RR_PRNG_x(1,s); s1=RR_PRNG_x(2,s);
 
 % Below is the RR implementation of the xoroshiro128** algorithm by Sebastiano Vigna:
-% out(i)=((s0*5)<<<7)*9;  s1=s1^s0;  s0=(s0<<<24)^s1^(s1<<16);  s1=(s1<<<37);
+% out=((s0*5)<<<7)*9;  s1=s1^s0;  s0=(s0<<<24)^s1^(s1<<16);  s1=(s1<<<37);
 for i=1:n
   out(i)=RR_prod64s(RR_rotl64(RR_prod64s(s0,0x5u64),7),0x9u64); s1=bitxor(s1,s0);
   s0=bitxor(bitxor(RR_rotl64(s0,24),s1),bitsll(s1,16)); s1=RR_rotl64(s1,37); 
