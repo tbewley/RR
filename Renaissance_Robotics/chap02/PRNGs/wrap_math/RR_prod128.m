@@ -1,16 +1,15 @@
-function [ph,pl]=RR_prod128(y,z,a)
-% function [ph,pl]=RR_prod128(y,z,a)
-% Computes x*a with wrap on integer overflow, for xh=y and xl=z and {y,z,a}=uint64,
+function [ph,pl]=RR_prod128(xh,xl,a)
+% function [ph,pl]=RR_prod128(xh,xl,a)
+% Computes p=x*a with wrap on integer overflow, for {xh,xl,a}=uint64 using uint64 arithmetic,
 % where {xh,xl} and {ph,pl} are the high and low 64 bits of x and p, respectively.
+% TEST: xh=0, xl=intmax('uint64'), a=uint64(3), [ph,pl]=RR_prod128(xh,xl,a)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-al=bitand(a,0xFFFFFFFFu64); ah=bitsra(a,32); % {al,ah}={lower,upper} 32 bits of a
-yl=bitand(y,0xFFFFFFFFu64); yh=bitsra(y,32); % {bl,bh}={lower,upper} 32 bits of y
-zl=bitand(z,0xFFFFFFFFu64); zh=bitsra(z,32); % {bl,bh}={lower,upper} 32 bits of z
+ah =bitsra(a,32);  al =bitand(a, 0xFFFFFFFFu64); % {ah, al} ={high,low} 32 bits of a
+xhh=bitsra(xh,32); xhl=bitand(xh,0xFFFFFFFFu64); % {xhh,xhl}={high,low} 32 bits of xh
+xlh=bitsra(xl,32); xll=bitand(xl,0xFFFFFFFFu64); % {xlh,xll}={high,low} 32 bits of xl
 
-... TODO: pick it up from here...
-
-pl=RR_sum64(al*bl,bitsll(RR_sum64(al*bh,ah*bl),32));
-
-% drop the carry part (wrap on overflow)
+t=RR_sum64(al*xlh,ah*xll);
+[pl,pc]=RR_sum64(al*xll,bitsll(t,32));
+ph=RR_sum64(RR_sum64(RR_prod64(a,xh),pc),bitsra(t,32));
