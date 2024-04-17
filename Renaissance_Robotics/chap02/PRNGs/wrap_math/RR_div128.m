@@ -1,8 +1,8 @@
-function [dh,dl,r]=RR_div128s(xh,xl,y)
-% function [dh,dl,r]=RR_div128s(xh,xl,y)
-% Note: this code assumes y is nonzero only in its lowest 32 bits.
-% INPUTS:  x={xh,xl}, y where {xh,xl,y} are each uint64 (or uint32,single,double)
-% OUTPUTS: d={dh,dl} and r where {dh,dl,r} are uint64 and x=d*y+r
+function [dh,dl,rh,rl]=RR_div128(xh,xl,yh,yl)
+% function [dh,dl,rh,rl]=RR_div128(xh,xl,yh,yl)
+% This code performs uint128 by uint128 division using the nonrestoring division algorithm.
+% INPUTS:  x={xh,xl}, y={yh,yl} where {xh,xl,yh,yl} are each uint64 (or uint32,single,double)
+% OUTPUTS: d={dh,dl} and r={rh,rl} where {dh,dl,rh,rl} are uint64 and x=d*y+r
 % TEST:    xh=0x32E7613DA165B216, xl=0x4D9DAB159C256304, y=0x13CFB07B35AE5CB
 %          [dh,dl,rh,rl]=RR_div128s(xh,xl,y)
 %          [ph,pl]=RR_prod128s(dh,dl,y); [xhc,xhl]=RR_sum128(dh,dl,rh,rl)
@@ -13,14 +13,14 @@ xh=uint64(xh); A=bitsra(xh,32); B=bitand(xh,0xFFFFFFFFu64); % {A,B}={hi,lo} 32 b
 xl=uint64(xl); C=bitsra(xl,32); D=bitand(xl,0xFFFFFFFFu64); % {C,D}={hi,lo} 32 bits of xl
 y=uint64(y);
 
-% The key idea is to implement (A.a^3+B.a^2+C.a+D)/Y where {A,B,C,D,Y} are 32bit
+% The key idea is to implement (A.a^3+B.a^2+C.a+D)/Y where {A,B,C,D} are 32bit and Y is 64bit
 % as follows (clever idea due to Knuth, volume 2, note that / denotes division and % remainder):
 %      (A / Y) a^3 +                                        upper 32 bits of dh
 %    (((A % Y) a + B) / Y) a^2 +                            lower 32 bits of dh
 %  (((((A % Y) a + B) % Y) a + C) / Y) a +                  upper 32 bits of dl
 % ((((((A % Y) a + B) % Y) a + C) % Y) a + D) / Y           lower 32 bits of dl
 
-% PESKY BUG WORKAROUND IN MATLAB: as of Apr 2024, do NOT use / for division of integers in Matlab.
+% PESKY BUG WORKAROUND IN MATLAB: as of Apr 2024, do not use / for division of integers in Matlab.
 % https://www.mathworks.com/matlabcentral/answers/857225-how-does-division-work-for-integer-types
 
 a=0x100000000;

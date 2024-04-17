@@ -32,4 +32,4 @@ for i=1:n
 end
 
 % Save current value of state for next time
-RR_PRNG_x(1,s)=s0; RR_PRNG_x(2,s)=s1; RR_PRNG_x(3,s)=s2; RR_PRNG_x(4,s)=s3;
+RR_PRNG_x(1,s)=s0; RR_PRNG_x(2,s)=s1;
