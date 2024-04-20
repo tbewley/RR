@@ -1,11 +1,16 @@
 function [dh,dl,r]=RR_div128s(xh,xl,y)
 % function [dh,dl,r]=RR_div128s(xh,xl,y)
-% Note: this code assumes y is nonzero only in its lowest 32 bits.
+% This code performs uint128 by uint32 division using an algorithm from Knuth, leveraging uint64
+% arithmetic.  Note: this code assumes y is nonzero only in its lowest 32 bits.
 % INPUTS:  x={xh,xl}, y where {xh,xl,y} are each uint64 (or uint32,single,double)
 % OUTPUTS: d={dh,dl} and r where {dh,dl,r} are uint64 and x=d*y+r
-% TEST:    xh=0x32E7613DA165B216, xl=0x4D9DAB159C256304, y=0x13CFB07B35AE5CB
-%          [dh,dl,rh,rl]=RR_div128s(xh,xl,y)
-%          [ph,pl]=RR_prod128s(dh,dl,y); [xhc,xhl]=RR_sum128(dh,dl,rh,rl)
+% TEST:    clear, clc, format hex
+%          xh=RR_xoshiro256pp, xl=RR_xoshiro256pp, y=RR_xoshiro128pp
+%          [dh,dl,r]=RR_div128s(xh,xl,y)  % Do the division (s.t. x=d*y+r)
+%          disp('Note:  r should be less than y')
+%          [ph,pl]=RR_prod128s(dh,dl,y);  % CHECK: calculate d*y+r
+%          [XH,XL]=RR_sum128(ph,pl,0,r)   % in two steps.
+%          disp('Note: {XH,XL} and {xh,xl} should match')
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -32,4 +37,4 @@ dl=idivide(t2,y)*a+idivide(t3,y);
 
 [ph,pl]  =RR_prod128s(dh,dl,y);                 % p={ph,pl}    where p=d*y
 [mph,mpl]=RR_sum128s(bitcmp(ph),bitcmp(pl),1);  % mp={mph,mpl} where mp=-p (2's complement)
-[rh,rl]  =RR_sum128(xh,xl,mph,mpl);             % finally, calculate r=x-p where r={rh,rl}
+[rh,r]   =RR_sum128(xh,xl,mph,mpl);             % finally, calculate r=x-p where r={rh,rl}

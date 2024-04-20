@@ -1,11 +1,8 @@
-% classdef RR_uint64
-% This class emulates uint64 with wrap on overflow, because unfortunately
-% Matlab doesn't wrap (unlike C and Eminem).
-% This emulation is inefficient - use of this code is recommended for pedagogical
-% purposes only.  For production codes, you should absolutely use C instead.
+% classdef RR_uint128
+% This class emulates uint128 with wrap on overflow.
 %
 % DEFINITION:
-%   a=RR_uint64(c)  defines an RR_uint64 object from any positive integer
+%   a=RR_uint128(ch,cl)  defines an RR_uint64 object from two uint64 variables
 %
 % STANDARD OPERATIONS defined on RR_uint64 objects (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     a+b  gives the sum of two integers
@@ -18,15 +15,15 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint64 < matlab.mixin.CustomDisplay
-    properties % Each RR_uint64 object consists of just one field:
-        v      % a uint64 value (with +,-,*,/ redefined to wrap on overflow)
+classdef RR_uint128 < matlab.mixin.CustomDisplay
+    properties % RR_uint128 objects consist of two fields, with +,-,*,/ defined to wrap on overflow
+        vh     % the high part of v, a uint64 value 
+        vl     % the low part of v,  a uint64 value
     end
     methods
-        function obj = RR_uint64(v)     % a=RR_uint64 creates an RR_uint64 object obj.
-            if strcmp(class(v),'sym'), error('RR_uint64 only defined for numeric arguments'), end
-            obj.v = uint64(abs(v));
-            if sign(v)==-1, obj.v=bitcmp(obj.v)+1; end
+        function obj = RR_uint64(vh,vl)    % a=RR_uint64 creates an RR_uint64 object obj.
+            obj.vh = uint64(abs(vh));
+            obj.vl = uint64(abs(vl));
         end
         function [sum,carry] = plus(a,b)  % Defines a+b
             [a,b]=check(a,b);

@@ -10,7 +10,7 @@
 %   G=RR_tf(num,den)  2 arguments defines an RR_tf object from numerator and denominator polynomials
 %   G=RR_tf(z,p,K)    3 arguments defines an RR_tf object from vectors of zeros and poles, z and p, and the gain K
 %   Note that, to generate a DT rational transfer function, use 1 of the above 3 commands, then set G.h.
-%   Any RR_tf object G has two RR_poly fields, G.num and G.den.  (A DT RR_tf object G has a third field, G.h.) 
+%   Any RR_tf object G has two RR_poly fields, G.num and G.den.  A DT RR_tf object G has a third field, G.h. 
 %
 % STANDARD OPERATIONS defined on RR_tf objects (overloading the +, -, *, /, ^ operators):
 %   plus:     G1+G2  gives the sum of two transfer functions        (or, a transfer functions and a scalar)
