@@ -17,27 +17,22 @@
 
 classdef RR_uint128 < matlab.mixin.CustomDisplay
     properties % RR_uint128 objects consist of two fields, with +,-,*,/ defined to wrap on overflow
-        vh     % the high part of v, a uint64 value 
-        vl     % the low part of v,  a uint64 value
+        h     % the high part of v, a uint64 value 
+        l     % the low part of v,  a uint64 value
     end
     methods
         function obj = RR_uint64(vh,vl)    % a=RR_uint64 creates an RR_uint64 object obj.
             obj.vh = uint64(abs(vh));
             obj.vl = uint64(abs(vl));
         end
-        function [sum,carry] = plus(a,b)  % Defines a+b
-            [a,b]=check(a,b);
-            sum=bitand(a.v,0x7FFFFFFFFFFFFFFF)+bitand(b.v,0x7FFFFFFFFFFFFFFF); % add first 63 bits
-            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64);
-            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)));
-            carry=bitget(MSB,2);
+        function [sum] = plus(a,b)        % Defines a+b
+            [h,l]=RR_sum128(a.h,a.l,b.h,b.l); sum=RR_uint128(h,l);
         end
         function diff = minus(a,b)        % Defines a-b
-            [a,b]=check(a,b);
             diff=a+(-b);
         end
-        function out = uminus(a)
-            out=RR_uint64(bitcmp(a.v)+1);
+        function out = uminus(b)          % Defines (-b)
+            [h,l]=RR_sum128(bitcmp(b.h),bitcmp(b.l),uint64(0),uint64(1)); out=RR_uint128(h,l);
         end    
         function prod = mtimes(a,b)       % Defines a*b
             [a,b]=check(a,b);
