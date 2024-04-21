@@ -55,12 +55,12 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
         function TF=eq(a,b), if (a.v==b.v) & (a.l==b.l),            TF=true; else, TF=false; end, end
  
         function a = RR_bitsll(a,k)            
-            a.h=bitsll(a.h,k);
-            for i=1:k; a.h=bitset(a.h,i,bitget(a.l,64+k+i); end
+            a.h=bitsll(a.h,k); for i=1:k; a.h=bitset(a.h,i,bitget(a.l,64-k+i)); end
             a.l=bitsll(a.l,k); 
         end
         function a = RR_bitsrl(a,k)            
-            a.h=bitsrl(a.h,k); a.l=bitsrl(a.l,k); 
+            a.l=bitsrl(a.l,k); for i=1:k; a.l=bitset(a.l,64-k+i,bitget(a.h,i)); end
+            a.h=bitsrl(a.h,k); 
         end
 
 
