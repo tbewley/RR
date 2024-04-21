@@ -11,9 +11,9 @@ function [D,R]=RR_div64(Q,M)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-D=uint64(Q);  M=uint64(M); Mbar=bitcmp(M)+1; R=uint64(0);  % Needs explicit type casting!
-if M>Q,       D=uint64(0); R=Q;   return  % skip this algorithm for the trivial cases 
-elseif M>Q-M, D=uint64(1); R=Q-M; return
+D=uint64(Q);  M=uint64(M); Mbar=bitcmp(M)+1; R=uint64(0);
+if M>D,       R=D;   D=uint64(0); return  % skip algorithm below for the trivial cases 
+elseif M>D-M, R=D-M; D=uint64(1); return
 else
   for N=64:-1:1
     s=bitget(R,64); R=bitsll(R,1); R=bitset(R,1,bitget(D,64)); D=bitsll(D,1);  

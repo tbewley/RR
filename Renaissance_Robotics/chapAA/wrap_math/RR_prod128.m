@@ -8,13 +8,13 @@ function [ph,pl,ch,cl]=RR_prod128(xh,xl,yh,yl)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-[ph,pl,cl]=RR_prod128s(xh,xl,yl)   % {cl ph pl} <- {xh xl} * yl   
-[p1,p2,ch]=RR_prod128s(xh,xl,yh)   % {ch p1 p2} <- {xh xl} * yh 
-[cl,ph,c1]=RR_sum128(cl,ph,p1,p2)  % {c1 cl ph} <- {cl ph} + {p1 p2}
-ch=RR_sum64(ch,c1)                 %        ch  <- ch+c1
+[ph,pl,cl]=RR_prod128s(xh,xl,yl);   % {cl ph pl} <- {xh xl} * yl   
+[p1,p2,ch]=RR_prod128s(xh,xl,yh);   % {ch p1 p2} <- {xh xl} * yh 
+[cl,ph,c1]=RR_sum128(cl,ph,p1,p2);  % {c1 cl ph} <- {cl ph} + {p1 p2}
+ch=RR_sum64(ch,c1);                 %        ch  <- ch+c1
 
-%             {xh xl}
-%           * {yh yl}
+%             {xh xl}     This graphic summarizes how the above calculations are combined.
+%           * {yh yl}     (should be self explanatory)
 % -------------------
 %          {cl ph pl}
 %     + {ch p1 p2}

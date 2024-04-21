@@ -17,56 +17,61 @@
 
 classdef RR_uint128 < matlab.mixin.CustomDisplay
     properties % RR_uint128 objects consist of two fields, with +,-,*,/ defined to wrap on overflow
-        h     % the high part of v, a uint64 value 
-        l     % the low part of v,  a uint64 value
+        h      % the high part of v, a uint64 value 
+        l      % the low part of v,  a uint64 value
     end
     methods
-        function obj = RR_uint64(vh,vl)    % a=RR_uint64 creates an RR_uint64 object obj.
-            obj.vh = uint64(abs(vh));
-            obj.vl = uint64(abs(vl));
+        function obj = RR_uint128(a,b)  % create an RR_uint128 object obj.
+            if nargin==1                % one argument: create {hi,lo} parts from {0,a}            
+                 obj.h = uint64(0);
+                 obj.l = uint64(a); 
+            else                        % two arguments: create {hi,lo} parts from {a,b}
+                 obj.h = uint64(a);
+                 obj.l = uint64(b);
+            end
         end
         function [sum] = plus(a,b)        % Defines a+b
             [h,l]=RR_sum128(a.h,a.l,b.h,b.l); sum=RR_uint128(h,l);
         end
         function diff = minus(a,b)        % Defines a-b
-            diff=a+(-b);
+            bb=-b; [h,l]=RR_sum128(a.h,a.l,bb.h,bb.l); diff=RR_uint128(h,l);
         end
         function out = uminus(b)          % Defines (-b)
             [h,l]=RR_sum128(bitcmp(b.h),bitcmp(b.l),uint64(0),uint64(1)); out=RR_uint128(h,l);
         end    
         function prod = mtimes(a,b)       % Defines a*b
-            [a,b]=check(a,b);
-            al=bitand(a.v,0xFFFFFFFFu64); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
-            bl=bitand(b.v,0xFFFFFFFFu64); bh=bitsra(b.v,32); % {ah,bh} are upper 32 bits of {a,b}
-            prod=RR_uint64(bl*al)+RR_uint64(bitsll((al*bh)+(ah*bl),32));
+            [h,l]=RR_prod128(a.h,a.l,b.h,b.l); prod=RR_uint128(h,l);
         end
         function [quo,re] = mrdivide(b,a) % Defines [quo,re]=b/a
-            [b,a]=check(b,a); quo=RR_uint64(idivide(b.v,a.v)); re=RR_uint64(rem(b.v,a.v));
+            [quo,re]=RR_div128(b,a)
         end
-        function pow = mpower(a,n),  pow=RR_uint64(a.v^n); end             % Defines a^n
-        function fac = factorial(a), fac=RR_uint64(factorial(a.v));  end   % Defines factorial(a)
         function n = norm(a), n=abs(a.v); end                              % Defines norm(a)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function TF=lt(a,b), [a,b]=check(a,b); if a.v< b.v, TF=true; else, TF=false; end, end            
-        function TF=gt(a,b), [a,b]=check(a,b); if a.v> b.v, TF=true; else, TF=false; end, end
-        function TF=le(a,b), [a,b]=check(a,b); if a.v<=b.v, TF=true; else, TF=false; end, end
-        function TF=ge(a,b), [a,b]=check(a,b); if a.v>=b.v, TF=true; else, TF=false; end, end
-        function TF=ne(a,b), [a,b]=check(a,b); if a.v~=b.v, TF=true; else, TF=false; end, end
-        function TF=eq(a,b), [a,b]=check(a,b); if a.v==b.v, TF=true; else, TF=false; end, end
-        function [a,b]=check(a,b)
-            if ~isa(a,'RR_uint64'), a=RR_uint64(a); end
-            if ~isa(b,'RR_uint64'), b=RR_uint64(b); end
+        function TF=lt(a,b), if (a.h< b.h) | (a.h==b.h & a.l< b.l), TF=true; else, TF=false; end, end            
+        function TF=gt(a,b), if (a.h> b.h) | (a.h==b.h & a.l> b.l), TF=true; else, TF=false; end, end
+        function TF=le(a,b), if (a.h< b.h) | (a.h==b.h & a.l<=b.l), TF=true; else, TF=false; end, end
+        function TF=ge(a,b), if (a.h> b.h) | (a.h==b.h & a.l>=b.l), TF=true; else, TF=false; end, end
+        function TF=ne(a,b), if (a.v~=b.v) | (a.l~=b.l),            TF=true; else, TF=false; end, end
+        function TF=eq(a,b), if (a.v==b.v) & (a.l==b.l),            TF=true; else, TF=false; end, end
+ 
+        function a = RR_bitsll(a,k)            
+            a.h=bitsll(a.h,k);
+            for i=1:k; a.h=bitset(a.h,i,bitget(a.l,64+k+i); end
+            a.l=bitsll(a.l,k); 
+        end
+        function a = RR_bitsrl(a,k)            
+            a.h=bitsrl(a.h,k); a.l=bitsrl(a.l,k); 
         end
 
+
+
     end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
         function displayScalarObject(obj)
-            fprintf(getHeader(obj))
-            disp(obj.v)
+            fprintf('RR_uint128 with {h,l} = {0x%s,0x%s}\n',dec2hex(obj.h,16),dec2hex(obj.l,16))
         end
     end
-end
+end 
 
 % cheatsheet: bitwise operations on unsigned integers, in both C and Matlab
 %  C  Bit Operations   Matlab

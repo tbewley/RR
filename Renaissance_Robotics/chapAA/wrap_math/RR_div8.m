@@ -12,7 +12,7 @@ function [D,R]=RR_div8(Q,M)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 D=uint8(Q);   M=uint8(M);  Mbar=bitcmp(M)+1; R=uint8(0);  % Needs explicit type casting!
-if M>Q,       D=uint8(0);  R=Q;   return  % skip this algorithm for the trivial cases 
+if M>Q,       D=uint8(0);  R=Q;   return  % skip algorithm below for the trivial cases 
 elseif M>Q-M, D=uint8(1);  R=Q-M; return
 else
   fprintf('M (in binary) = %s, Mbar (in binary) = %s\n',dec2bin(M,8),dec2bin(Mbar,8))

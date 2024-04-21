@@ -1,11 +1,11 @@
-function [DH,DL,RH,RL]=RR_div128(QH,QL,MH,ML)
-% function [DH,DL,RH,RL]=RR_div128(QH,QL,MH,ML)                      
+function [D,R]=RR_div128(Q,M)
+% function [D,R]=RR_div128(Q,M)                      
 % This code performs full uint128 by uint128 division using the nonrestoring division algorithm;
 % look at RR_div64 first for a more streamlined template, and RR_div8 to understand how it works.
-% INPUTS:  {QH,QL,MH,ML} are uint64, with  Q={QH,QL}=dividend, M={MH,ML}=divisor
-% OUTPUTS: {DH,DL,RH,RL} are uint64, where D={DH,DL} and R={RH,RL} with Q=D*M+R
+% INPUTS:  {Q,M} are RR_uint128, with Q=dividend, M=divisor
+% OUTPUTS: {D,R} are RR_uint128, with Q=D*M+R
 % TEST:
-%   clear, clc, QH=RR_xoshiro256pp, QL=RR_xoshiro256pp, MH=uint64(0), ML=RR_xoshiro256pp
+%   clear, clc, Q=RR_uint128(RR_xoshiro256pp,RR_xoshiro256pp), M=RR_uint128(RR_xoshiro256pp)
 %   [DH,DL,RH,RL]=RR_div128(QH,QL,MH,ML)
 %   [PH,PL]=RR_prod128s(DH,DL,ML)    % Calculate Y=D*M+R in 2 steps, compare visually with Q
 %   [YH,YL]=RR_sum128(PH,PL,RH,RL)       
@@ -14,25 +14,22 @@ function [DH,DL,RH,RL]=RR_div128(QH,QL,MH,ML)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-DH=uint64(QH); DH=uint64(QH); MH=uint64(MH); ML=uint64(ML);
-MbarH,MbarL=RR_minus(MH,ML);  RH=uint64(0);  RL=RH;
-if M>Q,       DH=RH; DL=DH; RH=QH; RL=QL; return  % skip this algorithm for the trivial cases 
-elseif M>Q-M, DH=RH; DL=uint64(1); R=Q-M; return
+Mbar=-M; R=uint128(0);
+if M>D,       R=D;   D=uint128(0); return  % skip this algorithm for the trivial cases 
+elseif M>D-M, R=D-M; D=uint128(1); return
 else
-  for N=Nmax:-1:1
-    s=bitget(R,Nmax); R=bitsll(R,1); R=bitset(R,1,bitget(D,Nmax)); D=bitsll(D,1);  
-    if s, R=RR_sum64(R,M); else, R=RR_sum64(R,Mbar); end
-    if bitget(R,Nmax), D=bitset(D,1,0); else, D=bitset(D,1,1); end
+  for N=128:-1:1
+    s=bitget(R,64); R=bitsll(R,1); R=bitset(R,1,bitget(D,64)); D=bitsll(D,1);  
+    if s, R=R+M; else, R=R+Mbar; end
+    if bitget(R,64), D=bitset(D,1,0); else, D=bitset(D,1,1); end
   end
-  if bitget(R,Nmax), R=RR_sum64(R,M); end
+  if bitget(R,64), R=R+M; end
 end
 
+% TODO:
 % RR_randi (no arguments for 64 bit number)
 % RR_uminus64, 32, 8
 % RR_uint128 and RR_uint256 operations needed:
 % instantiate (one argument: bottom part = 0, 2-4 arguments: 2-4 parts)
-% unary_minus
-% sum
-% product
 % RR_bitsll
 % RR_bitsrl
