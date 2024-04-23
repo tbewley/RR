@@ -1,6 +1,6 @@
 function [p,c]=RR_prod64(x,y)
 % function [p,c]=RR_prod64(x,y)
-% INPUTS:  x, y are each uint64 (or uint32,single,double)
+% INPUTS:  x, y are each uint64 (or uint32,uint16,uint8,single,double)
 % OUTPUTS: p=x*y is uint64
 %          c=carry part (uint64, can ignore for wrap on uint64 overflow)
 % TEST: x=intmax('uint64'), y=3, [p,c]=RR_prod64(x,y)
@@ -11,4 +11,4 @@ x=uint64(x); xh=bitsra(x,32); xl=bitand(x,0xFFFFFFFFu64); % {xh,xl}={hi,lo} 32 b
 y=uint64(y); yh=bitsra(y,32); yl=bitand(y,0xFFFFFFFFu64); % {yh,yl}={hi,lo} 32 bits of y
 [pm,cm]=RR_sum64(xl*yh,xh*yl);
 [p,c]  =RR_sum64(xl*yl,bitsll(pm,32));
-c      =c+bitsll(cm,32)+bitsra(pm,32)+xh*yh;
+c      =c+bitsll(cm,32)+bitsrl(pm,32)+xh*yh;

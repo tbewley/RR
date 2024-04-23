@@ -8,7 +8,7 @@ function [p,c]=RR_prod64s(x,y)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-x=uint64(x); xh=bitsra(x,32); xl=bitand(x,0xFFFFFFFFu64); % {xh,xl}={hi,lo} 32 bits of x
+x=uint64(x); xh=bitsrl(x,32); xl=bitand(x,0xFFFFFFFFu64); % {xh,xl}={hi,lo} 32 bits of x
 y=uint64(y); % ASSUMES (without checking) that y is zero in its upper 32 bits!
 pm   =xh*y;
 [p,c]=RR_sum64(xl*y,bitsll(pm,32));

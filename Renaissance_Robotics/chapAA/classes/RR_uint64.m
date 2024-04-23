@@ -1,19 +1,27 @@
 % classdef RR_uint64
-% This class emulates uint64 with wrap on overflow, because unfortunately
-% Matlab doesn't wrap (unlike C and Eminem).
-% This emulation is inefficient - use of this code is recommended for pedagogical
-% purposes only.  For production codes, you should absolutely use C instead.
+% This class implements a modified uint64 behavior with wrap on overflow, because Matlab don't wrap.
+%
+% Note that, as is standard, unsigned integer division and remainder are defined in RR such that
+%   A = (A/B)*B + (A rem B) where (A rem B) has value less than the value of B.
+% Unfortunately, as of April 2024, Matlab's built-in integer division,  A/B, doesn't conform to this
+% standard, and thus should probably not be used when doing integer math, unless/until this is fixed.
+% For example, taking the following in Matlab: [can also replace 64 with one of {8,16,32}]
+%             b=uint64(7), a=uint64(4), q=b/a, r=rem(b,a)  gives  q=2, r=3.  (doah!)
+% On the other hand, taking the following: [can also replace 64 with one of {8,16,32,128,256,512}]
+%             B=RR_uint64(7), A=RR_uint64(4),  [Q,R]=B/A   gives  q=1, r=3.  :)
 %
 % DEFINITION:
-%   a=RR_uint64(c)  defines an RR_uint64 object from any positive integer
+%   A=RR_uint64(c) defines an RR_uint64 object from any integer 0<=c<=2^64-1=1.84e19
 %
-% STANDARD OPERATIONS defined on RR_uint64 objects (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
-%   plus:     a+b  gives the sum of two integers
-%   minus:    b-a  gives the difference of two integers
-%   mtimes:   a*b  gives the product of two integers
-%   mrdivide: [quo,rem]=b/a divides two integers, giving the quotient quo and remainder rem
-%   mpower:   a^n  gives the n'th power of the integer a
-%   Note that the relations <, >, <=, >=, ~=, == are also defined.
+% STANDARD OPERATIONS defined on RR_uint64 objects
+% (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
+%   plus:     [SUM,CARRY]=A+B  gives the sum of two RR_uint64 integers
+%   uminus:   -A gives the two's complement representation of negative A
+%   minus:    B-A  gives the difference of two RR_uint64 integers (in two's complement form if negative)
+%   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_uint64 integers
+%   mrdivide: [QUO,REM]=B/A divides two  RR_uint64 integers, giving the quotient QUO and remainder REM
+%   The relations <, >, <=, >=, ~=, == are also clearly defined.
+%   {+,-,*,/} are all built on uint64 primatives
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
@@ -23,47 +31,38 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         v      % a uint64 value (with +,-,*,/ redefined to wrap on overflow)
     end
     methods
-        function obj = RR_uint64(v)     % a=RR_uint64 creates an RR_uint64 object obj.
-            if strcmp(class(v),'sym'), error('RR_uint64 only defined for numeric arguments'), end
-            obj.v = uint64(abs(v));
-            if sign(v)==-1, obj.v=bitcmp(obj.v)+1; end
+        function OBJ = RR_uint64(v)         % Create an RR_uint64 object OBJ
+            OBJ.v = uint64(abs(v)); if sign(v)==-1, OBJ=-OBJ; end
         end
-        function [sum,carry] = plus(a,b)  % Defines a+b
-            [a,b]=check(a,b);
-            sum=bitand(a.v,0x7FFFFFFFFFFFFFFF)+bitand(b.v,0x7FFFFFFFFFFFFFFF); % add first 63 bits
-            MSB=bitget(a.v,64)+bitget(b.v,64)+bitget(sum,64);
-            sum=RR_uint64(bitset(sum,64,bitget(MSB,1)));
-            carry=bitget(MSB,2);
+        function [SUM,CARRY] = plus(A,B)    % Define A+B (ignore CARRY for wrap on overflow)
+            [A,B]=check(A,B); [s,c]=RR_sum64(A.v,B.v); SUM=RR_uint64(s); CARRY=RR_uint64(c); 
         end
-        function diff = minus(a,b)        % Defines a-b
-            [a,b]=check(a,b);
-            diff=a+(-b);
+        function DIFF = minus(A,B)          % Define A-B
+            [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
         end
-        function out = uminus(a)
-            out=RR_uint64(bitcmp(a.v)+1);
+        function OUT = uminus(B)            % Define -B
+            [B]=check(B); OUT=RR_uint64(bitcmp(B.v)+1);
         end    
-        function prod = mtimes(a,b)       % Defines a*b
-            [a,b]=check(a,b);
-            al=bitand(a.v,0xFFFFFFFFu64); ah=bitsra(a.v,32); % {al,bl} are lower 32 bits of {a,b}
-            bl=bitand(b.v,0xFFFFFFFFu64); bh=bitsra(b.v,32); % {ah,bh} are upper 32 bits of {a,b}
-            prod=RR_uint64(bl*al)+RR_uint64(bitsll((al*bh)+(ah*bl),32));
+        function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
+            [A,B]=check(A,B); [p,c]=RR_prod64(A.v,B.v); PROD=RR_uint64(p); CARRY=RR_uint64(c);
         end
-        function [quo,re] = mrdivide(b,a) % Defines [quo,re]=b/a
-            [b,a]=check(b,a); quo=RR_uint64(idivide(b.v,a.v)); re=RR_uint64(rem(b.v,a.v));
+        function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
+            [A,B]=check(A,B); QUO=RR_uint64(idivide(B.v,A.v)); RE=RR_uint64(rem(B.v,A.v));
         end
-        function pow = mpower(a,n),  pow=RR_uint64(a.v^n); end             % Defines a^n
-        function fac = factorial(a), fac=RR_uint64(factorial(a.v));  end   % Defines factorial(a)
-        function n = norm(a), n=abs(a.v); end                              % Defines norm(a)          
-        % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function TF=lt(a,b), [a,b]=check(a,b); if a.v< b.v, TF=true; else, TF=false; end, end            
-        function TF=gt(a,b), [a,b]=check(a,b); if a.v> b.v, TF=true; else, TF=false; end, end
-        function TF=le(a,b), [a,b]=check(a,b); if a.v<=b.v, TF=true; else, TF=false; end, end
-        function TF=ge(a,b), [a,b]=check(a,b); if a.v>=b.v, TF=true; else, TF=false; end, end
-        function TF=ne(a,b), [a,b]=check(a,b); if a.v~=b.v, TF=true; else, TF=false; end, end
-        function TF=eq(a,b), [a,b]=check(a,b); if a.v==b.v, TF=true; else, TF=false; end, end
-        function [a,b]=check(a,b)
-            if ~isa(a,'RR_uint64'), a=RR_uint64(a); end
-            if ~isa(b,'RR_uint64'), b=RR_uint64(b); end
+        function POW = mpower(A,n),  POW=A; for i=2:n; POW=POW*A; end, end    
+        function FAC = factorial(A), FAC=RR_uint64(1); for i=2:A.v, FAC=FAC*i; end, end
+        function n = norm(A), n=abs(A.v); end    % Defines norm(A)
+
+        % Now define A<B, A>B, A<=B, A>=B, A~=B, A==B based on the values of A and B.
+        function tf=lt(A,B), [A,B]=check(A,B); if A.v< B.v, tf=true; else, tf=false; end, end            
+        function tf=gt(A,B), [A,B]=check(A,B); if A.v> B.v, tf=true; else, tf=false; end, end
+        function tf=le(A,B), [A,B]=check(A,B); if A.v<=B.v, tf=true; else, tf=false; end, end
+        function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
+        function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
+        function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
+        function [A,B]=check(A,B)
+            if ~isa(A,'RR_uint64'), A=RR_uint64(A); end
+            if nargin==2 & ~isa(B,'RR_uint64'), B=RR_uint64(B); end
         end
 
     end

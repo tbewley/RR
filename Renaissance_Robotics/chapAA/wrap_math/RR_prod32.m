@@ -8,4 +8,4 @@ function [p,c]=RR_prod32(x,y)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 t=uint64(x)*uint64(y);  % Note: intermediate math is uint64
-p=uint32(bitand(t,0xFFFFFFFFu64)); c=uint32(bitsra(t,32));
+p=uint32(bitand(t,0xFFFFFFFFu64)); c=uint32(bitsrl(t,32));

@@ -6,4 +6,4 @@ function rotated=RR_rotr64(x,k)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-rotated=bitor(bitsra(x,k),bitsll(x,64-k));
+rotated=bitor(bitsrl(x,k),bitsll(x,64-k));

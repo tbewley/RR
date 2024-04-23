@@ -9,4 +9,4 @@ function [s,c]=RR_sum64(x,y)
 
 s=bitand(x,0x7FFFFFFFFFFFFFFF)+bitand(y,0x7FFFFFFFFFFFFFFF); % add the first 63 bits
 MSB_sum=bitget(x,64)+bitget(y,64)+bitget(s,64);              % calculate the 64th bit
-s=bitset(s,64,bitget(MSB_sum,1)); c=bitget(MSB_sum,2);  
+s=uint64(bitset(s,64,bitget(MSB_sum,1))); c=uint64(bitget(MSB_sum,2));  
