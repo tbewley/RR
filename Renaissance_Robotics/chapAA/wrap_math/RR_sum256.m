@@ -10,6 +10,6 @@ function [S,C]=RR_sum256(X,Y)
 XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo); % intermediate math done using RR_uint128 
 YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
 
-[SH,SL,C1]=RR_sum256s(XH,XL,YL); [SH.h,SH.l,C2]=RR_sum128(SH.h,SH.l,YH.h,YH.l);
+[SH,SL,C1]=RR_sum256s(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
 
-S=RR_uint256(SH.h,SH.l,SL.h,SL.l); C=RR_uint256(0,0,C1.h,C1.l)+RR_uint256(C2);
+S=RR_uint256(SH.h,SH.l,SL.h,SL.l); C=RR_uint256(0,0,C1.h,C1.l);

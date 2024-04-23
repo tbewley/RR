@@ -32,20 +32,45 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
                 OBJ.hi=uint64(a); OBJ.m2=uint64(b); OBJ.m1=uint64(c); OBJ.lo=uint64(d); 
             end
         end
-        function [SUM,CARRY] = plus(A,B)          % Defines a+b
-            [SUM,CARRY]=RR_sum256(A,B);
+        function [SUM,CARRY] = plus(X,Y)       % Defines X+Y using RR_uint128 math
+            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo);
+            YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
+
+            [SH,SL,C1]=RR_sum256s(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
+
+            SUM=RR_uint256(SH.h,SH.l,SL.h,SL.l); CARRY=RR_uint256(0,0,C1.h,C1.l);
         end
-        function DIFF = minus(A,B)        % Defines A-B
-            BB=-B; [h,l]=RR_sum256(A.h,A.l,BB.h,BB.l); DIFF=RR_uint256(h,l);
+        function DIFF = minus(A,B)            % Defines A-B
+            DIFF=A+(-B);
         end
-        function OUT = uminus(B)          % Defines (-B)    % FIX!!
+        function OUT = uminus(B)              % Defines (-B)
             B=RR_uint256(bitcmp(B.hi),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint256(1);
         end    
-        function PROD = mtimes(A,B)       % Defines A*B
-            [h,l]=RR_prod128(A.h,A.l,B.h,B.l); PROD=RR_uint256(h,l);
+        function [PROD,CARRY] = mtimes(X,Y)   % Defines X*Y using RR_uint128 math
+            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo); 
+            YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
+
+            [PH,PL,CL] =RR_prod256s(XH,XL,YL);          % {CL PH PL} <- {XH XL} * YL   
+            [P1,P2,CH] =RR_prod256s(XH,XL,YH);          % {CH P1 P2} <- {XH XL} * YH 
+
+            [CL,PH,C1]=RR_sum256s(CL,PH,P2);            % {C1 CL PH} <- {CL PH} + {0 P2}
+            CH=CH+C1;                                   %         CH <- CH+C1
+            [CL,C2]=CL+P1;                              %    {C2 CL} <- CL+P1
+            CH=CH+C2;                                   %         CH <- CH+C2
+
+%             {XH XL}     This graphic summarizes how the above calculations are combined.
+%           * {YH YL}     (should be self explanatory)
+% -------------------
+%          {CL PH PL}
+%     + {CH P1 P2}
+% -------------------
+%       {CH CL PH PL}
+
+            PROD =RR_uint256(PH.h,PH.l,PL.h,PL.l);
+            CARRY=RR_uint256(CH.h,CH.l,CL.h,CL.l);
         end
         function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
-            [QUO,RE]=RR_div128(B,A);
+            [QUO,RE]=RR_div256(B,A);
         end
         function n = norm(A), n=abs(A.v); end                              % Defines norm(A)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.

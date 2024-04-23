@@ -5,14 +5,11 @@ function [D,R]=RR_div256(Q,M)
 % INPUTS:  {Q,M} are RR_uint256, with Q=dividend, M=divisor
 % OUTPUTS: {D,R} are RR_uint256, with Q=D*M+R
 % TEST:
-%   clear, clc, Q=RR_uint256(RR_xoshiro256pp,RR_xoshiro256pp,RR_xoshiro256pp,RR_xoshiro256pp)
-%   M=RR_uint128(RR_xoshiro256pp,RR_xoshiro256pp,RR_xoshiro256pp,RR_xoshiro256pp); M=RR_bitsrl(M,8),
+%   clear, clc, Q=RR_randi256, M=RR_randi256; M=RR_bitsrl(M,8),
 %   [D,R]=RR_div256(Q,M), disp('Check: Y=D*M+R, res=Y-Q.  Looking for res=0, R<M.')
 %   Y=D*M+R, res=Y-Q
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
-
-%%%% Completed but still not debugged
 
 D=Q; Mbar=-M; R=RR_uint256(0);
 if M>D,       R=D;   D=RR_uint256(0); return  % skip this algorithm for the trivial cases 
@@ -28,5 +25,4 @@ else
 end
 
 % TODO:
-% RR_randi (no arguments for 64 bit number)
 % RR_uminus64, 32, 8
