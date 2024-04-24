@@ -1,7 +1,8 @@
 function [D,R]=RR_div8(Q,M)
 % function [D,R]=RR_div8(Q,M)                      
 % This code performs full uint8   by uint8   division using the nonrestoring division algorithm.
-% This version generates pretty screen output to show how it works; RR_div64 is more streamlined.
+% RR_div8 generates pretty screen output to show how it works; RR_div64 is more streamlined.
+% Both, of course, are slow compared to Matlab's built in / function (for uint8 through uint64). 
 % INPUTS:  Q, M are uint8 (or single,double) Q=dividend, M=divisor
 % OUTPUTS: D and R are uint8, with Q=D*M+R
 % TEST:

@@ -50,7 +50,7 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
         end    
         function [PROD,CARRY] = mtimes(A,B) % Defines [PROD,CARRY]=a*b, ignore CARRY for wrap on overflow
             [ph,pl,ch,cl]=RR_prod128(A.h,A.l,B.h,B.l);
-            PROD=RR_uint128(ph,pl); CARRY=RR_uint128(ph,pl);
+            PROD=RR_uint128(ph,pl); CARRY=RR_uint128(ch,cl);
         end
         function [QUO,RE] = mrdivide(B,A)   % Defines [QUO,RE]=B/A
             [QUO,RE]=RR_div128(B,A);

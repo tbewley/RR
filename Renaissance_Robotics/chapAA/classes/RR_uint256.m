@@ -47,7 +47,7 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
             B=RR_uint256(bitcmp(B.hi),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint256(1);
         end    
         function [PROD,CARRY] = mtimes(X,Y)   % Defines X*Y using RR_uint128 math
-            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo); 
+            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo);
             YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
 
             [PH,PL,CL] =RR_prod256s(XH,XL,YL);          % {CL PH PL} <- {XH XL} * YL   
