@@ -1,9 +1,15 @@
-% classdef RR_uint512
-% This class developes a RR_uint512 type (built with eight uint64 types) with wrap on overflow.
+% classdef RR_uint512  
+% A 512-bit unsigned integer class, built from eight uint64 primatives, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_randi512, B=-A, C=A+B   % gives C=0.
+%
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 512 with any of {8,16,32,64,128,256,512}]
+%   B=RR_randi512, A=RR_randi512(400), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint512(hi,m6,m5,m4,m3,m2,m1,lo) defines an RR_uint512 object from 8 uint64 variables
-%   (I really don't think this one will ever be practically needed, but what the heck...  :)
+%   A=RR_uint512(hi,m6,m5,m4,m3,m2,m1,lo) defines an RR_uint512 object from 8 uint64 variables, 0<=A<=2^512-1
 %
 % STANDARD OPERATIONS defined on RR_uint512 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -39,38 +45,42 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
                 OBJ.m3=uint64(e); OBJ.m2=uint64(f); OBJ.m1=uint64(g); OBJ.lo=uint64(h); 
             end
         end
-        function SUM512 = plus(A512,B512)         % Defines A512+B512
-            SUM512=RR_sum512(A512,B512);
+        function [SUM,CARRY] = plus(X,Y)         % Defines X+Y using RR_uint256 math
+            [XH,XL]=RR_512_to_256(X);          [YH,YL]=RR_512_to_256(Y);
+            [SH,SL,C1]=RR_HL_plus_L(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
+            SUM=RR_256_to_512(SH,SL);          CARRY=RR_256_to_512(0,C);
         end
-        function DIFF512 = minus(A512,B512)       % Defines A512-B512
-            BB512=-B512; DIFF512=RR_sum512(AH256,AL256,BBH256,BBL256); % =RR_uint512(H256,L256);
+        function DIFF = minus(A,B)               % Defines A-B
+            DIFF=A+(-B);
         end
-        function OUT512 = uminus(B512)            % Defines (-B512)
-            % [BH256,BL256]=extractHL(B);
-            % OUT512=RR_sum512(BH256,RR_sum512(uint64(1)); 
+        function OUT = uminus(B)                 % Defines (-B)
+            B=RR_uint512(bitcmp(B.hi),bitcmp(B.m6),bitcmp(B.m5),bitcmp(B.m4), ...
+                         bitcmp(B.m3),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint512(1);
+        end    
+        function [PROD,CARRY] = mtimes(X,Y)      % Defines X*Y using RR_uint256 math
+            [XH,XL]=RR_512_to_256(X); [YH,YL]=RR_512_to_256(Y);
+            [PH,PL,CL]=RR_HL_times_Y(XH,XL,YL);  % {CL PH PL}<-{XH XL} * YL   
+            [P1,P2,CH]=RR_HL_times_Y(XH,XL,YH);  % {CH P1 P2}<-{XH XL} * YH 
+            [CL,PH,C1]=RR_HL_plus_L(CL,PH,P2);   % {C1 CL PH}<-{CL PH} + {0 P2}
+            CH=CH+C1; [CL,C2]=CL+P1; CH=CH+C2;   % CH<-CH+C1, {C2 CL}<-CL+P1, CH<-CH+C2
+            PROD=RR_256_to_512(PH,PL); CARRY=RR_256_to_512(CH,CL);
         end
-        function OBJ512 = RR_uint512HL(A256,B256)  % create an RR_uint512 object from two RR_uint256 objects.
-            OBJ512.hi=A256.hi; OBJ512.m6=A256.m2; OBJ512.m5=A256.m1; OBJ512.m4=A256.lo; 
-            OBJ512.m3=B256.hi; OBJ512.m2=B256.m2; OBJ512.m1=B256.m1; OBJ512.lo=B256.lo; 
-        end   
-        function PROD512 = mtimes(A512,B512)      % Defines A512*B512
-            PROD512=RR_prod512(A512,B512);
+        function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
+            [QUO,RE]=RR_div512(B,A);
         end
-        function [QUO512,RE512] = mrdivide(B512,A512) % Defines [QUO,RE]=B/A
-            [QUO512,RE512]=RR_div512(B512,A512);
-        end
+
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-
-        function tf=lt(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256< BH256) | (AH256==BH256 & AL256< BL256), tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256> BH256) | (AH256==BH256 & AL256> BL256), tf=true; else, tf=false; end, end
-        function tf=le(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256<=BH256) | (AH256==BH256 & AL256<=BL256), tf=true; else, tf=false; end, end
-        function tf=ge(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256>=BH256) | (AH256==BH256 & AL256>=BL256), tf=true; else, tf=false; end, end
-        function tf=ne(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256~=BH256) | (AL256~=BL256),                tf=true; else, tf=false; end, end
-        function tf=eq(A,B), [AH256,AL256]=extractHL(A); [BH256,BL256]=extractHL(B); if (AH256==BH256) | (AL256==BL256),                tf=true; else, tf=false; end, end
-
-        function [AH256,AL256]=extractHL(A), AH256=RR_uint256(A.hi,A.m6,A.m5,A.m4); AL256=RR_uint256(A.m3,A.m2,A.m1,A.lo); end
+        function tf=lt(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH< BH) | (AH==BH & AL< BL), tf=true; else, tf=false; end, end            
+        function tf=gt(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH> BH) | (AH==BH & AL> BL), tf=true; else, tf=false; end, end
+        function tf=le(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH<=BH) | (AH==BH & AL<=BL), tf=true; else, tf=false; end, end
+        function tf=ge(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH>=BH) | (AH==BH & AL>=BL), tf=true; else, tf=false; end, end
+        function tf=ne(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH~=BH) | (AL~=BL),          tf=true; else, tf=false; end, end
+        function tf=eq(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH==BH) | (AL==BL),          tf=true; else, tf=false; end, end
+        function s=sign(A), if A.v==0, s=0; else, s=1; end, end
 
         function A = RR_bitsll(A,k)            
+            while k>63, A.hi=A.m6; A.m6=A.m5; A.m5=A.m4; A.m4=A.m3; 
+                        A.m3=A.m2; A.m2=A.m1; A.m1=A.lo; A.lo=uint64(0); k=k-64; end
             A.hi=bitsll(A.hi,k); for i=1:k; A.hi=bitset(A.hi,i,bitget(A.m6,64-k+i)); end
             A.m6=bitsll(A.m6,k); for i=1:k; A.m6=bitset(A.m6,i,bitget(A.m5,64-k+i)); end
             A.m5=bitsll(A.m5,k); for i=1:k; A.m5=bitset(A.m5,i,bitget(A.m4,64-k+i)); end
@@ -81,6 +91,8 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
             A.lo=bitsll(A.lo,k); 
         end
         function A = RR_bitsrl(A,k)            
+            while k>63, A.lo=A.m1; A.m1=A.m2; A.m2=A.m3; A.m3=A.m4;
+                        A.m4=A.m5; A.m5=A.m6; A.m6=A.hi; A.hi=uint64(0); k=k-64; end
             A.lo=bitsrl(A.lo,k); for i=1:k; A.lo=bitset(A.lo,64-k+i,bitget(A.m1,i)); end
             A.m1=bitsrl(A.m1,k); for i=1:k; A.m1=bitset(A.m1,64-k+i,bitget(A.m2,i)); end
             A.m2=bitsrl(A.m2,k); for i=1:k; A.m2=bitset(A.m2,64-k+i,bitget(A.m3,i)); end
@@ -89,6 +101,9 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
             A.m5=bitsrl(A.m5,k); for i=1:k; A.m5=bitset(A.m5,64-k+i,bitget(A.m6,i)); end
             A.m6=bitsrl(A.m6,k); for i=1:k; A.m6=bitset(A.m6,64-k+i,bitget(A.hi,i)); end
             A.hi=bitsrl(A.hi,k); 
+        end
+        function [XH,XL]=RR_512_to_256(X)
+            XH=RR_uint256(X.hi,X.m6,X.m5,X.m4); XL=RR_uint256(X.m3,X.m2,X.m1,X.lo);
         end
     end
     methods(Access = protected)

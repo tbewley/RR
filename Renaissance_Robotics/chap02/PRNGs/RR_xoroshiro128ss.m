@@ -2,7 +2,6 @@ function out=RR_xoroshiro128ss(n)
 % function out=RR_xoroshiro128ss(n)
 % PRNG using Sebastiano Vigna's xoroshiro128**, with a 4x32=128 bit state and 32 bit output
 % Initialize with RR_prng('stochastic','xoroshiro128**') or RR_prng('deterministic','xoroshiro128**')
-% This Matlab implementation is meant primarily for pedagogical purposes, it is not fast.
 %
 % INPUT: n = number of pseudorandom numbers to generate (OPTIONAL, n=1 by default)
 % TEST:  RR_xoroshiro128ss(5)     % Generate 5 pseudorandom numbers

@@ -1,15 +1,12 @@
 % classdef RR_uint8
-% This class implements a modified uint8 behavior with wrap on overflow, because unfortunately
-% Matlab doesn't wrap (unlike C and Rust and Jay-Z and Eminem).  :)
+% A 8-bit unsigned integer class, built internally with uint8 math, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_uint8(7), B=-A, C=A+B   % gives  B=0xF9=249, C=0.  Also try for A=RR_randi64
 %
-% Note that, as is standard, unsigned integer division and remainder are defined in RR such that
-%   A = (A/B)*B + (A rem B) where (A rem B) has value less than the value of B.
-% Unfortunately, as of April 2024, Matlab's built-in integer division,  A/B, doesn't conform to this
-% standard, and thus should probably not be used when doing integer math, unless/until this is fixed.
-% For example, taking the following in Matlab: [can replace 8 with any of {8,16,32,64}]
-%             b=uint8(7), a=uint8(4), q=b/a, r=rem(b,a)  gives  q=2, r=3.  (doah!)
-% On the other hand, taking the following:     [can replace 8 with any of {8,16,32,64,128,256,512}]
-%             B=RR_uint8(7), A=RR_uint8(4),  [Q,R]=B/A   gives  q=1, r=3.  (yay!)
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512}]
+%   B=RR_randi8, A=RR_randi(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint8(c)  defines an RR_uint8 object from any integer 0<=c<256=2^8=0xFF
@@ -32,8 +29,9 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
         v      % a uint8 value (with +,-,*,/ redefined to wrap on overflow)
     end
     methods
-        function OBJ = RR_uint8(v)         % Create an RR_uint8 object OBJ
-            OBJ.v = uint8(abs(v)); if sign(v)==-1, OBJ=-OBJ; end
+        function OBJ = RR_uint8(v)          % Create an RR_uint8 object OBJ
+            OBJ.v = uint8(abs(v));
+            if sign(v)==-1, OBJ=-OBJ; end
         end
         function [SUM,CARRY] = plus(A,B)    % Define A+B (ignore CARRY for wrap on overflow)
             [A,B]=check(A,B); t=uint16(A.v)+uint16(B.v);  % Note: intermediate math is uint16
@@ -65,6 +63,7 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
         function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
         function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
         function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
+        function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
         function [A,B]=check(A,B)
             if ~isa(A,'RR_uint8'), A=RR_uint8(A); end
             if nargin==2 & ~isa(B,'RR_uint8'), B=RR_uint8(B); end
@@ -73,9 +72,8 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
-        function displayScalarObject(obj)
-            fprintf(getHeader(obj))
-            disp(obj.v)
+        function displayScalarObject(OBJ)
+            fprintf('RR_uint8 with value 0x%s = %d\n',dec2hex(OBJ.v,2),OBJ.v)
         end
     end
 end

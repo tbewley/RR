@@ -7,7 +7,7 @@ function [dh,dl,r]=RR_div128s(xh,xl,y)
 % INPUTS:  x={xh,xl}, y where {xh,xl,y} are each uint64 (or uint32,single,double)
 % OUTPUTS: d={dh,dl} and r where {dh,dl,r} are uint64 and x=d*y+r
 % TEST:    clear, clc, format hex
-%          xh=RR_randi64, xl=RR_randi64, y=RR_randi64; y=bitsrl(y,32)
+%          xh=RR_randi64().v, xl=RR_randi64().v, y=RR_randi64(50).v;
 %          [dh,dl,r]=RR_div128s(xh,xl,y), disp('Check: Y=D*M+R, res=Y-Q.  Look for res=0, R<M.')
 %          [ph,pl]=RR_prod128s(dh,dl,y);  % CHECK: calculate d*y+r
 %          [XH,XL]=RR_sum128(ph,pl,0,r)   % in two steps.

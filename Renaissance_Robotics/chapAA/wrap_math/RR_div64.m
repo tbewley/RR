@@ -5,9 +5,9 @@ function [D,R]=RR_div64(Q,M)
 % INPUTS:  Q, M are each uint64 (or uint8,uint16,uint32,single,double) Q=dividend, M=divisor
 % OUTPUTS: D and R are uint64, with Q=D*M+R
 % TEST:
-%   clear, clc, Q=RR_xoshiro256pp, M=bitsra(RR_xoshiro256pp,3)
-%   [D,R]=RR_div64(Q,M), fprintf('Check: D*M+R-Q = %d, which should be zero\n',D*M+R-Q)
-%   fprintf('       M-R = %6.6e, which should be positive\n',double(M)-double(R))         
+%   clear, clc, Q=RR_randi64().v, M=RR_randi64(50).v
+%   [D,R]=RR_div64(Q,M), 
+%   fprintf('Check: D*M+R = %x, which should equal Q\n',D*M+R)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 

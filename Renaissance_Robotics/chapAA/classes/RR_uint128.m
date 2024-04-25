@@ -1,27 +1,25 @@
 % classdef RR_uint128
-% This class developes a uint128 type (built with two uint64 types) with wrap on overflow.
+% A 128-bit unsigned integer class, built from two uint64 primatives, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_randi128, B=-A, C=A+B   % gives C=0.
 %
-% Note that, as is standard, unsigned integer division and remainder are defined in RR such that
-%   A = (A/B)*B + (A rem B) where (A rem B) has value less than the value of B.
-% Unfortunately, as of April 2024, Matlab's built-in integer division,  A/B, doesn't conform to this
-% standard, and thus should probably not be used when doing integer math, unless/until this is fixed.
-% For example, taking the following in Matlab: [can also replace 64 with one of {8,16,32}]
-%             b=uint64(7), a=uint64(4), q=b/a, r=rem(b,a)  gives  q=2, r=3.  (doah!)
-% On the other hand, taking the following: [can also replace 64 with one of {8,16,32,128,256,512}]
-%             B=RR_uint64(7), A=RR_uint64(4),  [Q,R]=B/A   gives  q=1, r=3.  :)
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 128 with any of {8,16,32,64,128,256,512}]
+%   B=RR_randi128, A=RR_randi128(72), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint128(h,l) defines an RR_uint128 object from 2 uint64 variables, 0<=A<=2^128-1=3.40e+38
+%   A=RR_uint128(h,l) defines an RR_uint128 object A from 2 uint64 variables, 0<=A<=2^128-1=3.40e+38
 %
 % STANDARD OPERATIONS defined on RR_uint128 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
-%   plus:     [sum,carry]=a+b  gives the sum of two RR_uint128 integers
-%   uminus:   -a gives the two's complement representation of negative a
-%   minus:    b-a  gives the difference of two RR_uint128 integers (in two's complement form if negative)
-%   mtimes:   [sum,carry]=a*b  gives the product of two RR_uint128 integers
-%   mrdivide: [quo,rem]=b/a divides two RR_uint128 integers, giving the quotient quo and remainder rem
+%   plus:     [SUM,CARRY]=A+B  gives the sum of two RR_uint128 integers (ignore CARRY for wrap)
+%   uminus:   -A gives the two's complement representation of negative A (unlike built-in Matlab division)
+%   minus:    B-A  gives the difference of two RR_uint128 integers (in two's complement form if negative)
+%   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_uint128 integers (ignore CARRY for wrap)
+%   mrdivide: [QUO,REM]=B/A divides two RR_uint128 integers, giving the quotient QUO and remainder REM
 %   The relations <, >, <=, >=, ~=, == are also clearly defined.
-%   {+,-,*} are built on uint64 primatives; the nonrestoring division algorithm is used to compute a/b
+%   {+,-,*} are built on uint64 primatives; the nonrestoring division algorithm is used to compute B/A.
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
@@ -63,14 +61,21 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
         function tf=ge(A,B), if (A.h> B.h) | (A.h==B.h & A.l>=B.l), tf=true; else, tf=false; end, end
         function tf=ne(A,B), if (A.v~=B.v) | (A.l~=B.l),            tf=true; else, tf=false; end, end
         function tf=eq(A,B), if (A.v==B.v) & (A.l==B.l),            tf=true; else, tf=false; end, end
- 
+        function s=sign(A),  if A.v==0,                             s=0;     else, s=1;      end, end 
         function A = RR_bitsll(A,k)            
+            if k>63, A.h=A.l; A.l=uint64(0); k=k-64; end
             A.h=bitsll(A.h,k); for i=1:k; A.h=bitset(A.h,i,bitget(A.l,64-k+i)); end
             A.l=bitsll(A.l,k); 
         end
-        function A = RR_bitsrl(A,k)            
+        function A = RR_bitsrl(A,k)
+            if k>63, A.l=A.h; A.h=uint64(0); k=k-64; end               
             A.l=bitsrl(A.l,k); for i=1:k; A.l=bitset(A.l,64-k+i,bitget(A.h,i)); end
             A.h=bitsrl(A.h,k); 
+        end
+        function X=RR_128_to_256(XH,XL)
+            if ~isa(XH,'RR_uint128'), XH=RR_uint128(XH); end
+            if ~isa(XL,'RR_uint128'), XL=RR_uint128(XL); end                
+            X=RR_uint256(XH.h,XH.l,XL.h,XL.l);
         end
     end
     methods(Access = protected)

@@ -1,8 +1,15 @@
 % classdef RR_uint256
-% This class developes a uint256 type (built with four uint64 types) with wrap on overflow.
+% A 256-bit unsigned integer class, built from four uint64 primatives, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_randi256, B=-A, C=A+B   % gives C=0.
+%
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 256 with any of {8,16,32,64,128,256,512}]
+%   B=RR_randi256, A=RR_randi256(160), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint256(hi,m2,m1,lo) defines an RR_uint256 object from 4 uint64 variables, 0<=A<=2^256-1=1.16e+77
+%   A=RR_uint256(hi,m2,m1,lo) defines an RR_uint256 object A from 4 uint64 variables, 0<=A<=2^256-1
 %
 % STANDARD OPERATIONS defined on RR_uint256 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -32,42 +39,33 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
                 OBJ.hi=uint64(a); OBJ.m2=uint64(b); OBJ.m1=uint64(c); OBJ.lo=uint64(d); 
             end
         end
-        function [SUM,CARRY] = plus(X,Y)       % Defines X+Y using RR_uint128 math
-            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo);
-            YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
-
-            [SH,SL,C1]=RR_sum256s(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
-
-            SUM=RR_uint256(SH.h,SH.l,SL.h,SL.l); CARRY=RR_uint256(0,0,C1.h,C1.l);
+        function [SUM,CARRY] = plus(X,Y)     % Defines X+Y using RR_uint128 math
+            [XH,XL]=RR_256_to_128(X);        [YH,YL]=RR_256_to_128(Y);
+            [SH,SL,C1]=RR_HL_plus_L(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
+            SUM=RR_128_to_256(SH,SL);        CARRY=RR_128_to_256(0,C);
         end
-        function DIFF = minus(A,B)            % Defines A-B
+        function DIFF = minus(A,B)           % Defines A-B
             DIFF=A+(-B);
         end
-        function OUT = uminus(B)              % Defines (-B)
+        function OUT = uminus(B)             % Defines (-B)
             B=RR_uint256(bitcmp(B.hi),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint256(1);
         end    
-        function [PROD,CARRY] = mtimes(X,Y)   % Defines X*Y using RR_uint128 math
-            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo);
-            YH=RR_uint128(Y.hi,Y.m2); YL=RR_uint128(Y.m1,Y.lo);
-
-            [PH,PL,CL] =RR_prod256s(XH,XL,YL);          % {CL PH PL} <- {XH XL} * YL   
-            [P1,P2,CH] =RR_prod256s(XH,XL,YH);          % {CH P1 P2} <- {XH XL} * YH 
-
-            [CL,PH,C1]=RR_sum256s(CL,PH,P2);            % {C1 CL PH} <- {CL PH} + {0 P2}
-            CH=CH+C1;                                   %         CH <- CH+C1
-            [CL,C2]=CL+P1;                              %    {C2 CL} <- CL+P1
-            CH=CH+C2;                                   %         CH <- CH+C2
+        function [PROD,CARRY] = mtimes(X,Y)     % Defines X*Y using RR_uint128 math
+            [XH,XL]=RR_256_to_128(X); [YH,YL]=RR_256_to_128(Y);
+            [PH,PL,CL]=RR_HL_times_Y(XH,XL,YL);   % {CL PH PL}<-{XH XL} * YL   
+            [P1,P2,CH]=RR_HL_times_Y(XH,XL,YH);   % {CH P1 P2}<-{XH XL} * YH 
+            [CL,PH,C1]=RR_HL_plus_L(CL,PH,P2);    % {C1 CL PH}<-{CL PH} + {0 P2}
+            CH=CH+C1; [CL,C2]=CL+P1; CH=CH+C2;  % CH<-CH+C1, {C2 CL}<-CL+P1, CH<-CH+C2
+            PROD=RR_128_to_256(PH,PL); CARRY=RR_128_to_256(CH,CL);
 
 %             {XH XL}     This graphic summarizes how the above calculations are combined.
-%           * {YH YL}     (should be self explanatory)
+%           * {YH YL}     
 % -------------------
 %          {CL PH PL}
 %     + {CH P1 P2}
 % -------------------
 %       {CH CL PH PL}
 
-            PROD =RR_uint256(PH.h,PH.l,PL.h,PL.l);
-            CARRY=RR_uint256(CH.h,CH.l,CL.h,CL.l);
         end
         function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
             [QUO,RE]=RR_div256(B,A);
@@ -80,18 +78,28 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
         function tf=ge(A,B), if (A.hi>=B.hi) | (A.hi==B.hi & A.m2>=B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1>=B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo>=B.lo), tf=true; else, tf=false; end, end
         function tf=ne(A,B), if (A.hi~=B.hi) | (A.m2~=B.m2) | (A.m1~=B.m1) | (A.lo~=B.lo), tf=true; else, tf=false; end, end
         function tf=eq(A,B), if (A.hi==B.hi) & (A.m2==B.m2) & (A.m1==B.m1) & (A.lo==B.lo), tf=true; else, tf=false; end, end
- 
-        function A = RR_bitsll(A,k)            
+        function s=sign(A),  if A.v==0, s=0; else, s=1; end, end
+        function A = RR_bitsll(A,k)            % Implements A=A<<k for A=RR_uint256
+            while k>63, A.hi=A.m2; A.m2=A.m1; A.m1=A.lo; A.lo=uint64(0); k=k-64; end
             A.hi=bitsll(A.hi,k); for i=1:k; A.hi=bitset(A.hi,i,bitget(A.m2,64-k+i)); end
             A.m2=bitsll(A.m2,k); for i=1:k; A.m2=bitset(A.m2,i,bitget(A.m1,64-k+i)); end
             A.m1=bitsll(A.m1,k); for i=1:k; A.m1=bitset(A.m1,i,bitget(A.lo,64-k+i)); end
             A.lo=bitsll(A.lo,k); 
         end
-        function A = RR_bitsrl(A,k)            
+        function A = RR_bitsrl(A,k)            % Implements A=A>>k for A=RR_uint256
+            while k>63, A.lo=A.m1; A.m1=A.m2; A.m2=A.hi; A.hi=uint64(0); k=k-64; end
             A.lo=bitsrl(A.lo,k); for i=1:k; A.lo=bitset(A.lo,64-k+i,bitget(A.m1,i)); end
             A.m1=bitsrl(A.m1,k); for i=1:k; A.m1=bitset(A.m1,64-k+i,bitget(A.m2,i)); end
             A.m2=bitsrl(A.m2,k); for i=1:k; A.m2=bitset(A.m2,64-k+i,bitget(A.hi,i)); end
             A.hi=bitsrl(A.hi,k); 
+        end
+        function [XH,XL]=RR_256_to_128(X)
+            XH=RR_uint128(X.hi,X.m2); XL=RR_uint128(X.m1,X.lo);
+        end
+        function X=RR_256_to_512(XH,XL)
+            if ~isa(XH,'RR_uint256'), XH=RR_uint256(XH); end
+            if ~isa(XL,'RR_uint256'), XL=RR_uint256(XL); end                
+            X=RR_uint512(XH.hi,XH.m2,XH.m1,XH.lo,XL.hi,XL.m2,XL.m1,XL.lo);
         end
     end
     methods(Access = protected)

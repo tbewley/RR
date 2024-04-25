@@ -13,12 +13,13 @@ function X=RR_randi(IMAX,M,N,P)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % Calculate IMAX and {M,N,P} from input data
-if nargin==0, IMAX=1, end
+if nargin==0, IMAX=100, end
 if nargin==2 & length(M)>1, N=M(2); if length(M)>2, P=M(3); end, M=M(1); end
 if ~exist('M'), M=1; end, if ~exist('N'), N=1; end, if ~exist('P'), P=1; end
 
-global RR_PRNG_OUTPUT
-if RR_PRNG_OUTPUT=='32bit', intmax=0xFFFFFFFF; else, intmax=0xFFFFFFFFFFFFFFFF; end
+global RR_PRNG_OUTPUT RR_PRNG_GENERATOR
+if ~strcmp(RR_PRNG_GENERATOR,'xoshiro256++'), RR_prng('stochastic','xoshiro256++'), end
+intmax=0xFFFFFFFFFFFFFFFF;
 
 cat_total=double(floor(intmax/IMAX)); % total number of integers per catagory
 draw_max=cat_total*IMAX-1;            % prepare to draw integers from [0,draw_max]
@@ -30,3 +31,8 @@ for i=1:M*N*P, while Z(i)>draw_max,
 end, end
 if RR_PRNG_OUTPUT=='32bit', X=reshape(uint32(floor(double(Z)/cat_total))+1,M,N,P);
 else,                       X=reshape(uint64(floor(double(Z)/cat_total))+1,M,N,P); end
+
+if     IMAX<256,        X=uint8(X);
+elseif IMAX<65536,      X=uint16(X);
+elseif IMAX<4294967296, X=uint32(X);
+end

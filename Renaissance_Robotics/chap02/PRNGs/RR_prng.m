@@ -25,10 +25,10 @@ function RR_prng(seed,generator)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 global RR_PRNG_GENERATOR RR_PRNG_OUTPUT RR_PRNG_x
-RR_PRNG_x=uint64([])
+RR_PRNG_x=uint64([]);
 
 if nargin<1, seed='stochastic'; end
-if nargin<2, generator='xoshiro256++'; end, RR_PRNG_GENERATOR=generator
+if nargin<2, generator='xoshiro256++'; end, RR_PRNG_GENERATOR=generator;
 if ~strcmp(seed,'stochastic') & ~strcmp(seed,'deterministic'),
    error('The seed must be selected as stochastic or deterministic.'), end
 
@@ -58,4 +58,4 @@ switch generator
     error('That generator is not implemented.')
 end
 
-fprintf('Initializing the RR PRNG with %s seed and %s generator.\n',seed,generator)
+% fprintf('Initializing the RR PRNG with %s seed and %s generator.\n',seed,generator)

@@ -1,15 +1,12 @@
 % classdef RR_uint32
-% This class implements a modified uint32 behavior with wrap on overflow, because unfortunately
-% Matlab doesn't wrap (unlike C and Rust and Jay-Z and Eminem).  :)
+% A 32-bit unsigned integer class, built internally with uint64 math, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_uint32(7), B=-A, C=A+B   % gives  B=0xFFFFFFF9=4294967289, C=0.
 %
-% Note that, as is standard, unsigned integer division and remainder are defined in RR such that
-%   A = (A/B)*B + (A rem B) where (A rem B) has value less than the value of B.
-% Unfortunately, as of April 2024, Matlab's built-in integer division,  A/B, doesn't conform to this
-% standard, and thus should probably not be used when doing integer math, unless/until this is fixed.
-% For example, taking the following in Matlab: [can replace 32 with any of {8,16,32,64}]
-%             b=uint32(7), a=uint32(4), q=b/a, r=rem(b,a)  gives  q=2, r=3.  (doah!)
-% On the other hand, taking the following:     [can replace 32 with any of {8,16,32,64,128,256,512}]
-%             B=RR_uint32(7), A=RR_uint32(4),  [Q,R]=B/A   gives  q=1, r=3.  (yay!)
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512}]
+%   B=RR_uint32(7), A=RR_uint32(4), [Q,R]=B/A, C=(Q*A+R)-B   % gives  Q=1, R=3, C=0.
 %
 % DEFINITION:
 %   A=RR_uint32(c) defines an RR_uint32 object from any integer 0<=c<=4294967295=2^32-1=0xFFFFFFFF
@@ -27,7 +24,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint16 < matlab.mixin.CustomDisplay
+classdef RR_uint32 < matlab.mixin.CustomDisplay
     properties % Each RR_uint32 object consists of just one field:
         v      % a uint32 value (with +,-,*,/ redefined to wrap on overflow)
     end
@@ -65,6 +62,7 @@ classdef RR_uint16 < matlab.mixin.CustomDisplay
         function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
         function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
         function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
+        function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
         function [A,B]=check(A,B)
             if ~isa(A,'RR_uint32'), A=RR_uint32(A); end
             if nargin==2 & ~isa(B,'RR_uint32'), B=RR_uint32(B); end
@@ -73,9 +71,8 @@ classdef RR_uint16 < matlab.mixin.CustomDisplay
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
-        function displayScalarObject(obj)
-            fprintf(getHeader(obj))
-            disp(obj.v)
+        function displayScalarObject(OBJ)
+            fprintf('RR_uint32 with value 0x%s = %d\n',dec2hex(OBJ.v,8),OBJ.v)
         end
     end
 end

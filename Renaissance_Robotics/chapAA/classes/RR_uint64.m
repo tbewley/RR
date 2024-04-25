@@ -1,14 +1,12 @@
 % classdef RR_uint64
-% This class implements a modified uint64 behavior with wrap on overflow, because Matlab don't wrap.
+% A 64-bit unsigned integer class, built from uint64 primatives, with wrap on overflow/underflow
+% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_uint64(7), B=-A, C=A+B   % gives B=0xFFFFFFFFFFFFFFF9=18446744073709551609, C=0.
 %
-% Note that, as is standard, unsigned integer division and remainder are defined in RR such that
-%   A = (A/B)*B + (A rem B) where (A rem B) has value less than the value of B.
-% Unfortunately, as of April 2024, Matlab's built-in integer division,  A/B, doesn't conform to this
-% standard, and thus should probably not be used when doing integer math, unless/until this is fixed.
-% For example, taking the following in Matlab: [can also replace 64 with one of {8,16,32}]
-%             b=uint64(7), a=uint64(4), q=b/a, r=rem(b,a)  gives  q=2, r=3.  (doah!)
-% On the other hand, taking the following: [can also replace 64 with one of {8,16,32,128,256,512}]
-%             B=RR_uint64(7), A=RR_uint64(4),  [Q,R]=B/A   gives  q=1, r=3.  :)
+% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% Thus the following behavior: [can also replace 128 with any of {8,16,32,64,128,256,512}]
+%   B=RR_randi64, A=RR_randi64(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint64(c) defines an RR_uint64 object from any integer 0<=c<=2^64-1=1.84e19
@@ -60,6 +58,7 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
         function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
         function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
         function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
+        function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
         function [A,B]=check(A,B)
             if ~isa(A,'RR_uint64'), A=RR_uint64(A); end
             if nargin==2 & ~isa(B,'RR_uint64'), B=RR_uint64(B); end
@@ -68,9 +67,8 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
-        function displayScalarObject(obj)
-            fprintf(getHeader(obj))
-            disp(obj.v)
+        function displayScalarObject(OBJ)
+            fprintf('RR_uint64 with value 0x%s = %d\n',dec2hex(OBJ.v,16),OBJ.v)
         end
     end
 end

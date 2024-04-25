@@ -1,6 +1,6 @@
 function [s,c]=RR_sum32(x,y)
 % function [s,c]=RR_sum32(x,y)
-% INPUTS:  x, y are each uint32 (or single,double)
+% INPUTS:  x, y are each uint32
 % OUTPUTS: s=x+y is uint32
 %          c=carry bit (uint32, can ignore for wrap on uint32 overflow)
 % TEST: x=intmax('uint32'), y=3, [s,c]=RR_sum32(x,y)

@@ -1,6 +1,6 @@
 function [s,c]=RR_sum64(x,y)
 % function [s,c]=RR_sum64(x,y)
-% INPUTS:  x, y are each uint64 (or single,double)
+% INPUTS:  x, y are each uint64
 % OUTPUTS: s=x+y is uint64
 %          c=carry bit (uint64, can ignore for wrap on uint64 overflow)
 % TEST: x=intmax('uint64'), y=3, [s,c]=RR_sum64(x,y)
