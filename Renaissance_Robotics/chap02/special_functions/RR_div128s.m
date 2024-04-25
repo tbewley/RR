@@ -1,9 +1,9 @@
 function [dh,dl,r]=RR_div128s(xh,xl,y)
 % function [dh,dl,r]=RR_div128s(xh,xl,y)
 % This code performs uint128 by uint32 division using an algorithm from Knuth, leveraging uint64
-% arithmetic.  Note: this code assumes y is nonzero only in its lowest 32 bits.
+% arithmetic.  Note that this code assumes y is nonzero only in its lowest 32 bits.
 % This code is over 40x faster than the nonrestoring division algorithm (RR_div128) for problems
-% at this size or smaller, but which are still to be to be addressed with uint64 or RR_uint64.
+% at this size or smaller, but which are still to big to be addressed with uint64 or RR_uint64.
 % INPUTS:  x={xh,xl}, y where {xh,xl,y} are each uint64 (or uint32,single,double)
 % OUTPUTS: d={dh,dl} and r where {dh,dl,r} are uint64 and x=d*y+r
 % TEST:    clear, clc, format hex

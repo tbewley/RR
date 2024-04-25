@@ -1,12 +1,12 @@
 % classdef RR_uint16
 % A 16-bit unsigned integer class, built internally with uint32 math, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_uint16(7), B=-A, C=A+B   % gives  B=65529, C=0.
+%   A=RR_randi16, B=-A, C=A+B  % gives C=0 [can replace 16 with any of {8,16,32,64,128,256,512,1024}]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
 % Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512}]
-%   B=RR_uint16(7), A=RR_uint16(4), [Q,R]=B/A, C=(Q*A+R)-B   % gives  Q=1, R=3, C=0.
+%   B=RR_randi16, A=RR_randi16(10000), [Q,R]=B/A, C=(Q*A+R)-B   % gives  Q=1, R=3, C=0.
 %
 % DEFINITION:
 %   A=RR_uint16(c) defines an RR_uint16 object from any integer 0<=c<=65535=2^16-1=0xFFFF

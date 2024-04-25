@@ -1,7 +1,7 @@
 % classdef RR_uint512  
 % A 512-bit unsigned integer class, built from eight uint64 primatives, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi512, B=-A, C=A+B   % gives C=0.
+%   A=RR_randi512, B=-A, C=A+B  % gives C=0 [can replace 512 with any of {8,16,32,64,128,256,512,1024}]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
@@ -105,6 +105,12 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
         function [XH,XL]=RR_512_to_256(X)
             XH=RR_uint256(X.hi,X.m6,X.m5,X.m4); XL=RR_uint256(X.m3,X.m2,X.m1,X.lo);
         end
+        function X=RR_512_to_1024(XH,XL)
+            if ~isa(XH,'RR_uint512'), XH=RR_uint512(XH); end
+            if ~isa(XL,'RR_uint512'), XL=RR_uint512(XL); end                
+            X=RR_uint1024(XH.hi,XH.m6,XH.m5,XH.m4,XH.m3,XH.m2,XH.m1,XH.lo,...
+                          XL.hi,XL.m6,XL.m5,XL.m4,XL.m3,XL.m2,XL.m1,XL.lo);
+        end        
     end
     methods(Access = protected)
         function displayScalarObject(OBJ)

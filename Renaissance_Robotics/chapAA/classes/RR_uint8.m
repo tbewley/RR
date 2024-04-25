@@ -1,12 +1,12 @@
 % classdef RR_uint8
 % A 8-bit unsigned integer class, built internally with uint8 math, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_uint8(7), B=-A, C=A+B   % gives  B=0xF9=249, C=0.  Also try for A=RR_randi64
+%   A=RR_randi8, B=-A, C=A+B  % gives C=0 [can replace 8 with any of {8,16,32,64,128,256,512,1024}]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
 % Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512}]
-%   B=RR_randi8, A=RR_randi(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+%   B=RR_randi8, A=RR_randi8(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint8(c)  defines an RR_uint8 object from any integer 0<=c<256=2^8=0xFF

@@ -1,7 +1,7 @@
 % classdef RR_uint64
 % A 64-bit unsigned integer class, built from uint64 primatives, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_uint64(7), B=-A, C=A+B   % gives B=0xFFFFFFFFFFFFFFF9=18446744073709551609, C=0.
+%   A=RR_randi64, B=-A, C=A+B  % gives C=0 [can replace 64 with any of {8,16,32,64,128,256,512,1024}]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
@@ -68,7 +68,7 @@ classdef RR_uint64 < matlab.mixin.CustomDisplay
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
         function displayScalarObject(OBJ)
-            fprintf('RR_uint64 with value 0x%s = %d\n',dec2hex(OBJ.v,16),OBJ.v)
+            fprintf('RR_uint64 with value 0x%s = %u\n',dec2hex(OBJ.v,16),OBJ.v)
         end
     end
 end
