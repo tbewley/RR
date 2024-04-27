@@ -1,15 +1,19 @@
-% classdef RR_uint8
-% A 8-bit unsigned integer class, built internally with uint16 math, with wrap on overflow/underflow
-% using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi8, B=-A, C=A+B  % gives C=0 [can replace 8 with any of {8,16,32,64,128,256,512,1024}]
+% classdef RR_int32
+% An 32-bit signed integer class, built internally with int64 math, with flag on overflow, and an
+% output that is RR_int32 if result fits in 32 bits, and grows into RR_int64 if it doesn't.
+% Thus the following behavior (unlike Matlab's built-in functions):
+%   A=RR_int16(32766), B=RR_int16(1), C=A+B % gives C=32767 (as RR_int16), overflow=false
+%   A=RR_int16(32766), B=RR_int16(1), C=A+B % gives C=32768 (as RR_int32), overflow=true
+%   A=RR_int16(100), B=RR_int16(-300), C=A*B % gives C=-30000 (as RR_int16),  overflow=false
+%   A=RR_int16(100), B=RR_int16(-400), C=A*B % gives C=-40000 (as RR_int32), overflow=true
 %
-% RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
+% RR defines signed integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 8 with any of {8,16,32,64,128,256,512,1024}]
+% Thus the following behavior:
 %   B=RR_randi8, A=RR_randi8(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint8(c)  defines an RR_uint8 object from any integer 0<=c<256=2^8=0xFF
+%   A=RR_uint8(c)  defines an RR_uint16 object from any integer 0<=c<256=2^8=0xFF
 %
 % STANDARD OPERATIONS defined on RR_uint8 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -24,24 +28,26 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint8 < matlab.mixin.CustomDisplay
-    properties % Each RR_uint8 object consists of just one field:
-        v      % a uint8 value (with +,-,*,/ redefined to wrap on overflow)
+classdef RR_int32 < matlab.mixin.CustomDisplay
+    properties % Each RR_int32 object consists of just one field:
+        v      % a int32 value (with +,-,*,/ redefined to wrap on overflow)
     end
     methods
-        function OBJ = RR_uint8(v)          % Create an RR_uint8 object OBJ
-            OBJ.v = uint8(abs(v));
-            if sign(v)==-1, OBJ=-OBJ; end
+        function OBJ = RR_int32(v)           % Create an RR_int8 object OBJ
+            if v<-2147483648 | 2147483647<v, error('input out of range for RR_int16'),
+            else, OBJ.v = int32(v); end
         end
-        function [SUM,CARRY] = plus(A,B)    % Define A+B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint16(A.v)+uint16(B.v);  % Note: intermediate math is uint16
-            SUM=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8)); 
+        function [SUM,overflow] = plus(A,B) % Define A+B
+            [A,B]=check(A,B); SUM=int64(A.v)+int64(B.v);  % Note: intermediate math is int64
+            if -2147483648<=SUM & SUM<=2147483647, SUM=RR_int32(bitand(SUM,0xFFFFs32)); overflow=false; 
+            else, warning('sum overflow in RR_int32, increasing int type to RR_uint64.');
+                SUM=RR_int64(SUM); overflow=true, end
         end
         function DIFF = minus(A,B)          % Define A-B
             [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
         end
-        function OUT = uminus(B)            % Define -B
-            [B]=check(B); OUT=RR_uint8(bitcmp(B.v)+1);
+        function B = uminus(B)              % Define -B
+            [B]=check(B); B.v=-B.v;
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
             [A,B]=check(A,B); t=uint16(A.v)*uint16(B.v);  % Note: intermediate math is uint16
@@ -65,15 +71,15 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
         function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
         function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
         function [A,B]=check(A,B)
-            if ~isa(A,'RR_uint8'), A=RR_uint8(A); end
-            if nargin==2 & ~isa(B,'RR_uint8'), B=RR_uint8(B); end
+            if ~isa(A,'RR_int16'), A=RR_int16(A); end
+            if nargin==2 & ~isa(B,'RR_int16'), B=RR_int16(B); end
         end
 
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
         function displayScalarObject(OBJ)
-            fprintf('RR_uint8 with value 0x%s = %d\n',dec2hex(OBJ.v,2),OBJ.v)
+            fprintf('RR_int32 with value 0x%s = %d\n',dec2hex(OBJ.v,4),OBJ.v)
         end
     end
 end

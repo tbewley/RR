@@ -5,7 +5,7 @@
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512}]
+% Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512,1024}]
 %   B=RR_randi16, A=RR_randi16(10000), [Q,R]=B/A, C=(Q*A+R)-B   % gives  Q=1, R=3, C=0.
 %
 % DEFINITION:
