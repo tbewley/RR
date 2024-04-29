@@ -1,7 +1,7 @@
 function X=RR_rand(M,N,P)
 % function X=RR_rand(M,N,P) or X=RR_rand([M N P]) or X=RR_rand(size(A))
 % Generate a scalar, vector (length M), matrix (MxN), or rank-3 (MxNxP) array, each entry
-% of which is a real number uniformly distributed on the open interval (0,1).
+% of which is a REAL number UNIFORMLY DISTRIBUTED on the open interval (0,1).
 % INPUTS: M,N,P = dimension(s) of output array (OPTIONAL, default M=N=P=1)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array of random numbers on (0,1)
 % TEST: X=RR_rand(10,10)                   % 10x10 array of real numbers on (0,1)

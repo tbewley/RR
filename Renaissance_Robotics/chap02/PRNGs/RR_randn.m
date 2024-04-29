@@ -1,7 +1,7 @@
 function X=RR_randn(M,N,P)
 % function X=RR_randn(M,N,P) or X=RR_randn([M N P]) or X=RR_randn(size(A))
 % Generate a scalar, vector (length M), matrix (MxN), or rank-3 (MxNxP) array, each entry
-% of which is drawn a from the standard normal distribution (mean=0, stddev=1)
+% of which is a REAL number NORMALLY DISTRIBUTED with mean=0 and stddev=1
 % INPUTS: M,N,P = dimension(s) of output array (OPTIONAL, default M=N=P=1)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array of random real numbers
 % TEST: X=RR_randn(10,10)                          % 10x10 matrix of real numbers (mean=0, stddev=1)
