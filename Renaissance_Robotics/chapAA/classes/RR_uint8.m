@@ -41,7 +41,7 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
             A=RR_uint8.check(A); B=RR_uint8.check(B); Bbar=-B; DIFF=A+Bbar;
         end
         function OUT = uminus(B)            % Define -B
-            B=RR_uint8.check(B); OUT=RR_uint8(bitcmp(B.v)+1);
+            B=RR_uint8.check(B); OUT=bitcmp(B.v)+RR_uint8(1);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
             A=RR_uint8.check(A); B=RR_uint8.check(B); t=uint16(A.v)*uint16(B.v);

@@ -40,7 +40,7 @@ classdef (InferiorClasses = {?RR_uint8}) RR_uint16 < matlab.mixin.CustomDisplay
             A=RR_uint16.check(A); B=RR_uint16.check(B); Bbar=-B; DIFF=A+Bbar;
         end
         function OUT = uminus(B)            % Define -B
-            B=RR_uint16.check(B); OUT=RR_uint16(bitcmp(B.v)+1);
+            B=RR_uint16.check(B); OUT=bitcmp(B.v)+RR_uint16(1);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
             A=RR_uint16.check(A); B=RR_uint16.check(B); t=uint32(A.v)*uint32(B.v);

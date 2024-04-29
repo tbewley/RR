@@ -42,7 +42,7 @@ classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32}) ...
             Bbar=-B; DIFF=A+Bbar;
         end
         function OUT = uminus(B)            % Define -B
-            B=RR_uint64.check(B); OUT=RR_uint64(bitcmp(B.v)+1);
+            B=RR_uint64.check(B); OUT=bitcmp(B.v)+RR_uint64(1);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
             A=RR_uint64.check(A); B=RR_uint64.check(B);
