@@ -37,10 +37,10 @@ classdef RR_int16 < matlab.mixin.CustomDisplay
             if v<-32767 | 32767<v, error('input out of range for RR_int16'),else, OBJ.v = int16(v); end
         end
         function [SUM,overflow] = plus(A,B) % Define A+B
-            [A,B]=check(A,B); SUM=int32(A.v)+int32(B.v);  % Note: intermediate math is int32
-            if -32768<=SUM & SUM<=32767, SUM=RR_int16(bitand(SUM,0xFFFFs32)); overflow=false; 
+            [A,B]=check(A,B); s=int32(A.v)+int32(B.v);  % Note: intermediate math is int32
+            if -32768<=s & s<=32767, SUM=RR_int16(bitand(s,0xFFFFs32)); overflow=false; 
             else, warning('sum overflow in RR_int16, increasing int type to RR_uint32.');
-                SUM=RR_int32(SUM); overflow=true, end
+                SUM=RR_int32(s); overflow=true, end
         end
         function DIFF = minus(A,B)          % Define A-B
             [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
@@ -48,9 +48,11 @@ classdef RR_int16 < matlab.mixin.CustomDisplay
         function B = uminus(B)              % Define -B
             [B]=check(B); B.v=-B.v;
         end    
-        function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint16(A.v)*uint16(B.v);  % Note: intermediate math is uint16
-            PROD=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8));
+        function [PROD,overflow] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
+            [A,B]=check(A,B); p=int32(A.v)*int32(B.v);  % Note: intermediate math is uint32
+            if -32768<=p & p<=32767, PROD=RR_int16(bitand(p,0xFFFFs32)); overflow=false; 
+            else, warning('product overflow in RR_int16, increasing int type to RR_uint32.');
+                PROD=RR_int32(p); overflow=true; end
         end
         function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
             [A,B]=check(A,B); QUO=RR_uint8(idivide(B.v,A.v)); RE=RR_uint8(rem(B.v,A.v));

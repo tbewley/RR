@@ -1,21 +1,21 @@
 % classdef RR_int32
-% An 32-bit signed integer class, built internally with int64 math, with flag on overflow, and an
+% A 32-bit signed integer class, built internally with int64 math, with flag on overflow, and an
 % output that is RR_int32 if result fits in 32 bits, and grows into RR_int64 if it doesn't.
 % Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_int16(32766), B=RR_int16(1), C=A+B % gives C=32767 (as RR_int16), overflow=false
-%   A=RR_int16(32766), B=RR_int16(1), C=A+B % gives C=32768 (as RR_int32), overflow=true
-%   A=RR_int16(100), B=RR_int16(-300), C=A*B % gives C=-30000 (as RR_int16),  overflow=false
-%   A=RR_int16(100), B=RR_int16(-400), C=A*B % gives C=-40000 (as RR_int32), overflow=true
+%   A=RR_int16(2147483646), B=RR_int16(1),  C=A+B % gives C=2147483647 (as RR_int32), overflow=false
+%   A=RR_int16(2147483646), B=RR_int16(2),  C=A+B % gives C=2147483648 (as RR_int64), overflow=true
+%   A=RR_int16(1000000000), B=RR_int16(-2), C=A*B % gives C=-2000000000 (as RR_int32), overflow=false
+%   A=RR_int16(1000000000), B=RR_int16(-3), C=A*B % gives C=-3000000000 (as RR_int64), overflow=true
 %
 % RR defines signed integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
 % Thus the following behavior:
-%   B=RR_randi8, A=RR_randi8(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+%   B=RR_randi32, A=RR_randi32(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint8(c)  defines an RR_uint16 object from any integer 0<=c<256=2^8=0xFF
+%   A=RR_uint32(c)  defines an RR_uint32 object from any integer 0<=c<256=2^8=0xFF
 %
-% STANDARD OPERATIONS defined on RR_uint8 objects
+% STANDARD OPERATIONS defined on RR_uint32 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
 %   plus:     [SUM,CARRY]=A+B  gives the sum of two RR_uint8 integers
 %   uminus:   -A gives the two's complement representation of negative A
@@ -23,25 +23,24 @@
 %   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_uint8 integers
 %   mrdivide: [QUO,REM]=B/A divides two  RR_uint8 integers, giving the quotient QUO and remainder REM
 %   The relations <, >, <=, >=, ~=, == are also clearly defined.
-%   {+,-,*,/} are built on uint16 and uint8 primatives
+%   {+,-,*,/} are built on uint32 and uint8 primatives
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_int32 < matlab.mixin.CustomDisplay
-    properties % Each RR_int32 object consists of just one field:
-        v      % a int32 value (with +,-,*,/ redefined to wrap on overflow)
+classdef RR_int16 < matlab.mixin.CustomDisplay
+    properties % Each RR_int16 object consists of just one field:
+        v      % a int16 value (with +,-,*,/ redefined to wrap on overflow)
     end
     methods
-        function OBJ = RR_int32(v)           % Create an RR_int8 object OBJ
-            if v<-2147483648 | 2147483647<v, error('input out of range for RR_int16'),
-            else, OBJ.v = int32(v); end
+        function OBJ = RR_int16(v)           % Create an RR_int8 object OBJ
+            if v<-32767 | 32767<v, error('input out of range for RR_int16'),else, OBJ.v = int16(v); end
         end
         function [SUM,overflow] = plus(A,B) % Define A+B
-            [A,B]=check(A,B); SUM=int64(A.v)+int64(B.v);  % Note: intermediate math is int64
-            if -2147483648<=SUM & SUM<=2147483647, SUM=RR_int32(bitand(SUM,0xFFFFs32)); overflow=false; 
-            else, warning('sum overflow in RR_int32, increasing int type to RR_uint64.');
-                SUM=RR_int64(SUM); overflow=true, end
+            [A,B]=check(A,B); s=int32(A.v)+int32(B.v);  % Note: intermediate math is int32
+            if -32768<=s & s<=32767, SUM=RR_int16(bitand(s,0xFFFFs32)); overflow=false; 
+            else, warning('sum overflow in RR_int16, increasing int type to RR_uint32.');
+                SUM=RR_int32(s); overflow=true, end
         end
         function DIFF = minus(A,B)          % Define A-B
             [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
@@ -49,9 +48,11 @@ classdef RR_int32 < matlab.mixin.CustomDisplay
         function B = uminus(B)              % Define -B
             [B]=check(B); B.v=-B.v;
         end    
-        function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint16(A.v)*uint16(B.v);  % Note: intermediate math is uint16
-            PROD=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8));
+        function [PROD,overflow] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
+            [A,B]=check(A,B); p=int32(A.v)*int32(B.v);  % Note: intermediate math is uint32
+            if -32768<=p & p<=32767, PROD=RR_int16(bitand(p,0xFFFFs32)); overflow=false; 
+            else, warning('product overflow in RR_int16, increasing int type to RR_uint32.');
+                PROD=RR_int32(p); overflow=true; end
         end
         function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
             [A,B]=check(A,B); QUO=RR_uint8(idivide(B.v,A.v)); RE=RR_uint8(rem(B.v,A.v));
@@ -79,7 +80,7 @@ classdef RR_int32 < matlab.mixin.CustomDisplay
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)
         function displayScalarObject(OBJ)
-            fprintf('RR_int32 with value 0x%s = %d\n',dec2hex(OBJ.v,4),OBJ.v)
+            fprintf('RR_int32 with value 0x%s = %i\n',dec2hex(OBJ.v,8),OBJ.v)
         end
     end
 end

@@ -2,15 +2,16 @@
 % An 8-bit signed integer class, built internally with int16 math, with flag on overflow, and an
 % output that is RR_int8 if result fits in 8 bits, and grows into RR_int16 if it doesn't.
 % Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_int8(100), B=RR_int8(20), C=A+B % gives C=120 (as RR_int8),  overflow=false
-%   A=RR_int8(100), B=RR_int8(50), C=A+B % gives C=150 (as RR_int16), overflow=true
-%   A=RR_int8(10), B=RR_int8(-10), C=A*B % gives C=-100 (as RR_int8),  overflow=false
-%   A=RR_int8(10), B=RR_int8(-20), C=A*B % gives C=-200 (as RR_int16), overflow=true
+%   A=RR_int8(126), B=RR_int8(1),  C=A+B % gives C=127  (as RR_int8),  overflow=false
+%   A=RR_int8(126), B=RR_int8(2),  C=A+B % gives C=128  (as RR_int16), overflow=true
+%   A=RR_int8(100), B=RR_int8(-1), C=A*B % gives C=-100 (as RR_int8),  overflow=false
+%   A=RR_int8(100), B=RR_int8(-2), C=A*B % gives C=-200 (as RR_int16), overflow=true
 %
 % RR defines signed integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
+% such that  B = (B/A)*A + R where R*A>=0 (R is the same sign as A) and |R|<|B|.
+% Signed integer division satisfies the identity (−A)/B = −(A/B) = A/(−B).
 % Thus the following behavior:
-%   B=RR_randi8, A=RR_randi8(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+%   B=RR_int8(RR_randi8().v)-127), A=RR_int8(RR_randi8(50).v-25), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint8(c)  defines an RR_uint8 object from any integer 0<=c<256=2^8=0xFF
@@ -40,7 +41,7 @@ classdef RR_int8 < matlab.mixin.CustomDisplay
             [A,B]=check(A,B); s=int16(A.v)+int16(B.v);  % Note: intermediate math is int16
             if -128<=s & s<128, SUM=RR_int8(bitand(s,0xFFs16)); overflow=false; 
             else, warning('sum overflow in RR_int8, increasing int type to RR_uint16.');
-                SUM=RR_int16(SUM); overflow=true; end
+                SUM=RR_int16(s); overflow=true; end
         end
         function DIFF = minus(A,B)          % Define A-B
             [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;

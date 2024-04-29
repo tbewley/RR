@@ -30,7 +30,7 @@ for i=1:n
                   s0=bitxor(s0,s3); s2=bitxor(s2,t ); s3=RR_rotl32(s3,11);
 end
 
-disp('IS THERE STILL A BUG IN THIS ONE?')
+disp('THERE IS STILL A BUG IN THIS ONE.')
 
 % Save current value of state for next time
 RR_PRNG_x(1,s)=s0; RR_PRNG_x(2,s)=s1; RR_PRNG_x(3,s)=s2; RR_PRNG_x(4,s)=s3;
