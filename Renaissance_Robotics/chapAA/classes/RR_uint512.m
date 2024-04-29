@@ -1,15 +1,16 @@
 % classdef RR_uint512  
-% A 512-bit unsigned integer class, built from eight uint64 primatives, with wrap on overflow/underflow
+% A 512-bit unsigned integer class, built from 8 uint64 primatives, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi512, B=-A, C=A+B  % gives C=0 [can replace 512 with any of {8,16,32,64,128,256,512,1024}]
+%   A=RR_rand_RR_uint(512), B=-A, C=A+B  % gives C=0 [can replace 512 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 512 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_randi512, A=RR_randi512(400), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
+% Thus the following behavior:
+%   B=RR_rand_RR_uint(512), A=RR_rand_RR_uint(400)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint512(hi,m6,m5,m4,m3,m2,m1,lo) defines an RR_uint512 object from 8 uint64 variables, 0<=A<=2^512-1
+%   A=RR_uint512(hi,m6,m5,m4,m3,m2,m1,lo)
+%   defines an RR_uint512 object from 8 uint64 variables, 0<=A<=2^512-1
 %
 % STANDARD OPERATIONS defined on RR_uint512 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -45,37 +46,48 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
                 OBJ.m3=uint64(e); OBJ.m2=uint64(f); OBJ.m1=uint64(g); OBJ.lo=uint64(h); 
             end
         end
-        function [SUM,CARRY] = plus(X,Y)         % Defines X+Y using RR_uint256 math
-            [XH,XL]=RR_512_to_256(X);          [YH,YL]=RR_512_to_256(Y);
-            [SH,SL,C1]=RR_HL_plus_L(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
+        function [SUM,CARRY] = plus(A,B)       % Defines A+B using RR_uint256 math
+            A=RR_uint512.check(A); B=RR_uint512.check(B);
+            [AH,AL]=RR_512_to_256(A);          [BH,BL]=RR_512_to_256(B);
+            [SH,SL,C1]=RR_HL_plus_L(AH,AL,BL); [SH,C2]=SH+BH; C=C1+C2;
             SUM=RR_256_to_512(SH,SL);          CARRY=RR_256_to_512(0,C);
         end
         function DIFF = minus(A,B)               % Defines A-B
+            A=RR_uint512.check(A); B=RR_uint512.check(B);
             DIFF=A+(-B);
         end
         function OUT = uminus(B)                 % Defines (-B)
+            B=RR_uint512.check(B);
             B=RR_uint512(bitcmp(B.hi),bitcmp(B.m6),bitcmp(B.m5),bitcmp(B.m4), ...
-                         bitcmp(B.m3),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint512(1);
+                         bitcmp(B.m3),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+1;
         end    
-        function [PROD,CARRY] = mtimes(X,Y)      % Defines X*Y using RR_uint256 math
-            [XH,XL]=RR_512_to_256(X); [YH,YL]=RR_512_to_256(Y);
-            [PH,PL,CL]=RR_HL_times_Y(XH,XL,YL);  % {CL PH PL}<-{XH XL} * YL   
-            [P1,P2,CH]=RR_HL_times_Y(XH,XL,YH);  % {CH P1 P2}<-{XH XL} * YH 
+        function [PROD,CARRY] = mtimes(A,B)      % Defines A*B using RR_uint256 math
+            A=RR_uint512.check(A); B=RR_uint512.check(B);
+            [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+            [PH,PL,CL]=RR_HL_times_Y(AH,AL,BL);  % {CL PH PL}<-{AH AL} * BL   
+            [P1,P2,CH]=RR_HL_times_Y(AH,AL,BH);  % {CH P1 P2}<-{AH AL} * BH 
             [CL,PH,C1]=RR_HL_plus_L(CL,PH,P2);   % {C1 CL PH}<-{CL PH} + {0 P2}
             CH=CH+C1; [CL,C2]=CL+P1; CH=CH+C2;   % CH<-CH+C1, {C2 CL}<-CL+P1, CH<-CH+C2
             PROD=RR_256_to_512(PH,PL); CARRY=RR_256_to_512(CH,CL);
         end
         function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
+            A=RR_uint512.check(A); B=RR_uint512.check(B);
             [QUO,RE]=RR_div512(B,A);
         end
 
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function tf=lt(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH< BH) | (AH==BH & AL< BL), tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH> BH) | (AH==BH & AL> BL), tf=true; else, tf=false; end, end
-        function tf=le(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH<=BH) | (AH==BH & AL<=BL), tf=true; else, tf=false; end, end
-        function tf=ge(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH>=BH) | (AH==BH & AL>=BL), tf=true; else, tf=false; end, end
-        function tf=ne(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH~=BH) | (AL~=BL),          tf=true; else, tf=false; end, end
-        function tf=eq(A,B), [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B); if (AH==BH) | (AL==BL),          tf=true; else, tf=false; end, end
+        function tf=lt(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH< BH) | (AH==BH & AL< BL), tf=true; else, tf=false; end, end            
+        function tf=gt(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH> BH) | (AH==BH & AL> BL), tf=true; else, tf=false; end, end
+        function tf=le(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH<=BH) | (AH==BH & AL<=BL), tf=true; else, tf=false; end, end
+        function tf=ge(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH>=BH) | (AH==BH & AL>=BL), tf=true; else, tf=false; end, end
+        function tf=ne(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH~=BH) | (AL~=BL),          tf=true; else, tf=false; end, end
+        function tf=eq(A,B), A=RR_uint512.check(A); B=RR_uint512.check(B); [AH,AL]=RR_512_to_256(A); [BH,BL]=RR_512_to_256(B);
+                             if (AH==BH) | (AL==BL),          tf=true; else, tf=false; end, end
         function s=sign(A), if A.v==0, s=0; else, s=1; end, end
 
         function A = RR_bitsll(A,k)            
@@ -111,6 +123,12 @@ classdef RR_uint512 < matlab.mixin.CustomDisplay
             X=RR_uint1024(XH.hi,XH.m6,XH.m5,XH.m4,XH.m3,XH.m2,XH.m1,XH.lo,...
                           XL.hi,XL.m6,XL.m5,XL.m4,XL.m3,XL.m2,XL.m1,XL.lo);
         end        
+    end
+    methods(Static)
+        function A=check(A)
+            if isa(A,'numeric'), A=RR_uint512(A);
+            elseif ~isa(A,'RR_uint512'), A=RR_uint512(A.v); end
+        end
     end
     methods(Access = protected)
         function displayScalarObject(OBJ)

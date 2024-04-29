@@ -1,15 +1,15 @@
 % classdef RR_uint8
 % A 8-bit unsigned integer class, built internally with uint16 math, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi8, B=-A, C=A+B  % gives C=0 [can replace 8 with any of {8,16,32,64,128,256,512,1024}]
+%   A=RR_rand_RR_uint(8), B=-A, C=A+B  % gives C=0 [can replace 8 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 8 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_randi8, A=RR_randi8(50), [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% Thus the following behavior:
+%   B=RR_rand_RR_uint(8), A=RR_rand_RR_uint(5)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint8(c)  defines an RR_uint8 object from any integer 0<=c<256=2^8=0xFF
+%   A=RR_uint8(c)  defines an RR_uint8  object from any integer 0<=c<=2^8-1=0xFF=255
 %
 % STANDARD OPERATIONS defined on RR_uint8 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -34,21 +34,22 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
             if sign(v)==-1, OBJ=-OBJ; end
         end
         function [SUM,CARRY] = plus(A,B)    % Define A+B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint16(A.v)+uint16(B.v);  % Note: intermediate math is uint16
+            A=RR_uint8.check(A); B=RR_uint8.check(B); t=uint16(A.v)+uint16(B.v);
             SUM=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8)); 
         end
         function DIFF = minus(A,B)          % Define A-B
-            [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
+            A=RR_uint8.check(A); B=RR_uint8.check(B); Bbar=-B; DIFF=A+Bbar;
         end
         function OUT = uminus(B)            % Define -B
-            [B]=check(B); OUT=RR_uint8(bitcmp(B.v)+1);
+            B=RR_uint8.check(B); OUT=RR_uint8(bitcmp(B.v)+1);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint16(A.v)*uint16(B.v);  % Note: intermediate math is uint16
+            A=RR_uint8.check(A); B=RR_uint8.check(B); t=uint16(A.v)*uint16(B.v);
             PROD=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8));
         end
         function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
-            [A,B]=check(A,B); QUO=RR_uint8(idivide(B.v,A.v)); RE=RR_uint8(rem(B.v,A.v));
+            A=RR_uint8.check(A); B=RR_uint8.check(B);
+            QUO=RR_uint8(idivide(B.v,A.v)); RE=RR_uint8(rem(B.v,A.v));
         end
         function POW = mpower(A,n),   p=uint64(A.v)^n;
             if p==0xFFFFFFFFFFFFFFFF, error('Overflow'), end, POW=RR_uint8(bitand(p,0xFFu64)); end    
@@ -57,18 +58,25 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
         function n = norm(A), n=abs(A.v); end    % Defines norm(A)          
 
         % Now define A<B, A>B, A<=B, A>=B, A~=B, A==B based on the values of A and B.
-        function tf=lt(A,B), [A,B]=check(A,B); if A.v< B.v, tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), [A,B]=check(A,B); if A.v> B.v, tf=true; else, tf=false; end, end
-        function tf=le(A,B), [A,B]=check(A,B); if A.v<=B.v, tf=true; else, tf=false; end, end
-        function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
-        function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
-        function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
-        function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
-        function [A,B]=check(A,B)
-            if ~isa(A,'RR_uint8'), A=RR_uint8(A); end
-            if nargin==2 & ~isa(B,'RR_uint8'), B=RR_uint8(B); end
+        function tf=lt(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v< B.v, tf=true; else, tf=false; end, end
+        function tf=gt(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v> B.v, tf=true; else, tf=false; end, end
+        function tf=le(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v<=B.v, tf=true; else, tf=false; end, end
+        function tf=ge(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v>=B.v, tf=true; else, tf=false; end, end
+        function tf=ne(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v~=B.v, tf=true; else, tf=false; end, end
+        function tf=eq(A,B), A=RR_uint8.check(A); B=RR_uint8.check(B);
+                             if A.v==B.v, tf=true; else, tf=false; end, end
+        function s=sign(A),  if A.v==0,   s=0;     else, s=1;      end, end
+    end
+    methods(Static)
+        function A=check(A)
+            if isa(A,'numeric'), A=RR_uint8(A);
+            elseif ~isa(A,'RR_uint8'), A=RR_uint8(A.v); end
         end
-
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)

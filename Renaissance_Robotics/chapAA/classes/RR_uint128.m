@@ -1,12 +1,12 @@
 % classdef RR_uint128
 % A 128-bit unsigned integer class, built from two uint64 primatives, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi128, B=-A, C=A+B  % gives C=0 [can replace 128 with any of {8,16,32,64,128,256,512,1024}]
+%   A=RR_rand_RR_uint(128), B=-A, C=A+B  % gives C=0 [can replace 128 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 128 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_randi128, A=RR_randi128(72), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
+% Thus the following behavior:
+%   B=RR_rand_RR_uint(128), A=RR_rand_RR_uint(90)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint128(h,l) defines an RR_uint128 object A from 2 uint64 variables, 0<=A<=2^128-1=3.40e+38
@@ -38,29 +38,39 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
             end
         end
         function [SUM,CARRY] = plus(A,B)    % Defines [SUM,CARRY]=A+B, ignore CARRY for wrap on overflow
+            A=RR_uint128.check(A); B=RR_uint128.check(B);
             [sh,sl,c]=RR_sum128(A.h,A.l,B.h,B.l); SUM=RR_uint128(sh,sl); CARRY=RR_uint128(c);
         end
-        function DIFF = minus(A,B)          % Defines a-b
+        function DIFF = minus(A,B)          % Defines A-B
+            A=RR_uint128.check(A); B=RR_uint128.check(B);
             BB=-B; [h,l]=RR_sum128(A.h,A.l,BB.h,BB.l); DIFF=RR_uint128(h,l);
         end
-        function out = uminus(b)            % Defines (-b)
-            [h,l]=RR_sum128(bitcmp(b.h),bitcmp(b.l),uint64(0),uint64(1)); out=RR_uint128(h,l);
+        function OUT = uminus(B)            % Defines (-B)
+            B=RR_uint128.check(B);
+            [h,l]=RR_sum128(bitcmp(B.h),bitcmp(B.l),uint64(0),uint64(1)); OUT=RR_uint128(h,l);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Defines [PROD,CARRY]=a*b, ignore CARRY for wrap on overflow
+            A=RR_uint128.check(A); B=RR_uint128.check(B);
             [ph,pl,ch,cl]=RR_prod128(A.h,A.l,B.h,B.l);
             PROD=RR_uint128(ph,pl); CARRY=RR_uint128(ch,cl);
         end
         function [QUO,RE] = mrdivide(B,A)   % Defines [QUO,RE]=B/A
-            [QUO,RE]=RR_div128(B,A);
+            A=RR_uint128.check(A); B=RR_uint128.check(B); [QUO,RE]=RR_div128(B,A);
         end
         function n = norm(A), n=abs(A.v); end  % Defines norm(a)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function tf=lt(A,B), if (A.h< B.h) | (A.h==B.h & A.l< B.l), tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), if (A.h> B.h) | (A.h==B.h & A.l> B.l), tf=true; else, tf=false; end, end
-        function tf=le(A,B), if (A.h< B.h) | (A.h==B.h & A.l<=B.l), tf=true; else, tf=false; end, end
-        function tf=ge(A,B), if (A.h> B.h) | (A.h==B.h & A.l>=B.l), tf=true; else, tf=false; end, end
-        function tf=ne(A,B), if (A.v~=B.v) | (A.l~=B.l),            tf=true; else, tf=false; end, end
-        function tf=eq(A,B), if (A.v==B.v) & (A.l==B.l),            tf=true; else, tf=false; end, end
+        function tf=lt(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.h< B.h) | (A.h==B.h & A.l< B.l), tf=true; else, tf=false; end, end            
+        function tf=gt(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.h> B.h) | (A.h==B.h & A.l> B.l), tf=true; else, tf=false; end, end
+        function tf=le(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.h< B.h) | (A.h==B.h & A.l<=B.l), tf=true; else, tf=false; end, end
+        function tf=ge(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.h> B.h) | (A.h==B.h & A.l>=B.l), tf=true; else, tf=false; end, end
+        function tf=ne(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.v~=B.v) | (A.l~=B.l),            tf=true; else, tf=false; end, end
+        function tf=eq(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
+                             if (A.v==B.v) & (A.l==B.l),            tf=true; else, tf=false; end, end
         function s=sign(A),  if A.v==0,                             s=0;     else, s=1;      end, end 
         function A = RR_bitsll(A,k)            
             if k>63, A.h=A.l; A.l=uint64(0); k=k-64; end
@@ -76,6 +86,12 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
             if ~isa(XH,'RR_uint128'), XH=RR_uint128(XH); end
             if ~isa(XL,'RR_uint128'), XL=RR_uint128(XL); end                
             X=RR_uint256(XH.h,XH.l,XL.h,XL.l);
+        end
+    end
+    methods(Static)
+        function A=check(A)
+            if isa(A,'numeric'), A=RR_uint128(A);
+            elseif ~isa(A,'RR_uint128'), A=RR_uint128(A.v); end
         end
     end
     methods(Access = protected)

@@ -1,17 +1,17 @@
-function X=RR_randu(NBITS,M,N,P)
-% function X=RR_randu(NBITS,M,N,P) or X=RR_randi(IMAX,[M N P]) or X=RR_randi(IMAX,size(A))
+function X=RR_rand_uint(NBITS,M,N,P)
+% function X=RR_rand_uint(NBITS,M,N,P) or X=RR_rand_uint(IMAX,[M N P])
 % Generate a scalar, vector (length M), matrix (MxN), or rank-3 (MxNxP) array, each entry
 % of which is an UNSIGNED INTEGER with uniform distribution over the range 0 to 2^NBITS-1.
 % For NBITS<=64, vectors or matrices or arrays of (uint8,uint16,uint32,uint64) are generated;
-% for NBITS>64, cell arrays of (RR_uint128,RR_uint256,RR_uint512,RR_uint1024) are generated.
+% for NBITS>64,  cell arrays of (RR_uint128,RR_uint256,RR_uint512,RR_uint1024) are generated.
 % INPUTS: NBITS = max number of nonzero bits   (OPTIONAL, default NBITS=64)
 %         M,N,P = dimension(s) of output array (OPTIONAL, default M=N=P=1)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array (or cell array) of unsigned integers
-% TEST:   X=RR_randu(5,50000);           % vector of 50000 5-bit unsigned integers on [0,31]
+% TEST:   X=RR_rand_uint(5,50000);   % vector of 50000 5-bit uint8 integers on [0,31]
 %         clf, histogram(X,[-0.5:1:31.5],'Normalization','probability')
 %         hold on; plot([0 31],[1 1]/32,'k-',linewidth=2)
-%         Y=RR_randu(48,5,5), dec2hex(Y(1,1),16) % 5x5 matrix of RR_uint64 on [0,2^48-1]
-%         Z=RR_randu(120,5,5), Z{1,1}            % 5x5 cell array of RR_uint128 on [0,2^120-1]
+%         Y=RR_rand_uint(48,5,5), dec2hex(Y(1,1),16) % 5x5 matrix of uint64 on [0,2^48-1]
+%         Z=RR_rand_uint(120,5,5), Z{1,1}            % 5x5 cell array of RR_uint128 on [0,2^120-1]
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -27,7 +27,9 @@ if ~exist('M'), M=1; end, if ~exist('N'), N=1; end, if ~exist('P'), P=1; end
 
 if NBITS<=64
 	X=reshape(bitsrl(RR_prng_draw(M*N*P),64-NBITS),M,N,P);
-	if NBITS<9, X=uint8(X); elseif NBITS<17, X=uint16(X); elseif NBITS<33, X=uint32(X); end
+	if NBITS<9,      X=uint8(X);
+	elseif NBITS<17, X=uint16(X);
+	elseif NBITS<33, X=uint32(X); end
 else, for i=1:M, for j=1:N, for k=1:P
 	if NBITS<=128,
 	    X{i,j,k}=RR_bitsrl(RR_uint128(RR_xoshiro256pp,RR_xoshiro256pp),128-NBITS);

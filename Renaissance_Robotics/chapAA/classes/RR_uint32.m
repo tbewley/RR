@@ -1,15 +1,15 @@
 % classdef RR_uint32
 % A 32-bit unsigned integer class, built internally with uint64 math, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi32, B=-A, C=A+B  % gives C=0 [can replace 32 with any of {8,16,32,64,128,256,512,1024}]
+%   A=RR_rand_RR_uint(32), B=-A, C=A+B  % gives C=0 [can replace 32 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 16 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_randi32, A=RR_randi32(20), [Q,R]=B/A, C=(Q*A+R)-B   % gives  Q=1, R=3, C=0.
+% Thus the following behavior:
+%   B=RR_rand_RR_uint(32), A=RR_rand_RR_uint(20)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
-%   A=RR_uint32(c) defines an RR_uint32 object from any integer 0<=c<=4294967295=2^32-1=0xFFFFFFFF
+%   A=RR_uint32(c) defines an RR_uint32 object from any integer 0<=c<=2^32-1=0xFFFFFFFF=4294967295
 %
 % STANDARD OPERATIONS defined on RR_uint32 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -24,7 +24,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint32 < matlab.mixin.CustomDisplay
+classdef (InferiorClasses = {?RR_uint8, ?RR_uint16}) RR_uint32 < matlab.mixin.CustomDisplay
     properties % Each RR_uint32 object consists of just one field:
         v      % a uint32 value (with +,-,*,/ redefined to wrap on overflow)
     end
@@ -33,21 +33,22 @@ classdef RR_uint32 < matlab.mixin.CustomDisplay
             OBJ.v = uint32(abs(v)); if sign(v)==-1, OBJ=-OBJ; end
         end
         function [SUM,CARRY] = plus(A,B)    % Define A+B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint64(A.v)+uint64(B.v);  % Note: intermediate math is uint64
+            A=RR_uint32.check(A); B=RR_uint32.check(B); t=uint64(A.v)+uint64(B.v);  
             SUM=RR_uint32(bitand(t,0xFFFFFFFFu64)); CARRY=RR_uint32(bitsrl(t,32)); 
         end
         function DIFF = minus(A,B)          % Define A-B
-            [A,B]=check(A,B); Bbar=-B; DIFF=A+Bbar;
+            A=RR_uint32.check(A); B=RR_uint32.check(B); Bbar=-B; DIFF=A+Bbar;
         end
         function OUT = uminus(B)            % Define -B
-            [B]=check(B); OUT=RR_uint32(bitcmp(B.v)+1);
+            B=RR_uint32.check(B); OUT=RR_uint32(bitcmp(B.v)+1);
         end    
         function [PROD,CARRY] = mtimes(A,B) % Define A*B (ignore CARRY for wrap on overflow)
-            [A,B]=check(A,B); t=uint64(A.v)*uint64(B.v);  % Note: intermediate math is uint64
+            A=RR_uint32.check(A); B=RR_uint32.check(B); t=uint64(A.v)*uint64(B.v);
             PROD=RR_uint32(bitand(t,0xFFFFFFFFu64)); CARRY=RR_uint32(bitsrl(t,32));
         end
         function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
-            [A,B]=check(A,B); QUO=RR_uint32(idivide(B.v,A.v)); RE=RR_uint32(rem(B.v,A.v));
+            A=RR_uint32.check(A); B=RR_uint32.check(B);
+            QUO=RR_uint32(idivide(B.v,A.v)); RE=RR_uint32(rem(B.v,A.v));
         end
         function POW = mpower(A,n),  p=uint64(A.v)^n;
             if p==0xFFFFFFFFFFFFFFFF, error('Overflow'), end, POW=RR_uint32(bitand(p,0xFFFFFFFFu64)); end    
@@ -56,18 +57,25 @@ classdef RR_uint32 < matlab.mixin.CustomDisplay
         function n = norm(A), n=abs(A.v); end    % Defines norm(A)          
             
         % Now define A<B, A>B, A<=B, A>=B, A~=B, A==B based on the values of A and B.
-        function tf=lt(A,B), [A,B]=check(A,B); if A.v< B.v, tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), [A,B]=check(A,B); if A.v> B.v, tf=true; else, tf=false; end, end
-        function tf=le(A,B), [A,B]=check(A,B); if A.v<=B.v, tf=true; else, tf=false; end, end
-        function tf=ge(A,B), [A,B]=check(A,B); if A.v>=B.v, tf=true; else, tf=false; end, end
-        function tf=ne(A,B), [A,B]=check(A,B); if A.v~=B.v, tf=true; else, tf=false; end, end
-        function tf=eq(A,B), [A,B]=check(A,B); if A.v==B.v, tf=true; else, tf=false; end, end
-        function s=sign(A),                    if A.v==0,   s=0;     else, s=1;      end, end
-        function [A,B]=check(A,B)
-            if ~isa(A,'RR_uint32'), A=RR_uint32(A); end
-            if nargin==2 & ~isa(B,'RR_uint32'), B=RR_uint32(B); end
+        function tf=lt(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v< B.v, tf=true; else, tf=false; end, end
+        function tf=gt(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v> B.v, tf=true; else, tf=false; end, end
+        function tf=le(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v<=B.v, tf=true; else, tf=false; end, end
+        function tf=ge(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v>=B.v, tf=true; else, tf=false; end, end
+        function tf=ne(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v~=B.v, tf=true; else, tf=false; end, end
+        function tf=eq(A,B), A=RR_uint32.check(A); B=RR_uint32.check(B);
+                             if A.v==B.v, tf=true; else, tf=false; end, end
+        function s=sign(A),  if A.v==0,   s=0;     else, s=1;      end, end
+    end
+    methods(Static)
+        function A=check(A)
+            if isa(A,'numeric'), A=RR_uint32(A);
+            elseif ~isa(A,'RR_uint32'), A=RR_uint32(A.v); end
         end
-
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods(Access = protected)

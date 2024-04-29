@@ -1,12 +1,12 @@
 % classdef RR_uint256
 % A 256-bit unsigned integer class, built from four uint64 primatives, with wrap on overflow/underflow
 % using two's complement notation.  Thus the following behavior (unlike Matlab's built-in functions):
-%   A=RR_randi256, B=-A, C=A+B  % gives C=0 [can replace 256 with any of {8,16,32,64,128,256,512,1024}]
+%   A=RR_rand_RR_uint(256), B=-A, C=A+B  % gives C=0 [can replace 256 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
 % such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 256 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_randi256, A=RR_randi256(160), [Q,R]=B/A, C=(Q*A+R)-B  % gives C=0.
+% Thus the following behavior:
+%   B=RR_rand_RR_uint(256), A=RR_rand_RR_uint(200)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
 %
 % DEFINITION:
 %   A=RR_uint256(hi,m2,m1,lo) defines an RR_uint256 object A from 4 uint64 variables, 0<=A<=2^256-1
@@ -39,27 +39,31 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
                 OBJ.hi=uint64(a); OBJ.m2=uint64(b); OBJ.m1=uint64(c); OBJ.lo=uint64(d); 
             end
         end
-        function [SUM,CARRY] = plus(X,Y)     % Defines X+Y using RR_uint128 math
-            [XH,XL]=RR_256_to_128(X);        [YH,YL]=RR_256_to_128(Y);
-            [SH,SL,C1]=RR_HL_plus_L(XH,XL,YL); [SH,C2]=SH+YH; C=C1+C2;
+        function [SUM,CARRY] = plus(A,B)     % Defines A+B using RR_uint128 math
+            A=RR_uint256.check(A); B=RR_uint256.check(B);
+            [AH,AL]=RR_256_to_128(A);        [BH,BL]=RR_256_to_128(B);
+            [SH,SL,C1]=RR_HL_plus_L(AH,AL,BL); [SH,C2]=SH+BH; C=C1+C2;
             SUM=RR_128_to_256(SH,SL);        CARRY=RR_128_to_256(0,C);
         end
         function DIFF = minus(A,B)           % Defines A-B
+            A=RR_uint256.check(A); B=RR_uint256.check(B);
             DIFF=A+(-B);
         end
         function OUT = uminus(B)             % Defines (-B)
-            B=RR_uint256(bitcmp(B.hi),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+RR_uint256(1);
+            B=RR_uint256.check(B);
+            B=RR_uint256(bitcmp(B.hi),bitcmp(B.m2),bitcmp(B.m1),bitcmp(B.lo)); OUT=B+1;
         end    
-        function [PROD,CARRY] = mtimes(X,Y)     % Defines X*Y using RR_uint128 math
-            [XH,XL]=RR_256_to_128(X); [YH,YL]=RR_256_to_128(Y);
-            [PH,PL,CL]=RR_HL_times_Y(XH,XL,YL);   % {CL PH PL}<-{XH XL} * YL   
-            [P1,P2,CH]=RR_HL_times_Y(XH,XL,YH);   % {CH P1 P2}<-{XH XL} * YH 
+        function [PROD,CARRY] = mtimes(A,B)  % Defines A*B using RR_uint128 math
+            A=RR_uint256.check(A); B=RR_uint256.check(B);
+            [AH,AL]=RR_256_to_128(A); [BH,BL]=RR_256_to_128(B);
+            [PH,PL,CL]=RR_HL_times_Y(AH,AL,BL);   % {CL PH PL}<-{AH AL} * BL   
+            [P1,P2,CH]=RR_HL_times_Y(AH,AL,BH);   % {CH P1 P2}<-{AH AL} * BH 
             [CL,PH,C1]=RR_HL_plus_L(CL,PH,P2);    % {C1 CL PH}<-{CL PH} + {0 P2}
             CH=CH+C1; [CL,C2]=CL+P1; CH=CH+C2;  % CH<-CH+C1, {C2 CL}<-CL+P1, CH<-CH+C2
             PROD=RR_128_to_256(PH,PL); CARRY=RR_128_to_256(CH,CL);
 
-%             {XH XL}     This graphic summarizes how the above calculations are combined.
-%           * {YH YL}     
+%             {AH AL}     This graphic summarizes how the above calculations are combined.
+%           * {BH BL}     
 % -------------------
 %          {CL PH PL}
 %     + {CH P1 P2}
@@ -68,16 +72,23 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
 
         end
         function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
+            A=RR_uint256.check(A); B=RR_uint256.check(B);            
             [QUO,RE]=RR_div256(B,A);
         end
         function n = norm(A), n=abs(A.v); end                              % Defines norm(A)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
-        function tf=lt(A,B), if (A.hi< B.hi) | (A.hi==B.hi & A.m2< B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1< B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo< B.lo), tf=true; else, tf=false; end, end            
-        function tf=gt(A,B), if (A.hi> B.hi) | (A.hi==B.hi & A.m2> B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1> B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo> B.lo), tf=true; else, tf=false; end, end
-        function tf=le(A,B), if (A.hi<=B.hi) | (A.hi==B.hi & A.m2<=B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1<=B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo<=B.lo), tf=true; else, tf=false; end, end
-        function tf=ge(A,B), if (A.hi>=B.hi) | (A.hi==B.hi & A.m2>=B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1>=B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo>=B.lo), tf=true; else, tf=false; end, end
-        function tf=ne(A,B), if (A.hi~=B.hi) | (A.m2~=B.m2) | (A.m1~=B.m1) | (A.lo~=B.lo), tf=true; else, tf=false; end, end
-        function tf=eq(A,B), if (A.hi==B.hi) & (A.m2==B.m2) & (A.m1==B.m1) & (A.lo==B.lo), tf=true; else, tf=false; end, end
+        function tf=lt(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi< B.hi) | (A.hi==B.hi & A.m2< B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1< B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo< B.lo), tf=true; else, tf=false; end, end            
+        function tf=gt(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi> B.hi) | (A.hi==B.hi & A.m2> B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1> B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo> B.lo), tf=true; else, tf=false; end, end
+        function tf=le(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi<=B.hi) | (A.hi==B.hi & A.m2<=B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1<=B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo<=B.lo), tf=true; else, tf=false; end, end
+        function tf=ge(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi>=B.hi) | (A.hi==B.hi & A.m2>=B.m2) | (A.hi==B.hi & A.m2==B.m2 & A.m1>=B.m1) | (A.hi==B.hi & A.m2==B.m2 & A.m1==B.m1 & A.lo>=B.lo), tf=true; else, tf=false; end, end
+        function tf=ne(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi~=B.hi) | (A.m2~=B.m2) | (A.m1~=B.m1) | (A.lo~=B.lo), tf=true; else, tf=false; end, end
+        function tf=eq(A,B), A=RR_uint256.check(A); B=RR_uint256.check(B);
+            if (A.hi==B.hi) & (A.m2==B.m2) & (A.m1==B.m1) & (A.lo==B.lo), tf=true; else, tf=false; end, end
         function s=sign(A),  if A.v==0, s=0; else, s=1; end, end
         function A = RR_bitsll(A,k)            % Implements A=A<<k for A=RR_uint256
             while k>63, A.hi=A.m2; A.m2=A.m1; A.m1=A.lo; A.lo=uint64(0); k=k-64; end
@@ -100,6 +111,12 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
             if ~isa(XH,'RR_uint256'), XH=RR_uint256(XH); end
             if ~isa(XL,'RR_uint256'), XL=RR_uint256(XL); end                
             X=RR_uint512(XH.hi,XH.m2,XH.m1,XH.lo,XL.hi,XL.m2,XL.m1,XL.lo);
+        end
+    end
+    methods(Static)
+        function A=check(A)
+            if isa(A,'numeric'), A=RR_uint256(A);
+            elseif ~isa(A,'RR_uint256'), A=RR_uint256(A.v); end
         end
     end
     methods(Access = protected)

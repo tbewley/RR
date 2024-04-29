@@ -1,5 +1,5 @@
-function X=RR_randi(IMAX,M,N,P)
-% function X=RR_randi(IMAX,M,N,P) or X=RR_randi(IMAX,[M N P]) or X=RR_randi(IMAX,size(A))
+function X=RR_rand_int(IMAX,M,N,P)
+% function X=RR_rand_int(IMAX,M,N,P) or X=RR_randi(IMAX,[M N P]) or X=RR_randi(IMAX,size(A))
 % Generate a scalar, vector (length M), matrix (MxN), or rank-3 (MxNxP) array, each entry
 % of which is a SIGNED (int8,int16,int32,int64) or UNSIGNED (uint8,uint16,uint32,uint64)
 % integer with discrete uniform distribution over the specified range. 
@@ -8,8 +8,8 @@ function X=RR_randi(IMAX,M,N,P)
 %               Replace IMAX with [IMIN,IMAX] to specify a different range of integers. 
 %         M,N,P = dimension(s) of output array (OPTIONAL, default M=N=P=1)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array of random integers on 1:IMAX
-% TEST:   X=RR_randi(100,10,10)         % 10x10 array of uint8 on 0:100
-%         Y=RR_randi([-10,10],50000);   % 50000 integers on -10:10
+% TEST:   X=RR_rand_int(100,10,10)         % 10x10 array of uint8 on 0:100
+%         Y=RR_rand_int([-10,10],50000);   % 50000 integers on -10:10
 %         clf, histogram(Y,[-10.5:1:10.5],'Normalization','probability')
 %         hold on; plot([-10 10],[1 1]/21,'k-',linewidth=2)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
