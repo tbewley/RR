@@ -4,9 +4,9 @@
 %   A=RR_rand_RR_uint(8), B=-A, C=A+B  % gives C=0 [can replace 8 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior:
-%   B=RR_rand_RR_uint(8), A=RR_rand_RR_uint(5)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% such that  A = (A/B)*B + R where the remainder R has value less than the divisor B.  
+% Thus, the following calculations give C=0 and R<B:
+%   A=RR_rand_RR_uint(8), B=RR_rand_RR_uint(5)+1, [Q,R]=A/B, C=(Q*B+R)-A
 %
 % DEFINITION:
 %   A=RR_uint8(c)  defines an RR_uint8  object from any integer 0<=c<=2^8-1=0xFF=255
@@ -47,9 +47,9 @@ classdef RR_uint8 < matlab.mixin.CustomDisplay
             A=RR_uint8.check(A); B=RR_uint8.check(B); t=uint16(A.v)*uint16(B.v);
             PROD=RR_uint8(bitand(t,0xFFu16)); CARRY=RR_uint8(bitsrl(t,8));
         end
-        function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
+        function [QUO,RE] = mrdivide(A,B)   % Define [QUO,RE]=A/B  Note: use idivide, not /
             A=RR_uint8.check(A); B=RR_uint8.check(B);
-            QUO=RR_uint8(idivide(B.v,A.v)); RE=RR_uint8(rem(B.v,A.v));
+            QUO=RR_uint8(idivide(A.v,B.v)); RE=RR_uint8(rem(A.v,B.v));
         end
         function POW = mpower(A,n),   p=uint64(A.v)^n;
             if p==0xFFFFFFFFFFFFFFFF, error('Overflow'), end, POW=RR_uint8(bitand(p,0xFFu64)); end    

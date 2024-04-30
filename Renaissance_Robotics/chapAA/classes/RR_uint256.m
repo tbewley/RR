@@ -4,9 +4,9 @@
 %   A=RR_rand_RR_uint(256), B=-A, C=A+B  % gives C=0 [can replace 256 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior:
-%   B=RR_rand_RR_uint(256), A=RR_rand_RR_uint(200)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% such that  A = (A/B)*B + R where the remainder R has value less than the divisor B.  
+% Thus, the following calculations give C=0 and R<B:
+%   A=RR_rand_RR_uint(256), B=RR_rand_RR_uint(200)+1, [Q,R]=A/B, C=(Q*B+R)-A
 %
 % DEFINITION:
 %   A=RR_uint256(hi,m2,m1,lo) defines an RR_uint256 object A from 4 uint64 variables, 0<=A<=2^256-1
@@ -24,7 +24,8 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint256 < matlab.mixin.CustomDisplay
+classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32, ?RR_uint64, ?RR_uint128}) ...
+    RR_uint256 < matlab.mixin.CustomDisplay
     properties % RR_uint256 object OBJ consists of four fields, with +,-,*,/ defined to wrap on overflow
         hi      % bits 193 to 256
         m2      % bits 129 to 192 
@@ -71,9 +72,9 @@ classdef RR_uint256 < matlab.mixin.CustomDisplay
 %       {CH CL PH PL}
 
         end
-        function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
+        function [QUO,RE] = mrdivide(A,B) % Defines [QUO,RE]=A/B
             A=RR_uint256.check(A); B=RR_uint256.check(B);            
-            [QUO,RE]=RR_div256(B,A);
+            [QUO,RE]=RR_div256(A,B);
         end
         function n = norm(A), n=abs(A.v); end                              % Defines norm(A)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.

@@ -4,9 +4,9 @@
 %   A=RR_rand_RR_uint(64), B=-A, C=A+B  % gives C=0 [can replace 64 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior: [can also replace 128 with any of {8,16,32,64,128,256,512,1024}]
-%   B=RR_rand_RR_uint(64), A=RR_rand_RR_uint(45)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% such that  A = (A/B)*B + R where the remainder R has value less than the divisor B.  
+% Thus, the following calculations give C=0 and R<B:
+%   A=RR_rand_RR_uint(64), B=RR_rand_RR_uint(45)+1, [Q,R]=A/B, C=(Q*B+R)-A
 %
 % DEFINITION:
 %   A=RR_uint64(c) defines an RR_uint64 object from any integer 0<=c<=2^64-1=0xFFFFFFFFFFFFFFFF=1.84e19
@@ -48,9 +48,9 @@ classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32}) ...
             A=RR_uint64.check(A); B=RR_uint64.check(B);
             [p,c]=RR_prod64(A.v,B.v); PROD=RR_uint64(p); CARRY=RR_uint64(c);
         end
-        function [QUO,RE] = mrdivide(B,A)   % Define [QUO,RE]=B/A  Note: use idivide, not /
+        function [QUO,RE] = mrdivide(A,B)   % Define [QUO,RE]=A/B  Note: use idivide, not /
             A=RR_uint64.check(A); B=RR_uint64.check(B);
-            QUO=RR_uint64(idivide(B.v,A.v)); RE=RR_uint64(rem(B.v,A.v));
+            QUO=RR_uint64(idivide(A.v,B.v)); RE=RR_uint64(rem(A.v,B.v));
         end
         function POW = mpower(A,n),  POW=A; for i=2:n; POW=POW*A; end, end    
         function FAC = factorial(A), FAC=RR_uint64(1); for i=2:A.v, FAC=FAC*i; end, end

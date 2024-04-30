@@ -4,9 +4,9 @@
 %   A=RR_rand_RR_uint(1024), B=-A, C=A+B  % gives C=0 [can replace 1024 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior:
-%   B=RR_rand_RR_uint(1024), A=RR_rand_RR_uint(800)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% such that  A = (A/B)*B + R where the remainder R has value less than the divisor B.  
+% Thus, the following calculations give C=0 and R<B:
+%   A=RR_rand_RR_uint(1024), B=RR_rand_RR_uint(800)+1, [Q,R]=A/B, C=(Q*B+R)-A
 %
 % DEFINITION:
 %   A=RR_uint1024(hi,m14,m13,m12,m11,m10,m9,m8,m7,m6,m5,m4,m3,m2,m1,lo)
@@ -25,7 +25,8 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint1024 < matlab.mixin.CustomDisplay
+classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32, ?RR_uint64, ?RR_uint128, ?RR_uint256, ?RR_uint512}) ...
+    RR_uint1024 < matlab.mixin.CustomDisplay
     properties % RR_uint1024 object OBJ consists of 16 fields, with +,-,*,/ defined to wrap on overflow
         hi      % bits 961 to 1024
         m14     % bits 897 to  960 
@@ -84,9 +85,9 @@ classdef RR_uint1024 < matlab.mixin.CustomDisplay
             CH=CH+C1; [CL,C2]=CL+P1; CH=CH+C2;   % CH<-CH+C1, {C2 CL}<-CL+P1, CH<-CH+C2
             PROD=RR_512_to_1024(PH,PL); CARRY=RR_512_to_1024(CH,CL);
         end
-        function [QUO,RE] = mrdivide(B,A) % Defines [QUO,RE]=B/A
+        function [QUO,RE] = mrdivide(A,B) % Defines [QUO,RE]=A/B
             A=RR_uint1024.check(A); B=RR_uint1024.check(B);
-            [QUO,RE]=RR_div1024(B,A);
+            [QUO,RE]=RR_div1024(A,B);
         end
 
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.

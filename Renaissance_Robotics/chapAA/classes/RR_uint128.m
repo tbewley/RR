@@ -4,9 +4,9 @@
 %   A=RR_rand_RR_uint(128), B=-A, C=A+B  % gives C=0 [can replace 128 with anything from 1 to 1024...]
 %
 % RR defines unsigned integer division and remainder (unlike Matlab's built-in / operator)
-% such that  B = (B/A)*A + R where the remainder R has value less than the value of B.  
-% Thus the following behavior:
-%   B=RR_rand_RR_uint(128), A=RR_rand_RR_uint(90)+1, [Q,R]=B/A, C=(Q*A+R)-B   % gives C=0.
+% such that  A = (A/B)*B + R where the remainder R has value less than the divisor B.  
+% Thus, the following calculations give C=0 and R<B:
+%   A=RR_rand_RR_uint(128), B=RR_rand_RR_uint(90)+1, [Q,R]=A/B, C=(Q*B+R)-A
 %
 % DEFINITION:
 %   A=RR_uint128(h,l) defines an RR_uint128 object A from 2 uint64 variables, 0<=A<=2^128-1=3.40e+38
@@ -24,7 +24,8 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-classdef RR_uint128 < matlab.mixin.CustomDisplay
+classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32, ?RR_uint64}) ...
+    RR_uint128 < matlab.mixin.CustomDisplay
     properties % RR_uint128 objects OBJ consist of two fields, with +,-,*,/ defined to wrap on overflow
         h      % the high part of OBJ, a uint64 value 
         l      % the low  part of OBJ, a uint64 value
@@ -54,8 +55,8 @@ classdef RR_uint128 < matlab.mixin.CustomDisplay
             [ph,pl,ch,cl]=RR_prod128(A.h,A.l,B.h,B.l);
             PROD=RR_uint128(ph,pl); CARRY=RR_uint128(ch,cl);
         end
-        function [QUO,RE] = mrdivide(B,A)   % Defines [QUO,RE]=B/A
-            A=RR_uint128.check(A); B=RR_uint128.check(B); [QUO,RE]=RR_div128(B,A);
+        function [QUO,RE] = mrdivide(A,B)   % Defines [QUO,RE]=A/B
+            A=RR_uint128.check(A); B=RR_uint128.check(B); [QUO,RE]=RR_div128(A,B);
         end
         function n = norm(A), n=abs(A.v); end  % Defines norm(a)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
