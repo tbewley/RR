@@ -6,7 +6,8 @@
 %   A=RR_int8(2^7-2), B=RR_int8(2),  [C,overflow]=A+B % gives C=128  (as RR_int16), overflow=true
 %   A=RR_int8(2^6),   B=RR_int8(-1), [C,overflow]=A*B % gives C=-64  (as RR_int8),  overflow=false
 %   A=RR_int8(2^6),   B=RR_int8(-3), [C,overflow]=A*B % gives C=-192 (as RR_int16), overflow=true
-% Hey, at least the results are correct.
+% Hey, at least the results are correct.  Try the following to watch it in action:
+%   A=RR_int8(1); for i=2:21, A=A*i, end
 %
 % Note that RR defines signed integer division and remainder (unlike Matlab's built-in / operator)
 % such that  A = (A/B)*B + R where sign(R)=sign(A) and |R|<|B|, where A=dividend, B=divisor.

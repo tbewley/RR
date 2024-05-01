@@ -28,3 +28,4 @@ elseif NBITS<33, for i=1:M, for j=1:N, for k=1:P, X{i,j,k}=RR_uint32(Z(i,j,k)); 
 elseif NBITS<65, for i=1:M, for j=1:N, for k=1:P, X{i,j,k}=RR_uint64(Z(i,j,k)); end, end, end
 else X=Z;
 end
+if M*N*P==1 & NBITS<65, X=X{1,1,1}; end  % Exit cell array mode if returning a scalar.

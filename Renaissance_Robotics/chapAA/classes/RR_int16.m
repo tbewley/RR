@@ -6,7 +6,8 @@
 %   A=RR_int16(2^15-2), B=RR_int16(2), [C,overflow]=A+B % gives C=32768 (as RR_int32), overflow=true
 %   A=RR_int16(10000), B=RR_int16(-3), [C,overflow]=A*B % gives C=-30000 (as RR_int16), overflow=false
 %   A=RR_int16(10000), B=RR_int16(-4), [C,overflow]=A*B % gives C=-40000 (as RR_int32), overflow=true
-% Hey, at least the result is correct.
+% Hey, at least the results are correct.  Try the following to watch it in action:
+%   A=RR_int8(1); for i=2:21, A=A*i, end
 %
 % Note that RR defines signed integer division and remainder (unlike Matlab's built-in / operator)
 % such that  A = (A/B)*B + R where sign(R)=sign(A) and |R|<|B|, where A=dividend, B=divisor.
