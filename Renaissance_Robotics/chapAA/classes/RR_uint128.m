@@ -58,7 +58,7 @@ classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32, ?RR_uint64}) ...
         function [QUO,RE] = mrdivide(A,B)   % Defines [QUO,RE]=A/B
             A=RR_uint128.check(A); B=RR_uint128.check(B); [QUO,RE]=RR_div128(A,B);
         end
-        function n = norm(A), n=abs(A.v); end  % Defines norm(a)          
+        function n = norm(A), n=abs(A.h)+abs(A.l); end  % Defines norm(a)          
         % Now define a<b, a>b, a<=b, a>=b, a~=b, a==b based on the values of a and b.
         function tf=lt(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
                              if (A.h< B.h) | (A.h==B.h & A.l< B.l), tf=true; else, tf=false; end, end            
@@ -69,9 +69,9 @@ classdef (InferiorClasses = {?RR_uint8, ?RR_uint16, ?RR_uint32, ?RR_uint64}) ...
         function tf=ge(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
                              if (A.h> B.h) | (A.h==B.h & A.l>=B.l), tf=true; else, tf=false; end, end
         function tf=ne(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
-                             if (A.v~=B.v) | (A.l~=B.l),            tf=true; else, tf=false; end, end
+                             if (A.h~=B.h) | (A.l~=B.l),            tf=true; else, tf=false; end, end
         function tf=eq(A,B), A=RR_uint128.check(A); B=RR_uint128.check(B);
-                             if (A.v==B.v) & (A.l==B.l),            tf=true; else, tf=false; end, end
+                             if (A.h==B.h) & (A.l==B.l),            tf=true; else, tf=false; end, end
         function s=sign(A),  if A.v==0,                             s=0;     else, s=1;      end, end 
         function A = RR_bitsll(A,k)            
             if k>63, A.h=A.l; A.l=uint64(0); k=k-64; end

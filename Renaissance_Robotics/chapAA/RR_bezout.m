@@ -14,7 +14,7 @@ function [g,x,y] = RR_bezout(a,b)
 % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-if b>a & a.v~=0, disp('ERROR: Need a>=b!'), return, end
+if b>a & a~=0, disp('ERROR: Need a>=b!'), return, end
 [g,q,n] = RR_gcd(a,b);      % Start by calling the GCD algorithm
 x=0; y=1; for j=n-1:-1:1    % Using the q{i} and g from the GCF call, compute {xg,yg}
   t=x; x=y; y=t-q{j}*y;     % via the Extended Euclidean algorithm
