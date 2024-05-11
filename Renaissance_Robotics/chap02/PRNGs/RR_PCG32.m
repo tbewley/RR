@@ -19,8 +19,7 @@ function out=RR_PCG32(n,s,skip)
 % * and + if converting to a language that can be set natively to wrap on integer overflow)
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
-%% Efficient PCG algorithm due to Melissa O'Neill, available at https://www.pcg-random.org/
-%% Matlab implementation Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<1, n=1; end     % number of pseudorandom numbers to generate
 if nargin<2, s=1; end     % which stream to operate in

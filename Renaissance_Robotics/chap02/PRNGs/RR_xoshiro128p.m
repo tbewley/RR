@@ -1,34 +1,22 @@
-function out=RR_xoshiro128p(n)
-% function out=RR_xoshiro128p(n)
-% PRNG using Sebastiano Vigna's xoshiro128+, with a 4x32=128 bit state and 32 bit output
-% Initialize with RR_prng('stochastic','xoshiro128++') or RR_prng('deterministic','xoshiro128++')
+function [out,s]=RR_xoshiro128p(n,s)
+% function [out,s]=RR_xoshiro128p(n,s)
+% PRNG using Blackman & Vigna's xoshiro128+ scheme (note: n,s are both required inputs)
+% output computed with       z←(s0+s3)>>8
+% PRNG marched forward with  t←s1<<9, s2←s2^s0, s3←s3^s1, s1←s1^s2, s0←s0^s3, s2←s2^t, s3←s3<<<11
+% NOTE: {s0,s1,s2,s3} denoted {s(1),s(2),s(3),s(4)} in code below
+% See RR_xoshiro128 for a convenient wrapper that takes care of state initialization. 
+% See https://prng.di.unimi.it/xoshiro128plus.c for Blackman & Vigna's C implementation.
 %
-% INPUT: n = number of pseudorandom numbers to generate (OPTIONAL, n=1 by default)
-% TEST:  RR_xoshiro128pp(5)     % Generate 5 pseudorandom numbers
-%
-% Dependencies: https://github.com/tbewley/RR/tree/main/Renaissance_Robotics/chap02/PRNGs/wrap_math
-% Replace most calls to these functions, as appropriate, with simple * and + if converting
-% to a language that can be set natively to wrap on integer overflow
+% INPUT:        n = number of pseudorandom numbers to generate
+% INPUT/OUTPUT: s = vector of four uint32 state variable 
+% OUTPUT:       out = vector of n uint32 ouputs
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
-%% Efficient xoshiro256++ algorithm by Sebastiano Vigna available at https://prng.di.unimi.it/
-%% Matlab implementation Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-if nargin<1, n=1; end   % number of pseudorandom numbers to generate
-s=1; % Take just one stream (for now).  TODO: implement multiple streams.
-
-global RR_PRNG_GENERATOR RR_PRNG_x
-if ~strcmp(RR_PRNG_GENERATOR,'xoshiro128++'), RR_prng('stochastic','xoshiro128++'), end
-
-% Prep to calculate using local values {s0,s1,s2,s3} [follow Vigna's notation]
-s0=RR_PRNG_x(1,s); s1=RR_PRNG_x(2,s); s2=RR_PRNG_x(3,s); s3=RR_PRNG_x(4,s);
-
-% Below is the RR implementation of the xoshiro256++ algorithm by Sebastiano Vigna
 for i=1:n
-  out(i)=RR_sum32(RR_rotl32(RR_sum32(s0,s3),7),s0);                  % two additions
-  t=bitsll(s1,9); s2=bitxor(s2,s0); s3=bitxor(s3,s1); s1=bitxor(s1,s2);  % five XORs
-                  s0=bitxor(s0,s3); s2=bitxor(s2,t ); s3=RR_rotl32(s3,11);
+  out(i)=bitsrl(RR_sum32(s(1),s(4)),8);                                    % one addition
+  t=bitsll(s(2),9);
+  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));  % five XORs
+  s(1)=bitxor(s(1),s(4)); s(3)=bitxor(s(3),t );   s(4)=RR_rotl32(s(4),11);
 end
-
-% Save current value of state for next time
-RR_PRNG_x(1,s)=s0; RR_PRNG_x(2,s)=s1; RR_PRNG_x(3,s)=s2; RR_PRNG_x(4,s)=s3;

@@ -9,8 +9,6 @@ function [out,s]=RR_xoroshiro128ss_rev(n,s)
 % INPUT:        n = number of pseudorandom numbers to generate
 % INPUT/OUTPUT: s = vector of two uint64 state variable 
 % OUTPUT:       out = vector of n uint64 ouputs
-% 
-% TEST:  RR_xoroshiro128ss(5,s0,s1)     % Generate 5 pseudorandom numbers
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
