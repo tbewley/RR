@@ -15,8 +15,7 @@ function [out,s]=RR_xoshiro256pp(n,s)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n
-  out(i)=RR_sum64(RR_rotl64(RR_sum64(s(1),s(4)),23),s(1));                 % two additions
-  t=bitsll(s(2),17);
-  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));  % five XORs
+  out(i)=RR_sum64(RR_rotl64(RR_sum64(s(1),s(4)),23),s(1)); t=bitsll(s(2),17);
+  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));
   s(1)=bitxor(s(1),s(4)); s(3)=bitxor(s(3),t );   s(4)=RR_rotl64(s(4),45);
 end

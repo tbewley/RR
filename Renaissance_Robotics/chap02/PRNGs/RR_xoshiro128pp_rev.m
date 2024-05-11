@@ -15,6 +15,6 @@ function [out,s]=RR_xoshiro128pp_rev(n,s)
 
 for i=1:n
   s(4)=RR_rotr32(s(4),11); q=s(2); r=bitxor(s(2),s(3)); s(1)=bitxor(s(1),s(4));
-  s(2)=RR_Shift32_slow(r); s(3)=bitxor(q,s(2));         s(4)=bitxor(s(4),s(2));
+  s(2)=RR_shift32(r); s(3)=bitxor(bitxor(q,s(2)),s(1)); s(4)=bitxor(s(4),s(2));
   out(i)=RR_sum32(RR_rotl32(RR_sum32(s(1),s(4)),7),s(1));                                 
 end

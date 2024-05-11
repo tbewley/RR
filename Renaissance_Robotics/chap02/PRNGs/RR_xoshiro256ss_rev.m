@@ -15,6 +15,6 @@ function [out,s]=RR_xoshiro256ss_rev(n,s)
 
 for i=1:n
   s(4)=RR_rotr64(s(4),45); q=s(2); r=bitxor(s(2),s(3)); s(1)=bitxor(s(1),s(4));
-  s(2)=RR_Shift64_slow(r); s(3)=bitxor(q,s(2));         s(4)=bitxor(s(4),s(2));
+  s(2)=RR_shift64(r); s(3)=bitxor(bitxor(q,s(2)),s(1)); s(4)=bitxor(s(4),s(2));
   out(i)=RR_prod64s(RR_rotl64(RR_prod64s(s(2),0x5u64),7),0x9u64);                                   
 end
