@@ -4,7 +4,7 @@ function out=RR_xoshiro256(n,scheme,init)
 % with a (globally-defined and internally stored) 4x64=256 bit state, RR_PRNG_4x64.
 %
 % INPUTS: n = number of pseudorandom numbers to generate (OPTIONAL, n=1 by default)
-%         scheme ={'ss','pp','p','ss_rev','pp_rev','p_rev'} selects which scheme to use (OPTIONAL, 'ss' by default)
+%         scheme ={'ss','pp','p','ss_rev','pp_rev','p_rev'} selects the scheme (OPTIONAL, 'ss' by default)
 %         init = 'stochastic' or 'deterministic' (OPTIONAL, uses 'stochastic', if necessary, by default)
 % OUTPUT: out = a vector, of length n, with uint64 integers
 % TEST:   RR_xoshiro256(5,'ss')      % Generate 5 uint64s using xoshiro256**
@@ -18,6 +18,7 @@ function out=RR_xoshiro256(n,scheme,init)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin<1, n=1; end   % number of pseudorandom numbers to generate
+if nargin<2, scheme='ss'; end
 s=1; % Take just one stream (for now).  TODO: implement multiple streams.
 
 global RR_PRNG_4x64; 

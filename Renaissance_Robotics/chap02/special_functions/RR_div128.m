@@ -3,10 +3,10 @@ function [Q,R]=RR_div128(B,A)
 % This code performs full uint128 by uint128 division using the nonrestoring division algorithm;
 % look at RR_div8 first to understand how it works.
 % INPUTS:  {B,A} are RR_uint128, with B=dividend, A=divisor
-% OUTPUTS: {Q,R} are RR_uint128, with B=Q*A+R
+% OUTPUTS: {Q,R} are RR_uint128, with B=Q*A+R, R<A
 % TEST:
 %    clear, clc, B=RR_randi128, A=RR_randi128(100), disp('Calculating [Q,R]=B/A')
-%    [Q,R]=RR_div128(B,A), disp('Check: C=Q*A+R, res=C-B.'), C=Q*A+R, res=C-B
+%    [Q,R]=RR_div128(B,A), disp('Check: C=Q*A+R, res=C-B'), C=Q*A+R, res=C-B
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
