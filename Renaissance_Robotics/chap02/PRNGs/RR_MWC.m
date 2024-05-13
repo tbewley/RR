@@ -4,7 +4,7 @@ function out=RR_MWC(n,scheme,init)
 % with a (globally-defined and internally stored) state of 2x64=128, 3x64=192, or 4x64=256 bits.
 %
 % INPUTS: n = number of pseudorandom numbers to generate (OPTIONAL, n=1 by default)
-%         scheme = {'128','192','256','128_rev','192_rev','256_rev'} selects the scheme (OPTIONAL, '256' by default)
+%         scheme = {'128','128_rev','192','192_rev','256','256_rev'} selects the scheme (OPTIONAL, '256' by default)
 %         init = 'stochastic' or 'deterministic' (OPTIONAL, uses 'stochastic', if necessary, by default)
 % OUTPUT: out = a vector, of length n, with uint64 integers
 % TEST:   RR_MWC(5,'128')      % Generate 5 uint64s using MWC128

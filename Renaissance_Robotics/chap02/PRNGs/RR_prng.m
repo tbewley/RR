@@ -21,23 +21,21 @@ end
 
 switch bits
   case 128                                    % This is for the RR_PCG64 case
-    global RR_PRNG_1x128 RR_PRNG_c_128;       % Note that this case uses the RR_uint128 data type
+    global RR_PRNG_2x128;                     % Note that this case uses the RR_uint128 data type
     a128=RR_uint128(0x278F2419A4D3A5F7,0xC2280069635487FD); % 128-bit LCG mult from L’Ecuyer (1999)
-    RR_PRNG_1x128(1)=a128*seed64;
-    RR_PRNG_c_128(1)=a128*RR_PRNG_1x128(1);
+    RR_PRNG_2x128=RR_uint128([]);
+    RR_PRNG_2x128(1,1)=a128*RR_uint128(seed64);
+    RR_PRNG_2x128(2,1)=a128*RR_PRNG_2x128(1,1);
   case 64,
     switch num
-      case 1, global RR_PRNG_1x64 RR_PRNG_c;  % This is for the RR_PCG32 case
-        RR_PRNG_1x64(1)=seed64;
-        if strcmp(seed,'stochastic')
-          RR_PRNG_c_64(1)=RR_prod64(a64,seed64);
-        else
-          RR_PRNG_c_64(1)=uint64(109);        % Deterministic c (by O'Neill, for her PCG32 example)
-        end
-      case 2, global RR_PRNG_2x64;            % This is for the RR_MWC128 and RR_xoroshiro128 cases
+      case 2, global RR_PRNG_2x64;            % This is for the RR_PCG32, RR_MWC128, and RR_xoroshiro128 cases
         RR_PRNG_2x64=uint64([]);
         RR_PRNG_2x64(1,1)=seed64;
-        RR_PRNG_2x64(2,1)=RR_prod64(a64,seed64);
+        if strcmp(seed,'stochastic')
+           RR_PRNG_2x64(2,1)=RR_prod64(a64,seed64);
+        else
+           RR_PRNG_2x64(2,1)=uint64(109);     % Deterministic case (c by O'Neill, for PCG32 example)
+        end
       case 3, global RR_PRNG_3x64;            % This is for the RR_MWC192 case
         RR_PRNG_3x64=uint64([]);
         RR_PRNG_3x64(1,1)=seed64;

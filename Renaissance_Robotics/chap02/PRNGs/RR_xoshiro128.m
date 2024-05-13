@@ -4,7 +4,7 @@ function out=RR_xoshiro128(n,scheme,init)
 % with a (globally-defined and internally stored) 4x32=128 bit state, RR_PRNG_4x32.
 %
 % INPUTS: n = number of pseudorandom numbers to generate (OPTIONAL, n=1 by default)
-%         scheme ={'ss','pp','p','ss_rev','pp_rev','p_rev'} selects the scheme (OPTIONAL, 'ss' by default)
+%         scheme = {'ss','ss_rev','pp','pp_rev','p','p_rev'} selects the scheme (OPTIONAL, 'ss' by default)
 %         init = 'stochastic' or 'deterministic' (OPTIONAL, uses 'stochastic', if necessary, by default)
 % OUTPUT: out = a vector, of length n, with uint32 integers
 % TEST:   RR_xoshiro128(5,'ss')      % Generate 5 uint32s using xoshiro128**
