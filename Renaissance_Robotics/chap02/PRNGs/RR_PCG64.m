@@ -17,5 +17,3 @@ for i=1:n
   hi=x.h; lo=x.l; hi=RR_prod64(bitxor(hi,bitsrl(hi,32)),a);
   out(i)=RR_prod64(bitxor(hi,bitsrl(hi,48)),lo); x=x*a+c;
 end
-
-

@@ -15,8 +15,7 @@ function [out,s]=RR_xoshiro128p(n,s)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n
-  out(i)=bitsrl(RR_sum32(s(1),s(4)),8);                                    % one addition
-  t=bitsll(s(2),9);
-  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));  % five XORs
+  out(i)=bitsrl(RR_sum32(s(1),s(4)),8);                         t=bitsll(s(2),9);
+  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));
   s(1)=bitxor(s(1),s(4)); s(3)=bitxor(s(3),t );   s(4)=RR_rotl32(s(4),11);
 end

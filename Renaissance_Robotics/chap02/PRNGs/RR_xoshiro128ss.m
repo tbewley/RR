@@ -15,10 +15,7 @@ function [out,s]=RR_xoshiro128ss(n,s)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n
-  out(i)=RR_prod32(RR_rotl32(RR_prod32(s(2),0x5u32),7),0x9u32);     % two multiplications
-  t=bitsll(s(2),9);
-  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));    % five XORs
+  out(i)=RR_prod32(RR_rotl32(RR_prod32(s(2),0x5u32),7),0x9u32);  t=bitsll(s(2),9);
+  s(3)=bitxor(s(3),s(1)); s(4)=bitxor(s(4),s(2)); s(2)=bitxor(s(2),s(3));
   s(1)=bitxor(s(1),s(4)); s(3)=bitxor(s(3),t );   s(4)=RR_rotl32(s(4),11);
 end
-
-disp('THERE IS STILL A BUG IN THIS ONE.')
