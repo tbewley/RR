@@ -14,8 +14,6 @@ function [out,s]=RR_MWC192(n,s)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n
-  out(i)=s(2);
-  [tl,th]=RR_prod64(s(1),0xFFA04E67B3C95D86);
-  s(1)=s(2);
+  out(i)=s(2); [tl,th]=RR_prod64(s(1),0xFFA04E67B3C95D86); s(1)=s(2);
   [s(3),s(2)]=RR_sum128(th,tl,0x0u64,s(3));
 end

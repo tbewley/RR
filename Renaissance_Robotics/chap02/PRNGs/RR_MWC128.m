@@ -14,7 +14,6 @@ function [out,s]=RR_MWC128(n,s)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 for i=1:n
-  out(i)=bitxor(s(1),bitsll(s(1),32));
-  [tl,th]=RR_prod64(s(1),0xFFEBB71D94FCDAF9);
+  out(i)=bitxor(s(1),bitsll(s(1),32)); [tl,th]=RR_prod64(s(1),0xFFEBB71D94FCDAF9);
   [s(2),s(1)]=RR_sum128(th,tl,0x0u64,s(2));
 end
