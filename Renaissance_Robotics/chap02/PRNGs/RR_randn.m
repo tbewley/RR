@@ -11,6 +11,7 @@ function X=RR_randn(M,N,P,precision)
 %       clf, histogram(Y,40,'Normalization','pdf')
 %       x=[mu-4*sigma:sigma/40:mu+4*sigma]; y=exp(-(x-mu).^2/(2*sigma^2))/(sigma*sqrt(2*pi));
 %       hold on;  plot(x,y,'k-',linewidth=2)
+%
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 

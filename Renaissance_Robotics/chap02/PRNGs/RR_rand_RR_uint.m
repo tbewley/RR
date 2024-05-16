@@ -13,7 +13,7 @@ function X=RR_rand_RR_uint(NBITS,M,N,P)
 % TEST:   X=RR_rand_RR_uint(24)                % an RR_uint32 integer on [0,2^24-1]
 %         Z=RR_rand_RR_uint(120,5,5), Z{1,1}   % 5x5 cell array of RR_uint128 on [0,2^120-1]
 %
-% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
+%% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 if nargin==0, NBITS=64; end   % Calculate NBITS and {M,N,P} from input data
