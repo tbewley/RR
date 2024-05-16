@@ -38,7 +38,7 @@ if IMAX==IMIN, X=zeros(M,N,P); else
 	end, end, end
 
 	% Normalize X by cat_total, round down to range 0:TOTAL-1, and reshape to desired matrix form
-	X=reshape(idivide(Z,cat_total),M,N,P);
+	X=reshape(idivide(Z,cat_total),M,N,P);  % be certain to use idivide, not Matlab's / operator!!
 end
 
 if     IMIN>=0           & IMAX<=255,        X=IMIN+uint8(X);

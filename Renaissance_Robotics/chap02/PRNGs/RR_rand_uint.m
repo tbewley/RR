@@ -10,11 +10,11 @@ function X=RR_rand_uint(NBITS,M,N,P)
 %         M,N,P = dimensions of output array (OPTIONAL, default M=N=P=1)
 % OUTPUT: X     = scalar, vector, matrix, or rank-3 array (or cell array) of unsigned integers
 %
-% TEST:   X=RR_rand_uint(5,50000);   % vector of 50000 5-bit uint8 integers on [0,31]
+% TEST:   Y=RR_rand_uint(48,5,5), dec2hex(Y(1,1),12) % 5x5 matrix of uint64 on [0,2^48-1]
+%         Z=RR_rand_uint(120,5,5), Z{1,1}            % 5x5 cell array of RR_uint128 on [0,2^120-1]
+%         X=RR_rand_uint(5,50000);   % vector of 50000 5-bit uint8 integers on [0,31]
 %         clf, histogram(X,[-0.5:1:31.5],'Normalization','probability')
 %         hold on; plot([0 31],[1 1]/32,'k-',linewidth=2)
-%         Y=RR_rand_uint(48,5,5), dec2hex(Y(1,1),12) % 5x5 matrix of uint64 on [0,2^48-1]
-%         Z=RR_rand_uint(120,5,5), Z{1,1}            % 5x5 cell array of RR_uint128 on [0,2^120-1]
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
