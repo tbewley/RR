@@ -22,22 +22,19 @@ function X=RR_rand_int(IMAX,M,N,P)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 % Calculate {IMIN,IMAX} and {M,N,P} from input data
-if nargin==0, IMAX=100, elseif length(IMAX)==2, IMIN=IMAX(1); IMAX=IMAX(2); else, IMIN=0; end
+if nargin==0, IMIN=0, IMAX=100, elseif length(IMAX)==2, IMIN=IMAX(1); IMAX=IMAX(2); else, IMIN=0; end
 if nargin==2 & length(M)>1, N=M(2); if length(M)>2, P=M(3); end, M=M(1); end
 if ~exist('M'), M=1; end, if ~exist('N'), N=1; end, if ~exist('P'), P=1; end
 if IMIN>IMAX, error('Need IMIN<=IMAX in RR_rand_int'), end
 
 if IMAX==IMIN, X=zeros(M,N,P); else
-	global RR_PRNG_OUTPUT RR_PRNG_GENERATOR
-	if ~strcmp(RR_PRNG_GENERATOR,'xoshiro256++'), RR_prng('stochastic','xoshiro256++'), end
-
 	TOTAL=uint64(IMAX-IMIN+1); % TOTAL= # of catagories, cat_total= # of integers per catagory
 	if RR_power_of_2_test(TOTAL), cat_total=idivide(0x8000000000000000,TOTAL/2); prune=false;
 	else,                         cat_total=idivide(0xFFFFFFFFFFFFFFFF,TOTAL);   prune=true; end
 
-	Z=RR_prng_draw(M*N*P);   % select the random integers
+	Z=RR_xoshiro256(M*N*P);   % select the random integers using RR_xoshiro256ss
 	if prune, for i=1:M*N*P, while Z(i)>cat_total*TOTAL-1, 
-		Z(i)=RR_prng_draw(1);  % Replace those (few) draws that are > than the max allowed
+		Z(i)=RR_xoshiro256(1);  % Replace those (few) draws that are > than the max allowed
 	end, end, end
 
 	% Normalize X by cat_total, round down to range 0:TOTAL-1, and reshape to desired matrix form

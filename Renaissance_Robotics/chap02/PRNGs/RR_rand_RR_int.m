@@ -14,10 +14,11 @@ function X=RR_rand_RR_int(IMAX,M,N,P)
 %               Note: class of RR_int or RR_uint returned is selected to fit the [IMIN:IMAX] range;
 %               be certain to convert this after result is returned if you want something else.
 %
-% TEST:   X=RR_rand_RR_int(4096,5,5), X{1,1}        % 5x5 cell array of RR_uint16 integers on [0:4096]
-%         Y=RR_rand_RR_int([-10,10],50000); Y{1,1}  % cell array of 50000 RR_int8 integers on [-10:10]
-%         clf, histogram(Y.v,[-10.5:1:10.5],'Normalization','probability')
-%         hold on; plot([-10 10],[1 1]/21,'k-',linewidth=2)%
+% TEST:   X=RR_rand_RR_int(4096,5,5), X{1,1}            % 5x5 cell array of RR_uint16 integers on [0:4096]
+%         N=50000; Y=RR_rand_RR_int([-10,10],N); Y{1,1} % cell array of 50000 RR_int8 integers on [-10:10]
+%         clf, for i=1:N, Yv(i)=Y{i}.v; end
+%         histogram(Yv,[-10.5:1:10.5],'Normalization','probability')
+%         hold on; plot([-10 10],[1 1]/21,'k-',linewidth=2)
 % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
