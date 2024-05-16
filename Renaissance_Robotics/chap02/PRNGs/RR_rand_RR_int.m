@@ -19,6 +19,7 @@ function X=RR_rand_RR_int(IMAX,M,N,P)
 %         clf, for i=1:N, Yv(i)=Y{i}.v; end
 %         histogram(Yv,[-10.5:1:10.5],'Normalization','probability')
 %         hold on; plot([-10 10],[1 1]/21,'k-',linewidth=2)
+%
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 

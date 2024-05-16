@@ -10,6 +10,7 @@ function X=RR_rand(M,N,P,precision)
 %       Y=-2+4*RR_rand(10000);             % 10000 real numbers on (-2,2)
 %       clf, histogram(Y,[-2:0.2:2],'Normalization','pdf')
 %       hold on; plot([-2 2],[1 1]/4,'k-',linewidth=2)   
+%
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 2)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
