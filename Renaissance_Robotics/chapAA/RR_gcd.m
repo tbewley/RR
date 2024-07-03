@@ -6,16 +6,16 @@ function [g,q,n] = RR_gcd(a,b)
 % OUTPUTS: g   = greatest common divisor (GCD) of a,b
 %          q   = quotients generated during the running of Euclid's algorithm
 %          n   = number of steps taken by Euclid's algorithm
-% TESTS:   b=RR_int(357),          a=RR_int(385),            [g,q,n] = RR_gcd(a,b)  % Find GCF of two integers
+% TESTS:   b=RR_int16(357),        a=RR_int16(385),          [g,q,n] = RR_gcd(a,b)  % Find GCF of two integers
 %          b=RR_poly([1 3.7 6],1), a=RR_poly([2 3.7 6 7],1), [g,q,n] = RR_gcd(a,b)  % Find GCF of two polynomials
 % NOTE:    For the polynomial case, g and q come out with somewhat strange overall scalaing (fixed in Bezout)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-if b>a & a~=0, [a,b]=RR_swap(a,b); end
+if b>a & (isa(a,'RR_poly') | a~=0), [a,b]=RR_swap(a,b); end
 n=0; rm=a; r=b;
 
-if a==0, % This special case corresponds to taking a=2^N (1 greater than intmax of RR_uintN)
+if ~isa(a,'RR_poly') & a==0, % This special case corresponds to taking a=2^N (1 greater than intmax of RR_uintN)
   rm=-b;  rm, r                                 % in this special case, we compute the first step
   [quo,rem]=rm/r; n=1; q{n}=quo+1; rm=r; r=rem; % manually, with a=2^N-b (so it fits as a RR_uintN)
 end

@@ -22,8 +22,6 @@ function [LPF,HPF]=RR_complementary_filters(omegac,n)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 8)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-disp('hello world!  this code is REALLY broken.  fix it, Prof Bewley!'); return
-
 if nargin<1, omegac=1, end, if nargin<2, n=1, end
 t=RR_poly([1 omegac])^(2*n-1); LPF=RR_tf(t.poly(n+1:2*n),t.poly); HPF=1-LPF;
 % Note: the filters constructed are of order (2*n-1), and in the stop band roll off at rate n.
