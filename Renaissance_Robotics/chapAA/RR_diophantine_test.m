@@ -4,13 +4,13 @@
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
   
 clc, disp('Set up a simple integer Diophantine problem (solve a*x+b*y=f for x and y)')
-a=RR_int(385),  b=RR_int(357), f=RR_int(21)
+a=RR_int32(385),  b=RR_int32(357), f=RR_int32(21)
 [x,y,r,t]=RR_diophantine(a,b,f), residual=a*x+b*y-f, pause
 disp('A different solution, a*X+b*Y=f (X=x+(b/g)*k, Y=y-(a/g)*k, randomly-generated k)')
 k=randi([-10 10]), X=x+r*k, Y=y-t*k, residual=a*X+b*Y-f, pause
 
 disp('The following case does NOT work, as fbad is not a multiple of the GCF!')
-fbad=RR_int(25), [x,y,r,t]=RR_diophantine(a,b,fbad), residual=a*x+b*y-fbad, disp('Note nonzero residual!'), pause
+fbad=RR_int32(25), [x,y,r,t]=RR_diophantine(a,b,fbad), residual=a*x+b*y-fbad, disp('Note nonzero residual!'), pause
 
 clear, disp(' ') % now switch everything from RR_int types to RR_poly types
 

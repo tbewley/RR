@@ -7,7 +7,7 @@ function [g,x,y] = RR_bezout(a,b)
 % OUTPUTS: g  = greatest common factor (GCF) of a,b
 %          xg,yg = objects, of the same class as the inputs a,b}, satisfying Bezout identity a*xgm+b*ygm=gm
 %          In the cass of working on the RR_poly class, outputs [g,xg,yg] are scaled such that g is monic.
-% TESTS:   a=RR_int(385),                  b=RR_int(357),                       % Test over the integers.
+% TESTS:   a=RR_int64(385),                  b=RR_int64(357),                       % Test over the integers.
 %          [g,x,y] = RR_bezout(a,b), test=a*x+b*y, residual=norm(g-test)
 %          a=RR_poly([1 2 3 5 7],1), b=RR_poly([1 2 3 4 6],1)                   % Test over the polynomials
 %          [g,x,y] = RR_bezout(a,b), test=a*x+b*y, residual=norm(g-test)
