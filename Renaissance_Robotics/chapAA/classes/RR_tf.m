@@ -36,7 +36,7 @@
 %   RR_plot_response: General algorithm for plotting system responce (using partial fraction expansions)
 %
 % SOME TESTS:  [Try them! Change them!]
-%   G=RR_tf([1],[1 0 0],1), D=RR_tf(3.3*[1 .33],[1 3.3]), T=G*D/(1+G*D)
+%   G=RR_tf([1],[1 0 0]), D=RR_tf(3.3*[1 .33],[1 3.3]), T=G*D/(1+G*D)
 %   close all, figure(1), RR_bode(G), figure(2), RR_bode(D), figure(3), RR_bode(G*D)
 %   figure(4), RR_impulse(T), figure(5), RR_step(T)
 %   NOTE: type "help RR_*", for any of the above-listed ADDITIONAL OPERATIONS, for further info.
@@ -70,13 +70,12 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     				if ~isa(num,'RR_poly'), num=RR_poly(num); end, G = RR_tf(num,RR_poly(1));
     			case 2 	
      				if  isa(num,'RR_poly'), G.num=num; else, G.num=RR_poly(num); end
-   					if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
-   					t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;
-                    % G.z=RR_roots(G.num); G.p=RR_roots(G.den);
+                    if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
+                    t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;
                     if  G.num.s & G.num.n>9, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
                     if  G.den.s & G.den.n>9, G.p=sym('p',[1 G.den.n]); else, G.p=RR_roots(G.den); end
                     G.K=G.num.poly(1)/G.den.poly(1); 
-   				case 3
+                case 3
                     G.z=num; G.p=den; G.K=K; G.num=RR_poly(num,K); G.den=RR_poly(den,1);
     	    end
             G.h=[];
