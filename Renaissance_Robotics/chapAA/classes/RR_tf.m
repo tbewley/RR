@@ -69,7 +69,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
     			case 1  
     				if ~isa(num,'RR_poly'), num=RR_poly(num); end, G = RR_tf(num,RR_poly(1));
     			case 2 	
-     				if  isa(num,'RR_poly'), G.num=num; else, G.num=RR_poly(num); end
+                    if  isa(num,'RR_poly'), G.num=num; else, G.num=RR_poly(num); end
                     if  isa(den,'RR_poly'), G.den=den; else, G.den=RR_poly(den); end
                     t=1/G.den.poly(1); G.den=G.den*t; G.num=G.num*t;
                     if  G.num.s & G.num.n>9, G.z=sym('z',[1 G.num.n]); else, G.z=RR_roots(G.num); end
