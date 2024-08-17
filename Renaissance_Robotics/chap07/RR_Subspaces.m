@@ -19,10 +19,10 @@ disp('here is a surprise! (A is nilpotent of degree 3)');
 A, A_times_A=A*A, A_times_A_times_A=A*A*A, pause
 
 clc, A=[1 2;3 4;0 0], [C,L,R,N,Apinv]=test_rectangular_matrix(A);
-gamma=randi([-10 10]), yL=gamma*L(:,1), Apinv_times_yL=Apinv*yL, pause
+gamma=ran, yL=gamma*L(:,1), Apinv_times_yL=Apinv*yL, pause
 
 clc, A=[1 2 0;3 4 0], [C,L,R,N,Apinv]=test_rectangular_matrix(A);
-delta=randi([-10 10]), xN=delta*N(:,1), A_times_xN=A*xN, pause
+delta=ran, xN=delta*N(:,1), A_times_xN=A*xN, pause
 
 disp('Some pretty nifty stuff, eh?')
 disp('Note that an alternative method to generate orthogonal bases of {C,L,R,N}')
