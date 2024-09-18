@@ -14,6 +14,6 @@ for t=0:h:T
 end
 %%%%%%%%
 function k=RHS(x)
-sig=4; b=1; rbar=3*sig*(sig+b+3)/(sig-b-1);  % Define constants for Lorenz
-k=[sig*(x(2)-x(1)); -x(2)-x(1)*x(3); -b*x(3)+x(1)*x(2)-b*rbar];
+sig=4; b=1; rbar=3*sig*(sig+b+3)/(sig-b-1);        % Define constants for Lorenz
+k=[sig*(x(2)-x(1)); -x(2)-x(1)*x(3); -b*x(3)+x(1)*x(2)-b*rbar]; % RHS for Lorenz
 end
