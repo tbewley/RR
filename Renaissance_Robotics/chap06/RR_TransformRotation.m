@@ -2,15 +2,15 @@
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
 syms gamma beta alpha
-q3a=[cos(alpha/2); 0; 0; sin(alpha/2)];
-q1 =[cos(beta/2);  sin(beta/2);  0; 0];
-q3b=[cos(gamma/2); 0; 0; sin(gamma/2)];
-R313=QuaternionMultiply(q3a,QuaternionMultiply(q1,q3b))
+q3a=RR_quaternion([cos(alpha/2); 0; 0; sin(alpha/2)]);
+q1 =RR_quaternion([cos(beta/2);  sin(beta/2);  0; 0]);
+q3b=RR_quaternion([cos(gamma/2); 0; 0; sin(gamma/2)]);
+R313=q3a*q1*q3b
 
-q3=[cos(alpha/2); 0; 0; sin(alpha/2)];
-q2=[cos(beta/2);  0; sin(beta/2); 0];
-q1=[cos(gamma/2); sin(gamma/2); 0; 0];
-R321=QuaternionMultiply(q3,QuaternionMultiply(q2,q1))
+q3=RR_quaternion([cos(alpha/2); 0; 0; sin(alpha/2)]);
+q2=RR_quaternion([cos(beta/2);  0; sin(beta/2); 0]);
+q1=RR_quaternion([cos(gamma/2); sin(gamma/2); 0; 0]);
+R321=q3*q2*q1
 
 disp(' '); pause   % Transform from R_313 to R_q and back *********************************
 q=(rand(4,1)-0.5); q=q/norm(q),

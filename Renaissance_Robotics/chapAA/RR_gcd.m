@@ -2,17 +2,19 @@ function [g,q,n] = RR_gcd(a,b)
 % function [g,q,n] = RR_gcd(a,b)
 % Solve for the greatest common divisor (GCD) of a and b via Euclid's algorithm,
 % where a and b are either RR_int or RR_poly class.
-% INPUTS:  a,b = input integers (type RR_int) or polynomials (type RR_poly), with a >= b
+% INPUTS:  a,b = input positive integers (type RR_int) or polynomials (type RR_poly), with a >= b
 % OUTPUTS: g   = greatest common divisor (GCD) of a,b
 %          q   = quotients generated during the running of Euclid's algorithm
 %          n   = number of steps taken by Euclid's algorithm
 % TESTS:   b=RR_int16(357),        a=RR_int16(385),          [g,q,n] = RR_gcd(a,b)  % Find GCF of two integers
 %          b=RR_poly([1 3.7 6],1), a=RR_poly([2 3.7 6 7],1), [g,q,n] = RR_gcd(a,b)  % Find GCF of two polynomials
-% NOTE:    For the polynomial case, g and q come out with somewhat strange overall scalaing (fixed in Bezout)
+% NOTE 1:  We need a>=b; if this isn't true, we swap a and b.
+% NOTE 2:  The conditional a>=b compares magnitudes for integers, and order for polynomials.
+% NOTE 3:  For the polynomial case, g and q come out with somewhat strange overall scalaing (fixed in Bezout)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-if b>a & (isa(a,'RR_poly') | a~=0), [a,b]=RR_swap(a,b); end
+if b>a & (isa(a,'RR_poly') | a~=0), disp(' '); disp('Swap!'), [a,b]=RR_swap(a,b), end
 n=0; rm=a; r=b;
 
 if ~isa(a,'RR_poly') & a==0, % This special case corresponds to taking a=2^N (1 greater than intmax of RR_uintN)

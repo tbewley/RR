@@ -72,6 +72,7 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
         end
         function p = plus(p,q),     [p,q]=check(p,q); p.v=p.v+q.v;  end  % p+q
         function p = minus(p,q),    [p,q]=check(p,q); p.v=p.v-q.v;  end  % p-q
+        function q = uminus(q),                       q.v=-q.v;     end  % p-q
         function p = mrdivide(p,q),                   p=p*inv(q); end    % p/q = p*inv(q)
         function p = mldivide(p,q),                   p=inv(p)*q; end    % p\q = inv(p)*q
         function out = mtimes(p,q),                                      % p*q
