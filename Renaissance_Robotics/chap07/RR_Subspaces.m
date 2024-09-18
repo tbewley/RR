@@ -1,15 +1,19 @@
 function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A)
+% function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A)
 % Generates some interesting information about matrices
 % The results that this script produces are helpful for understanding the Strang plot.
-% INPUT:  A=some small (square or rectangular) matrix to test
-% OUTPUT: C,L,R,N=orthogonal bases for the 4 fundamental subspaces of A
-%         Ap=the inverse of A (if it exists), or the pseudoinverse of A (if not)
-%         r=the rank of A
+% INPUT:  A = a small (square or rectangular) matrix, with integer elements, to test
+% OUTPUT: C,L,R,N = orthogonal bases for the 4 fundamental subspaces of A
+%         Ap = the inverse of A (if it exists), or the pseudoinverse of A (if not)
+%         r = the rank of A
 %         m,n = the number of rows and columns of A
-% TEST:   Run RR_Subspaces_Test to test this code
+% TEST:   see RR_Subspaces_Test to test this code.  Also try, e.g., this:
+%         A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; RR_Subspaces(A)
 % NOTES:  This code uses the QR decompositions of A and A' to generate C,L,R,N.
 %         This code scales Ap, and the individual columns (one at a time) of C,L,R,N,
 %         so that their entries are integers, which makes them easier to look at.
+%         Note that an alternative method to generate orthogonal bases of {C,L,R,N}
+%         is to calculate [U,S,V] = svd(A), as described in the notes.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -44,8 +48,6 @@ else
    [C,L]=QRcheck(A,r)
    disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
    [R,N]=QRcheck(A',r), pause, disp(' ')
-   % Note that an alternative method to generate orthogonal bases of {C,L,R,N}
-   % is to calculate [U,S,V] = svd(A), as described in the notes.
 
    disp('here is how A and A^+ transform a randomly-generated xR')
    disp('from the row space to the column space and back');
