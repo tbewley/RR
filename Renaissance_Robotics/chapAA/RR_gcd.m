@@ -14,11 +14,11 @@ function [g,q,n] = RR_gcd(a,b)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-if b>a & (isa(a,'RR_poly') | a~=0), disp(' '); disp('Swap!'), [a,b]=RR_swap(a,b), end
+if b>a & (isa(a,'RR_poly') | a~=0), [a,b]=RR_swap(a,b); end
 n=0; rm=a; r=b;
 
 if ~isa(a,'RR_poly') & a==0, % This special case corresponds to taking a=2^N (1 greater than intmax of RR_uintN)
-  rm=-b;  rm, r                                 % in this special case, we compute the first step
+  rm=-b;                                        % in this special case, we compute the first step
   [quo,rem]=rm/r; n=1; q{n}=quo+1; rm=r; r=rem; % manually, with a=2^N-b (so it fits as a RR_uintN)
 end
 while norm(r)>1e-7
