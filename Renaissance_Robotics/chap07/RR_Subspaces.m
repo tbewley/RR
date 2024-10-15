@@ -1,8 +1,9 @@
-function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A)
-% function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A)
+function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A,verbose)
+% function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A,verbose)
 % Generates some interesting information about matrices
 % The results that this script produces are helpful for understanding the Strang plot.
 % INPUT:  A = a small (square or rectangular) matrix, with integer elements, to test
+%         verbose = optional argument, suppress screen output if false
 % OUTPUT: C,L,R,N = orthogonal bases for the 4 fundamental subspaces of A
 %         Ap = the inverse of A (if it exists), or the pseudoinverse of A (if not)
 %         r = the rank of A
@@ -17,61 +18,70 @@ function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-disp('Let us test the following matrix:'), A
-disp('Here are the number of rows, m, and columns, n, of A:')   
-[m,n]=size(A)
-if m==n
-   disp('A is square, calculating determinant:')
-   d=det(A)
-else
-   disp('A is not square, determinant not defined.')
-end 
-disp('Here is the rank of A:'), r=rank(A), pause, disp(' ')
-
-if ((m==n) & (n==r))
-   disp('The inverse of A exists, here it is:'), Ap=inv(A)
-   disp('Here is the inverse of A with the denominator fac conveniently pulled out:') 
-   [Ap_num,fac]=RR_rat(Ap)
-   disp('Here is A times the inverse of A, which should give the identity matrix:')
-   test=A*Ap, pause, disp(' ')
-   disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
-   C=eye(r), L=[]
-   disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
-   R=eye(r), N=[], pause, disp(' ')
-else
-   disp('The inverse of A does not exist!')
-   disp('Instead, here is the pseudoinverse of A, denoted A^+'), Ap=pinv(A)
-   disp('Here is A^+ with the denominator fac conveniently pulled out:') 
-   [Ap_num,fac]=RR_rat(Ap), pause, disp(' ')
-
-   disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
-   [C,L]=QRcheck(A,r)
-   disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
-   [R,N]=QRcheck(A',r), pause, disp(' ')
-
-   disp('here is how A and A^+ transform a randomly-generated xR')
-   disp('from the row space to the column space and back');
-   xR=0; for i=1:r, xR=xR+ran*R(:,i); end, xR   % First, build up a random xR
-   yC=A*xR, Ap_yC=Ap*yC                         % Map from xR to yC and then back to xR
-   disp('Note: xR and Ap_yC should be the same.'), pause, disp(' ') 
-
-   if n>r
-      disp('there is junk in the nullspace.  here is a randomly generated xN:')
-      xN=0; for i=1:n-r, xN=xN+ran*N(:,i); end, xN 
-      disp('here is how A transforms a randomly-generated xN')
-      A_times_xN=A*xN, disp('Note: A should map xN to close to zero.')
+if nargin<2 or verbose
+   disp('Let us test the following matrix:'), A
+   disp('Here are the number of rows, m, and columns, n, of A:')   
+   [m,n]=size(A)
+   if m==n
+      disp('A is square, calculating determinant:')
+      d=det(A)
    else
-      disp('the nullspace only contains the zero element')
-   end, pause, disp(' ')
+      disp('A is not square, determinant not defined.')
+   end 
+   disp('Here is the rank of A:'), r=rank(A), pause, disp(' ')
 
-   if m>r
-      disp('there is junk in the left nullspace.  here is a randomly generated yL:')
-      yL=0; for i=1:m-r, yL=yL+ran*L(:,i); end, yL
-      disp('here is how Ap transforms a randomly-generated yL')
-      Ap_times_yL=Ap*yL, disp('Note: Ap should map yL to close to zero.')
+   if ((m==n) & (n==r))
+      disp('The inverse of A exists, here it is:'), Ap=inv(A)
+      disp('Here is the inverse of A with the denominator fac conveniently pulled out:') 
+      [Ap_num,fac]=RR_rat(Ap)
+      disp('Here is A times the inverse of A, which should give the identity matrix:')
+      test=A*Ap, pause, disp(' ')
+      disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
+      C=eye(r), L=[]
+      disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
+      R=eye(r), N=[], pause, disp(' ')
    else
-      disp('the nullspace only contains the zero element')
-   end, pause, disp(' ')
+      disp('The inverse of A does not exist!')
+      disp('Instead, here is the pseudoinverse of A, denoted A^+'), Ap=pinv(A)
+      disp('Here is A^+ with the denominator fac conveniently pulled out:') 
+      [Ap_num,fac]=RR_rat(Ap), pause, disp(' ')
+
+      disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
+      [C,L]=QRcheck(A,r)
+      disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
+      [R,N]=QRcheck(A',r), pause, disp(' ')
+
+      disp('here is how A and A^+ transform a randomly-generated xR')
+      disp('from the row space to the column space and back');
+      xR=0; for i=1:r, xR=xR+ran*R(:,i); end, xR   % First, build up a random xR
+      yC=A*xR, Ap_yC=Ap*yC                         % Map from xR to yC and then back to xR
+      disp('Note: xR and Ap_yC should be the same.'), pause, disp(' ') 
+
+      if n>r
+         disp('there is junk in the nullspace.  here is a randomly generated xN:')
+         xN=0; for i=1:n-r, xN=xN+ran*N(:,i); end, xN 
+         disp('here is how A transforms a randomly-generated xN')
+         A_times_xN=A*xN, disp('Note: A should map xN to close to zero.')
+      else
+         disp('the nullspace only contains the zero element')
+      end, pause, disp(' ')
+
+      if m>r
+         disp('there is junk in the left nullspace.  here is a randomly generated yL:')
+         yL=0; for i=1:m-r, yL=yL+ran*L(:,i); end, yL
+         disp('here is how Ap transforms a randomly-generated yL')
+         Ap_times_yL=Ap*yL, disp('Note: Ap should map yL to close to zero.')
+      else
+         disp('the nullspace only contains the zero element')
+      end, pause, disp(' ')
+   end
+else
+   [m,n]=size(A); r=rank(A);
+   if ((m==n) & (n==r))
+      Ap=inv(A);   C=eye(r); L=[];     R=eye(r); N=[];
+   else
+      Ap=pinv(A); [C,L]=QRcheck(A,r); [R,N]=QRcheck(A',r);
+   end
 end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
