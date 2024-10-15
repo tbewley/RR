@@ -1,3 +1,8 @@
-# RR Chapter 16: Design Paradigms
-These files are associated with Chapter 16 of the text <a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a>, by Thomas Bewley.<BR>
-All files Copyright 2024 by Thomas Bewley, published under the <a href="https://github.com/tbewley/RR/blob/main/LICENSE">BSD 3-Clause License</a>.
+# TenSim
+Tensegrity Simulator - code for computing both the statics (including the tensioning via an LP) and dynamics of tensegrity systems, following the detailed derivations in *Bewley (2019) Stabilization of low-altitude balloon systems, Part 2: riggings with multiple taut ground tethers, analyzed as tensegrity systems*.
+
+The main code, TenSim.m, implements all of the tensegrity systems discussed in the above paper as examples, in addition to a few from Skelton and de Oliveira (2009).
+
+The two main subroutines called are TenSimStatics.m and TenSimDynamics.m, which implementing the equations of sections 3.1 and 3.2 of the above paper, respectively.  The (2D and 3D) plotting code is TenSimPlot.m.
+
+All codes are written in simple (easy to extend) Matlab syntax.

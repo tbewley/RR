@@ -1,0 +1,2 @@
+put them all together with this:
+cat TenSim.m TenSimStateClass.m TenSimStatics.m TenSimDynamics.m TenSimComputeQ.m TenSimPlot.m quat_conj.m quat_multiply.m quat_rotate.m quat_def_rotation.m mArrow3.m > ../TenSim.m
