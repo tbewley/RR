@@ -15,6 +15,12 @@ function TenSim(structure,sym)
 %   'T2' 3D TBar of Fig 3.15
 %   'T3' 2D Mitchell truss of, e.g., Fig 4.4          (try order=3 to 8)
 %   'T4' 3D prism of, e.g., Fig 3.28 and 3.43         (try sym=3, 4, or 5)
+% Some classic 2D Bridge Trusses (try order=0 to 5)
+%   'BT_Warren'
+%   'BT_Howe'
+%   'BT_Pratt_Parker'
+%   'BT_Baltimore_Petit'
+%   'BT_Whipple'
 %
 % NOTE: dynamics portion of code only developed for class=1 tensegrity structures (so far!)
 
@@ -63,6 +69,8 @@ switch structure
         switch sym, case 3, alpha2=pi/3; case 4, alpha2=1.3310; case 5, alpha2=1.4007; end
         alpha=alpha2;                    % Select which alpha to use here (try different values!)
         disp("Need "+r2d(pi/2-pi/sym)+" <= alpha <= "+r2d(pi/2));
+    case {'BT_Warren','BT_Howe','BT_Pratt_Parker','BT_Baltimore_Petit','BT_Whipple'} % Bridge Trusses 
+        p.kappa=1000;
 end
 plot_with_forces=true;    % put arrows on static analysis plot (true or false)
 %%%%%%%%%%%%%%%%%%%%%%%%% END OF ADDITIONAL ADJUSTABLE PARAMETERS %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,6 +81,7 @@ switch p.structure
     case {'T1'}, class=4;
     case {'T2'}, class=5;
     case {'T3'}, class=2;
+    case {'BT_Warren','BT_Howe','BT_Pratt_Parker','BT_Baltimore_Petit','BT_Whipple'}, class=3; 
     otherwise,   class=1;
 end
 
@@ -138,6 +147,8 @@ switch p.structure
             p.ellb(k)=norm(x.Db(:,k));         x.Db(:,k)=x.Db(:,k)/p.ellb(k);
             p.Jb(k)=p.mb(k)*p.ellb(k)^2/12;
         end
+    case {'BT_Warren','BT_Howe','BT_Pratt_Parker','BT_Baltimore_Petit','BT_Whipple'} % Bridge Trusses 
+
     otherwise
         p.b=0;                   % Number of (actual) bars
 end
@@ -183,7 +194,7 @@ switch p.structure
         p.P(1:3,3)=[2299;  121.6; 2018];   % high
         p.P(1:3,4)=[2785; -768.8; 1998];   % high
     case {'T3'}
-        m=1; for j=-sym:2:sym
+        m=1; r, phi, for j=-sym:2:sym
             p.P(:,m)=r*[cos(phi*j) sin(phi*j)]; m=m+1;
         end, p.p=size(p.P,2);
     otherwise
