@@ -1,13 +1,14 @@
 % script RR_Truss_Warren.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear, s=6;   % number of horizontal sections in the truss
-h=1/s;        % height of the truss
+s=6;     % number of horizontal sections in the truss
+h=1/s;   % height of the truss
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clear Q P C U
 % Locations of the fixed nodes of the truss (normalized units)
 P=[0 1; 0 0]; p=2;  
 
 % Locations of the free nodes of the Warren truss (for arbitrary s and h)
-for i=1:s-1, Q(:,i)=[i/s; 0]; end              % free nodes in bottom row
+for i=1:s-1, Q(:,i)  =[i/s;       0]; end      % free nodes in bottom row
 for i=0:s-1, Q(:,s+i)=[(i+0.5)/s; h]; end      % free nodes in top row
 q=2*s-1; n=q+p;
 
