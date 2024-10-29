@@ -30,7 +30,7 @@ c=cos(phi); s=sin(phi); % (intermediate variables)
 
 x=pinv(A)*b;  % Use the pseudoinverse!
 
-if nargin<9, fig=figure(1), ax=axes(fig), end
+if nargin<9, ax=axes, end
 plotframe(h,w,phi,fyA,fyB,lA,lB,x,ax)
 
 if nargin>8 & verbose
