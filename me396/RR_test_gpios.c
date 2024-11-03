@@ -37,9 +37,9 @@
 
 #include <stdio.h>  // the first two standard libraries define a whole bunch of useful stuff 
 #include <stdlib.h> //     (google them...)
-#include <string.h> // this library defines the string handling commands
+#include <string.h> // this library defines some string handling commands
 #include <errno.h>  // this library defines the convenient perror message
-#include <unistd.h> // this library defines the usleep and nanosleep commands
+#include <unistd.h> // this library defines the sleep, usleep, nanosleep commands
 #include <signal.h>	// this library defines a mechanism to capture ctrl-c signals
 #include <gpiod.h>  // this is the modern linux library of functions to handle GPIOs.
 
@@ -55,7 +55,7 @@ int gpio_close;                   // this function closes the GPIO lines
 int chip=4;        // Note that the initial values defined after the = signs can be changed later.
 int n_buttons=2;   // (some of these values indeed will be changed, many of them won't...)
 int n_LEDs=2;
-unsigned int gpio_line[] = {23, 24, 22, 27}; // the 4 lines to be used by thie program
+unsigned int gpio_line[] = {23, 24, 22, 27}; // the 4 GPIO lines to be used by thie program
 struct gpiod_line_request *theLineRequest[] = {NULL, NULL, NULL, NULL}; // 4 pointers used by gpiod
 int button_val[] = {0, 0};  // the most recently read button values
 int LED_val[]    = {0, 0};  // the desired values for the LEDs (0=off, 1=on)
