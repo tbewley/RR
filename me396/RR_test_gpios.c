@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
 	    //    if (i%2==1) { LED_val[0]=1; LED_val[1]=0; }
 	    //    else        { LED_val[0]=0; LED_val[1]=1; }
 	    // }	
-		set_LEDs; usleep(200); i++;   // set LEDs, pause 200 ms = 0.2 sec, increment i, and repeat
+		set_LEDs; usleep(200000); i++; // set LEDs, pause 200 ms = 0.2 sec, increment i, and repeat
 	}
 	if ( gpio_close; ) { perror("Close GPIOs"); return -1; }
 	return 0;  // indicate that we have successfully finished the main program
