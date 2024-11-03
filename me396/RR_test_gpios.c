@@ -10,7 +10,7 @@
 // Note that "Embedded C", as opposed to "Standard C" (as used by hello_world), leverages rich
 // library functions, like gpiod.h, to "touch hardware" (e.g., read buttons, light LEDs, ...)
 //
-// See pin graphic here:
+// See RPi pin graphic here:
 //   https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png
 // The RPi commands "gpioinfo" and "cat /boot/firmware/config.txt" help to see what pins are
 // taken.  See also helpful information about gpiod_line_request get and set values here:
@@ -72,8 +72,10 @@ int main(int argc, char *argv[]){
 		read_buttons;  LED_val=button_val;
 		printf("button value 0 = %d, button value 1 = %d\n", button_val[0], button_val[1]);
 		// uncomment below to modify behavior to blink (on even & odd i) if both buttons pressed
-		// if ( LED_val[0]*LED_val[1]==1 && i%2==1 ) { LED_val[0]=1; LED_val[1]=0; }
-		// else                                      { LED_val[0]=0; LED_val[1]=1; }	
+		// if ( LED_val[0]*LED_val[1]==1 ) {
+	    //    if (i%2==1) { LED_val[0]=1; LED_val[1]=0; }
+	    //    else        { LED_val[0]=0; LED_val[1]=1; }
+	    // }	
 		gpio_set(LED_val);
 		usleep(100); i++;     // pause 100 ms = 0.1 sec, then increment i and repeat
 	}
