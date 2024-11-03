@@ -8,7 +8,7 @@
 // and is easily modified to handle more or fewer LEDs and buttons.
 //
 // Note that "Embedded C", as opposed to "Standard C" (as used by hello_world), leverages rich
-// library functions, like gpiod.h, to "touch hardware" (e.g., read buttons, light LEDs)
+// library functions, like gpiod.h, to "touch hardware" (e.g., read buttons, light LEDs, ...)
 //
 // See pin graphic here:
 //   https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png
@@ -25,8 +25,8 @@
 //
 // LED CONFIGURATION 2 (suggested in class, leveraging 2N2222 npn transistors):
 //   a. Provide a prototypng board with 3.3V (RPi pin 1) and ground (RPi pin 6)
-//   b. For each GPIO output pin, connect through a 1.5 kohm resistor to the Base of the transistor.
-//   c. Connect the Emitters of the transistors to ground.
+//   b. For each GPIO output pin, connect through a 1.5 kohm resistor to the Base of a transistor.
+//   c. Connect the Emitter of each transistor to ground.
 //   d. Connect 3.3v to an LED, through a 220 kohm resistor, to the Collector of each transistor.
 // 
 // The "main" program drives the LEDs, based on the presses of the buttons, in a simple manner.
