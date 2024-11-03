@@ -9,6 +9,8 @@
 // See pin graphic here:
 //   https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png
 // The RPi commands "gpioinfo" and "cat /boot/firmware/config.txt" help to see what pins are taken...
+// See also helpful information about gpiod here:
+//    https://libgpiod.readthedocs.io/en/latest/group__line__request.html#:~:text=gpiod_line_request_get_value
 //
 // CONFIGURATION 1 (simple):
 // Connect each RPI output pin to an LED, through a current-limiting resister, to ground (RPi pin 6).
@@ -21,7 +23,7 @@
 // This program will {turn the LEDs on, wait 2 sec, turn the LEDs off, wait 2 sec}, repeat 5x, exit.
 //
 // Compile and execute on an RPi5 as follows:  (-Wall gives warnings, -g keeps symbols for use by a debugger)
-//   gcc RR_test_led0.c -Wall -g -lgpiod -o RR_test_led0; ./RR_test_led0
+//   gcc RR_test_led1.c -Wall -g -lgpiod -o RR_test_led1; ./RR_test_led1
 
 #include <stdio.h>
 #include <unistd.h> // usleep, nanosleep
@@ -43,35 +45,43 @@ struct gpiod_line_request *theLineRequestB = NULL;
 struct gpiod_line_request *theLineRequestC = NULL;
 struct gpiod_line_request *theLineRequestD = NULL;
 
+// Define the following as global so we don't have to pass them around everywhere
+int nLEDs=2;
+int nButtons=2;
+unsigned int LED_line[2]    = {22 27};
+unsigned int Button_line[2] = {23 24};
+
 int main(int argc, char *argv[]){
 	int ret;
+	int valC;
+	int valD;
 	int i=0;
 	unsigned int lineA = 22;
 	unsigned int lineB = 27;
 	unsigned int lineC = 23;
 	unsigned int lineD = 24;
 	signal(SIGINT, cleanup); // signal catcher; calls the cleanup function on exit
-	printf("Using gpio22 and gpio27 to drive LEDs.  Ignoring buttons for now.\n");
+	printf("Using gpio22 and gpio27 to drive LEDs, and gpio23 and gpio24 to read buttons.\n");
 
 	ret = gpio_init(4, lineA, lineB, lineC, lineD, true, true, false, false);
 	if (ret != 0) { perror("gpio inits"); return -1; } // handle errors
 
 	printf("Setting gpioA and gpioB to OFF\n");
 	ret = gpio_set(lineA, lineB, 0, 0);
-	if (ret != 0) { perror("gpioA and gpioB set to off"); return -1; }    // handle errors
+	if (ret != 0) { perror("LED_gpios set to off"); return -1; }  // handle errors
 
 	while (i < 5) {       // loop 5 times
+		valC=gpiod_line_request_get_value(theLineRequestC, lineC);
+		valD=gpiod_line_request_get_value(theLineRequestD, lineD);
+		printf("valC = %d, valD = %d\n",valC,valD);
 		printf("loop %d of %d\nSetting gpioA and gpioB to ON\n",i,5);
 		ret = gpio_set(lineA, lineB, 1, 1);
-		if (ret != 0) { perror("gpioA and gpioB set to ON"); return -1; }    // handle errors
 		sleep(2);         // pause 2 seconds
 		printf("Setting gpioA and gpioB to OFF\n");
 		ret = gpio_set(lineA, lineB, 0, 0);
-		if (ret != 0) { perror("gpioA and gpioB set to OFF"); return -1; }    // handle errors
 		sleep(2); i++;    // pause 2 seconds, increment i
 	}
 	ret = gpio_close(lineA, lineB, lineC, lineD);         // close out gpios
-	if (ret != 0) { perror("gpio close"); return -1; }    // handle errors
 	return 0;                       // indicate we have successfully finished main program
 }
 
@@ -191,12 +201,12 @@ int  gpio_init(int chip, unsigned int lineA, unsigned int lineB, unsigned int li
 // close out gpios
 int gpio_close(unsigned int lineA, unsigned int lineB, unsigned int lineC, unsigned int lineD ) {
 	gpiod_line_request_set_value(theLineRequestA, lineA, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-	gpiod_line_request_release(theLineRequestA); 	                 // release the line request
+	gpiod_line_request_release(theLineRequestA); 	                   // release the line request
 	gpiod_line_request_set_value(theLineRequestB, lineB, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-	gpiod_line_request_release(theLineRequestB); 	                 // release the line request
+	gpiod_line_request_release(theLineRequestB); 	                   // release the line request
 	gpiod_line_request_set_value(theLineRequestC, lineC, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-	gpiod_line_request_release(theLineRequestC); 	                 // release the line request
+	gpiod_line_request_release(theLineRequestC); 	                   // release the line request
 	gpiod_line_request_set_value(theLineRequestD, lineD, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-	gpiod_line_request_release(theLineRequestD); 	                 // release the line request
+	gpiod_line_request_release(theLineRequestD); 	                   // release the line request
 	return 0;
 }

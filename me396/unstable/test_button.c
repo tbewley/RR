@@ -2,7 +2,7 @@
 #include <gpiod.h>
 
 // from: https://www.google.com/search?q=gpiod+gpio+get+button+rpi+c (AI response)
-// gcc test_button.c -Wall -g -lgpiod -o test_button; ./test_button
+// gcc test_button.c -o test_button -Wall -g -lgpiod; ./test_button
 
 int main(int argc, char **argv) {
     const char *chipname = "gpiochip4"; // Default GPIO chip on Raspberry Pi

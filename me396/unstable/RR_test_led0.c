@@ -21,7 +21,7 @@
 // This program will {turn the LEDs on, wait 2 sec, turn the LEDs off, wait 2 sec}, repeat 5x, exit.
 //
 // Compile and execute on an RPi5 as follows:  (-Wall gives warnings, -g keeps symbols for use by a debugger)
-//   gcc RR_test_led1.c -Wall -g -lgpiod -o RR_test_led1; ./RR_test_led1
+//   gcc RR_test_led0.c -Wall -g -lgpiod -o RR_test_led0; ./RR_test_led0
 
 #include <stdio.h>
 #include <unistd.h> // usleep, nanosleep
@@ -45,8 +45,6 @@ struct gpiod_line_request *theLineRequestD = NULL;
 
 int main(int argc, char *argv[]){
 	int ret;
-	int valC;
-	int valD;
 	int i=0;
 	unsigned int lineA = 22;
 	unsigned int lineB = 27;
@@ -60,14 +58,9 @@ int main(int argc, char *argv[]){
 
 	printf("Setting gpioA and gpioB to OFF\n");
 	ret = gpio_set(lineA, lineB, 0, 0);
-	if (ret != 0) { perror("gpioA and gpioB set to off"); return -1; }    // handle errors
+	if (ret != 0) { perror("gpioA and gpioB set to off"); return -1; }       // handle errors
 
 	while (i < 5) {       // loop 5 times
-		ret=gpiod_line_request_input(lineC, "button")
-		valC = gpiod_line_get_value(lineC);
-		ret=gpiod_line_request_input(lineD, "button")
-		valD = gpiod_line_get_value(lineD);
-		printf("valC = %d, valD = %d\n",valC,valD);
 		printf("loop %d of %d\nSetting gpioA and gpioB to ON\n",i,5);
 		ret = gpio_set(lineA, lineB, 1, 1);
 		if (ret != 0) { perror("gpioA and gpioB set to ON"); return -1; }    // handle errors
