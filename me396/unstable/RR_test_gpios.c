@@ -42,45 +42,47 @@
 #include <signal.h>	// this library defines a mechanism to capture ctrl-c signals
 #include <gpiod.h>  // this is the modern linux library of functions to handle GPIOs.
 
-// these additional functions and structs are below the main code in this program
-int set_LEDs();
+// These additional functions and structs are found below the main section of this program
 int read_buttons();
-int gpio_init();
-void cleanup(int signo);
-int gpio_close();
-struct gpiod_chip *the_gpio_chip;
-struct gpiod_line_request *theLineRequestA = NULL; // todo: make these into a vector
-struct gpiod_line_request *theLineRequestB = NULL;
-struct gpiod_line_request *theLineRequestC = NULL;
-struct gpiod_line_request *theLineRequestD = NULL;
+int set_LEDs();
+struct gpiod_chip *the_gpio_chip; // this struct is required by the gpiod library
+int gpio_init();                    // this function initializes the GPIO lines
+void cleanup(int signo);          // this function performs a clean shutdown if ctrl-c is pressed
+int gpio_close();                   // this function closes the GPIO lines
 
-// Define the following as global so we don't have to pass them around everywhere
+// Define the following as global variables, accessible in "main" as well as the other functions.
 int chip=4;        // Note that the initial values defined after the = signs can be changed later.
 int n_buttons=2;   // (some of these values indeed will be changed, many of them won't...)
 int n_LEDs=2;
 int button_val[] = {0, 0};  // the most recently-read button values
 int LED_val[]    = {0, 0};  // the desired values for the LEDs (0=off, 1=on)
-unsigned int gpio_line[] = {22, 27, 23, 24}; // the 4 GPIO lines to be used by thie program
+unsigned int gpio_line[] = {23, 24, 22, 27}; // the 4 GPIO lines to be used by thie program
+struct gpiod_line_request *theLineRequestA = NULL; // todo: make a vector out of theLineRequest
+struct gpiod_line_request *theLineRequestB = NULL;
+struct gpiod_line_request *theLineRequestC = NULL;
+struct gpiod_line_request *theLineRequestD = NULL;
 
 // This is the "main" section of the program (in C, there is always a "main").
 int main(int argc, char *argv[]){
 	// The following variable is "scoped" only for the "main" section.
 	int i=0;
-	signal(SIGINT, cleanup);  // this is the "signal catcher"; it calls cleanup on a ctrl-c interrupt
-	printf("Using GPIO23 and GPIO24 to read buttons, and GPIO22 and GPIO27 to drive LEDs.\n");
+	signal(SIGINT, cleanup);  // this "signal catcher" calls cleanup on a ctrl-c interrupt
+	printf("Using GPIO%d and GPIO%d to set LEDs,",    gpio_line[0],gpio_line[1]);
+    printf("and GPIO%d and GPIO%d to read buttons.\n",gpio_line[2],gpio_line[3]);
 	if ( gpio_init() ) { perror("Initialize GPIOs"); return -1; } // the {} parts to the right handle
-	if ( set_LEDs()  ) { perror("Set LEDs to off");  return -1; } // the errors, quitting on failure.
+    LED_val[0]=0;     LED_val[1]=1; 
+	if ( set_LEDs() )  { perror("Set LEDs to on");  return -1; } // the errors, quitting on failure.
+    sleep(10);
 	while (i < 300) {         // loop 300 times (about 1 minute)
-		if ( read_buttons() ) { perror("Reading buttons"); return -1; } 
-		// for now, just echo the button values at the LEDs
-		LED_val[0]=button_val[0]; LED_val[1]=button_val[1];  
+		if ( read_buttons() ) { perror("Read buttons");  return -1; }
+		int j=0; while (j<n_LEDs) { LED_val[j]=button_val[j]; j++; } // just echo button values at the LEDs
 		printf("button value 0 = %d, button value 1 = %d\n", button_val[0], button_val[1]);
 		// uncomment below to modify behavior to blink (on even & odd i) if both buttons pressed
 		// if ( LED_val[0]*LED_val[1]==1 ) {
 	    //    if (i%2==1) { LED_val[0]=1; LED_val[1]=0; }
 	    //    else        { LED_val[0]=0; LED_val[1]=1; }
-	    // }
-	    if ( set_LEDs()  ) { perror("Set LEDs");  return -1; } // the errors, quitting on failure.
+	    // }	
+	    if ( set_LEDs() ) { perror("Set LEDs");  return -1; }
 		usleep(200000); i++; // set LEDs, pause 200 ms = 0.2 sec, increment i, and repeat
 	}
 	if ( gpio_close() ) { perror("Close GPIOs"); return -1; }
@@ -88,7 +90,8 @@ int main(int argc, char *argv[]){
 }
 
 // This function reads all button values, puts the results in the global array button_val[].
-int read_buttons() { 
+int read_buttons() { 	
+	// todo: make a vector out of theLineRequest, turn the following into a loop.
 	button_val[0]=gpiod_line_request_get_value(theLineRequestC, gpio_line[2]);
 	button_val[1]=gpiod_line_request_get_value(theLineRequestD, gpio_line[3]);
 	return 0;
@@ -96,23 +99,27 @@ int read_buttons() {
 
 // This function sets all LED values, based on the global array LED_val[].
 int set_LEDs() {
-	int ret;
-	if (LED_val[0] > 0) {
-		ret = gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_ACTIVE);
+	int ret=0;
+	int ret1;
+    // todo: make a vector out of theLineRequest, turn the following into a loop.
+    if (LED_val[0] == 0) {
+    	ret1=gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_INACTIVE);
+		if (ret1) { perror("set LEDs"); ret=-1; }   // handle errors
 	} else {
-		ret = gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_INACTIVE);
+		ret1=gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_ACTIVE);
+		if (ret1) { perror("set LEDs"); ret=-1; }   // handle errors
 	}
-	if (ret) { perror("set_LEDs"); }   // handle errors
-	if (LED_val[1] > 0) {
-		ret = gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_ACTIVE);
+    if (LED_val[1] == 0) {
+    	ret1=gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_INACTIVE);
+		if (ret1) { perror("set LEDs"); ret=-1; }   // handle errors
 	} else {
-		ret = gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_INACTIVE);
+		ret1=gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_ACTIVE);
+		if (ret1) { perror("set LEDs"); ret=-1; }   // handle errors
 	}
-	if (ret) { perror("set_LEDs"); }   // handle errors
-	return 0;
+	return ret;
 }
 
-struct gpiod_chip * gpiod_chip_open_by_number(int chip){
+struct gpiod_chip *gpiod_chip_open_by_number(int chip){
 	struct gpiod_chip *the_gpio_chip;
 	char thePath[30];
 	sprintf(thePath,"/dev/gpiochip%d",chip);
@@ -120,96 +127,66 @@ struct gpiod_chip * gpiod_chip_open_by_number(int chip){
 	return the_gpio_chip;
 };
 
-int  gpio_init() {
+int gpio_init() {
 	int i=0;
-	struct gpiod_line_settings *theLineSettings;
-	struct gpiod_line_config *theLineConfig;
+	struct gpiod_line_settings  *theLineSettings;
+	struct gpiod_line_config    *theLineConfig;
 	struct gpiod_request_config *theRequestConfig = NULL;
-	int ret;
+	int ret=0;
+	int ret1;
 	unsigned int line;
-
-	while (i < 4) {
+	while (i < n_LEDs+n_buttons) {
 		line=gpio_line[i];
-		the_gpio_chip = gpiod_chip_open_by_number(chip);  	// open the chip first
-		if (!the_gpio_chip) { printf("Open chip %d failed\n",chip); return -1; } // handle errors
+		printf("i=%d",i);
+		the_gpio_chip = gpiod_chip_open_by_number(chip);
+		  if (!the_gpio_chip) { perror("Open chip"); ret=-1; } 
 		theLineSettings = gpiod_line_settings_new();
-		if (!theLineSettings) {                             // handle errors
-			perror("Get line settings");
-			gpiod_chip_close(the_gpio_chip);
-			return -1;
-		}
-		if (i<2) {
+		  if (!theLineSettings) { perror("Get line settings"); ret=-1; }
+		if (i<n_LEDs) {
 			gpiod_line_settings_set_direction(theLineSettings, GPIOD_LINE_DIRECTION_OUTPUT);	
-			theLineConfig = gpiod_line_config_new();
 			printf("Initializing gpio%d as output\n",line);
-			if (!theLineConfig){                           // handle errors
-				perror("Get line config for output");
-				gpiod_line_settings_free(theLineSettings);
-				gpiod_chip_close(the_gpio_chip);
-				return -1;
-			}	
 		} else {
 			gpiod_line_settings_set_direction(theLineSettings, GPIOD_LINE_DIRECTION_INPUT);	
-			theLineConfig = gpiod_line_config_new();
 			printf("Initializing gpio%d as input\n",line);
-			if (!theLineConfig){                           // handle errors
-				perror("Get line config for input");
-				gpiod_line_settings_free(theLineSettings);
-				gpiod_chip_close(the_gpio_chip);
-				return -1;
-			}	
 		}
-		ret = gpiod_line_config_add_line_settings(theLineConfig, &line, 1, theLineSettings);
-		if (ret) {                                        // handle errors
-			perror("Add line settings");
-			gpiod_line_config_free(theLineConfig);
-			gpiod_line_settings_free(theLineSettings);
-			gpiod_chip_close(the_gpio_chip);
-			return -1;
-		}	
+		theLineConfig = gpiod_line_config_new();
+		  if (!theLineConfig){ perror("Get line config"); ret=-1; }
+		ret1 = gpiod_line_config_add_line_settings(theLineConfig,&line,1,theLineSettings);
+		  if (ret1) { perror("Add line settings"); ret=-1; }       
 		theRequestConfig = gpiod_request_config_new();
-		if (!theRequestConfig){                           // handle errors
-			perror("Request new config");
-			gpiod_line_config_free(theLineConfig);
-			gpiod_line_settings_free(theLineSettings);
-			gpiod_chip_close(the_gpio_chip);
-			return -1;
-		}
-		gpiod_request_config_set_consumer(theRequestConfig, "led demo");
+		  if (!theRequestConfig){ perror("Request new config"); ret=-1; }
+		gpiod_request_config_set_consumer(theRequestConfig, "led lab");
+
 		switch (i) {
 			case 0: theLineRequestA = gpiod_chip_request_lines(the_gpio_chip, theRequestConfig, theLineConfig); break;
 			case 1: theLineRequestB = gpiod_chip_request_lines(the_gpio_chip, theRequestConfig, theLineConfig); break;
 			case 2: theLineRequestC = gpiod_chip_request_lines(the_gpio_chip, theRequestConfig, theLineConfig); break;
 			case 3: theLineRequestD = gpiod_chip_request_lines(the_gpio_chip, theRequestConfig, theLineConfig); break;	
 		}
+
 		gpiod_request_config_free(theRequestConfig);     // clean up
 		gpiod_line_config_free(theLineConfig);
 		gpiod_line_settings_free(theLineSettings);
 		gpiod_chip_close(the_gpio_chip);
 		i++;
 	}
-	return 0;
+	return ret;
 }
 
 void cleanup(int signo){
 	if (signo == SIGINT){
-		printf("received SIGINT Ctrl-C; closing\n");
-		if ( gpio_close() ) { perror("cleanup"); } // handle errors
-		exit(0);
- 	}
+		printf("received SIGINT Ctrl-C, closing\n");
+	    if ( gpio_close() ) { perror("Close GPIOs"); }
+        exit(0);
+    }
 }
 
-// close out gpios
 int gpio_close() {
-	unsigned int lineA=gpio_line[0];
-	unsigned int lineB=gpio_line[1];
-
-	gpiod_line_request_set_value(theLineRequestA, lineA, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-	gpiod_line_request_set_value(theLineRequestB, lineB, GPIOD_LINE_VALUE_INACTIVE); //turn it off
-
-	gpiod_line_request_release(theLineRequestA); 	                   // release the line request
-	gpiod_line_request_release(theLineRequestB); 	                   // release the line request
-	gpiod_line_request_release(theLineRequestC); 	                   // release the line request
-	gpiod_line_request_release(theLineRequestD); 	                   // release the line request
+	int i=0; while (i<n_LEDs) { LED_val[i]=0; i++; }
+	if ( set_LEDs() ) { perror("Set LEDs during close");  return -1; } // turn off the LEDs first
+	gpiod_line_request_release(theLineRequestA);
+	gpiod_line_request_release(theLineRequestB);
+	gpiod_line_request_release(theLineRequestC);
+	gpiod_line_request_release(theLineRequestD);	
 	return 0;
 }

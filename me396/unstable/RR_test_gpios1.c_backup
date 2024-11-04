@@ -1,4 +1,4 @@
-// RR_test_gpios.c, for USAFA ME396 lab 1 in Fall 2024, on an RPi 5
+// RR_test_gpios1.c, for USAFA ME396 lab 1 in Fall 2024, on an RPi 5
 // H. Clark Briggs and Thomas Bewley, Oct 2024.   Copyright 2020 - 2024 USAFA
 // This program uses 
 //   gpio22 as an output (at pin 15) to control LED 1,
@@ -31,7 +31,7 @@
 // The "main" program drives the LEDs, based on the presses of the buttons, in a simple manner.
 //
 // Compile and execute on an RPi5 as follows:
-//   gcc RR_test_gpios.c -Wall -g -lgpiod -o RR_test_gpios; ./RR_test_gpios
+//   gcc RR_test_gpios1.c -Wall -g -lgpiod -o RR_test_gpios1; ./RR_test_gpios1
 // Note: -Wall gives warnings, -g keeps symbols for use by a debugger
 
 #include <stdio.h>  // the first two standard libraries define a whole bunch of useful stuff 
@@ -43,13 +43,13 @@
 #include <gpiod.h>  // this is the modern linux library of functions to handle GPIOs.
 
 // these additional functions and structs are below the main code in this program
+void cleanup(int signo);
+int gpio_init();
 int set_LEDs();
 int read_buttons();
-int gpio_init();
-void cleanup(int signo);
 int gpio_close();
 struct gpiod_chip *the_gpio_chip;
-struct gpiod_line_request *theLineRequestA = NULL; // todo: make these into a vector
+struct gpiod_line_request *theLineRequestA = NULL;
 struct gpiod_line_request *theLineRequestB = NULL;
 struct gpiod_line_request *theLineRequestC = NULL;
 struct gpiod_line_request *theLineRequestD = NULL;
@@ -76,40 +76,15 @@ int main(int argc, char *argv[]){
 		LED_val[0]=button_val[0]; LED_val[1]=button_val[1];  
 		printf("button value 0 = %d, button value 1 = %d\n", button_val[0], button_val[1]);
 		// uncomment below to modify behavior to blink (on even & odd i) if both buttons pressed
-		// if ( LED_val[0]*LED_val[1]==1 ) {
-	    //    if (i%2==1) { LED_val[0]=1; LED_val[1]=0; }
-	    //    else        { LED_val[0]=0; LED_val[1]=1; }
-	    // }
+		if ( LED_val[0]*LED_val[1]==1 ) {
+	        if (i%2==1) { LED_val[0]=1; LED_val[1]=0; }
+	        else        { LED_val[0]=0; LED_val[1]=1; }
+	     }
 	    if ( set_LEDs()  ) { perror("Set LEDs");  return -1; } // the errors, quitting on failure.
 		usleep(200000); i++; // set LEDs, pause 200 ms = 0.2 sec, increment i, and repeat
 	}
 	if ( gpio_close() ) { perror("Close GPIOs"); return -1; }
 	return 0;  // indicate that we have successfully finished the main program
-}
-
-// This function reads all button values, puts the results in the global array button_val[].
-int read_buttons() { 
-	button_val[0]=gpiod_line_request_get_value(theLineRequestC, gpio_line[2]);
-	button_val[1]=gpiod_line_request_get_value(theLineRequestD, gpio_line[3]);
-	return 0;
-}
-
-// This function sets all LED values, based on the global array LED_val[].
-int set_LEDs() {
-	int ret;
-	if (LED_val[0] > 0) {
-		ret = gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_ACTIVE);
-	} else {
-		ret = gpiod_line_request_set_value(theLineRequestA, gpio_line[0], GPIOD_LINE_VALUE_INACTIVE);
-	}
-	if (ret) { perror("set_LEDs"); }   // handle errors
-	if (LED_val[1] > 0) {
-		ret = gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_ACTIVE);
-	} else {
-		ret = gpiod_line_request_set_value(theLineRequestB, gpio_line[1], GPIOD_LINE_VALUE_INACTIVE);
-	}
-	if (ret) { perror("set_LEDs"); }   // handle errors
-	return 0;
 }
 
 struct gpiod_chip * gpiod_chip_open_by_number(int chip){
@@ -119,6 +94,40 @@ struct gpiod_chip * gpiod_chip_open_by_number(int chip){
 	the_gpio_chip = gpiod_chip_open(thePath);	
 	return the_gpio_chip;
 };
+
+// This function reads all button values, puts the results in the global array button_val[].
+int read_buttons() { 
+	unsigned int line;
+	line=gpio_line[2];
+	button_val[0]=gpiod_line_request_get_value(theLineRequestC, line);
+	line=gpio_line[3];
+	button_val[1]=gpiod_line_request_get_value(theLineRequestD, line);
+	return 0;
+}
+
+// This function sets all LED values, based on the global array LED_val[].
+int set_LEDs() {
+	int ret;
+	unsigned int line;
+	line=gpio_line[0];
+	if (LED_val[0] > 0) {
+		ret = gpiod_line_request_set_value(theLineRequestA, line, GPIOD_LINE_VALUE_ACTIVE);
+		if (ret) { perror("in gpio_set, line set value ACTIVE"); }   // handle errors
+	} else {
+		ret = gpiod_line_request_set_value(theLineRequestA, line, GPIOD_LINE_VALUE_INACTIVE);
+		if (ret) { perror("in gpio_set, line set value INACTIVE"); } // handle errors
+	}
+	line=gpio_line[1];
+	if (LED_val[1] > 0) {
+		ret = gpiod_line_request_set_value(theLineRequestB, line, GPIOD_LINE_VALUE_ACTIVE);
+		if (ret) { perror("in gpio_set, line set value ACTIVE"); }   // handle errors
+	} else {
+		ret = gpiod_line_request_set_value(theLineRequestB, line, GPIOD_LINE_VALUE_INACTIVE);
+		if (ret) { perror("in gpio_set, line set value INACTIVE"); } // handle errors
+	}
+	return 0;
+}
+
 
 int  gpio_init() {
 	int i=0;
