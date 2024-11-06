@@ -1,0 +1,9 @@
+Set Up Notes for ME396 Lab I2C 3 Axis Magnetometer Fall 2024
+10/30/2024 By Briggs
+This lab uses an RPi and the I2C magnetometer HMC5883L to demonstrate using the I2C bus.
+Connect the I2C Magnetometer SCL to GPIO3 (header pin 5), SDA to GPIO2 (header pin 3), VCC to 3.3v(header pin 1), and GND to Gnd (header pin 6).
+
+The example program i2c_magnetometer.c will initialize the I2C bus and the magnetometer and then request heading readings once per second.
+The heading output is in degrees. Note the indication of North on the PCB.
+
+Exit the program by pressing ^C (ctrl-C).
