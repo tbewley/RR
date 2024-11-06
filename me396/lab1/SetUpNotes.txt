@@ -1,5 +1,5 @@
 Set Up Notes for ME396 Lab I2C 3 Axis Magnetometer Fall 2024
-10/30/2024 By Briggs
+11/6/2024 By Briggs and Bewley
 
 This lab uses an RPi and the I2C magnetometer HMC5883L to demonstrate using the I2C bus.
 Connect the I2C Magnetometer SCL to GPIO3 (header pin 5), connect SDA to GPIO2 (header pin 3), 
@@ -7,11 +7,13 @@ connect both VIN and 3vo to 3.3v (header pin 1), and connect GND to GND (header 
 
 To make the code, once you copy this directory of files to your RPi, execute the following commands:
   chmod +x makeme.sh
-  ls -alh              # Note that the chmod command above makes the makeme.sh script executable!
-  ./compassdemo        # Note that the ./ portion of this command is needed, to make bash look for the executable here.
+  ls -alh        # Note that the chmod command above makes the makeme.sh script executable!
+  ./makeme.sh    # This runs the compiler.  If it fails, copy its contents onto the command line.
+  ./compassdemo  # Note that the ./ portion of this command makes bash look for the executable here.
 
 The example program i2c_magnetometer.c will initialize the I2C bus and the magnetometer
 and then request heading readings once per second.
-The heading output is in degrees. Note the indication of North on the PCB.
+The heading output is in degrees. Note the indication of x (which is North) on the PCB.
+Note that the code adds the local magnetic declination for USAFA.
 
 Exit the program by pressing ^C (ctrl-C).
