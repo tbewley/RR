@@ -5,7 +5,7 @@
 */
 /* Original code from 
 * James Sleeman, http://sparks.gogo.co.nz/
-* for Arduino
+* for Arduino (https://github.com/sleemanj/HMC5883L_Simple)
 * Copyright (C) 2014 James Sleeman
 */
 #include <stdint.h>
@@ -193,6 +193,11 @@ int SetScale( uint16_t scale )
 
 int SetOrientation( uint16_t orientation )
 {
+      // Orientation is the bits marked XXXYYYZZZ in mode
+      //    xxXXXYYYZZZxxxxx
+      mode = (mode & ~0x3FE0) | (orientation & 0x3FE0);   
+      return 0;
+
   switch (orientation) {
     case COMPASS_NORTH:
     case COMPASS_SOUTH:
