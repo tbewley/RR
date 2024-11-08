@@ -64,7 +64,7 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
                     end
                 end
             else                                        % two arguments: compute q = e^(d*phi)
-                if abs(norm(d)-1)>1e-15, disp('input vector not of unit length; not valid for rotation!'), end  
+                if isnumeric(d) & abs(norm(d)-1)>1e-15, disp('input vector not of unit length; not valid for rotation!'), end  
                 c=cos(phi); s=sin(phi); q.v=[c s*d(1) s*d(2) s*d(3)]; q=remove_double_cover(q);
             end
             function out=e(i), out=[0 0 0 0]; out(1+i)=1; end  % Defines a useful unit vector for this function
@@ -82,7 +82,7 @@ classdef RR_quaternion < matlab.mixin.CustomDisplay
                P=[t(1) -t(2) -t(3) -t(4);
                   t(2)  t(1) -t(4)  t(3);  % Note: indexing from 1, not 0!
                   t(3)  t(4)  t(1) -t(2);
-                  t(4) -t(3)  t(2)  t(1)]; out=RR_quaternion(P*q.v');
+                  t(4) -t(3)  t(2)  t(1)]; out=RR_quaternion(P*q.v.');
            end
         end
         function pow = mpower(p,n)                                       % p^n
