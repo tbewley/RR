@@ -1,16 +1,16 @@
 % script RR_attitude.m
 %
-% If you have a widget on your bot (UUV, UAV, spacecraft ...) that measures
+% If you have a device on your bot (UUV, UAV, spacecraft ...) that measures
 % what direction down is (i.e., a "3-axes accelerometer", assuming you are
 % not accelerating significantly), you can figure out pitch and roll, but
 % you can't figure out your rotation (yaw) around the down direction.
 %
-% If you have a widget on your bot that measures what direction magnetic N
+% If you have a device on your bot that measures what direction magnetic N
 % is (i.e., a "3-axis magnetometer", assuming magnetic N is a predictable
 % direction in your local environment), you can figure out yaw and pitch,
 % but you can't figure out your rotation (roll) around the N direction.
 %
-% But, if you have both widgets, you can figure out all 3 (yaw, pitch, and roll
+% But, if you have both devices, you can figure out all 3 (yaw, pitch, and roll
 % of your bot, compared to a standard reference orientation), ... in fact,
 % you have more information than you need (7 equations in 4 unknowns).
 % This script sets up and solves ("best fits") the associated (quadratic) equations
@@ -25,8 +25,8 @@ an(3)=round(-180+360*rand); c3=cos(an(3)*pi/180); s3=sin(an(3)*pi/180);
 fprintf('Some (random) 321 rotation angles: {yaw,pitch,roll} (deg) ='); disp(an)
 disp('Here is the rotation matrix corresponding to these three rotation angles:')
 R_321=[c3*c2,          -c2*s3,          s2;   ...
-   c3*s2*s1+c1*s3, c3*c1-s3*s2*s1, -c2*s1; ...
-   s3*s1-c3*c1*s2, c1*s3*s2+c3*s1, c2*c1 ]
+       c3*s2*s1+c1*s3, c3*c1-s3*s2*s1, -c2*s1; ...
+       s3*s1-c3*c1*s2, c1*s3*s2+c3*s1,  c2*c1 ]
 mr=R_321*m;  gr=R_321*g;
 
 disp(' '), disp('Now, given ONLY the magnetic and gravity vectors, m and g, in')
