@@ -37,8 +37,9 @@ disp('we now reconstruct all three of these rotation angles.'), disp(' ')
 
 % (remove the semicolon below to display the optimization options used)
 options = optimoptions('fsolve','Algorithm','levenberg-marquardt','Display','off');
-[x,fval,EXITFLAG,OUTPUT]=fsolve(@func,0.5*[1 1 1 1],options);
+tic, [x,fval,EXITFLAG,OUTPUT]=fsolve(@func,0.5*[1 1 1 1],options); t=toc;
 fprintf('Optimization residual=%0.5g after %d iterations of levenberg-marquardt.\n',norm(fval),OUTPUT.funcCount)
+fprintf('Optimization took %0.5g seconds to converge\n',t)
 
 disp('Here is the rotation matrix for the optimized quaternion q:')
 q0=x(1); q1=x(2); q2=x(3); q3=x(4);
@@ -55,7 +56,8 @@ R_u_theta=eye(3)*C+(1-C)*u*u'+S*[0 -u(3) u(2); u(3) 0 -u(1); -u(2) u(1) 0];
 
 % The reconstructed angles from (both) of these (identical) rotation matrices
 an1=[ atan2(-R_q(2,3),R_q(3,3)), asin( R_q(1,3)), atan2(-R_q(1,2),R_q(1,1)) ]*180/pi;
-fprintf('reconstructed yaw, pitch, roll (in degrees) ='); disp(an1)
+fprintf('reconstructed yaw, pitch, roll (in degrees) = %0.10f, %0.10f, %0.10f\n',...
+    an1(1),an1(2),an1(3));
 
 function F=func(x)
 global g gr m mr
