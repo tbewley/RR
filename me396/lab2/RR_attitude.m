@@ -39,20 +39,20 @@ disp('we now reconstruct all three of these rotation angles.'), disp(' ')
 options = optimoptions('fsolve','Algorithm','levenberg-marquardt','Display','off');
 tic, [x,fval,EXITFLAG,OUTPUT]=fsolve(@func,0.5*[1 1 1 1],options); t=toc;
 fprintf('Optimization residual=%0.5g after %d iterations of levenberg-marquardt.\n',norm(fval),OUTPUT.funcCount)
-fprintf('Optimization took %0.5g ms to converge\n',1000*t)
+fprintf('Optimization took %0.5g ms to converge. ',1000*t)
 
-disp('Here is the rotation matrix for the optimized quaternion q:')
+disp('Here is rotation matrix for optimized quaternion:')
 q0=x(1); q1=x(2); q2=x(3); q3=x(4);
 R_q = [q0^2+q1^2-q2^2-q3^2, 2*q1*q2 - 2*q0*q3,   2*q1*q3 + 2*q0*q2; ...
        2*q1*q2 + 2*q0*q3,   q0^2-q1^2+q2^2-q3^2, 2*q2*q3 - 2*q0*q1; ...
        2*q1*q3 - 2*q0*q2,   2*q2*q3 + 2*q0*q1,   q0^2-q1^2-q2^2+q3^2 ]
 
 % The rotation matrix by Euler/Rodrigues for the corresponding {u,theta}
-c=x(1); u(1:3,1)=x(2:4); s=norm(u); u=u/s;
-phi=atan2(s,c)*180/pi; if phi>90, phi=phi-180; end, theta=2*phi;
+c=x(1); u(1:3,1)=x(2:4); s=norm(u); u=u/s
+phi=atan2(s,c)*180/pi; if phi>90, phi=phi-180; end, theta=2*phi
 C=cos(theta*pi/180); S=sin(theta*pi/180);
-R_u_theta=eye(3)*C+(1-C)*u*u'+S*[0 -u(3) u(2); u(3) 0 -u(1); -u(2) u(1) 0];
-% (uncomment the above line to check)
+R_u_theta=eye(3)*C+(1-C)*u*u'+S*[0 -u(3) u(2); u(3) 0 -u(1); -u(2) u(1) 0]
+% (remove semicolon after the above line to check)
 
 % The reconstructed angles from (both) of these (identical) rotation matrices
 an1=[ atan2(-R_q(2,3),R_q(3,3)), asin( R_q(1,3)), atan2(-R_q(1,2),R_q(1,1)) ]*180/pi;

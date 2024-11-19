@@ -19,13 +19,9 @@
 
 clear; clc; format short; global g gr m mr; disp(' ')
 m=[1; 0; 0];  g=[0; 0; 1];
-% an(1)=round(-180+360*rand);
-% an(2)=round( -90+180*rand);
-% an(3)=round(-180+360*rand);
-an=[-123    59    64];
-c1=cos(an(1)*pi/180); s1=sin(an(1)*pi/180);
-c2=cos(an(2)*pi/180); s2=sin(an(2)*pi/180);
-c3=cos(an(3)*pi/180); s3=sin(an(3)*pi/180);
+an(1)=round(-180+360*rand); c1=cos(an(1)*pi/180); s1=sin(an(1)*pi/180);
+an(2)=round( -90+180*rand); c2=cos(an(2)*pi/180); s2=sin(an(2)*pi/180);
+an(3)=round(-180+360*rand); c3=cos(an(3)*pi/180); s3=sin(an(3)*pi/180);
 fprintf('Some (random) 321 rotation angles: {yaw,pitch,roll} (deg) ='); disp(an)
 disp('Here is the rotation matrix corresponding to these three rotation angles:')
 R_321=[c3*c2,          -c2*s3,          s2;   ...
@@ -41,7 +37,8 @@ disp('we now reconstruct all three of these rotation angles.'), disp(' ')
 
 % (remove the semicolon below to display the optimization options used)
 options = optimoptions('fsolve','Algorithm','levenberg-marquardt','Display','off',...
-                       'SpecifyObjectiveGradient',true); % This last part means func also provides J
+                       'SpecifyObjectiveGradient',true);
+                       % The last part above means func also provides J
 
 tic, [x,fval,EXITFLAG,OUTPUT]=fsolve(@func,0.5*[1 1 1 1],options); t=toc;
 fprintf('Optimization residual=%0.5g after %d iterations of levenberg-marquardt.\n',norm(fval),OUTPUT.funcCount)
@@ -52,13 +49,6 @@ q0=x(1); q1=x(2); q2=x(3); q3=x(4);
 R_q = [q0^2+q1^2-q2^2-q3^2, 2*q1*q2 - 2*q0*q3,   2*q1*q3 + 2*q0*q2; ...
        2*q1*q2 + 2*q0*q3,   q0^2-q1^2+q2^2-q3^2, 2*q2*q3 - 2*q0*q1; ...
        2*q1*q3 - 2*q0*q2,   2*q2*q3 + 2*q0*q1,   q0^2-q1^2-q2^2+q3^2 ]
-
-% The rotation matrix by Euler/Rodrigues for the corresponding {u,theta}
-c=x(1); u(1:3,1)=x(2:4); s=norm(u); u=u/s;
-phi=atan2(s,c)*180/pi; if phi>90, phi=phi-180; end, theta=2*phi;
-C=cos(theta*pi/180); S=sin(theta*pi/180);
-R_u_theta=eye(3)*C+(1-C)*u*u'+S*[0 -u(3) u(2); u(3) 0 -u(1); -u(2) u(1) 0];
-% (uncomment the above line to check)
 
 % The reconstructed angles from (both) of these (identical) rotation matrices
 an1=[ atan2(-R_q(2,3),R_q(3,3)), asin( R_q(1,3)), atan2(-R_q(1,2),R_q(1,1)) ]*180/pi;

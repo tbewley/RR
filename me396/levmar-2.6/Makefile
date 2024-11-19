@@ -6,7 +6,7 @@
 CC=gcc
 CONFIGFLAGS=#-ULINSOLVERS_RETAIN_MEMORY
 #ARCHFLAGS=-march=pentium4 # YOU MIGHT WANT TO UNCOMMENT THIS FOR P4
-CFLAGS=$(CONFIGFLAGS) $(ARCHFLAGS) -O3 -funroll-loops -Wall #-g #-ffast-math #-pg
+CFLAGS=$(CONFIGFLAGS) $(ARCHFLAGS) -O3 -funroll-loops #-g #-ffast-math #-pg
 LAPACKLIBS_PATH=/usr/local/lib # WHEN USING LAPACK, CHANGE THIS TO WHERE YOUR COMPILED LIBS ARE!
 LDFLAGS=-L$(LAPACKLIBS_PATH) -L.
 LIBOBJS=lm.o Axb.o misc.o lmlec.o lmbc.o lmblec.o lmbleic.o
