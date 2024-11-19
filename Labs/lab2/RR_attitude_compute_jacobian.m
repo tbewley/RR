@@ -1,3 +1,9 @@
+% Script to calculate the analytical Jacobian for the RR_attitude problem.
+%
+%% Renaissance Repository, https://github.com/tbewley/RR (Labs)
+%% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
+
+
 clc, syms q0 q1 q2 q3
 disp('here is the Jacobian of f(q0,q1,q2,q3)=q0^2+q1^2+q2^2+q3^2')
 jacobian([q0^2+q1^2+q2^2+q3^2],[q0 q1 q2 q3]), pause
