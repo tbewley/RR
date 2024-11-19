@@ -1,7 +1,5 @@
-#
 # Unix/Linux GCC Makefile for Levenberg - Marquardt minimization
 # Under windows, use Makefile.vc for MSVC
-#
 
 CC=gcc
 CONFIGFLAGS=#-ULINSOLVERS_RETAIN_MEMORY
