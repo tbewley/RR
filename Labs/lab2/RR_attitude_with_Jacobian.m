@@ -46,7 +46,7 @@ options = optimoptions('fsolve','Algorithm','levenberg-marquardt','Display','off
                        % The last part above means func also provides J
 
 % Can use func or func2 in the line below; func2 should be a bit faster.
-tic, [x,fval,EXITFLAG,OUTPUT]=fsolve(@func,0.5*[1 1 1 1],options); t=toc;
+tic, [x,fval,EXITFLAG,OUTPUT]=fsolve(@func2,0.5*[1 1 1 1],options); t=toc;
 fprintf('Optimization residual=%0.5g after %d iterations of levenberg-marquardt.\n',norm(fval),OUTPUT.funcCount)
 fprintf('Optimization took %0.5g ms to converge\n',1000*t)
 

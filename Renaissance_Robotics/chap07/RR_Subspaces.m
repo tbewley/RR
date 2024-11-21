@@ -18,7 +18,7 @@ function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A,verbose)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-if nargin<2 or verbose
+if nargin<2 | verbose
    disp('Let us test the following matrix:'), A
    disp('Here are the number of rows, m, and columns, n, of A:')   
    [m,n]=size(A)

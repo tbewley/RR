@@ -1,6 +1,5 @@
 function RR_Plot_Truss(Q,P,C,U,x);
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
-figure(2);
 axis equal, axis tight, grid, axis([-0.05 1.05 -0.3 0.4]), hold on
 h=max(Q(2,:));
 if h==0; fac=0; else, fac=1; end

@@ -9,9 +9,8 @@ OBJ = main.o levmarq.o # a list of all object files needed
 	$(CC) -c -o $@ $< $(CFLAGS) 
 # the above line (and the two similar lines below) starts with a tab!
 
-main: $(OBJ) # once all of the OBJ files are complied, this links them
+main: $(OBJ) # once all of the OBJ files are compiled, this links them
 	$(CC) -o $@ $^ $(CFLAGS) $(LFLAGS)
 
-clean:     # get rid of created object files, and main file
+clean:     # gets rid of all created object files, and the main file
 	rm -f *.o main    
-
