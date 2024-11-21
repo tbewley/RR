@@ -1,7 +1,7 @@
 % script RR_Truss_Warren.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s=6;     % number of horizontal sections in the truss
-h=0.2;   % height of the truss
+s=4;     % number of horizontal sections in the truss
+h=-0.3;   % height of the truss
 parabolic_top_chord=false;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Q P C U
@@ -20,14 +20,14 @@ U=zeros(2,q);  U(2,floor(s/2))=-1;
 % Connectivity of the Warren truss
 % Note: each column of C^T has exactly one entry equal to +1, and one entry equal to -1.
 m=4*s-1; C=zeros(m,q+p);
-C(1,n-1)=-1; C(1,1)=1; j=1;                               % bottom row to left fixed node
-for i=1:s-2, C(j+i,i)=-1; C(j+i,i+1)=1;  end, j=j+s-2;    % bottom row
-C(j+1,s-1)=-1; C(j+1,n)=1; j=j+1;                         % bottom row to right fixed node
-for i=1:s-1, C(j+i,s-1+i)=-1; C(j+i,s+i)=1; end, j=j+s-1; % top row
-C(j+1,n-1)=-1; C(j+1,s)=1; j=j+1;                         % left diagonal to fixed node
-for i=1:s-1, C(j+2*i-1,s+i-1)=-1; C(j+2*i-1,i)=1;         % internal diagonals
-             C(j+2*i,i)=1;        C(j+2*i,s+i)=-1; end, j=j+2*s-2;  
-C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                         % right diagonal to fixed node
+C(1,n-1)=-1;   C(1,1)=1; j=1;                               % bottom row to left fixed node
+for i=1:s-2,   C(j+i,i)=-1; C(j+i,i+1)=1;  end, j=j+s-2;    % bottom row
+C(j+1,s-1)=-1; C(j+1,n)=1; j=j+1;                           % bottom row to right fixed node
+for i=1:s-1,   C(j+i,s-1+i)=-1; C(j+i,s+i)=1; end, j=j+s-1; % top row
+C(j+1,n-1)=-1; C(j+1,s)=1; j=j+1;                           % left diagonal to fixed node
+for i=1:s-1,   C(j+2*i-1,s+i-1)=-1; C(j+2*i-1,i)=1;         % internal diagonals
+               C(j+2*i,i)=1;        C(j+2*i,s+i)=-1; end, j=j+2*s-2;  
+C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                             % right diagonal to fixed node
 
 % Now, convert the D*X*CQ=U problem in (3a) to the standard A*x=u form in (3b)
 [A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 

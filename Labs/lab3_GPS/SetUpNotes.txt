@@ -1,0 +1,9 @@
+Set Up Notes for ME396 Lab GPS Fall 2024
+10/27/204
+This lab uses an RPi and a USB GPS receiver to read the receiver's location in latitude, longitude and UTM coordinates easting and northing. The GPS receiver needs to be able to see the sky, so place it near any window to the outside.
+
+Connect the USB GPS receiver to the RPi's USB port. A USB extension cable may be necessary to reach an exterior window. You can test the GPS receivers functionality (and if its seeing satellites) with the command line command 'cat < /dev/ttyACM0'.
+
+The example program gpsExample.c will read the GPS data, printing the time, latitude, longitude and altitude, then print the equivalent UTM easting and northing position. If the program outputs n/a's for lat and long etc,it can't find enough satellites. Consider moving closer to a window with more visibility.
+
+Exit the program by pressing ^C (ctrl-C).

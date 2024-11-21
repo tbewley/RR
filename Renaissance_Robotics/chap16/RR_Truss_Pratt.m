@@ -1,9 +1,9 @@
 % script RR_Truss_Pratt.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s=6;     % number of horizontal sections in the truss
+s=4;     % number of horizontal sections in the truss
 h=.2;   % height of the truss
-l=0.5;
-parabolic_top_chord=false;
+l=0.4;
+parabolic_top_chord=true;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Q P C U
 % Locations of the fixed nodes of the truss (normalized units)
@@ -19,8 +19,8 @@ q=2*s-2; n=q+p;
 s1=floor(l*s); s2=ceil(l*s);
 U=zeros(2,q);
 if s1==s2, U(2,s1)=-1; else
-  if l1>0, U(2,s1)=s*l-s2; end
-  if l2<s, U(2,s2)=s1-s*l; end
+  if s1>0, U(2,s1)=s*l-s2; end
+  if s2<s, U(2,s2)=s1-s*l; end
 end
 U
 
