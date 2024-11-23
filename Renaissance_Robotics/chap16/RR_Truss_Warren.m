@@ -1,7 +1,7 @@
 % script RR_Truss_Warren.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 s=4;     % number of horizontal sections in the truss
-h=-0.3;   % height of the truss
+h=0.2;   % height of the truss
 parabolic_top_chord=false;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Q P C U
@@ -36,3 +36,9 @@ x=pinv(A)*u; residual=norm(A*x-u),
 if residual>1e-8, disp('No equilibrium solution'), beep, end
 % Finally, plot the truss (blue = tension, red = compression)
 RR_Plot_Truss(Q,P,C,U,x);
+
+fac=0.1;
+if h>0, f=quiver(load,0,load,fac*(-1),0,0);
+else,   f=quiver(load-fac*(-1),0,load,0,0);
+end
+set(f,'MaxHeadSize',10000,'linewidth',3,'color','k');

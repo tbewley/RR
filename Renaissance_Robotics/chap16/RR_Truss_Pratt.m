@@ -1,26 +1,25 @@
 % script RR_Truss_Pratt.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s=4;     % number of horizontal sections in the truss
-h=.2;   % height of the truss
-l=0.4;
-parabolic_top_chord=true;
+s=11;     % number of horizontal sections in the truss
+height=.2;   % height of the truss
+load=0.52;
+curvature=0.5;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Q P C U
 % Locations of the fixed nodes of the truss (normalized units)
 P=[0 1; 0 0]; p=2;  
 
 % Locations of the free nodes of the Pratt truss (for arbitrary s and h)
-for i=1:s-1, Q(:,i)    =[i/s; 0]; end      % free nodes in bottom row
-for i=1:s-1, Q(:,s-1+i)=[i/s; h]; end      % free nodes in top row
-if parabolic_top_chord, for i=1:s-1, Q(2,s-1+i)=[h-4*h*(i/s-0.5)^2]; end, end
+for i=1:s-1, Q(:,i)    =[i/s; 0];      end      % free nodes in bottom row
+for i=1:s-1, Q(:,s-1+i)=[i/s; height*(1-curvature*4*(i/s-0.5)^2)]; end    % free nodes in top row
 q=2*s-2; n=q+p;
 
 % External forces on the free nodes of the truss (normalized)
-s1=floor(l*s); s2=ceil(l*s);
+s1=floor(load*s); s2=ceil(load*s);
 U=zeros(2,q);
 if s1==s2, U(2,s1)=-1; else
-  if s1>0, U(2,s1)=s*l-s2; end
-  if s2<s, U(2,s2)=s1-s*l; end
+  if s1>0, U(2,s1)=s*load-s2; end
+  if s2<s, U(2,s2)=s1-s*load; end
 end
 U
 
@@ -43,4 +42,10 @@ C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                           % right diagonal to 
 % Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
 x=pinv(A)*u;
 % Finally, plot the truss (blue = tension, red = compression)
-RR_Plot_Truss(Q,P,C,U,x);
+RR_Plot_Truss1(Q,P,C,x);
+
+fac=0.1;
+if h>0, f=quiver(load,0,0,fac*(-1),0);
+else,   f=quiver(load,-fac*(-1),load,0);
+end
+set(f,'MaxHeadSize',10000,'linewidth',3,'color','k');

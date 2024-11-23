@@ -1,6 +1,6 @@
 % script RR_Truss_Howe.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s=4;     % number of horizontal sections in the truss
+s=6;     % number of horizontal sections in the truss
 h=.2;   % height of the truss
 parabolic_top_chord=true;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
