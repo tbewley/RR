@@ -64,6 +64,7 @@ end
 n=q+p;
 
 % External forces on the free nodes of the lower surface of the truss (normalized)
+load=round(load*sb*10)/(sb*10);
 s1=floor(load*sb); s2=ceil(load*sb);
 U=zeros(2,q);
 if s1==s2,  U(2,s1)=-1; else
@@ -148,6 +149,10 @@ if height>0, f=quiver(ax,load,0,0,0.1*(-1),0);           % Plot the load applied
 else,        f=quiver(ax,load,-0.1*(-1),0,0.11*(-1));
 end
 set(f,'MaxHeadSize',10000,'linewidth',3,'color','k'); % Set the arrow style
+if s1<s2, if     s1==0,  plot(ax,[P(1,1)  Q(1,s2)],[P(2,1)  Q(2,s2)],'m-',"LineWidth",6)
+          elseif s2==sb, plot(ax,[Q(1,s1) P(1,2) ],[Q(2,s1) P(2,2) ],'m-',"LineWidth",6)
+          else,          plot(ax,[Q(1,s1) Q(1,s2)],[Q(2,s1) Q(2,s2)],'m-',"LineWidth",6), end
+end
 
 end % function updateplot
 
