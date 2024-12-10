@@ -24,17 +24,17 @@ if verbose, fprintf('Initial error=%0.8g\n',error), % These 2 lines just print a
 
 failed_steps=0; successful_steps=0;
 while (error>tol)
-   J=Compute_Jacobian(x,r); H=J'*J;
-   y=x-(H+lambda*diag(diag(H)))\(J'*r);
+   J=Compute_Jacobian(x,r);
+   H=J'*J; y=x-(H+lambda*diag(diag(H)))\(J'*r); % This one line is the guts of Levenberg Marquardt.
    r_new=Compute_Residual(y); error_new=norm(r_new);
-   if error_new>error
-      lambda=2*lambda;  % increase lambda (by 2x) for each step that fails to reduce error
+   if error_new>error                % Then we just manage the updates to x and lambda and repeat.
+      lambda=2*lambda;     % increase lambda (by 2x) for each step that fails to reduce error
       if verbose, fprintf('error=%0.8g, increasing lambda to %0.8g\n',error_new,lambda)
         if n==2, plot3(y(1),y(2),error_new,'ro'), pause(0.1), end, end
       failed_steps=failed_steps+1;
    else
-      lambda=lambda/5;  % decrease lambda (by 5x) for each step that successfully reduces error
-      x=y; r=r_new; error=error_new; % do the update, but only on the successful steps
+      lambda=lambda/5;     % decrease lambda (by 5x) for each step that successfully reduces error
+      x=y; r=r_new; error=error_new;            % do the update, but only on the successful steps!
       if verbose, fprintf('error=%0.8g, decreasing lambda to %0.8g\n',error_new,lambda), x'
         if n==2, plot3(x(1),x(2),error,'kx','LineWidth',2,'MarkerSize',8), pause(0.01), end, end
       successful_steps=successful_steps+1;
