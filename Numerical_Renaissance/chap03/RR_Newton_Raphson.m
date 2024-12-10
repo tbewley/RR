@@ -1,5 +1,5 @@
 function [x] = RR_NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
-% function [x] = NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
+% function [x] = RR_NewtonRaphson(x,n,Compute_f,Compute_A,tol,verbose)         
 % This function solves f(x)=0 using the Newton Raphson method given an initial guess for
 % x, where the function f(x) and its Jacobian are defined in Compute_f and Compute_A.
 % Take verbose=1 for printing progress reports to screen, or verbose=0 to suppress.
