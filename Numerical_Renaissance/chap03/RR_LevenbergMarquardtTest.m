@@ -6,8 +6,7 @@ function RR_LevenbergMarquardtTest
 % elements.  [See https://en.wikipedia.org/wiki/Rosenbrock_function for this definition of f(x).]
 % The RR_LevenbergMarquardt optimization algorithm then drives f(x(1),x(2))=r(1)^2+r(2)^2 towards zero;
 % to apply it to a different vector of residuals r, just define new Residual and Jacobian functions
-% herein, where r has m components and x has n components with m>=n, and rerun.  A compact description
-% of the notation/algorithm used is at https://sites.cs.ucsb.edu/~yfwang/courses/cs290i_mvg/pdf/LMA.pdf
+% herein, where r has m components and x has n components with m>=n, and rerun.
 %% Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap03
 %% Copyright 2024 by Thomas Bewley, published under the BSD 3-Clause License. 
 
@@ -18,8 +17,9 @@ x=[-2:.01:2]; y=[-1:.01:3]; [X,Y]=meshgrid(x,y); figure(1); clf; hold on, nx=len
 for i=1:nx, for j=1:ny, r=Residual_Rosenbrock([x(i); y(j)]); Z(j,i)=norm(r); end, end
 contour(x,y,Z,100); title('Levenberg Marquardt minimization of Rosenbrock')
 
-x0=[0; 0];                   % initial guess for x; this optimization should finish near x=[1,1]
+x0=[-1.5; 0];                   % (bad) initial guess for x
 x=RR_LevenbergMarquardt(x0,@Residual_Rosenbrock,@Jacobian_Rosenbrock) % Perform the optimization
+disp('Actual minimum is at x=[1,1]; did we get close?')
 
 end % function RR_LevenbergMarquardtTest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

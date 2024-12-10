@@ -10,16 +10,18 @@ function [x] = RR_LevenbergMarquardt(x,Compute_Residual,Compute_Jacobian,tol,ver
 %           verbose = 1 (prints stuff to screen) or 0 (quiet)   [optional, default=1]
 %   OUTPUT  x = computed value of x that minimizes f(x)=||r(x)||^2
 %   TEST:   RR_LevenbergMarquardtTest
-% Note that a compact description of the notation/algorithm used below is available at
-% https://sites.cs.ucsb.edu/~yfwang/courses/cs290i_mvg/pdf/LMA.pdf
+% Note that a compact description of the notation/algorithm used herein is available at
+%    https://sites.cs.ucsb.edu/~yfwang/courses/cs290i_mvg/pdf/LMA.pdf
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
 if nargin<5, tol=1e-10; end, if nargin<6, verbose=1; end
 lambda=1; % initial value of lambda
 r=Compute_Residual(x); error=norm(r); n=length(x)
-if verbose, fprintf('Initial error=%0.8g\n',error),
+
+if verbose, fprintf('Initial error=%0.8g\n',error), % These 2 lines just print and plot
    if n==2, plot3(x(1),x(2),error,'kx','LineWidth',2,'MarkerSize',8), end, end
+
 failed_steps=0; successful_steps=0;
 while (error>tol)
    J=Compute_Jacobian(x,r); H=J'*J;
@@ -38,5 +40,5 @@ while (error>tol)
       successful_steps=successful_steps+1;
    end
 end
-fprintf('failed and successful steps = %0.8g, %0.8g\n',failed_steps,successful_steps)
+fprintf('failed (red) and successful (black) steps = %0.8g, %0.8g\n',failed_steps,successful_steps)
 end % function RR_LevenbergMarquardt
