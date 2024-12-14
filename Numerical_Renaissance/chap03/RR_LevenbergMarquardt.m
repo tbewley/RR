@@ -24,7 +24,7 @@ if verbose, fprintf('Initial error=%0.8g\n',error), % These 2 lines just print a
 
 failed_steps=0; successful_steps=0;
 while (error>tol)
-   J=Compute_Jacobian(x,r);
+   J=Compute_Jacobian(x);
    H=J'*J; y=x-(H+lambda*diag(diag(H)))\(J'*r); % This one line is the guts of Levenberg Marquardt.
    r_new=Compute_Residual(y); error_new=norm(r_new);
    if error_new>error                % Then we just manage the updates to x and lambda and repeat.

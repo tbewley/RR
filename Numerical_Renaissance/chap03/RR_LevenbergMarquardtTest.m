@@ -28,7 +28,7 @@ global a b;
 r=[ a-x(1); sqrt(b)*(x(2)-x(1)^2) ];  % The actual Rosenbrock function is f=r(1)^2+r(2)^2;
 end % function Residual_Rosenbrock
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [J] = Jacobian_Rosenbrock(x,r)
+function [J] = Jacobian_Rosenbrock(x)
 % This is the (analytical) derivative of each component of r w.r.t. each component of x
 global a b; 
 J=[-1, 0; sqrt(b)*(-1)*x(1), sqrt(b)]; 
