@@ -1,15 +1,15 @@
 function [Q,R,D,r,L] = RR_QRmigs(A)
 % function [Q,R,D,L] = RR_QRmigs(A)
-% Compute the INTEGER QR decomposition A=Q*D^(-1)*R, and rank r, of any small
-% integer mxn matrix A via Modified Integer Gram-Schmidt.  Note that Q and L
-% orthogonally span the column space and left nullspace of A.
+% Compute the INTEGER QR decomposition, A=Q*D^(-1)*R, and rank r, of any small
+% integer mxn matrix A via Modified Integer Gram-Schmidt.  Note that the integer
+% matrices Q and L orthogonally span the column space and left nullspace of A.
 % INPUTS:  A = a small (possibly, rectangular) integer matrix
 % OUTPUTS: Q = a integer matrix with orthogonal columns, spans column space of A
 %          R = an upper-triangular integer matrix
-%          D = a diagonal integer matrix
+%          D = a diagonal integer matrix            (note that A=Q*D^(-1)*R)
 %          r = the rank of A
 %          L = a integer matrix with orthogonal columns, spans left nullspace of A
-% TESTS:   A=randi(6,6,4)-3, [Q,R,D,r,L]=RR_QRmigs(A), round(Q*inv(D)*R)
+% TESTS:   A=randi(6,6,4)-3, [Q,R,D,r,L]=RR_QRmigs(A), round(Q*inv(D)*R), Q'*Q, L'*L, Q'*L
 %          A=randi(6,4,6)-3, [Q,R,D,r,L]=RR_QRmigs(A), round(Q*inv(D)*R)
 % NOTE: All internal calculations performed using integer arithmetic only; final
 % result converted to double for convenience (for doing matrix operations) in Matlab.
