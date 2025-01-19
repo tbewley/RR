@@ -9,7 +9,7 @@ function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A,verbose)
 %         r = the rank of A
 %         m,n = the number of rows and columns of A
 % TEST:   see RR_Subspaces_Test to test this code.  Also try, e.g., this:
-%         A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; RR_Subspaces(A)
+%         A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; RR_Subspaces(A);
 % NOTES:  This code uses the QR decompositions of A and A' to generate C,L,R,N.
 %         This code scales Ap, and the individual columns (one at a time) of C,L,R,N,
 %         so that their entries are integers, which makes them easier to look at.
@@ -89,7 +89,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [C,L]=QRcheck(A,r)
 % compute the QR decomposition of A, and rescale/rename the columns of Q
-[Q,R]=qr(A); C=[]; L=[];
+[Q,R,P]=qr(A); C=[]; L=[];
 if sign(Q(1,1)) ~= sign(A(1,1)), Q=-Q; end  % select a natural sign for Q(1,1)
 for i=1:r
    C(:,i)=RR_rat(Q(:,i));    % rescale/rename first r columns of Q

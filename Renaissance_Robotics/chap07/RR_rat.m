@@ -7,8 +7,8 @@ function [A,den]=RR_rat(A)
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
 
-[n,m]=size(A); den=1;
-for i=1:n, for j=1:m, if abs(A(i,j))>1e-10,
-  [n,d]=rat(A(i,j)); A=A*d; den=den*d;
+[m,n]=size(A); den=1;
+for i=1:m, for j=1:n, if abs(A(i,j))>1e-10, a=A(i,j);
+  [num,d]=rat(a); check=norm(a-num/d); A=A*d; den=den*d;
 end, end, end
 A=round(A); [g,A]=RR_gcd_vec(A); den=den/g;

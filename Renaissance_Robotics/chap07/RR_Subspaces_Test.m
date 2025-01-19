@@ -6,7 +6,7 @@
 
 clear, format short
 clc, A=[1 2 3;4 5 6;7 8 0];
-[C,L,R,N,Ap,r,n,m]=RR_Subspaces(A);
+[C,L,R,N,Ap,r,n,m]=RR_Subspaces(A); disp(' ')
 
 clc, A=[2 -2 -4;-1 3 4;1 -2 -3];
 [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A);
@@ -15,11 +15,11 @@ A, A_times_A=A*A, pause, disp(' ')
 
 clc, A=[2 2 -2;5 1 -3;1 5 -3];
 [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A);
-disp('here is a surprise! (A is nilpotent of degree 3)');
-A, A_times_A=A*A, A_times_A_times_A=A*A*A, pause
+disp('here is a surprise! A is nilpotent of degree 3!');
+A, A_times_A=A*A, A_times_A_times_A=A*A*A, pause, disp(' ')
 
 clc, A=[1 2;3 4;0 0];
-[C,L,R,N,Ap,r,n,m]=RR_Subspaces(A);
+[C,L,R,N,Ap,r,n,m]=RR_Subspaces(A); disp(' ')
 
 clc, A=[1 2 0;3 4 0];
 [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A);

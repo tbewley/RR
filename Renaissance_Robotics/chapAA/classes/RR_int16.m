@@ -17,7 +17,7 @@
 %   if B~=0, [Q,R]=A/B, C=(Q*B+R)-A, Q1=(-A)/B, Q2=-(A/B), Q3=A/(-B), end 
 %
 % DEFINITION:
-%   A=RR_int16(c)  defines an RR_int16 object from any integer 0<=c<256=2^8=0xFF
+%   A=RR_int16(c) defines an RR_int16 object from any integer 0x8000=-2^15=-32768<=c<=32767=2^15-1=0x7FFF
 %
 % STANDARD OPERATIONS defined on RR_int16 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
@@ -27,7 +27,7 @@
 %   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_int16 integers
 %   mrdivide: [QUO,REM]=B/A divides two  RR_int16 integers, giving the quotient QUO and remainder REM
 %   The relations <, >, <=, >=, ~=, == are also clearly defined.
-%   {+,-,*,/} are built on int32 primatives
+%   {+,-,*,/} are built on int16 and int32 primatives
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Appendix A)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 

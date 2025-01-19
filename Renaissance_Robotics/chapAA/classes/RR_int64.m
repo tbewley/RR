@@ -13,15 +13,16 @@
 %   if B~=0, [Q,R]=A/B, C=(Q*B+R)-A, Q1=(-A)/B, Q2=-(A/B), Q3=A/(-B), end 
 %
 % DEFINITION:
-%   A=RR_int32(c)  defines an RR_int32 object from any integer 0<=c<256=2^8=0xFF
+%   A=RR_int64(c)  defines an RR_int64 object from any integer on the range
+%                   0x8000000000000000=-2^63<=c<=2^63-1=0x7FFFFFFFFFFFFFFF
 %
-% STANDARD OPERATIONS defined on RR_int32 objects
+% STANDARD OPERATIONS defined on RR_int64 objects
 % (overloading the +, -, *, /, ^, <, >, <=, >=, ~=, == operators):
-%   plus:     [SUM,CARRY]=A+B  gives the sum of two RR_int32 integers
+%   plus:     [SUM,CARRY]=A+B  gives the sum of two RR_int64 integers
 %   uminus:   -A gives the two's complement representation of negative A
-%   minus:    B-A  gives the difference of two RR_int32 integers (in two's complement form if negative)
-%   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_int32 integers
-%   mrdivide: [QUO,REM]=B/A divides two  RR_int32 integers, giving the quotient QUO and remainder REM
+%   minus:    B-A  gives the difference of two RR_int64 integers (in two's complement form if negative)
+%   mtimes:   [SUM,CARRY]=A*B  gives the product of two RR_int64 integers
+%   mrdivide: [QUO,REM]=B/A divides two  RR_int64 integers, giving the quotient QUO and remainder REM
 %   The relations <, >, <=, >=, ~=, == are also clearly defined.
 %   {+,-,*,/} are built on int64 primatives
 %
