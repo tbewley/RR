@@ -1,5 +1,5 @@
-function [Q,D,R,r,L] = RR_QRmigs(A)
-% function [Q,D,R,r,L] = RR_QRmigs(A)
+function [Q,D,R,r,L] = RR_QDRmigs(A)
+% function [Q,D,R,r,L] = RR_QDRmigs(A)
 % Compute the INTEGER QR decomposition, A=Q*D^(-1)*R, and rank r, of any small
 % integer mxn matrix A via Modified Integer Gram-Schmidt.  Note that the integer
 % matrices Q and L orthogonally span the column space and left nullspace of A.
@@ -9,7 +9,7 @@ function [Q,D,R,r,L] = RR_QRmigs(A)
 %          D = a diagonal integer matrix            (note that A=Q*D^(-1)*R)
 %          r = the rank of A
 %          L = a integer matrix with orthogonal columns, spans left nullspace of A
-% TEST: A=randi(11,6,4)-6, [Q,D,R,r,L]=RR_QRmigs(A), Q*inv(D)*R, Q'*Q, L'*L, Q'*L
+% TEST: A=randi(11,6,4)-6, [Q,D,R,r,L]=RR_QDRmigs(A), Q*inv(D)*R, Q'*Q, L'*L, Q'*L
 % NOTE: All internal calculations performed using 64-bit integer arithmetic only.
 % Renaissance Repository, https://github.com/tbewley/RR/tree/main/NR_chap02
 % Copyright 2025 by Thomas Bewley, published under BSD 3-Clause License. 
@@ -51,7 +51,7 @@ index=[1:m]; for i=1:m     % strip out the zero columns of L
 end, L=L(:,index);
 Q=double(Q); L=double(L); % convert to double (Matlab default)
 R=Q'*A; D=Q'*Q;           % generate R and D
-end % function RR_QRmigs
+end % function RR_QDRmigs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [p]=dot_product(u,v)
 p=0; for i=1:length(u), p=p+u(i)*v(i); end

@@ -33,7 +33,7 @@ if nargin<2 | verbose
    if ((m==n) & (n==r))
       disp('The inverse of A exists, here it is:'), Ap=inv(A)
       disp('Here is the inverse of A with the denominator fac conveniently pulled out:') 
-      [Ap_num,fac]=RR_rat(Ap)
+      [Ap_num,fac]=rat1(Ap)
       disp('Here is A times the inverse of A, which should give the identity matrix:')
       test=A*Ap, pause, disp(' ')
       disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
@@ -44,7 +44,7 @@ if nargin<2 | verbose
       disp('The inverse of A does not exist!')
       disp('Instead, here is the pseudoinverse of A, denoted A^+'), Ap=pinv(A)
       disp('Here is A^+ with the denominator fac conveniently pulled out:') 
-      [Ap_num,fac]=RR_rat(Ap), pause, disp(' ')
+      [Ap_num,fac]=rat1(Ap), pause, disp(' ')
 
       disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
       [C,L] = MIGS(A)
@@ -93,23 +93,23 @@ num=0; while num==0, num=randi([-10 10]); end
 end % ran
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [A,den]=rat1(A)
-% function [A,den]=RR_rat(A)
+% function [A,den]=rat1(A)
 % INPUT:  A = a matrix with real elements
 % OUTPUT: A,den = A matrix with integer elements, and a positive integer, such that A/den
 %                 is the same as the input matrix.
-% TEST:   A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; Ap=pinv(A), [Ap,den]=RR_rat(Ap), Ap/den
+% TEST:   A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; Ap=pinv(A), [Ap,den]=rat1(Ap), Ap/den
 
 [m,n]=size(A); den=1;
 for i=1:m, for j=1:n, if abs(A(i,j))>1e-10, a=A(i,j);
   [num,d]=rat(a); check=norm(a-num/d); A=A*d; den=den*d;
 end, end, end
-A=round(A); [g,A]=gcd_vec(A); den=den/g;
+A=round(A); [g]=gcd_vec(A); A=A/g; den=den/g;
 end % rat1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Q,L] = MIGS(A)
-% Initializes Q=A, then orthogonalizes its columns. 
-% Then, initializes L=I, then orthogonalizes its columns (against both Q and itself).
-% For full version of this code, see RR_QDRmigs
+% Initialize Q=A, then orthogonalize its columns. 
+% Then, initialize L=I, and orthogonalizes its columns (against both Q and itself).
+% For full version of this code, see RR/Numerical_Renaissance/chap02/RR_QDRmigs
 % NOTE: All internal calculations performed using 64-bit integer arithmetic only.
 % Copyright 2025 by Thomas Bewley, published under BSD 3-Clause License. 
 
