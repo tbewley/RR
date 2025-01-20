@@ -42,9 +42,9 @@ if nargin<2 | verbose
       [Ap_num,fac]=rat1(Ap), pause, disp(' ')
 
       disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
-      [C,L] = MIGS(A)
+      [C,L] = QL(A)
       disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
-      [R,N] = MIGS(A'), pause, disp(' ')
+      [R,N] = QL(A'), pause, disp(' ')
 
       disp('here is how A and A^+ transform a randomly-generated xR')
       disp('from the row space to the column space and back');
@@ -75,7 +75,7 @@ else
    if ((m==n) & (n==r))
       Ap=inv(A);  C=eye(r); L=[];     R=eye(r); N=[];
    else
-      Ap=pinv(A); [C,L] = MIGS(A);  [R,N] = MIGS(A);
+      Ap=pinv(A); [C,L] = QL(A);  [R,N] = QL(A);
    end
 end
 end
@@ -100,7 +100,7 @@ end, end, end
 A=round(A); [g]=gcd_vec(A); A=A/g; den=den/g;
 end % rat1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [Q,L] = MIGS(A)
+function [Q,L] = QL(A)
 % Initialize Q=A, then orthogonalize its columns.
 % Then, initialize L=I, and orthogonalizes its columns (against both Q and itself).
 % For full version of this code, see RR/Numerical_Renaissance/chap02/RR_QDRmigs
@@ -142,7 +142,7 @@ index=[1:m]; for i=1:m     % strip out the zero columns of L
   end  
 end, L=L(:,index);
 Q=double(Q); L=double(L); % convert back to double (Matlab default)
-end % function MIGS
+end % function QL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [p]=dot_product(u,v)
 p=0; for i=1:length(u), p=p+u(i)*v(i); end
