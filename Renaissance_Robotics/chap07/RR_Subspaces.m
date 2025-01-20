@@ -4,17 +4,12 @@ function [C,L,R,N,Ap,r,n,m]=RR_Subspaces(A,verbose)
 % The results that this script produces are helpful for understanding the Strang plot.
 % INPUT:  A = a small (square or rectangular) matrix, with integer elements, to test
 %         verbose = optional argument, suppress screen output if false
-% OUTPUT: C,L,R,N = orthogonal bases for the 4 fundamental subspaces of A
+% OUTPUT: C,L,R,N = integer orthogonal bases for the 4 fundamental subspaces of A
 %         Ap = the inverse of A (if it exists), or the pseudoinverse of A (if not)
 %         r = the rank of A
 %         m,n = the number of rows and columns of A
 % TEST:   see RR_Subspaces_Test to test this code.  Also try, e.g., this:
 %         A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; RR_Subspaces(A);
-% NOTES:  This code uses the QR decompositions of A and A' to generate C,L,R,N.
-%         This code scales Ap, and the individual columns (one at a time) of C,L,R,N,
-%         so that their entries are integers, which makes them easier to look at.
-%         Note that an alternative method to generate orthogonal bases of {C,L,R,N}
-%         is to calculate [U,S,V] = svd(A), as described in the notes.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 7)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -97,7 +92,6 @@ function [A,den]=rat1(A)
 % INPUT:  A = a matrix with real elements
 % OUTPUT: A,den = A matrix with integer elements, and a positive integer, such that A/den
 %                 is the same as the input matrix.
-% TEST:   A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; Ap=pinv(A), [Ap,den]=rat1(Ap), Ap/den
 
 [m,n]=size(A); den=1;
 for i=1:m, for j=1:n, if abs(A(i,j))>1e-10, a=A(i,j);
@@ -107,7 +101,7 @@ A=round(A); [g]=gcd_vec(A); A=A/g; den=den/g;
 end % rat1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Q,L] = MIGS(A)
-% Initialize Q=A, then orthogonalize its columns. 
+% Initialize Q=A, then orthogonalize its columns.
 % Then, initialize L=I, and orthogonalizes its columns (against both Q and itself).
 % For full version of this code, see RR/Numerical_Renaissance/chap02/RR_QDRmigs
 % NOTE: All internal calculations performed using 64-bit integer arithmetic only.
@@ -153,6 +147,7 @@ end % function MIGS
 function [p]=dot_product(u,v)
 p=0; for i=1:length(u), p=p+u(i)*v(i); end
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [g]=gcd_vec(u)
 g=gcd(u(1),u(2)); for i=3:length(u), g=gcd(g,u(i)); end
 end
