@@ -47,9 +47,9 @@ if nargin<2 | verbose
       [Ap_num,fac]=RR_rat(Ap), pause, disp(' ')
 
       disp('Here are some orthogonal vectors spanning the Column Space and the Left Nullspace:')
-      [C,L]=QRcheck(A,r)
+      [C,L] = MIGS(A)
       disp('Here are some orthogonal vectors spanning the Row Space and the Nullspace:')
-      [R,N]=QRcheck(A',r), pause, disp(' ')
+      [R,N] = MIGS(A'), pause, disp(' ')
 
       disp('here is how A and A^+ transform a randomly-generated xR')
       disp('from the row space to the column space and back');
@@ -78,28 +78,83 @@ if nargin<2 | verbose
 else
    [m,n]=size(A); r=rank(A);
    if ((m==n) & (n==r))
-      Ap=inv(A);   C=eye(r); L=[];     R=eye(r); N=[];
+      Ap=inv(A);  C=eye(r); L=[];     R=eye(r); N=[];
    else
-      Ap=pinv(A); [C,L]=QRcheck(A,r); [R,N]=QRcheck(A',r);
+      Ap=pinv(A); [C,L] = MIGS(A);  [R,N] = MIGS(A);
    end
 end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Below are some auxiliary functions that are convenient in the above code
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [C,L]=QRcheck(A,r)
-% compute the QR decomposition of A, and rescale/rename the columns of Q
-[Q,R,P]=qr(A); C=[]; L=[];
-if sign(Q(1,1)) ~= sign(A(1,1)), Q=-Q; end  % select a natural sign for Q(1,1)
-for i=1:r
-   C(:,i)=RR_rat(Q(:,i));    % rescale/rename first r columns of Q
-end  
-for i=1:size(Q,2)-r
-   L(:,i)=RR_rat(Q(:,r+i));  % rescale/rename remaining columns of Q
-end
-end
+% Below are some auxiliary functions used by the above code
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function num=ran
 % This routine is kinda stupid.  It just finds a random nonzero integer.
 num=0; while num==0, num=randi([-10 10]); end
+end % ran
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [A,den]=rat1(A)
+% function [A,den]=RR_rat(A)
+% INPUT:  A = a matrix with real elements
+% OUTPUT: A,den = A matrix with integer elements, and a positive integer, such that A/den
+%                 is the same as the input matrix.
+% TEST:   A=[2 2 2 -3;6 1 1 -4;1 6 1 -4;1 1 6 -4]; Ap=pinv(A), [Ap,den]=RR_rat(Ap), Ap/den
+
+[m,n]=size(A); den=1;
+for i=1:m, for j=1:n, if abs(A(i,j))>1e-10, a=A(i,j);
+  [num,d]=rat(a); check=norm(a-num/d); A=A*d; den=den*d;
+end, end, end
+A=round(A); [g,A]=gcd_vec(A); den=den/g;
+end % rat1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [Q,L] = MIGS(A)
+% Initializes Q=A, then orthogonalizes its columns. 
+% Then, initializes L=I, then orthogonalizes its columns (against both Q and itself).
+% For full version of this code, see RR_QDRmigs
+% NOTE: All internal calculations performed using 64-bit integer arithmetic only.
+% Copyright 2025 by Thomas Bewley, published under BSD 3-Clause License. 
+
+[m,n]=size(A); Q=int64(A); % Convert to integers (all math below done on integers!)
+for i=1:n                  % orthogonalize the columns of Q
+  Q(:,i)=Q(:,i)/gcd_vec(Q(:,i)); f(i)=dot_product(Q(:,i),Q(:,i));
+  if f(i)>0, for j=i+1:n;
+    Q(:,j)=f(i)*Q(:,j)-Q(:,i)*dot_product(Q(:,i),Q(:,j));
+  end, end
 end
+index=[1:n]; for i=1:n     % strip out the zero columns of Q
+  if f(i)==0, l=length(index);
+    for j=1:l, if index(j)==i
+      index=index([1:j-1,j+1:l]); break
+    end, end
+  end  
+end, Q=Q(:,index); f=f(index); r=length(index);
+L=int64(eye(m)); for j=1:r % orthogonalize columns of L against Q
+  for i=1:m
+    L(:,i)=f(j)*L(:,i)-Q(:,j)*dot_product(Q(:,j),L(:,i));
+    L(:,i)=L(:,i)/gcd_vec(L(:,i));
+  end
+end
+for j=1:m                  % orthogonalize the columns of L
+  h(j)=dot_product(L(:,j),L(:,j));
+  for i=j+1:m
+    L(:,i)=h(j)*L(:,i)-L(:,j)*dot_product(L(:,j),L(:,i));
+    L(:,i)=L(:,i)/gcd_vec(L(:,i));
+  end
+end
+index=[1:m]; for i=1:m     % strip out the zero columns of L
+  if dot_product(L(:,i),L(:,i))==0, l=length(index);
+    for j=1:l, if index(j)==i
+      index=index([1:j-1,j+1:l]); break
+    end, end
+  end  
+end, L=L(:,index);
+Q=double(Q); L=double(L); % convert back to double (Matlab default)
+end % function MIGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [p]=dot_product(u,v)
+p=0; for i=1:length(u), p=p+u(i)*v(i); end
+end
+function [g]=gcd_vec(u)
+g=gcd(u(1),u(2)); for i=3:length(u), g=gcd(g,u(i)); end
+end
+
+
