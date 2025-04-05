@@ -63,7 +63,7 @@ for j=1:NC,  drawsphere(C(j,:),0,0.208,50);  end
 for j=1:NC
   for i=1:NFe
      d=norm(C(j,:)-Fe(i,:));
-     if d<2.3, d, plot3([C(j,1) Fe(i,1)],[C(j,2) Fe(i,2)],[C(j,3) Fe(i,3)]), hold on, end
+     if d<2.3, d, plot3([C(j,1) Fe(i,1)],[C(j,2) Fe(i,2)],[C(j,3) Fe(i,3)],"linewidth",3), hold on, end
   end
 end
-
+colormap(summer)

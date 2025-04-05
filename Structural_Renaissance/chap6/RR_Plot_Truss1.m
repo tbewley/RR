@@ -4,7 +4,7 @@ axis equal, axis tight, grid(ax), axis(ax,[-0.05 1.05 -0.3 0.4]), hold(ax,"on")
 h=max(Q(2,:));
 if h==0; fac=0; plot(ax,-0.035,min(Q(2,:))-.01,'w.');
 else,    fac=1; plot(ax,-0.035,h+.01,'w.'); end
-fill(ax,P(1,1)+[-.035     0 .035*fac],P(2,2)+[-.05 0 -.05],'k-')
+fill(ax,P(1,1)+[-.035     0 .035*fac],P(2,1)+[-.05 0 -.05],'k-')
 fill(ax,P(1,2)+[-.035*fac 0 .035    ],P(2,2)+[-.05 0 -.05],'k-')
 N=[Q P];
 disp('In members: blue=tension, red=compression, black=no force')
