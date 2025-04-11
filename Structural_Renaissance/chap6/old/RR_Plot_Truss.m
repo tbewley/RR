@@ -1,5 +1,5 @@
 function RR_Plot_Truss(Q,P,C,U,x);
-clf, hold on
+hold on
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
 disp('In members: blue=tension, red=compression, black=no force')
 mn=min(x); fprintf('maximum tension     = %0.5g\n',mn)
@@ -38,6 +38,7 @@ else % d=3 case
   fac=0.5; for i=1:q
       f=quiver3(N(1,i)-fac*U(1,i),N(2,i)-fac*U(2,i),N(3,i)-fac*U(3,i),fac*U(1,i),fac*U(2,i),fac*U(3,i),0);
       set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
+    end
   end
-  axis equal, view(-75.3,6.05)
+  axis equal, view(-70.5,14.56), view(-75.3,6.05)
 end

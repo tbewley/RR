@@ -1,6 +1,6 @@
 function [nodes]=MT3D(N,refinements,iterations,forceprofile,variablewidth,movewallpoints) % Numerical Renaissance Codebase 1.0
 % This function creates and optimizes a 3D Mitchell truss.
-if nargin<1 | N<2 | N>6, N=5;  end, Np=N+1; params.N=N;
+if nargin<1 | N<1 | N>6, N=5;  end, Np=N+1; params.N=N;
 if nargin<2, refinements=0;    end
 if nargin<3, iterations=60;    end, x=Init_MT3D(N); 
 if nargin<4, forceprofile=3;   end, params.forceprofile=forceprofile;

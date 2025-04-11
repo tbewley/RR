@@ -53,6 +53,7 @@ x=reshape(nodes,Np*Np*2,1);
 end % function Init_MT2D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function Draw_MT2D(nodes,N,lengths,forces)
+nodes, forces
 figure(1), clf, hold on, axis equal, for i=1:N, for j=1:N, I=i+(j-1)*N; II=I+N^2; widthparam=10;
   if forces(I)>0.0
     plot([nodes(i,j+1,1) nodes(i+1,j+1,1)],[nodes(i,j+1,2) nodes(i+1,j+1,2)],'k-','LineWidth',widthparam*abs(forces(I))*lengths(I)+.1);
