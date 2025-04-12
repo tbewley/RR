@@ -1,9 +1,8 @@
 function RR_Plot_Truss(Q,P,C,U,x);
 clf, hold on
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
-disp('In members: blue=tension, red=compression, black=no force')
-mn=min(x); fprintf('maximum tension     = %0.5g\n',mn)
-mx=max(x); fprintf('maximum compression = %0.5g\n',mx)
+mx=max(x); fprintf('maximum tension (red)      = %0.5g\n',mx)
+mn=min(x); fprintf('maximum compression (blue) = %0.5g\n',abs(mn))
 if d==2
   axis equal, axis tight, grid, axis([-0.05 1.05 -0.3 0.4]), hold on
   h=max(Q(2,:));
@@ -12,8 +11,8 @@ if d==2
   fill(P(1,2)+[-.035*fac 0 .035    ],P(2,2)+[-.05 0 -.05],'k-')
   for i=1:m
     [i1,d1]=max(C(i,:)); [i2,d2]=min(C(i,:));  lw=3; 
-    if x(i)<-0.01,    sy='r-'; if x(i)<mn*0.9, lw=6; end
-    elseif x(i)>0.01, sy='b-'; if x(i)>mx*0.9, lw=6; end
+    if x(i)<-0.01,    sy='b-'; if x(i)<mn*0.9, lw=6; end
+    elseif x(i)>0.01, sy='r-'; if x(i)>mx*0.9, lw=6; end
     else, sy='k-'; end
     plot([N(1,d1) N(1,d2)],[N(2,d1) N(2,d2)],sy,"LineWidth",lw)
   end
@@ -30,8 +29,8 @@ else % d=3 case
   for i=1:p, RR_Plot_Pyramid(P(:,i)), end
   for i=1:m
     [i1,d1]=max(C(i,:)); [i2,d2]=min(C(i,:));  lw=3; 
-    if x(i)<-0.01,    sy='r-'; if x(i)<mn*0.9, lw=6; end
-    elseif x(i)>0.01, sy='b-'; if x(i)>mx*0.9, lw=6; end
+    if x(i)<-0.01,    sy='b-'; if x(i)<mn*0.9, lw=6; end
+    elseif x(i)>0.01, sy='r-'; if x(i)>mx*0.9, lw=6; end
     else, sy='k-'; end
     plot3([N(1,d1) N(1,d2)],[N(2,d1) N(2,d2)],[N(3,d1) N(3,d2)],sy,"LineWidth",lw)
   end

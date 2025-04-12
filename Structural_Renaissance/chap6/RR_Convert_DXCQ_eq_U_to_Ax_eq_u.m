@@ -1,7 +1,7 @@
 function [A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
 % Sets up to calculate the internal forces in a truss defined by Q,P,C and loading U
 
-N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
+N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,q]=size(Q);
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       % partition connectivity matrix, compute M
 for i=1:m; D(:,i)=M(:,i)/norm(M(:,i)); end  % compute the direction vectors D(:,i)
 x=sym('x',[1 m]); X=diag(x);                % set up a symbolic and diagonal X matrix
