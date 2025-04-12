@@ -1,8 +1,8 @@
 function RR_Plot_Truss(Q,P,C,U,x);
 clf, hold on
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
-mx=max(x); fprintf('maximum tension (red)      = %0.5g\n',mx)
-mn=min(x); fprintf('maximum compression (blue) = %0.5g\n',abs(mn))
+mx=max(x); fprintf('maximum tension (red, bold)      = %0.5g\n',mx)
+mn=min(x); fprintf('maximum compression (blue, bold) = %0.5g\n',abs(mn))
 if d==2
   axis equal, axis tight, grid, axis([-0.05 1.05 -0.3 0.4]), hold on
   h=max(Q(2,:));

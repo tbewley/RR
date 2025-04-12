@@ -32,8 +32,7 @@ for i=1:num, C(j+i,s-i)=-1; C(j+i,2*s-i-2)=1;  end, j=j+num;  % up/left  diagona
 C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                           % right diagonal to fixed node
 
 % Now, convert the D*X*CQ=U problem in (3a) to the standard A*x=u form in (3b)
-[A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
+[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
 x=pinv(A)*u;
-% Finally, plot the truss (blue = tension, red = compression)
 RR_Plot_Truss(Q,P,C,U,x);
