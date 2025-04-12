@@ -141,8 +141,8 @@ switch truss                        % free nodes in top row
 end, disp(' '); 
 
 % THE FOLLOWING TWO LINES IS WHERE THE MAGIC HAPPENS!  :)
-[A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U);        % Convert the D*X*CQ=U problem to standard A*x=u form
-x=pinv(A)*u;                 % Compute tensile and compressive forces x in the truss, assuming no pretension
+[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U);        % Convert the D*X*CQ=U problem to standard A*x=u form
+x=pinv(A)*b;                 % Compute tensile and compressive forces x in the truss, assuming no pretension
 
 RR_Plot_Truss1(Q,P,C,x,ax);  % Plot the truss (blue=tension, red=compression, black=no_force)
 if height>0, f=quiver(ax,load,0,0,0.1*(-1),0);           % Plot the load applied to the truss

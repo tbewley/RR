@@ -16,9 +16,9 @@ C=[1 0 0 0 0 -1 0;
    0 0 0 1 -1 0 0;
    1 0 0 0 -1 0 0];
 % Now, convert the D*X*CQ=U problem in (16.3a) to the standard A*x=u form in (16.3b)
-[A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
+[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
-x=pinv(A)*u;         % This implements (16.4b)
+x=pinv(A)*b;         % This implements (16.4b)
 % Finally, plot the truss (blue = tension, red = compression)
 x
 rank(A)

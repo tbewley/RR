@@ -16,7 +16,7 @@ CT=[ 1 -1  0  0  0  0  0  0  1  1  0  0  0  0  0;  % Connectivity of the truss
     -1  0  0  0  0  0  0  1  0  0  0  0  0  0  0;  % taken positive and which negative.
      0  0  0  1  0  0  0  0  0  0  0  0  0  0  1]; C=CT';
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
-[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
+[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
 x=pinv(A)*b                % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)

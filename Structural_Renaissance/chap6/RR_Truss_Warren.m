@@ -30,18 +30,11 @@ for i=1:s-1,   C(j+2*i-1,s+i-1)=-1; C(j+2*i-1,i)=1;         % internal diagonals
 C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                             % right diagonal to fixed node
 
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
-[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
+[A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
 x=pinv(A)*b, error=norm(A*x-u) % This just implements (6.4b),  Assumes zero pretension!
 if error>1e-8, disp('No equilibrium solution'), beep, end
 RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
-
-% Now, convert the D*X*CQ=U problem in (3a) to the standard A*x=u form in (3b)
-[A,u]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
-% Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
-x=pinv(A)*u; residual=norm(A*x-u),
-% Finally, plot the truss (blue = tension, red = compression)
-RR_Plot_Truss(Q,P,C,U,x);
 
 fac=0.1;
 if h>0, f=quiver(load,0,load,fac*(-1),0,0);

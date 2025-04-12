@@ -21,7 +21,7 @@ for i=1:3
         0 0 m 0 0 m 0 m 1 0 0 0 0 m]; %  q_6
   end
   % Now, convert the D*X*CQ=U problem in (16.3a) to the standard A*x=u form in (16.3b)
-  C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_u(Q,P,C,U); 
+  C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
   % Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
   x=pinv(A)*b;      % This implements (16.4b)... but, does it solve A*x=b?
   r=rank(A), x, A_times_x=A*x, b, error=norm(A*x-b)        % Let's check!!
