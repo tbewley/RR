@@ -2,7 +2,7 @@
 
 clear, figure(1), clf
 global truss height s load curvature ax
-truss="Pennsylvania"; height=0.2; s=10; load=0.5; curvature=0;  % Initial values
+truss="Pennsylvania"; height=0.2; s=6; load=0.5; curvature=0;  % Initial values
 
 fig=uifigure; g=uigridlayout(fig);           % Set up a grid for all of the elements
 g.RowHeight = {'1x',40};                     % Tall upper row, fixed hight lower row
@@ -61,9 +61,10 @@ switch truss
         Q(:,q+1)=[1-(1/2)/s; Q(2,sb)/2]; q=q+1;
     case 'K'
         for i=1:s-1, Q(:,q+i)=[i/s; height*(1-curvature*4*(i/s-0.5)^2)]; end, q=q+s-1; % free nodes in top    row
-        for i=1:s-1, Q(:,q+i)=[i/s; height*(1-curvature*4*(i/s-0.5)^2)]; end, q=q+s-1; % free nodes in middle row
+        for i=1:s-1, Q(:,q+i)=[i/s; (height/2)*(1-curvature*4*(i/s-0.5)^2)]; end, q=q+s-1; % free nodes in middle row
 end
-n=q+p;
+n=q+p
+Qsize=size(Q)
 
 % External forces on the free nodes of the lower surface of the truss (normalized)
 load=round(load*sb*10)/(sb*10);
@@ -140,22 +141,30 @@ switch truss                        % free nodes in top row
             C(j+5,2*s+num)  =-1;  C(j+5,k+num+1)=1;
         end
     case 'K'
-        m=4*s-3; C=zeros(m,q+p);
+        m=6*s-4; C=zeros(m,q+p);
         C(1,n-1)=-1;   C(1,1)=1; j=1;                               % bottom row to left fixed node
         for i=1:s-2,   C(j+i,i)=-1; C(j+i,i+1)=1;     end, j=j+s-2; % bottom row
         C(j+1,s-1)=-1; C(j+1,n)=1; j=j+1;                           % bottom row to right fixed node
         for i=1:s-2,   C(j+i,s-1+i)=-1; C(j+i,s+i)=1; end, j=j+s-2; % top row
         C(j+1,n-1)=-1; C(j+1,s)=1; j=j+1;                           % left diagonal to fixed node
-        for i=1:s-1,   C(j+i,i)=-1; C(j+i,s-1+i)=1;   end, j=j+s-1; % internal verticals
+        for i=1:s-1,   C(j+i,i)=-1;       C(j+i,2*s-2+i)=1; end, j=j+s-1; % internal verticals
+        for i=1:s-1,   C(j+i,2*s-2+i)=-1; C(j+i,s-1+i)=1;   end, j=j+s-1; % internal verticals
         num=ceil((s-2)/2);
-        for i=1:num, C(j+i,i+1)=-1; C(j+i,s+i-1)=1;   end, j=j+num; % up/left  diagonals
-        for i=1:num, C(j+i,s-i-1)=-1; C(j+i,2*s-i-1)=1; end, j=j+num; % up/right diagonals
-        C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                           % right diagonal to fixed node
+        for i=1:num, C(j+i,i+1)=-1;   C(j+i,2*s+i-2)=1; end, j=j+num; % up/left  diagonals
+        for i=1:num, C(j+i,s+i)=-1;   C(j+i,2*s+i-2)=1; end, j=j+num; % up/left  diagonals
+        for i=1:num, C(j+i,s-i-1)=-1; C(j+i,3*s-i-2)=1; end, j=j+num; % up/right diagonals
+        for i=1:num, C(j+i,2*s-i-2)=-1; C(j+i,3*s-i-2)=1; end, j=j+num; % up/right diagonals
+        C(j+1,n-s-1)=-1; C(j+1,n)=1; j=j+1;                           % right diagonal to fixed node
 end, disp(' '); 
+m
+Csize=size(C)
+C'
 
 % THE FOLLOWING TWO LINES IS WHERE THE MAGIC HAPPENS!  :)
 [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); % Convert D*X*CQ=U problem to standard A*x=u form
 x=pinv(A)*b;      % Compute tensile and compressive forces x in the truss, assuming no pretension
+
+error=norm(A*x-b)
 
 RR_Plot_Truss1(Q,P,C,x,ax);  % Plot the truss (blue=tension, red=compression, black=no_force)
 if height>0, f=quiver(ax,load,0,0,0.1*(-1),0);        % Plot the load applied to the truss
@@ -187,4 +196,4 @@ for i=1:m
   plot(ax,[N(1,d1) N(1,d2)],[N(2,d1) N(2,d2)],sy,"LineWidth",lw)
 end
 axis(ax,"tight"), axis(ax,"equal")
-end % function RR_Plot_Truss1
+end % % function update_truss
