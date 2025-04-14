@@ -1,5 +1,5 @@
 function [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
-% Sets up to calculate the internal forces in a truss defined by Q,P,C and loading U
+% Sets up to calculate the internal forces in a Truss defined by Q,P,C and loading U
 
 N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,q]=size(Q);
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       % partition connectivity matrix, compute M
