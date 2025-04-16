@@ -1,6 +1,4 @@
 % script RR_Frame_4_Bar_Seesaw.m
-% NOTE: this routine does not yet work...  Someone buy me a beer...  Clark?
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Locations of the fixed nodes of the truss (normalized units) 
 lA=0.5; lB=1;   % Locations of the masses
 fyA=-1; fyB=-1; % Values of the externally-applied forces
@@ -11,7 +9,7 @@ h=1; w=2;       % Parameters defining the physical frame
 P=[ 0  0;   % Columns denote (x,y) locations of each of the p=2 pinned supports
     0 2*h];
 R=[];       % Locations of each of the r=0 fixed supports
-            % Locations of each of the n=10 free nodes
+            % Locations of each of the n=10 free nodes (below)
 Q=[-w*c -w*c       w*c  w*c     -w*c   -w*c*1.5 -w*c-lA  w*c   w*c*1.5  w*c+lB;
     w*s  w*s+2*h  -w*s -w*s+2*h  w*s+h  w*s+h   w*s+h  -w*s+h -w*s+h   -w*s+h ];
 U=[ 0  0  0  0  0  0  0  0  0  0;    % External forces on the n free nodes
@@ -36,7 +34,5 @@ C=CT';
 % into standard A*x=u form
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,P,R,C,U,M); 
 % Then, solve for the interior and reaction forces in the frame
-x=pinv(A)*b, error=norm(A*x-b)
-if error>1e-8, disp('No equilibrium solution'), beep, end
-% Finally, plot the frame.
-RR_Plot_Frame(Q,P,R,C,U,M,x)
+x=pinv(A)*b; error=norm(A*x-b)
+if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,P,R,C,U,M,x), end

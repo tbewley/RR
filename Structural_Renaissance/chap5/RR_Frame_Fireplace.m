@@ -1,6 +1,4 @@
 % script RR_Frame_Fireplace.m
-% NOTE: this routine does not yet work...  Someone buy me a beer...  Clark?
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Locations of the fixed nodes of the truss (normalized units) 
 P=[ 6  6;  % Columns denote (x,y) locations of each of the p=2 pinned supports
     1 -1];
@@ -25,7 +23,6 @@ C=CT';
 % into standard A*x=u form
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,P,R,C,U,M); 
 % Then, solve for the interior forces in the frame
-x=pinv(A)*b, error=norm(A*x-b)
-if error>1e-8, disp('No equilibrium solution'), beep, end
-% Finally, plot the frame.
-RR_Plot_Frame(Q,P,R,C,U,M,x)
+x=pinv(A)*b; error=norm(A*x-b)
+if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,P,R,C,U,M,x), end
+
