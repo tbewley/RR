@@ -6,7 +6,9 @@ N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
 % Set up symbolic matrix F, the nonzero elements of which are the forces applied
 % in direction d on each member m at node n
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
-V=sym('v',[d,p+r]); % V is a symbolic matrix for reaction forces (TBD) at pinned & fixed supports
+% Set up symbolic matrix V for the (TBD) reaction forces at the pinned & fixed supports
+V=sym('v',[d,p+r]);
+
 W=[U V];
 
 % Below is the guts of the calculation.  We will seek the F and V s.t. sys=0.

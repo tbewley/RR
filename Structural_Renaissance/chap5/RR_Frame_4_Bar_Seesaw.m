@@ -21,7 +21,7 @@ CT=[ 1 0 0 1;  % q_1   Connectivity of the pin-jointed frame
      0 1 1 0;  % q_4   each node may have 3 or more members attached in
      1 0 0 0;  % q_5   addition to having a applied external load.
      1 0 0 0;  % q_6 
-     1 0 0 0;  % q_7 
+     1 0 0 0;  % q_7
      0 1 0 0;  % q_8 
      0 1 0 0;  % q_9 
      0 1 0 0;  % q_10 
@@ -34,5 +34,5 @@ C=CT';
 % into standard A*x=u form
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,P,R,C,U,M); 
 % Then, solve for the interior and reaction forces in the frame
-x=pinv(A)*b; error=norm(A*x-b)
+x=pinv(A)*b, error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,P,R,C,U,M,x), end
