@@ -2,23 +2,21 @@ function RR_Plot_Frame(Q,P,R,C,U,M,x);
 figure(1), clf, hold on, axis off, axis equal
 N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
 
-for i=1:m, for j=1:n,
-  if C(i,j)==1, for k=1:2, exp="f"+k+"_"+i+"_"+j+"=x(1)"; % eval(exp);
-    x=x(2:end); end, end,
-end, end
-for i=1:p+r, for k=1:2, V(k,i)=x(1); x=x(2:end); end, end, V
+F(1:m,1:n,1:d)=0; V(1:2,1:p+r)=0;
+for i=1:m, for j=1:n, if C(i,j)==1, for k=1:2, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
+for i=1:p+r, for k=1:2, V(k,i)=x(1); x=x(2:end); end, end, C, F, V
 
 if d==2
   [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
   member=0;
   for i=1:length(row)
-    switch col(i)
+    switch mod(col(i),6)
       case 1, sy='b-';
       case 2, sy='g-';
       case 3, sy='r-';
       case 4, sy='c-';
       case 5, sy='m-';
-      otherwise, sy='k-'; 
+      case 0, sy='k-'; 
     end
     newx=N(1,row(i)); newy=N(2,row(i));
     if col(i)>member, member=member+1;
@@ -45,7 +43,7 @@ if d==2
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
-
+  axis tight
 else % d=3 case
   % TODO.
 end

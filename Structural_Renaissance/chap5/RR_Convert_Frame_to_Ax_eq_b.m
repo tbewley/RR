@@ -13,7 +13,7 @@ W=[U V];
 
 % Below is the guts of the calculation.  We will seek the F and V s.t. sys=0.
 % We first set up to set the sum of the forces at each node n equal to zero
-temp=reshape(sum(F,2),2,[])+W;
+temp=reshape(sum(F,2),2,[])-W;
 sys=reshape(temp,numel(temp),1);
 % We then set up to set the sum of the forces on each member m equal to zero
 temp=sum(F,3);
