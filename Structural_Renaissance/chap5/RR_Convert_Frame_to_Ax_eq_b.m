@@ -1,8 +1,23 @@
-function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,P,R,C,U,M); 
-% Sets up to calculate the internal forces in a Frame defined by Q,P,C and loading U
+function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,R,S,M); 
+% Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
+% INPUTS: Q=matrix with columns defining locations of the FREE nodes
+%         C=connectivity matrix, with (on each of the m rows defining the m members)
+%           a 1 in each of the n columns that is connected to that member,
+%           and a 0 in each of the other columns on that row
+%         U=forces on all nodes, N=[Q P R S]
+%         P=matrix with columns defining locations of the PINNED support nodes, default=[]
+%              (with reaction forces resisting motion in all directions)
+%         R=matrix with columns defining locations of the ROLLER support nodes, default=[]
+%              (with reaction forces resisting motion in the vertical direction only)
+%         S=matrix with columns defining locations of the FIXED support nodes, default=[]
+%              (with reaction forces resisting motion in all directions,
+%               plus reaction moments resisting rotation in all directions)
+%         M=moments on all m members, default=[]
 
-% First, compute forces
-N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
+if nargin<6, S=[], if nargin<5, R=[], if nargin<4, P=[], end, end, end, N=[Q P R S];
+[m,n]=size(C), [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
+if nargin<7, M=zeros(1,m); end
+
 % Set up symbolic matrix F, the nonzero elements of which are the forces applied
 % in direction d on each member m at node n
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end

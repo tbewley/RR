@@ -1,4 +1,9 @@
-function RR_Plot_Frame(Q,P,R,C,U,M,x);
+function RR_Plot_Frame(Q,C,U,x,P,R,S,M);
+
+if nargin<7, S=[], if nargin<6, R=[], if nargin<5, P=[], end, end, end, N=[Q P R S];
+[m,n]=size(C), [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
+if nargin<8, M=zeros(1,m); end
+
 figure(1), clf, hold on, axis off, axis equal
 N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
 
