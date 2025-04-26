@@ -1,5 +1,6 @@
 % script RR_Tensegrity_Bar_3D.m
 % Set up a tensegrity surrogate for a bar in 3D, solve for its internal forces, and plot
+
 clear, P=[];    % Locations of the fixed nodes of the truss (normalized units)
 L=1; phi=15; R=L*tand(phi); m=-1;
 Q=[0 1 -1 0 0           0          ;

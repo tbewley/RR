@@ -1,7 +1,7 @@
 function RR_Plot_Frame(Q,C,U,x,P,R,S,M);
 
-if nargin<7, S=[], if nargin<6, R=[], if nargin<5, P=[], end, end, end, N=[Q P R S];
-[m,n]=size(C), [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
+if nargin<7, S=[]; if nargin<6, R=[]; if nargin<5, P=[]; end, end, end, N=[Q P R S];
+[m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
 if nargin<8, M=zeros(1,m); end
 
 figure(1), clf, hold on, axis off, axis equal
@@ -9,7 +9,7 @@ N=[Q P]; [m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
 
 F(1:m,1:n,1:d)=0; V(1:2,1:p+r)=0;
 for i=1:m, for j=1:n, if C(i,j)==1, for k=1:2, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
-for i=1:p+r, for k=1:2, V(k,i)=x(1); x=x(2:end); end, end, C, F, V
+for i=1:p+r, for k=1:2, V(k,i)=x(1); x=x(2:end); end, end
 
 if d==2
   [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
