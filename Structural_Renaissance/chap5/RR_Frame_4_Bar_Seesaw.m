@@ -33,4 +33,6 @@ C=CT';
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P); 
 % Then, solve for the interior and reaction forces in the frame
 x=pinv(A)*b, error=norm(A*x-b)
-if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,C,U,x,P), end
+figure(1); clf
+% if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,C,U,x,P), end
+RR_Plot_Frame(Q,C,U,x,P)

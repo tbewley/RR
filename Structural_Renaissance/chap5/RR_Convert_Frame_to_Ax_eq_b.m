@@ -24,8 +24,8 @@ if n~=q+p+r+s, error('wrong number of nodes in C'), end
 % in direction d on each member m at node n
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
 % Set up symbolic matrices for the (TBD) reaction forces at the pinned, roller, & fixed supports
-VP=sym('vp',[d,p]); VR=sym('vr',[d,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
-VS=sym('vp',[d,s]); W=[U VP VR VS];
+VP=sym('vp',[d,p]); VR(2,:)=sym('vr',[1,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
+VS=sym('vp',[d,s]); W=[U VP VR VS]
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
 if s>0; if d==2, MS=sym('ms',[1,s]); M=M+[zeros(d,q+p+r) MS];
         else,    MS=sym('ms',[3,s]); M=M+[zeros(d,q+p+r) MS]; end, end
@@ -75,7 +75,7 @@ for i=1:s, if d==2,         SYS=SYS+",ms"+i;
 SYS=SYS+"])";
 
 % finally, execute the symbolic equationsToMatrix command assembled above
-[A,b]=eval(SYS);        
+[A,b]=eval(SYS);
 A=eval(A); b=eval(b); % convert A and b to a regular matrix and vector
 [c1,c2]=size(A);
 disp("A has mhat="+c1+" equations, nhat="+c2+" unknowns, and rank="+rank(A))
