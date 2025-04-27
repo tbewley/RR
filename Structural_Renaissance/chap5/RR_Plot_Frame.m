@@ -35,10 +35,10 @@ if d==2 % plot d=2 case
     lastx=newx; lasty=newy;
   end
   flip=[1 1];
-  fac=0.3; for i=1:p
+  fac=0.2; for i=1:p
     fill(P(1,i)+fac*[-.2 0 .2],P(2,i)+flip(i)*fac*[-.3 0 -.3],'k-')
   end
-  fac=0.3; for i=1:r
+  fac=0.2; for i=1:r
     fill(R(1,i)+fac*[-.2 0 .2],R(2,i)+fac*[-.3 0 -.3],'k-')
     RR_drawcircle2([R(1,i)-fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
     RR_drawcircle2([R(1,i)+fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
