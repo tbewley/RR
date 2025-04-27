@@ -1,4 +1,6 @@
-function drawcircle(loc,r,w)
+function drawcircle(loc,r,w,c)
+
+if nargin<4; c=[0 .7 0], end
 
 N=40;
 THETA=linspace(0,2*pi,N);
@@ -9,4 +11,4 @@ Y=Y+loc(2);
 Z=0*X;
 H=line(X,Y,Z);
 set(H,'LineWidth',w);
-set(H,'Color',[0 .7 0]);
+set(H,'Color',c);

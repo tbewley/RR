@@ -10,9 +10,9 @@ figure(1), clf, hold on, axis off, axis equal
 F(1:m,1:n,1:d)=0; V(1:2,1:p+r)=0;
 for i=1:m, for j=1:n, if C(i,j)==1, for k=1:2, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
 
-for i=1:p, for k=1:d, VP(k,i)=x(1); x=x(2:end);  end, end
+for i=1:p, for k=1:d, VP(k,i)=x(1);       x=x(2:end); end, end
 for i=1:r,            VR(:,i)=[0,x(1)];   x=x(2:end); end 
-for i=1:s, for k=1:d, VS(k,i)=x(1); x=x(2:end);  end, end
+for i=1:s, for k=1:d, VS(k,i)=x(1);       x=x(2:end); end, end
 for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
@@ -40,8 +40,8 @@ if d==2 % plot d=2 case
   end
   fac=0.3; for i=1:r
     fill(R(1,i)+fac*[-.2 0 .2],R(2,i)+fac*[-.3 0 -.3],'k-')
-    viscircles([R(1,i)-fac*.1, R(2,i)-fac*.37], fac*.07,"Color",'k');
-    viscircles([R(1,i)+fac*.1, R(2,i)-fac*.37], fac*.07,"Color",'k');
+    RR_drawcircle2([R(1,i)-fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
+    RR_drawcircle2([R(1,i)+fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
   end
   fac=0.5; h=-1; for i=1:q
     if h>0
@@ -72,3 +72,17 @@ else % plot d=3 case
   % TODO
 end
 end % function RR_Plot_Frame
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function RR_drawcircle2(loc,r,w,c)
+if nargin<4; c=[0 .7 0], end
+N=40;
+THETA=linspace(0,2*pi,N);
+RHO=ones(1,N)*r;
+[X,Y] = pol2cart(THETA,RHO);
+X=X+loc(1);
+Y=Y+loc(2);
+Z=0*X;
+H=line(X,Y,Z);
+set(H,'LineWidth',w);
+set(H,'Color',c);
+end % function RR_drawcircle2
