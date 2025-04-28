@@ -17,6 +17,15 @@ for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
 
+load=0; for i=1:size(U,2), load=load+norm(U(:,i)); end
+fprintf('Total externally-applied load: %6.3f\n',load)
+for i=1:size(VP,2),
+  fprintf('Reaction force at pinned node #%d: %6.3f\n',i,norm(VP(:,i)))
+end
+for i=1:size(VR,2),
+  fprintf('Reaction force at roller node #%d: %6.3f\n',i,norm(VR(:,i)))
+end
+
 if d==2 % plot d=2 case
   [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
   member=0;
