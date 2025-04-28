@@ -17,14 +17,16 @@ for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
 
-load=0; for i=1:size(U,2), load=load+norm(U(:,i)); end
-fprintf('Total externally-applied load: %6.3f\n',load)
+for i=1:size(U,2),
+  fprintf('Externally-applied load at free node #%d: %6.3f N\n',i,norm(U(:,i)))
+end
 for i=1:size(VP,2),
-  fprintf('Reaction force at pinned node #%d: %6.3f\n',i,norm(VP(:,i)))
+  fprintf('Reaction force at pinned node #%d: %6.3f N\n',i,norm(VP(:,i)))
 end
 for i=1:size(VR,2),
-  fprintf('Reaction force at roller node #%d: %6.3f\n',i,norm(VR(:,i)))
+  fprintf('Reaction force at roller node #%d: %6.3f N\n',i,norm(VR(:,i)))
 end
+fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP]))*fac2; 
 
 if d==2 % plot d=2 case
   [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
@@ -44,15 +46,15 @@ if d==2 % plot d=2 case
     lastx=newx; lasty=newy;
   end
   flip=[1 1];
-  fac=0.2; for i=1:p
-    fill(P(1,i)+fac*[-.2 0 .2],P(2,i)+flip(i)*fac*[-.3 0 -.3],'k-')
+  for i=1:p
+    fill(P(1,i)+fac2*[-.2 0 .2],P(2,i)+flip(i)*fac2*[-.3 0 -.3],'k-')
   end
-  fac=0.2; for i=1:r
-    fill(R(1,i)+fac*[-.2 0 .2],R(2,i)+fac*[-.3 0 -.3],'k-')
-    RR_drawcircle2([R(1,i)-fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
-    RR_drawcircle2([R(1,i)+fac*.1 R(2,i)-fac*.37],fac*.07,3,'k')
+  for i=1:r
+    fill(R(1,i)+fac2*[-.2 0 .2],R(2,i)+fac2*[-.3 0 -.3],'k-')
+    RR_drawcircle2([R(1,i)-fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
+    RR_drawcircle2([R(1,i)+fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
   end
-  fac=0.5; h=-1; for i=1:q
+  h=-1; for i=1:q
     if h>0
       f=quiver(N(1,i),N(2,i),fac*U(1,i),fac*U(2,i),0);
     else

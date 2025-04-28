@@ -5,7 +5,7 @@ P=[ 6  6;  % Columns denote (x,y) locations of each of the p=2 pinned supports
 Q=[-2 -2  0  2  2  4;    % Locations of each of the n=6 free nodes
     1 -1  0  1 -1  0];
 U=[ 0  0  0  0  0  0;    % External forces on the n free nodes
-   -1  1  0  0  0  0];  
+   -1  1  0  0  0  0]*1000;  
    % m=4 members (columns) 
 CT=[ 1 0 0 0;  % q_1   Connectivity of the pin-jointed frame
      0 1 0 0;  % q_2   Note: members may connect 3 or more nodal points

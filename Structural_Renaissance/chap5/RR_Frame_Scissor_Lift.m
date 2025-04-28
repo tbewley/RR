@@ -8,8 +8,8 @@ R=[ W;      % (x,y) location of the r=1 Roller support
     0];    
 Q=[ L1*cosd(phi)-L2*sind(phi) L1*cosd(phi) W/2 W 0;  % (x,y) locations of the n=5 free nodes
     L1*sind(phi)+L2*cosd(phi) L1*sind(phi) H/2 H H]; % (the second node makes the plot nice)
-U=[ 0  0  0   0    0;      % External forces applied to each of the n=5 free nodes
-    0  0  0 -0.2 -0.2];  
+U=[ 0  0  0   0    0;   % External forces applied to each of the n=5 free nodes (in Newtons)
+    0  0  0 -500 -500];  
    % The m=3 structural Members of this pin-jointed frame are defined in the columns of CT.
 CT=[ 1 1 0;  % q_1   Each structural member connects several (Q,P,R) nodes of the frame, 
      0 1 0;  % q_2   as indicated by the 1's in the corresponding columns at left.
