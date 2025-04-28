@@ -18,6 +18,13 @@ for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
 
+for i=1:m, if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2)
+  f1=reshape(F(i,j(1),:),1,[]), f2=reshape(F(i,j(2),:),1,[])
+  t2=norm((N(:,j(1))+f1)-(N(:,j(2))+f2))
+  t3=norm((N(:,j(1))-f1)-(N(:,j(2))-f2))
+  if t2>t3, fprintf('Pure tension in member #%d = %6.3f N\n',i,norm(f1))
+  else,     fprintf('Pure compression in member #%d = %6.3f N\n',i,norm(f1)), end
+end, end
 for i=1:size(U,2),
   fprintf('Externally-applied load at free node #%d: %6.3f N\n',i,norm(U(:,i)))
 end
@@ -29,7 +36,6 @@ for i=1:size(VR,2),
 end
 t1=sum([VP VR VS],2);
 fprintf('Sum of all reaction forces in (x,y) = (%6.2f, %6.2f) N\n',t1(1),t1(2))
-
 fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP]))*fac2; 
 
 if d==2 % plot d=2 case
