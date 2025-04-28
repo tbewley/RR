@@ -10,6 +10,7 @@ figure(1), clf, hold on, axis off, axis equal
 F(1:m,1:n,1:d)=0; V(1:2,1:p+r)=0;
 for i=1:m, for j=1:n, if C(i,j)==1, for k=1:2, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
 
+VP=[]; VR=[]; VS=[];
 for i=1:p, for k=1:d, VP(k,i)=x(1);       x=x(2:end); end, end
 for i=1:r,            VR(:,i)=[0,x(1)];   x=x(2:end); end 
 for i=1:s, for k=1:d, VS(k,i)=x(1);       x=x(2:end); end, end
@@ -26,6 +27,9 @@ end
 for i=1:size(VR,2),
   fprintf('Reaction force at roller node #%d: %6.3f N\n',i,norm(VR(:,i)))
 end
+t1=sum([VP VR VS],2);
+fprintf('Sum of all reaction forces in (x,y) = (%6.2f, %6.2f) N\n',t1(1),t1(2))
+
 fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP]))*fac2; 
 
 if d==2 % plot d=2 case
