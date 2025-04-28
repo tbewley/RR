@@ -4,7 +4,7 @@ L=1; phi=70; L1=0.2*L; L2=0.05*L; P2x=0.35*L; P2y=-0.25*L;
 W=L*cosd(phi); H=L*sind(phi);
 P=[ 0 P2x;  % Columns denote (x,y) locations of each of the p=2 Pinned supports
     0 P2y];
-R=[ W;      % (x,y) locations of each of the p=1 Roller support
+R=[ W;      % (x,y) location of the r=1 Roller support
     0];    
 Q=[ L1*cosd(phi)-L2*sind(phi) L1*cosd(phi) W/2 W 0;  % (x,y) locations of the n=5 free nodes
     L1*sind(phi)+L2*cosd(phi) L1*sind(phi) H/2 H H]; % (the second node makes the plot nice)
