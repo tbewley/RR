@@ -36,8 +36,11 @@ for i=1:size(VR,2),
 end
 for i=1:size(VS,2),
   fprintf('Reaction force at  fixed node #%d: %0.5g N\n',i,norm(VS(:,i)))
-  if (d==2), fprintf('Reaction moment at fixed node #%d: %0.5g N m\n',i,norm(MS(i))),
-  else, fprintf('Reaction moment at fixed node #%d: %0.5g N m\n',i,norm(MS(i,:))), end
+  if (d==2)
+    fprintf('Reaction moment at fixed node #%d: %0.5g N m\n',i,MS(i)),
+  else
+    fprintf('Reaction moment at fixed node #%d: (%0.5g,%0.5g,%0.5g) N m\n',i,MS(i,:)),
+  end
 end
 t1=sum(U,2);
 fprintf('Sum of all applied forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
