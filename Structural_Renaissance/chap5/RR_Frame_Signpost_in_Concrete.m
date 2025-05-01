@@ -8,7 +8,7 @@ Q=[ 0 0 0 -2 1;    % (x,y) locations of the n=5 free nodes
 U=[ 0 0 0  0 0;   % External forces applied to each of the n=5 free nodes (in Newtons)
     0 0 0 -1 0];  
    % The m=4 structural Members of this pin-jointed frame are defined in the columns of CT.
-CT=[ 1 0 0 1;  % q_1   Each structural member connects several (Q,P,R) nodes of the frame, 
+CT=[ 1 0 0 1;  % q_1   Each structural member connects several (Q,P,R,S) nodes of the frame, 
      1 1 0 0;  % q_2   as indicated by the 1's in the corresponding columns at left.
      1 0 1 0;  % q_3   Note: each structural member may connect 3 or more nodal points
      0 1 1 0;  % q_4   (and, thus, each structural member may bear internal bending loads), 
