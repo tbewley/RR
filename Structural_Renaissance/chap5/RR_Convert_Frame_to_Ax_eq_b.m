@@ -14,6 +14,7 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M);
 %               plus reaction moments resisting rotation in ALL directions)
 %         M=moments on all m members, default=[]
 % OUTPUTS: A,b = matrix, vector defining the Ax=b problem to be solved at equilibrium
+% NOTE: use a separate fixed node for every member with an end fixed (they could be collocated)
 
 if nargin<6, S=[]; if nargin<5, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
@@ -24,11 +25,14 @@ if n~=q+p+r+s, error('wrong number of nodes in C'), end
 % in direction d on each member m at node n
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
 % Set up symbolic matrices for the (TBD) reaction forces at the pinned, roller, & fixed supports
-VP=sym('vp',[d,p]); VR(2,:)=sym('vr',[1,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
-VS=sym('vp',[d,s]); W=[U VP VR VS]
+VP=sym('vp%d_%d',[d,p]);
+VR(2,:)=sym('vr',[1,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
+VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS]
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
-if s>0; if d==2, MS=sym('ms',[1,s]); M=M+[zeros(d,q+p+r) MS];
-        else,    MS=sym('ms',[3,s]); M=M+[zeros(d,q+p+r) MS]; end, end
+if s>0, CT=C'
+  if d==2, MS=sym('ms',[1,s]); else, MS=sym('ms',[3,s]); end
+  q+p+r
+end
 
 % Below is the guts of the calculation.  We will seek the {F,VP,VR,VS,MS} s.t. sys=0.
 % We first set up to set the sum of the forces at each node n equal to zero
@@ -41,10 +45,11 @@ sys=[sys; reshape(temp,numel(temp),1)];
 % note: in 2D, (qxf)_z=q1*f2-q2*f1, in 3D, just use cross(q,f)
 for i=1:m, if d==2, t=0; else, t=[0; 0; 0]; end, for j=1:n,
   if d==2, t=t+N(1,j)*F(2,i,j)-N(2,j)*F(1,i,j);
-  else,    t=t+cross(N(:,j),F(:,i,j));          end
+  else,    t=t+cross(N(:,j),F(:,i,j));      end
 end, Mm(:,i)=t+M(:,i); end
-sys=[sys; reshape(Mm,numel(Mm),1)];
-eqns=length(sys);
+for i=1:s, [temp,j]=max(CT(q+p+r+i,:)); Mm(:,j)=Mm(:,j)+MS(:,i); end
+
+sys=[sys; reshape(Mm,numel(Mm),1)];  eqns=length(sys);
 
 % Now, set up the nonzero fk_i_j, vpk_i, vri, vsi, and ms as symbolic variables,
 % and convert SYS to A*x=b form
@@ -54,9 +59,11 @@ end, end
 for i=1:p, for k=1:d, exp="syms vp"+k+"_"+i; eval(exp); end, end
 for i=1:r,            exp="syms vr"+i;       eval(exp); end 
 for i=1:s, for k=1:d, exp="syms vs"+k+"_"+i; eval(exp); end, end
-for i=1:s, if d==2,         exp="syms ms"+i;       eval(exp);
-           else, for k=1:d, exp="syms ms"+k+"_"+i; eval(exp); end
+for i=1:s, if d==2,   exp="syms ms"+i;       eval(exp);
+     else, for k=1:d, exp="syms ms"+k+"_"+i; eval(exp); end
 end, end
+
+sys
 
 % set up a symbolic equationsToMatrix command in SYS
 SYS='equationsToMatrix(['; for i=1:eqns, SYS=SYS+"sys("+i+")==0";
@@ -73,6 +80,8 @@ for i=1:s, for k=1:d, SYS=SYS+",vs"+k+"_"+i; end, end
 for i=1:s, if d==2,         SYS=SYS+",ms"+i;       
            else, for k=1:d, SYS=SYS+",ms"+k+"_"+i; end, end, end
 SYS=SYS+"])";
+
+SYS
 
 % finally, execute the symbolic equationsToMatrix command assembled above
 [A,b]=eval(SYS);

@@ -34,11 +34,16 @@ end
 for i=1:size(VR,2),
   fprintf('Reaction force at roller node #%d: %0.5g N\n',i,norm(VR(:,i)))
 end
-t1=sum([U],2);
+for i=1:size(VS,2),
+  fprintf('Reaction force at  fixed node #%d: %0.5g N\n',i,norm(VS(:,i)))
+  if (d==2), fprintf('Reaction moment at fixed node #%d: %0.5g N m\n',i,norm(MS(i))),
+  else, fprintf('Reaction moment at fixed node #%d: %0.5g N m\n',i,norm(MS(i,:))), end
+end
+t1=sum(U,2);
 fprintf('Sum of all applied forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
 t1=sum([VP VR VS],2);
 fprintf('Sum of all reaction forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
-fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP]))*fac2; 
+fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP VS]))*fac2; 
 
 if d==2 % plot d=2 case
   [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
@@ -66,6 +71,9 @@ if d==2 % plot d=2 case
     RR_drawcircle2([R(1,i)-fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
     RR_drawcircle2([R(1,i)+fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
   end
+  for i=1:s
+    fill(S(1,i)+fac2*[-.4 -.4 .4 .4],S(2,i)+fac2*[-.3 0 0 -.3],'k-')
+  end  
   h=-1; for i=1:q
     if h>0
       f=quiver(N(1,i),N(2,i),fac*U(1,i),fac*U(2,i),0);
@@ -87,6 +95,14 @@ if d==2 % plot d=2 case
       f=quiver(R(1,i),R(2,i),fac*VR(1,i),fac*VR(2,i),0);
     else
       f=quiver(R(1,i)-fac*VR(1,i),R(2,i)-fac*VR(2,i),fac*VR(1,i),fac*VR(2,i),0);
+    end
+    set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
+  end
+  h=-1; for i=1:s
+    if h*flip(i)*sign(VS(2,i))>0
+      f=quiver(S(1,i),S(2,i),fac*VS(1,i),fac*VS(2,i),0);
+    else
+      f=quiver(S(1,i)-fac*VS(1,i),S(2,i)-fac*VS(2,i),fac*VS(1,i),fac*VS(2,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
