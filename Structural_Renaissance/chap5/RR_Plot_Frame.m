@@ -108,6 +108,17 @@ if d==2 % plot d=2 case
       f=quiver(S(1,i)-fac*VS(1,i),S(2,i)-fac*VS(2,i),fac*VS(1,i),fac*VS(2,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
+    if MS(i)<0
+      r=0.4; t=-2*pi*7/8; x=S(1,i)+r*cos(t); y=S(1,i)+r*sin(t);
+      RR_drawcircle2(S(:,i),0.4,3,'r',0,t)
+      plot([x x-r/2],[y y+r/20],'r','LineWidth',3)
+      plot([x x-r/4],[y y+r/2], 'r','LineWidth',3)
+    else 
+      r=0.4; t=2*pi*3/8; x=S(1,i)+r*cos(t); y=S(1,i)+r*sin(t);
+      RR_drawcircle2(S(:,i),0.4,3,'r',-pi,t)
+      plot([x x+r/2],[y y+r/20],'r','LineWidth',3)
+      plot([x x+r/4],[y y+r/2], 'r','LineWidth',3)
+    end
   end
   axis tight
 else % plot d=3 case
@@ -115,10 +126,11 @@ else % plot d=3 case
 end
 end % function RR_Plot_Frame
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function RR_drawcircle2(loc,r,w,c)
-if nargin<4; c=[0 .7 0], end
+function RR_drawcircle2(loc,r,w,c,deg_min,deg_max)
+if nargin<4; c=[0 .7 0]; end
+if nargin<6; deg_min=0; deg_max=2*pi; end
 N=40;
-THETA=linspace(0,2*pi,N);
+THETA=linspace(deg_min,deg_max,N);
 RHO=ones(1,N)*r;
 [X,Y] = pol2cart(THETA,RHO);
 X=X+loc(1);
