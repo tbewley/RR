@@ -65,7 +65,7 @@ if d==2 % plot d=2 case
     else, plot([lastx newx],[lasty newy],sy,"LineWidth",6); end
     lastx=newx; lasty=newy;
   end
-  flip=[1 1];
+  flip=ones(1,p);
   for i=1:p
     fill(P(1,i)+fac2*[-.2 0 .2],P(2,i)+flip(i)*fac2*[-.3 0 -.3],'k-')
   end
