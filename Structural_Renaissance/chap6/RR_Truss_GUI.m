@@ -1,4 +1,6 @@
 % script RR_Truss_GUI
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 clear, figure(1), clf
 global truss height s load curvature ax
@@ -63,8 +65,7 @@ switch truss
         for i=1:s-1, Q(:,q+i)=[i/s; height*(1-curvature*4*(i/s-0.5)^2)]; end, q=q+s-1; % free nodes in top    row
         for i=1:s-1, Q(:,q+i)=[i/s; (height/2)*(1-curvature*4*(i/s-0.5)^2)]; end, q=q+s-1; % free nodes in middle row
 end
-n=q+p
-Qsize=size(Q)
+n=q+p; Qsize=size(Q);
 
 % External forces on the free nodes of the lower surface of the truss (normalized)
 load=round(load*sb*10)/(sb*10);
@@ -156,9 +157,6 @@ switch truss                        % free nodes in top row
         for i=1:num, C(j+i,2*s-i-2)=-1; C(j+i,3*s-i-2)=1; end, j=j+num; % up/right diagonals
         C(j+1,n-s-1)=-1; C(j+1,n)=1; j=j+1;                           % right diagonal to fixed node
 end, disp(' '); 
-m
-Csize=size(C)
-C'
 
 % THE FOLLOWING TWO LINES IS WHERE THE MAGIC HAPPENS!  :)
 [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); % Convert D*X*CQ=U problem to standard A*x=u form

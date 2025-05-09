@@ -1,5 +1,8 @@
 % script RR_Truss_Pyramid_3D.m
 % Set up a simple 3D pyramid truss, solve for its internal forces, and plot
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 clear, P=[-1  1 -1 1;    % Locations of the fixed nodes of the truss (normalized units)
           -1 -1  1 1;
            0  0  0 0]/2;

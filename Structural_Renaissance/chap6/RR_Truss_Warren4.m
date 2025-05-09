@@ -1,5 +1,8 @@
 % script RR_Truss_Warren4.m
 % Set up a Warren truss with 4 sections, solve for its internal forces, and plot
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 P=[ 0  1;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (normalized)
     0  0];
 Q=[ 2  4  6  1  3  5  7;    % Locations of each of the n=7 free nodes (normalized)

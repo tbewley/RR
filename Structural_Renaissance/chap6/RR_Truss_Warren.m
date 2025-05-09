@@ -1,4 +1,6 @@
 % script RR_Truss_Warren.m
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is a slight generalization of RR_Truss_Warren4, with 2 parameters
 % For the kitchen-sink generalization, see RR_Truss_GUI.  Easy.  Enjoy!
