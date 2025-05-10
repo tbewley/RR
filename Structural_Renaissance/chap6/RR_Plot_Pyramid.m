@@ -1,5 +1,5 @@
 function RR_Plot_Pyramid(a,s,c)
-% Draws a 3D square pyramid below a point with apex a and scale s with colorspec c
+% Draws a 3D cube below a point with apex a and scale s with colorspec c
 % TEST: figure(1), clf; RR_Plot_Pyramid([0 1 1],1,'k')
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE

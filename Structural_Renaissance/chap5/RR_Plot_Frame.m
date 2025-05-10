@@ -1,28 +1,29 @@
 function RR_Plot_Frame(Q,C,U,x,P,R,S,M);
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 if nargin<7, S=[]; if nargin<6, R=[]; if nargin<5, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
 if nargin<8, M=zeros(1,m); end
 
-figure(1), clf, hold on, axis off, axis equal
-[m,n]=size(C); [d,p]=size(P); [d,r]=size(R); [d,q]=size(Q);
+F(1:m,1:n,1:d)=0;    % extract nonzero forces on members at nodes from x
+for i=1:m, for j=1:n, if C(i,j)==1, for k=1:d, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
 
-F(1:m,1:n,1:d)=0; V(1:2,1:p+r)=0;
-for i=1:m, for j=1:n, if C(i,j)==1, for k=1:2, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
-
-VP=[]; VR=[]; VS=[];
+VP=[]; VR=[]; VS=[]; % extract nonzero reaction forces at P,R,S support points from x
 for i=1:p, for k=1:d, VP(k,i)=x(1);       x=x(2:end); end, end
-for i=1:r,            VR(:,i)=[0,x(1)];   x=x(2:end); end 
+for i=1:r,   if d==2, VR(:,i)=[0;x(1)]; else, VR(:,i)=[0;0;x(1)]; end, x=x(2:end); end 
 for i=1:s, for k=1:d, VS(k,i)=x(1);       x=x(2:end); end, end
+% extract nonzero moments at S support points from x
 for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
 
+% print out the tension in compression in the 2-force members (only) 
 for i=1:m, if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2);
   f1=reshape(F(i,j(1),:),1,[]); f2=reshape(F(i,j(2),:),1,[]);
   t2=norm((N(:,j(1))+f1)-(N(:,j(2))+f2));
   t3=norm((N(:,j(1))-f1)-(N(:,j(2))-f2));
-  if t2>t3, fprintf('Pure tension in member #%d = %0.5g N\n',i,norm(f1))
+  if t2>t3, fprintf('Pure tension     in member #%d = %0.5g N\n',i,norm(f1))
   else,     fprintf('Pure compression in member #%d = %0.5g N\n',i,norm(f1)), end
 end, end
 for i=1:size(U,2),
@@ -42,70 +43,78 @@ for i=1:size(VS,2),
     fprintf('Reaction moment at fixed node #%d: (%0.5g,%0.5g,%0.5g) N m\n',i,MS(i,:)),
   end
 end
-t1=sum(U,2);
-fprintf('Sum of all applied forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
-t1=sum([VP VR VS],2);
-fprintf('Sum of all reaction forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
-fac2=0.2*(max(max(Q))-min(min(Q))); fac=2/max(max([U VP VP VS]))*fac2; 
+fac_b=1*(max(max(N))-min(min(N))); fac_f=0.1/max(max([U VP VR VS]))*fac_b; 
+figure(1), clf, axis equal, axis tight, grid, hold on, h=max(Q(2,:));
 
-if d==2 % plot d=2 case
-  [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
-  member=0;
-  for i=1:length(row)
-    switch mod(col(i),6)
-      case 1, sy='b-';
-      case 2, sy='g-';
-      case 3, sy='r-';
-      case 4, sy='c-';
-      case 5, sy='m-';
-      case 0, sy='k-'; 
-    end
-    newx=N(1,row(i)); newy=N(2,row(i));
-    if col(i)>member, member=member+1;
-    else, plot([lastx newx],[lasty newy],sy,"LineWidth",6); end
-    lastx=newx; lasty=newy;
+for i=1:p, if VP(3,i)<0, hp(i)=-1; else, hp(i)=1; end, end
+if d==2
+  % Plot little triagles below/above the pinned support points in 2D
+  for i=1:p,  fill(P(1,i)+fac_b*[-.035 0 .035],P(2,i)+hp(i)*fac_b*[-.05 0 -.05],'k-'), end
+  for i=1:r % Plot little triagles with little circles below the roller support points in 2D
+             fill(R(1,i)+fac_b*[-.035 0 .035],R(2,i)+fac_b*[-.05 0 -.05],'k-')
+    RR_drawcircle2([R(1,i)-fac_b*.02 R(2,i)-fac_b*.065],fac_b*.015,3,'k')
+    RR_drawcircle2([R(1,i)+fac_b*.02 R(2,i)-fac_b*.065],fac_b*.015,3,'k')
   end
-  flip=ones(1,p);
-  for i=1:p
-    fill(P(1,i)+fac2*[-.2 0 .2],P(2,i)+flip(i)*fac2*[-.3 0 -.3],'k-')
+  % Plot little rectangles at the fixed support points in 2D
+  for i=1:s, fill(S(1,i)+fac_b*[-.1 -.1 .1 .1],S(2,i)+fac_b*[-.05 0 0 -.05],'k-'), end
+else
+  % Plot little pyramids below the pinned support points in 3D
+  for i=1:p, RR_Plot_Pyramid(P(:,i),fac_b*.05), end 
+  for i=1:r % Plot little pyramids with little spheres below the roller support points in 3D
+    RR_Plot_Pyramid(R(:,i),fac_b*.05)
+    disp('TODO: Draw the rollers!'), beep
   end
-  for i=1:r
-    fill(R(1,i)+fac2*[-.2 0 .2],R(2,i)+fac2*[-.3 0 -.3],'k-')
-    RR_drawcircle2([R(1,i)-fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
-    RR_drawcircle2([R(1,i)+fac2*.1 R(2,i)-fac2*.37],fac2*.07,3,'k')
+  % Plot little rectangular prisms below the fixed support points in 3D     
+  for i=1:s, RR_Plot_Cube(S(:,i),fac_b*.05), end 
+end
+[row,col] = find(C'); % This finds the row and col of nonzero entries of C'
+member=0;
+for i=1:length(row)   % This plots the members of the structure in both 2D and 3D.
+  switch mod(col(i),6)
+    case 1, sy='b-';
+    case 2, sy='g-';
+    case 3, sy='r-';
+    case 4, sy='c-';
+    case 5, sy='m-';
+    case 0, sy='k-'; 
   end
-  for i=1:s
-    fill(S(1,i)+fac2*[-.4 -.4 .4 .4],S(2,i)+fac2*[-.3 0 0 -.3],'k-')
-  end  
+  newx=N(1,row(i)); newy=N(2,row(i)); if d==3, newz=N(3,row(i)); end 
+  if col(i)>member, member=member+1;
+  else, if d==2, plot([lastx newx],[lasty newy],sy,"LineWidth",6);
+        else     plot3([lastx newx],[lasty newy],[lastz newz],sy,"LineWidth",6); end
+  end
+  lastx=newx; lasty=newy; if d==3, lastz=newz; end 
+end
+
+if d==2              % this handles the rest of the d=2 (2D) case
+  t1=sum(U,2);  t2=sum([VP VR VS],2);
+  fprintf('Sum of all applied  forces in (x,y) = (%+0.5g, %+0.5g) N\n',t1(1),t1(2))
+  fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g) N\n',t2(1),t2(2))
   h=-1; for i=1:q
     if h>0
-      f=quiver(N(1,i),N(2,i),fac*U(1,i),fac*U(2,i),0);
+      f=quiver(N(1,i),N(2,i),fac_f*U(1,i),fac_f*U(2,i),0);
     else
-      f=quiver(N(1,i)-fac*U(1,i),N(2,i)-fac*U(2,i),fac*U(1,i),fac*U(2,i),0);
+      f=quiver(N(1,i)-fac_f*U(1,i),N(2,i)-fac_f*U(2,i),fac_f*U(1,i),fac_f*U(2,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
-  h=-1; for i=1:p
-    if h*flip(i)*sign(VP(2,i))>0
-      f=quiver(P(1,i),P(2,i),fac*VP(1,i),fac*VP(2,i),0);
-    else
-      f=quiver(P(1,i)-fac*VP(1,i),P(2,i)-fac*VP(2,i),fac*VP(1,i),fac*VP(2,i),0);
-    end
+  for i=1:p
+    f=quiver(P(1,i)-fac_f*VP(1,i),P(2,i)-fac_f*VP(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
   h=-1; for i=1:r
-    if h*flip(i)*sign(VR(2,i))>0
-      f=quiver(R(1,i),R(2,i),fac*VR(1,i),fac*VR(2,i),0);
+    if h*sign(VR(2,i))>0
+      f=quiver(R(1,i),R(2,i),fac_f*VR(1,i),fac_f*VR(2,i),0);
     else
-      f=quiver(R(1,i)-fac*VR(1,i),R(2,i)-fac*VR(2,i),fac*VR(1,i),fac*VR(2,i),0);
+      f=quiver(R(1,i)-fac_f*VR(1,i),R(2,i)-fac_f*VR(2,i),fac_f*VR(1,i),fac_f*VR(2,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
   h=-1; for i=1:s
-    if h*flip(i)*sign(VS(2,i))>0
-      f=quiver(S(1,i),S(2,i),fac*VS(1,i),fac*VS(2,i),0);
+    if h*sign(VS(2,i))>0
+      f=quiver(S(1,i),S(2,i),fac_f*VS(1,i),fac_f*VS(2,i),0);
     else
-      f=quiver(S(1,i)-fac*VS(1,i),S(2,i)-fac*VS(2,i),fac*VS(1,i),fac*VS(2,i),0);
+      f=quiver(S(1,i)-fac_f*VS(1,i),S(2,i)-fac_f*VS(2,i),fac_f*VS(1,i),fac_f*VS(2,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
     if MS(i)<0
@@ -120,10 +129,60 @@ if d==2 % plot d=2 case
       plot([x x+r/4],[y y+r/2], 'r','LineWidth',3)
     end
   end
-  axis tight
-else % plot d=3 case
-  % TODO
+else              % this handles the rest of the d=3 (2D) case
+  t1=sum(U,2);  t2=sum([VP VR VS],2);
+  fprintf('Sum of all applied  forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t1(1),t1(2),t1(3))
+  fprintf('Sum of all reaction forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t2(1),t2(2),t2(3))
+  fac_b=fac_b*0.07; fac_f=fac_f*2;                   % Tweak the scale factors for 3D
+
+  for i=1:q
+    if h>0, f=quiver3(Q(1,i)-fac_f*U(1,i), Q(2,i)-fac_f*U(2,i), Q(3,i)-fac_f*U(3,i), ...
+                      fac_f*U(1,i),        fac_f*U(2,i),        fac_f*U(3,i));
+    else,   f=quiver3(Q(1,i),       Q(2,i),       Q(3,i), ...
+                      fac_f*U(1,i), fac_f*U(2,i), fac_f*U(3,i));
+    end
+    set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
+  end
+  for i=1:p
+    if hp(i)>0
+      f=quiver3(P(1,i)-fac_f*VP(1,i), P(2,i)-fac_f*VP(2,i), P(3,i)-fac_f*VP(3,i), ...
+                       fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i));
+    else
+      f=quiver3(P(1,i),        P(2,i),        P(3,i), ...
+                fac_f*VP(1,i), fac_f*VP(2,i), fac_f*VP(3,i));
+    end      
+    set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
+  end
+  for i=1:r
+    if h*VR(3,i)>0,
+            f=quiver3(R(1,i)-fac_f*VR(1,i), R(2,i)-fac_f*VR(2,i), R(3,i)-fac_f*VR(3,i), ...
+                      fac_f*VR(1,i),        fac_f*VR(2,i),        fac_f*VR(3,i));
+    else,   f=quiver3(R(1,i),        R(2,i),        R(3,i), ...
+                      fac_f*VR(1,i), fac_f*VR(2,i), fac_f*VR(3,i));
+    end
+    set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
+  end
+  for i=1:s
+    if h*VS(3,i)>0,
+            f=quiver3(S(1,i)-fac_f*VS(1,i), S(2,i)-fac_f*VS(2,i), S(3,i)-fac_f*VS(3,i), ...
+                      fac_f*VS(1,i),        fac_f*VS(2,i),        fac_f*VS(3,i));
+    else,   f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
+                      fac_f*VS(1,i), fac_f*VS(2,i), fac_f*VS(3,i));
+    end
+    set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
+    if norm(MS(i))>1e-8  % plot the vector moment as a double headed arrow
+       f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
+                 fac_f*MS(1,i), fac_f*MS(2,i), fac_f*MS(3,i));
+      set(f,'MaxHeadSize',10000,'linewidth',3,'color','g');
+      fac_m=1.5*fac_f
+      f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
+                 fac_m*MS(1,i), fac_m*MS(2,i), fac_m*MS(3,i));
+      set(f,'MaxHeadSize',10000,'linewidth',3,'color','g');
+    end
+  end
+  view(-75.3,6.05)
 end
+axis tight
 end % function RR_Plot_Frame
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function RR_drawcircle2(loc,r,w,c,deg_min,deg_max)

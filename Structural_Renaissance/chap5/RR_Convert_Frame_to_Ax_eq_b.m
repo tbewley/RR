@@ -15,6 +15,8 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M);
 %         M=moments on all m members, default=[]
 % OUTPUTS: A,b = matrix, vector defining the Ax=b problem to be solved at equilibrium
 % NOTE: use a separate fixed node for every member with an end fixed (they could be collocated)
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 if nargin<6, S=[]; if nargin<5, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
@@ -29,14 +31,13 @@ VP=sym('vp%d_%d',[d,p]);
 VR(2,:)=sym('vr',[1,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
 VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS]
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
-if s>0, CT=C'
+if s>0, CT=C';
   if d==2, MS=sym('ms',[1,s]); else, MS=sym('ms',[3,s]); end
-  q+p+r
 end
 
 % Below is the guts of the calculation.  We will seek the {F,VP,VR,VS,MS} s.t. sys=0.
 % We first set up to set the sum of the forces at each node n equal to zero
-temp=reshape(sum(F,2),2,[])-W;
+temp=reshape(sum(F,2),d,[])-W;
 sys=reshape(temp,numel(temp),1);
 % We then set up to set the sum of the forces on each member m equal to zero
 temp=sum(F,3);
@@ -63,7 +64,8 @@ for i=1:s, if d==2,   exp="syms ms"+i;       eval(exp);
      else, for k=1:d, exp="syms ms"+k+"_"+i; eval(exp); end
 end, end
 
-sys
+sys, disp('The solver sets up the eqns listed above, with the variables as shown,')
+     disp('in the form Ax=b, then looks for a solution such the sys=0.'), disp(' ')
 
 % set up a symbolic equationsToMatrix command in SYS
 SYS='equationsToMatrix(['; for i=1:eqns, SYS=SYS+"sys("+i+")==0";
@@ -80,8 +82,6 @@ for i=1:s, for k=1:d, SYS=SYS+",vs"+k+"_"+i; end, end
 for i=1:s, if d==2,         SYS=SYS+",ms"+i;       
            else, for k=1:d, SYS=SYS+",ms"+k+"_"+i; end, end, end
 SYS=SYS+"])";
-
-SYS
 
 % finally, execute the symbolic equationsToMatrix command assembled above
 [A,b]=eval(SYS);

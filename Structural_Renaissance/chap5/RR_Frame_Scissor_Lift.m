@@ -1,5 +1,8 @@
 % script RR_Frame_Scissor_Lift.m
 % First, determine the locations of the nodes of the scissor lift (in meters)
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 L=1; phi=65, L1=0.2*L; L2=0.05*L; P2x=0.35*L; P2y=-0.25*L;
 W=L*cosd(phi); H=L*sind(phi);
 P=[ 0 P2x;  % Columns denote (x,y) locations of each of the p=2 Pinned supports

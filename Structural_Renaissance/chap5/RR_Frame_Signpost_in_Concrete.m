@@ -1,5 +1,8 @@
 % script RR_Frame_Signpost_in_Concrete.m
 % First, determine the locations of the nodes of the Signpost (in meters)
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 P=[]; R=[];  % No Pinned or Roller supports in this case
 S=[ 0;       % Columns denote (x,y) locations of each of the s=1 Fixed support
     0];

@@ -8,7 +8,7 @@ P=[ 0 20;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (nor
 Q=[10   5   15  ;    % Locations of each of the n=3 free nodes (normalized)
     0 8.66 8.66];
 U=[ 0  0  0;    % External forces on the n free nodes of the truss (normalized)
-   -1  0  0]*100;
+   -1  0  0];
   % m1 m2 m3 m4 m5 m6 m7 
 CT=[ 1  1  1  1  0  0  0;  % q_1 Connectivity of the truss
      0  0 -1  0  1  1  0;  % q_2 Note: each of the m=7 columns of C^T

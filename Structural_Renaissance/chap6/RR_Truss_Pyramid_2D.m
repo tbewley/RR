@@ -40,7 +40,7 @@ for i=1:3
   C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
   % Then, solve for the tensile and compressive forces x in the truss, assuming no pretension
   x=pinv(A)*b;      % This implements (16.4b)... but, does it solve A*x=b?
-  r=rank(A), x, A_times_x=A*x, b, error=norm(A*x-b)        % Let's check!!
+  r=rank(A), error=norm(A*x-b)        % Let's check!!
 
   % Finally, plot the truss (blue = tension, red = compression)
   if error<1e-10, figure(1); clf; RR_Plot_Truss(Q,P,C,U,x); axis equal, end

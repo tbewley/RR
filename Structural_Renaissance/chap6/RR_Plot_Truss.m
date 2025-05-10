@@ -2,7 +2,6 @@ function RR_Plot_Truss(Q,P,C,U,x);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clf, hold on
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       
 for i=1:m; D(:,i)=M(:,i)/norm(M(:,i)); end
@@ -14,22 +13,21 @@ end
 for i=1:p
   fprintf('Reaction force at pinned node #%d: %0.5g N\n',i,norm(VP(:,i)))
 end
-t1=sum(U,2);
-fprintf('Sum of all applied forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
-t1=sum(VP,2);
-fprintf('Sum of all reaction forces in (x,y) = (%0.5g, %0.5g) N\n',t1(1),t1(2))
 for i=1:m
-  if x(i)>0, fprintf('Pure tension in member #%d = %0.5g N\n',i,x(i))
+  if x(i)>0, fprintf('Pure tension     in member #%d = %0.5g N\n',i,x(i))
   else,      fprintf('Pure compression in member #%d = %0.5g N\n',i,abs(x(i))), end
 end
 mx=max(x); fprintf('maximum tension (red, bold)      = %0.5g\n',mx)
 mn=min(x); fprintf('maximum compression (blue, bold) = %0.5g\n',abs(mn))
 fac_b=1*(max(max(N))-min(min(N))); fac_f=0.1/max(max([U VP]))*fac_b; 
-
-figure(1), axis equal, axis tight, grid, hold on, h=max(Q(2,:));
-if d==2
-  fill(P(1,1)+[-.035 0 .035]*fac_b,P(2,1)+[-.05 0 -.05]*fac_b,'k-')
-  fill(P(1,2)+[-.035 0 .035]*fac_b,P(2,2)+[-.05 0 -.05]*fac_b,'k-')
+figure(1), clf, axis equal, axis tight, grid, hold on, h=max(Q(2,:));
+if d==2 % plot d=2 (2D) case
+  t1=sum(U,2);  t2=sum(VP,2);
+  fprintf('Sum of all applied  forces in (x,y) = (%+0.5g, %+0.5g) N\n',t1(1),t1(2))
+  fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g) N\n',t2(1),t2(2))
+  for i=1:p          % plot little triangles at pinned support points
+    fill(P(1,i)+fac_b*[-.035 0 .035],P(2,i)+fac_b*[-.05 0 -.05],'k-')
+  end
   for i=1:m
     [i1,d1]=max(C(i,:)); [i2,d2]=min(C(i,:));  lw=3; 
     if x(i)<-0.01,    sy='b-'; if x(i)<mn*0.9, lw=6; end
@@ -53,10 +51,13 @@ if d==2
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
-else % d=3 case
-  fac_b=fac_b*0.07; fac_f=fac_f*2; 
-  for i=1:p, RR_Plot_Pyramid(P(:,i),fac_b), end
-  for i=1:m
+else % plot d=3 (3D) case
+  t1=sum(U,2);  t2=sum(VP,2);
+  fprintf('Sum of all applied  forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t1(1),t1(2),t1(3))
+  fprintf('Sum of all reaction forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t2(1),t2(2),t2(3))
+  fac_b=fac_b*0.07; fac_f=fac_f*2;                   % Tweak the scale factors for 3D
+  for i=1:p, RR_Plot_Pyramid(P(:,i),fac_b), end      % Plot the pyramids
+  for i=1:m                                          % 
     [i1,d1]=max(C(i,:)); [i2,d2]=min(C(i,:));  lw=3; 
     if x(i)<-0.01,    sy='b-'; if x(i)<mn*0.9, lw=6; end
     elseif x(i)>0.01, sy='r-'; if x(i)>mx*0.9, lw=6; end

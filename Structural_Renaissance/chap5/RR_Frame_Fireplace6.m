@@ -1,5 +1,8 @@
 % script RR_Frame_Fireplace6.m
 % Locations of the fixed nodes of the truss (normalized units) 
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 P=[10  10;  % Columns denote (x,y) locations of each of the p=2 pinned supports
     1 -1];
 Q=[ -2  -2   0  2  2  4  6  6  8;    % Locations of each of the n=6 free nodes
