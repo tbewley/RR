@@ -3,10 +3,10 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-P=[ 0 1.5  1.5;  % Columns denote (x,y) locations of each of the p=3 Pinned support
+P=[ 0 1.5  1.5;  % Columns denote (x,y,z) locations of each of the p=3 Pinned support
     0  1   -1;
     0  0    0]
-Q=[ 0 0 -2 1;   % (x,y) locations of the n=4 free nodes
+Q=[ 0 0 -2 1;   % (x,y,z) locations of the n=4 free nodes
     0 0  0 0;
     3 4  3 3];  
 U=[ 0 0 .2 0;   % External forces applied to each of the n=4 free nodes (in Newtons)

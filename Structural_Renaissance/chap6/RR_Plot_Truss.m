@@ -1,8 +1,11 @@
-function RR_Plot_Truss(Q,P,C,U,x);
+function RR_Plot_Truss(Q,P,C,U,x,flip_vp,flip_p,flip_u);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 N=[Q P]; [m,n]=size(C); [d,q]=size(Q); [d,p]=size(P);
+if nargin<6 | length(flip_vp)~=p, flip_vp=ones(1,p); end
+if nargin<7 | length(flip_p )~=p, flip_p =ones(1,p); end
+if nargin<8 | length(flip_u )~=q, flip_u =ones(1,q); end
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       
 for i=1:m; D(:,i)=M(:,i)/norm(M(:,i)); end
 VP=D*diag(x)*CP % Compute reaction forces
@@ -44,7 +47,7 @@ if d==2 % plot d=2 (2D) case
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
   for i=1:p
-    if h>0
+    if h*flip_vp>0
       f=quiver(P(1,i)-fac_f*VP(1,i),P(2,i)-fac_f*VP(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
     else
       f=quiver(P(1,i),P(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
@@ -65,19 +68,22 @@ else % plot d=3 (3D) case
     plot3([N(1,d1) N(1,d2)],[N(2,d1) N(2,d2)],[N(3,d1) N(3,d2)],sy,"LineWidth",lw)
   end
   for i=1:q
-    if h>0, f=quiver3(Q(1,i)-fac_f*U(1,i), Q(2,i)-fac_f*U(2,i), Q(3,i)-fac_f*U(3,i), ...
-                      fac_f*U(1,i),        fac_f*U(2,i),        fac_f*U(3,i),0);
-    else,   f=quiver3(Q(1,i),       Q(2,i),       Q(3,i), ...
-                      fac_f*U(1,i), fac_f*U(2,i), fac_f*U(3,i),0);
+    if flip_u(i)>0
+      f=quiver3(Q(1,i)-fac_f*U(1,i), Q(2,i)-fac_f*U(2,i), Q(3,i)-fac_f*U(3,i), ...
+                fac_f*U(1,i),        fac_f*U(2,i),        fac_f*U(3,i),0);
+    else
+      f=quiver3(Q(1,i),       Q(2,i),       Q(3,i), ...
+                fac_f*U(1,i), fac_f*U(2,i), fac_f*U(3,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
   for i=1:p
-    if h*VP(3,i)>0,
-            f=quiver3(P(1,i)-fac_f*VP(1,i), P(2,i)-fac_f*VP(2,i), P(3,i)-fac_f*VP(3,i), ...
-                      fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i),0);
-    else,   f=quiver3(P(1,i),        P(2,i),        P(3,i), ...
-                      fac_f*VP(1,i), fac_f*VP(2,i), fac_f*VP(3,i),0);
+    if flip_vp(i)>0,
+        f=quiver3(P(1,i)-fac_f*VP(1,i), P(2,i)-fac_f*VP(2,i), P(3,i)-fac_f*VP(3,i), ...
+                  fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i));
+    else,   
+        f=quiver3(P(1,i),        P(2,i),        P(3,i), ...
+                  fac_f*VP(1,i), fac_f*VP(2,i), fac_f*VP(3,i));
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end

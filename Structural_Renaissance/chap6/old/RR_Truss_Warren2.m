@@ -4,17 +4,17 @@
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 % First, do 2D version:
-P=[ 0 20;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (SI units)
+P=[ 0 20;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (normalized)
     0  0];
-Q=[10   5   15  ; % (x,y) locations of each of the n=3 free nodes (SI units)
+Q=[10   5   15  ; % Locations of each of the n=3 free nodes (normalized)
     0 8.66 8.66];
-U=[ 0  0  0;      % External forces on the n free nodes of the truss (SI units)
+U=[ 0  0  0;      % External forces on the n free nodes of the truss (normalized)
    -1  0  0];
   % m1 m2 m3 m4 m5 m6 m7 
-CT=[ 1  1  0  0  1  1  0;  % q_1 Connectivity of the truss
-     0  0  1  1 -1  0  0;  % q_2 Note: each of the m=7 columns of C^T
-     0  0 -1  0  0 -1  1;  % q_3 has exactly one entry equal to +1 and one equal to -1
-    -1  0  0 -1  0  0  0;  % p_1 
+CT=[ 1  1  1  1  0  0  0;  % q_1 Connectivity of the truss
+     0  0 -1  0  1  1  0;  % q_2 Note: each of the m=7 columns of C^T
+     0  0  0 -1 -1  0  1;  % q_3 has exactly one entry equal to +1 and one equal to -1
+    -1  0  0  0  0 -1  0;  % p_1 
      0 -1  0  0  0  0 -1]; % p_2
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
@@ -34,15 +34,15 @@ Q=[10  5   15   10  5   15;  % Locations of the n=6 free nodes (SI units)
 U=[ 0  0    0    0  0    0;  % External forces on the n=6 free nodes (SI units)
     0  0    0    0  0    0;
  -500  0    0 -500  0    0];   
-CT=[ 1  1  0  0  1  1  0  0  0  0  0  0  0  0  1  0  0;  % q_1 Connectivity
-     0  0  1  1 -1  0  0  0  0  0  0  0  0  0  0  1  0;  % q_2
-     0  0 -1  0  0 -1  1  0  0  0  0  0  0  0  0  0  1;  % q_3 
-     0  0  0  0  0  0  0  1  1  0  0  1  1  0 -1  0  0;  % q_4
-     0  0  0  0  0  0  0  0  0  1  1 -1  0  0  0 -1  0;  % q_5
-     0  0  0  0  0  0  0  0  0 -1  0  0 -1  1  0  0 -1;  % q_6
-    -1  0  0 -1  0  0  0  0  0  0  0  0  0  0  0  0  0;  % p_1
+CT=[ 1  1  1  1  0  0  0  0  0  0  0  0  0  0  1  0  0;  % q_1 Connectivity
+     0  0 -1  0  1  1  0  0  0  0  0  0  0  0  0  1  0;  % q_2
+     0  0  0 -1 -1  0  1  0  0  0  0  0  0  0  0  0  1;  % q_3 
+     0  0  0  0  0  0  0  1  1  1  1  0  0  0 -1  0  0;  % q_4
+     0  0  0  0  0  0  0  0  0 -1  0  1  1  0  0 -1  0;  % q_5
+     0  0  0  0  0  0  0  0  0  0 -1 -1  0  1  0  0 -1;  % q_6
+    -1  0  0  0  0 -1  0  0  0  0  0  0  0  0  0  0  0;  % p_1
      0 -1  0  0  0  0 -1  0  0  0  0  0  0  0  0  0  0;  % p_2
-     0  0  0  0  0  0  0 -1  0  0 -1  0  0  0  0  0  0;  % p_3
+     0  0  0  0  0  0  0 -1  0  0  0  0 -1  0  0  0  0;  % p_3
      0  0  0  0  0  0  0  0 -1  0  0  0  0 -1  0  0  0]; % p_4
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
@@ -122,8 +122,6 @@ CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0;  % q_1 Connectivi
     0 0 0 0 0 0 m 0 0 m 0 0 0 0 0 0 0 0 0 0 0 0 0 0 m 0 0 m 0;  % p_3
     0 0 0 0 0 0 0 0 m 0 m 0 0 0 0 0 0 0 0 0 0 0 0 m 0 0 0 0 m]; % p_4
 CT=abs(CT); C=CT';
-% The following applies some pretension
-% ?
 % Now, convert the linear eqns for computing the interior forces in the frame
 % into standard A*x=u form
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P); 
@@ -131,6 +129,6 @@ CT=abs(CT); C=CT';
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else,
     RR_Plot_Frame(Q,C,U,x,P,[],[],[],[],[],[m m m m m m m m m m])
-end, view(19.23,10.15), print -dpdf Warren2_3D_rigid1.pdf, pause
+end, view(19.23,10.15), pause,
 
-view(82.40,5.17), print -dpdf Warren2_3D_rigid2.pdf
+view(82.40,5.17)

@@ -1,10 +1,13 @@
-function RR_Plot_Frame(Q,C,U,x,P,R,S,M);
+function RR_Plot_Frame(Q,C,U,x,P,R,S,M,flip_vp,flip_p,flip_u);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 if nargin<7, S=[]; if nargin<6, R=[]; if nargin<5, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
 if nargin<8, M=zeros(1,m); end
+if nargin<9  | length(flip_vp)~=p, flip_vp=ones(1,p); end
+if nargin<10 | length(flip_p )~=p, flip_p =ones(1,p); end
+if nargin<11 | length(flip_u )~=q, flip_u =ones(1,q); end
 
 F(1:m,1:n,1:d)=0;    % extract nonzero forces on members at nodes from x
 for i=1:m, for j=1:n, if C(i,j)==1, for k=1:d, F(i,j,k)=x(1); x=x(2:end); end,end,end,end
@@ -19,13 +22,24 @@ for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
 end, end
 
 % print out the tension in compression in the 2-force members (only) 
-for i=1:m, if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2);
-  f1=reshape(F(i,j(1),:),1,[]); f2=reshape(F(i,j(2),:),1,[]);
-  t2=norm((N(:,j(1))+f1)-(N(:,j(2))+f2));
-  t3=norm((N(:,j(1))-f1)-(N(:,j(2))-f2));
-  if t2>t3, fprintf('Pure tension     in member #%d = %0.5g N\n',i,norm(f1))
-  else,     fprintf('Pure compression in member #%d = %0.5g N\n',i,norm(f1)), end
-end, end
+sc=0;
+for i=1:m
+  if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2); sw(i)=3,
+    f1=reshape(F(i,j(1),:),1,[]); f2=reshape(F(i,j(2),:),1,[]);
+    t2=norm((N(:,j(1))+f1)-(N(:,j(2))+f2));
+    t3=norm((N(:,j(1))-f1)-(N(:,j(2))-f2));
+    if t2>t3, fprintf('Pure tension     in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='b-';
+    else,     fprintf('Pure compression in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='b-'; end
+  else
+    sw(i)=6,
+    switch mod(sc,2)
+      case 0, sy(i,:)='g-';
+      case 1, sy(i,:)='c-';
+      case 2, sy(i,:)='m-';
+      case 3, sy(i,:)='k-'; 
+    end; sc=sc+1;
+  end
+end
 for i=1:size(U,2),
   fprintf('Externally-applied load at free node #%d: %0.5g N\n',i,norm(U(:,i)))
 end
@@ -68,20 +82,13 @@ else
   for i=1:s, RR_Plot_Cube(S(:,i),fac_b*.05), end 
 end
 [row,col] = find(C'); % This finds the row and col of nonzero entries of C'
+
 member=0;
 for i=1:length(row)   % This plots the members of the structure in both 2D and 3D.
-  switch mod(col(i),6)
-    case 1, sy='b-';
-    case 2, sy='g-';
-    case 3, sy='r-';
-    case 4, sy='c-';
-    case 5, sy='m-';
-    case 0, sy='k-'; 
-  end
   newx=N(1,row(i)); newy=N(2,row(i)); if d==3, newz=N(3,row(i)); end 
   if col(i)>member, member=member+1;
-  else, if d==2, plot([lastx newx],[lasty newy],sy,"LineWidth",6);
-        else     plot3([lastx newx],[lasty newy],[lastz newz],sy,"LineWidth",6); end
+  else, if d==2, plot([lastx newx],[lasty newy],sy(member,:),"LineWidth",sw(member));
+        else     plot3([lastx newx],[lasty newy],[lastz newz],sy(member,:),"LineWidth",sw(member)); end
   end
   lastx=newx; lasty=newy; if d==3, lastz=newz; end 
 end
@@ -89,9 +96,9 @@ end
 if d==2              % this handles the rest of the d=2 (2D) case
   t1=sum(U,2);  t2=sum([VP VR VS],2);
   fprintf('Sum of all applied  forces in (x,y) = (%+0.5g, %+0.5g) N\n',t1(1),t1(2))
-  fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g) N\n',t2(1),t2(2))
-  h=-1; for i=1:q
-    if h>0
+  if p+r+s>0, fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g) N\n',t2(1),t2(2)), end
+  for i=1:q
+    if flip_u(i)>0
       f=quiver(N(1,i),N(2,i),fac_f*U(1,i),fac_f*U(2,i),0);
     else
       f=quiver(N(1,i)-fac_f*U(1,i),N(2,i)-fac_f*U(2,i),fac_f*U(1,i),fac_f*U(2,i),0);
@@ -129,54 +136,55 @@ if d==2              % this handles the rest of the d=2 (2D) case
       plot([x x+r/4],[y y+r/2], 'r','LineWidth',3)
     end
   end
-else              % this handles the rest of the d=3 (2D) case
+else              % this handles the rest of the d=3 (3D) case
   t1=sum(U,2);  t2=sum([VP VR VS],2);
   fprintf('Sum of all applied  forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t1(1),t1(2),t1(3))
-  fprintf('Sum of all reaction forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t2(1),t2(2),t2(3))
+  if p+r+s>0, fprintf('Sum of all reaction forces in (x,y,z) = (%+0.5g, %+0.5g, %+0.5g) N\n',t2(1),t2(2),t2(3)), end
   fac_b=fac_b*0.07; fac_f=fac_f*2;                   % Tweak the scale factors for 3D
 
   for i=1:q
-    if h>0, f=quiver3(Q(1,i)-fac_f*U(1,i), Q(2,i)-fac_f*U(2,i), Q(3,i)-fac_f*U(3,i), ...
-                      fac_f*U(1,i),        fac_f*U(2,i),        fac_f*U(3,i));
+     if flip_u(i)>0
+            f=quiver3(Q(1,i)-fac_f*U(1,i), Q(2,i)-fac_f*U(2,i), Q(3,i)-fac_f*U(3,i), ...
+                      fac_f*U(1,i),        fac_f*U(2,i),        fac_f*U(3,i),0);
     else,   f=quiver3(Q(1,i),       Q(2,i),       Q(3,i), ...
-                      fac_f*U(1,i), fac_f*U(2,i), fac_f*U(3,i));
+                      fac_f*U(1,i), fac_f*U(2,i), fac_f*U(3,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
   for i=1:p
     if hp(i)>0
       f=quiver3(P(1,i)-fac_f*VP(1,i), P(2,i)-fac_f*VP(2,i), P(3,i)-fac_f*VP(3,i), ...
-                       fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i));
+                       fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i),0);
     else
       f=quiver3(P(1,i),        P(2,i),        P(3,i), ...
-                fac_f*VP(1,i), fac_f*VP(2,i), fac_f*VP(3,i));
+                fac_f*VP(1,i), fac_f*VP(2,i), fac_f*VP(3,i),0);
     end      
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
   for i=1:r
     if h*VR(3,i)>0,
             f=quiver3(R(1,i)-fac_f*VR(1,i), R(2,i)-fac_f*VR(2,i), R(3,i)-fac_f*VR(3,i), ...
-                      fac_f*VR(1,i),        fac_f*VR(2,i),        fac_f*VR(3,i));
+                      fac_f*VR(1,i),        fac_f*VR(2,i),        fac_f*VR(3,i),0);
     else,   f=quiver3(R(1,i),        R(2,i),        R(3,i), ...
-                      fac_f*VR(1,i), fac_f*VR(2,i), fac_f*VR(3,i));
+                      fac_f*VR(1,i), fac_f*VR(2,i), fac_f*VR(3,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
   for i=1:s
     if h*VS(3,i)>0,
             f=quiver3(S(1,i)-fac_f*VS(1,i), S(2,i)-fac_f*VS(2,i), S(3,i)-fac_f*VS(3,i), ...
-                      fac_f*VS(1,i),        fac_f*VS(2,i),        fac_f*VS(3,i));
+                      fac_f*VS(1,i),        fac_f*VS(2,i),        fac_f*VS(3,i),0);
     else,   f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
-                      fac_f*VS(1,i), fac_f*VS(2,i), fac_f*VS(3,i));
+                      fac_f*VS(1,i), fac_f*VS(2,i), fac_f*VS(3,i),0);
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
     if norm(MS(i))>1e-8  % plot the vector moment as a double headed arrow
        f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
-                 fac_f*MS(1,i), fac_f*MS(2,i), fac_f*MS(3,i));
+                 fac_f*MS(1,i), fac_f*MS(2,i), fac_f*MS(3,i),0);
       set(f,'MaxHeadSize',10000,'linewidth',3,'color','g');
       fac_m=1.5*fac_f
       f=quiver3(S(1,i),        S(2,i),        S(3,i), ...
-                 fac_m*MS(1,i), fac_m*MS(2,i), fac_m*MS(3,i));
+                 fac_m*MS(1,i), fac_m*MS(2,i), fac_m*MS(3,i),0);
       set(f,'MaxHeadSize',10000,'linewidth',3,'color','g');
     end
   end
