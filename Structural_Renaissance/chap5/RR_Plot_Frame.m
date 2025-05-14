@@ -112,7 +112,11 @@ if d==2              % this handles the rest of the d=2 (2D) case
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
   for i=1:p
-    f=quiver(P(1,i)-fac_f*VP(1,i),P(2,i)-fac_f*VP(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
+    if flip_u(i)>0
+      f=quiver(P(1,i),P(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
+    else
+      f=quiver(P(1,i)-fac_f*VP(1,i),P(2,i)-fac_f*VP(2,i),fac_f*VP(1,i),fac_f*VP(2,i),0);
+    end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
   h=-1; for i=1:r
@@ -158,7 +162,7 @@ else              % this handles the rest of the d=3 (3D) case
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','m');
   end
   for i=1:p
-    if hp(i)>0
+    if flip_vp(i)>0
       f=quiver3(P(1,i)-fac_f*VP(1,i), P(2,i)-fac_f*VP(2,i), P(3,i)-fac_f*VP(3,i), ...
                        fac_f*VP(1,i),        fac_f*VP(2,i),        fac_f*VP(3,i),0);
     else
