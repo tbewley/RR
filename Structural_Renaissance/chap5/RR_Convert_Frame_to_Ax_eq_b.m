@@ -1,4 +1,4 @@
-function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,R,S,M,tension); 
+function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension,R,S,M); 
 % Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
 % INPUTS: Q=matrix with columns defining locations of the FREE nodes 
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
@@ -18,9 +18,10 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,R,S,M,tension);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-if nargin<6, S=[]; if nargin<5, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
+if nargin<7, S=[]; if nargin<6, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
+if nargin<5, tension=[]; end
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
-if nargin<7, if d==2, M=zeros(1,m); else, M=zeros(3,m); end, end
+if nargin<8, if d==2, M=zeros(1,m); else, M=zeros(3,m); end, end
 if n~=q+p+r+s, error('wrong number of nodes in C'), end
 
 % Set up symbolic matrix F, the nonzero elements of which are the forces applied

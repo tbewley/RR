@@ -117,7 +117,7 @@ tension=[1 10 18 19 20 21 22 23 24 25 26 27 28 29; ...
 CT=abs(CT); C=CT';
 % Now, convert the linear eqns for computing the interior forces in the frame
 % into standard A*x=u form
-[A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,[],[],[],tension); 
+[A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension); 
 % Then, solve for the interior forces in the frame
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else,
