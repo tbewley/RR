@@ -1,4 +1,4 @@
-function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M); 
+function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,R,S,M,tension); 
 % Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
 % INPUTS: Q=matrix with columns defining locations of the FREE nodes 
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
@@ -28,7 +28,7 @@ if n~=q+p+r+s, error('wrong number of nodes in C'), end
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
 % Set up symbolic matrices for the (TBD) reaction forces at the pinned, roller, & fixed supports
 VP=sym('vp%d_%d',[d,p]);
-VR(2,:)=sym('vr',[1,r]); VR(1,:)=0; if d==3, VR(3,:)=0; end
+VR(2,:)=sym('vr',[1,r]); if r>0, VR(1,:)=0; if d==3, VR(3,:)=0; end, end
 VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS]
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
 if s>0, CT=C';
@@ -51,10 +51,10 @@ end, Mm(:,i)=t+M(:,i); end
 for i=1:s, [temp,j]=max(CT(q+p+r+i,:)); Mm(:,j)=Mm(:,j)+MS(:,i); end
 sys=[sys; reshape(Mm,numel(Mm),1)];
 
-[rows,cols]=size(pretension); % Apply pretensioning
+[rows,cols]=size(tension); % Apply pretensioning
 for i=1:cols
-  [t1,j]=maxk(C(pretension(1,i),:),2); xa=N(:,j(1));  xb=N(:,j(2));
-  sys=[sys; (pretension(2,i)*(xa-xb)/norm(xa-xb) - F(:,pretension(1,i),j(1)))];
+  [t1,j]=maxk(C(tension(1,i),:),2); xa=N(:,j(1));  xb=N(:,j(2));
+  sys=[sys; (tension(2,i)*(xa-xb)/norm(xa-xb) - F(:,tension(1,i),j(1)))];
 end
 eqns=length(sys);
 
