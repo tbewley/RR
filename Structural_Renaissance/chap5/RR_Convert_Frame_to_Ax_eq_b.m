@@ -1,6 +1,6 @@
 function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M); 
 % Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
-% INPUTS: Q=matrix with columns defining locations of the FREE nodes
+% INPUTS: Q=matrix with columns defining locations of the FREE nodes 
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
 %           a 1 in each of the n columns that is connected to that member,
 %           and a 0 in each of the other columns on that row, with nodes N=[Q P R S]
@@ -18,8 +18,6 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-pretension=[1 10 18 19 20 21 22 23 24 25 26 27 28 29; ...
-            0 0  10 10 10 10 10 10 10 10 10 10 0  0];
 if nargin<6, S=[]; if nargin<5, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
 if nargin<7, if d==2, M=zeros(1,m); else, M=zeros(3,m); end, end
