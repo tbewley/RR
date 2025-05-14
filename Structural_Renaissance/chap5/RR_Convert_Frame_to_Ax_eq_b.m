@@ -3,8 +3,8 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M);
 % INPUTS: Q=matrix with columns defining locations of the FREE nodes
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
 %           a 1 in each of the n columns that is connected to that member,
-%           and a 0 in each of the other columns on that row
-%         U=forces on all nodes, N=[Q P R S]
+%           and a 0 in each of the other columns on that row, with nodes N=[Q P R S]
+%         U=forces on all nodes
 %         P=matrix with columns defining locations of the PINNED support nodes, default=[]
 %              (with reaction forces resisting motion in ALL directions)
 %         R=matrix with columns defining locations of the ROLLER support nodes, default=[]
@@ -18,6 +18,8 @@ function [A,b]=RR_Convert_Frame_to_Ax_eq_b_new(Q,C,U,P,R,S,M);
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
+pretension=[1 10 18 19 20 21 22 23 24 25 26 27 28 29; ...
+            0 0  10 10 10 10 10 10 10 10 10 10 0  0];
 if nargin<6, S=[]; if nargin<5, R=[]; if nargin<4, P=[]; end, end, end, N=[Q P R S];
 [m,n]=size(C); [ds,s]=size(S); [dr,r]=size(R); [dp,p]=size(P); [d,q]=size(Q);
 if nargin<7, if d==2, M=zeros(1,m); else, M=zeros(3,m); end, end
@@ -43,14 +45,20 @@ sys=reshape(temp,numel(temp),1);
 temp=sum(F,3);
 sys=[sys; reshape(temp,numel(temp),1)];
 % We then set up to set the sum of the moments (QxF) on each member i=1..m equal to zero
-% note: in 2D, (qxf)_z=q1*f2-q2*f1, in 3D, just use cross(q,f)
+% note: in 2D, (qxf)_z=q1*f2-q2*f1, in 3D, we just use cross(q,f)
 for i=1:m, if d==2, t=0; else, t=[0; 0; 0]; end, for j=1:n,
   if d==2, t=t+N(1,j)*F(2,i,j)-N(2,j)*F(1,i,j);
   else,    t=t+cross(N(:,j),F(:,i,j));      end
 end, Mm(:,i)=t+M(:,i); end
 for i=1:s, [temp,j]=max(CT(q+p+r+i,:)); Mm(:,j)=Mm(:,j)+MS(:,i); end
+sys=[sys; reshape(Mm,numel(Mm),1)];
 
-sys=[sys; reshape(Mm,numel(Mm),1)];  eqns=length(sys);
+[rows,cols]=size(pretension); % Apply pretensioning
+for i=1:cols
+  [t1,j]=maxk(C(pretension(1,i),:),2); xa=N(:,j(1));  xb=N(:,j(2));
+  sys=[sys; (pretension(2,i)*(xa-xb)/norm(xa-xb) - F(:,pretension(1,i),j(1)))];
+end
+eqns=length(sys);
 
 % Now, set up the nonzero fk_i_j, vpk_i, vri, vsi, and ms as symbolic variables,
 % and convert SYS to A*x=b form

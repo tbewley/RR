@@ -19,10 +19,10 @@ CT=[ 1  1  0  0  1  1  0;  % q_1 Connectivity of the truss
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b;               % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
-axis tight, print -dpdf Warren2.pdf
-pause
+axis tight, % print -dpdf Warren2.pdf
+% pause
 
 % Then, do 3D version:
 P=[ 0 20  0 20;           % (x,y,z) locations of the p=4 fixed nodes (SI units)
@@ -33,7 +33,7 @@ Q=[10  5   15   10  5   15;  % Locations of the n=6 free nodes (SI units)
     0 8.66 8.66  0 8.66 8.66];
 U=[ 0  0    0    0  0    0;  % External forces on the n=6 free nodes (SI units)
     0  0    0    0  0    0;
- -500  0    0 -500  0    0];   
+ -500  0    0 -500  0    0]; m=-1;  
 CT=[ 1  1  0  0  1  1  0  0  0  0  0  0  0  0  1  0  0;  % q_1 Connectivity
      0  0  1  1 -1  0  0  0  0  0  0  0  0  0  0  1  0;  % q_2
      0  0 -1  0  0 -1  1  0  0  0  0  0  0  0  0  0  1;  % q_3 
@@ -49,8 +49,8 @@ C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U);
 % Then, just solve for the tension and compression in the members, and plot.
 x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
-axis tight, view(19.23,10.15), print -dpdf Warren2_3D.pdf
-pause,
+axis tight, view(19.23,10.15), % print -dpdf Warren2_3D.pdf
+% pause,
 
 m=-1
 CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 1 0 0;  % q_1 Connectivity of the truss
@@ -64,12 +64,13 @@ CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 1 0 0;  % q_1 Connectivity of th
     0 0 0 0 0 0 0 m 0 0 0 0 m 0 0 0 0 0 0 m 0 0 m 0 0;  % p_3
     0 0 0 0 0 0 0 0 m 0 0 0 0 m 0 0 0 0 0 0 m m 0 0 0]; % p_4
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
-C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
+SYS_EXTRA="x18-10==0,x19-10==0,x22-10==0,x23-10==0,x24-10==0,x25-10==0,", pause
+C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U,SYS_EXTRA); 
 % Then, just solve for the tension and compression in the members, and plot.
 x=pinv(A)*b;                 % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
-axis tight, view(19.23,10.15), print -dpdf Warren2_3D_extra2.pdf
-pause
+axis tight, view(19.23,10.15), % print -dpdf Warren2_3D_extra2.pdf
+% pause
 
 CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 1 0 0 0 0 0 0;  % q_1 Connectivity of the truss
     0 0 m 0 1 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0;  % q_2
@@ -82,9 +83,11 @@ CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 1 0 0 0 0 0 0;  % q_1 Connectivi
     0 0 0 0 0 0 0 m 0 0 0 0 m 0 0 0 0 0 0 m 0 0 m 0 0 0 0 m 0;  % p_3
     0 0 0 0 0 0 0 0 m 0 0 0 0 m 0 0 0 0 0 0 m m 0 0 0 0 0 0 m]; % p_4
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
-C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
+SYS_EXTRA="x18-10==0,x19-10==0,x22-10==0,x23-10==0,x24-10==0,x25-10==0,"+...
+          "x26-10==0,x27-10==0,x28-10==0,x29-10==0,", pause
+C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U,SYS_EXTRA); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b;                 % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b,                 % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, view(19.23,10.15), print -dpdf Warren2_3D_extra3.pdf
 pause
@@ -105,7 +108,7 @@ Q=[10   5    15 10   5    15   5*2/3   5*2/3   20-5*2/3   20-5*2/3    ;    % Loc
     0 8.66 8.66  0 8.66 8.66  8.66*2/3 8.66*2/3 8.66*2/3 8.66*2/3 ];
 U=[ 0 0 0  0 0 0 0 0 0 0;    % External forces on the n free nodes of the truss (normalized)
     0 0 0  0 0 0 0 0 0 0;
-   -1 0 0 -1 0 0 0 0 0 0];
+   -1 0 0 -1 0 0 0 0 0 0]*1000;
 
 CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0;  % q_1 Connectivity of the truss
     0 0 m 0 1 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0 0 0 0;  % q_2

@@ -24,14 +24,20 @@ end, end
 % print out the tension in compression in the 2-force members (only) 
 sc=0;
 for i=1:m
-  if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2); sw(i)=3,
-    f1=reshape(F(i,j(1),:),1,[]); f2=reshape(F(i,j(2),:),1,[]);
-    t2=norm((N(:,j(1))+f1)-(N(:,j(2))+f2));
-    t3=norm((N(:,j(1))-f1)-(N(:,j(2))-f2));
-    if t2>t3, fprintf('Pure tension     in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='b-';
-    else,     fprintf('Pure compression in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='b-'; end
+  if sum(C(i,:))==2, [m,j]=maxk(C(i,:),2); sw(i)=3;
+    f1=reshape(F(i,j(1),:),1,[]);
+    f2=reshape(F(i,j(2),:),1,[]);
+%    t2=norm(()+0.01*f1)-(N(:,j(2))+0.01*f2));
+%    t3=norm((N(:,j(1))-0.01*f1)-(N(:,j(2))-0.01*f2));
+    if norm(f1-f2)<1e-5;
+       fprintf('Two-force           member #%d nearly slack.\n',i),     sy(i,:)='k-';
+    elseif dot(N(:,j(1))-N(:,j(2)),f1-f2)>0
+       fprintf('Pure tension     in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='r-';
+    else
+       fprintf('Pure compression in member #%d = %0.5g N\n',i,norm(f1)), sy(i,:)='b-';
+    end
   else
-    sw(i)=6,
+    sw(i)=6;
     switch mod(sc,2)
       case 0, sy(i,:)='g-';
       case 1, sy(i,:)='c-';
