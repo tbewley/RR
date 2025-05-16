@@ -19,8 +19,8 @@ CT=[ 1  1  0  0  1  1  0;  % q_1 Connectivity of the truss
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b;               % This just implements (6.4b),  Assumes zero pretension!
-RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
+x=pinv(A)*b; error=norm(A*x-b) % This implements (6.4b). Assumes zero pretension!
+RR_Plot_Truss(Q,P,C,U,x);      % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, % print -dpdf Warren2.pdf
 pause
 
@@ -47,7 +47,7 @@ CT=[ 1  1  0  0  1  1  0  0  0  0  0  0  0  0  1  0  0;  % q_1 Connectivity
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b; error=norm(A*x-b) % This implements (6.4b). Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, view(19.23,10.15), % print -dpdf Warren2_3D.pdf
 pause,
@@ -67,7 +67,7 @@ tension=[18 19 22 23 24 25; ...  % set the tension in member number,
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U,tension); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b;                 % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b; error=norm(A*x-b)  % This implements (6.4b).
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, view(19.23,10.15), % print -dpdf Warren2_3D_extra2.pdf
 pause
@@ -87,9 +87,9 @@ tension=[18 19 22 23 24 25 26 27 28 29; ...  % set the tension in member number,
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U,tension); 
 % Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b,                 % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b; error=norm(A*x-b) % This implements (6.4b).
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
-axis tight, view(19.23,10.15), print -dpdf -fillpage Warren2_3D_extra3.pdf
+axis tight, view(19.23,10.15), % print -dpdf -fillpage Warren2_3D_extra3.pdf
 pause
 
 Q=[10   5    15 10   5    15   5*2/3   5*2/3   20-5*2/3   20-5*2/3    ;    % Locations of each of the n=8 free nodes (normalized)
@@ -122,6 +122,6 @@ CT=abs(CT); C=CT';
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else,
     RR_Plot_Frame(Q,C,U,x,P,[],[],[],[],[],[m m m m m m m m m m])
-end, view(19.23,10.15), print -dpdf -fillpage Warren2_3D_rigid1.pdf, pause
+end, view(19.23,10.15), % print -dpdf -fillpage Warren2_3D_rigid1.pdf, pause
 
-view(82.40,5.17), print -dpdf -fillpage Warren2_3D_rigid2.pdf
+view(82.40,5.17), % print -dpdf -fillpage Warren2_3D_rigid2.pdf

@@ -20,6 +20,7 @@ for i=1:s, for k=1:d, VS(k,i)=x(1);       x=x(2:end); end, end
 for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
+VP
 
 % print out the tension in compression in the 2-force members (only) 
 sc=0;
@@ -119,7 +120,7 @@ if d==2              % this handles the rest of the d=2 (2D) case
     end
     set(f,'MaxHeadSize',10000,'linewidth',3,'color','r');
   end
-  h=-1; for i=1:r
+  for i=1:r
     if h*sign(VR(2,i))>0
       f=quiver(R(1,i),R(2,i),fac_f*VR(1,i),fac_f*VR(2,i),0);
     else

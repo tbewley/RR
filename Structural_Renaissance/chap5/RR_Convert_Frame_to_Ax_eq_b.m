@@ -1,11 +1,10 @@
-function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension,R,S,M); 
+function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension,R,S,M)
 % Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
 % INPUTS: Q=matrix with columns defining locations of the FREE nodes 
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
 %           a 1 in each of the n columns that is connected to that member,
 %           and a 0 in each of the other columns on that row, with nodes N=[Q P R S]
 %         U=forces on all nodes
-%         P=matrix with columns defining locations of the PINNED support nodes, default=[]
 %              (with reaction forces resisting motion in ALL directions)
 %         R=matrix with columns defining locations of the ROLLER support nodes, default=[]
 %              (with reaction forces resisting motion in the VERTICAL (y) DIRECTION ONLY)
@@ -30,7 +29,7 @@ F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
 % Set up symbolic matrices for the (TBD) reaction forces at the pinned, roller, & fixed supports
 VP=sym('vp%d_%d',[d,p]);
 VR(2,:)=sym('vr',[1,r]); if r>0, VR(1,:)=0; if d==3, VR(3,:)=0; end, end
-VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS]
+VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS];
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
 if s>0, CT=C';
   if d==2, MS=sym('ms',[1,s]); else, MS=sym('ms',[3,s]); end
@@ -71,8 +70,9 @@ for i=1:s, if d==2,   exp="syms ms"+i;       eval(exp);
      else, for k=1:d, exp="syms ms"+k+"_"+i; eval(exp); end
 end, end
 
-sys, disp('The solver sets up the eqns listed above, with the variables as shown,')
-     disp('in the form Ax=b, then looks for a solution such the sys=0.'), disp(' ')
+% uncomment below for some interesting verbose output
+% sys, disp('The solver sets up the eqns listed above, with the variables as shown,')
+%      disp('in the form Ax=b, then looks for a solution such the sys=0.'), disp(' ')
 
 % set up a symbolic equationsToMatrix command in SYS
 SYS='equationsToMatrix(['; for i=1:eqns, SYS=SYS+"sys("+i+")==0";

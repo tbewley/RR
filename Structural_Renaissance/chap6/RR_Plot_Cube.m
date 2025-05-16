@@ -1,5 +1,5 @@
 function RR_Plot_Cube(a,s,c)
-% Draws a 3D rectangular prism below (in y direction) a point a with scale s and colorspec c
+% Draws a little 3D rectangular prism below a point a with scale s and colorspec c
 % TEST: figure(1), clf; RR_Plot_Cube([1 2 3],0.5,'k')
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE

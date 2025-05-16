@@ -8,6 +8,9 @@ if nargin<7 | length(flip_p )~=p, flip_p =ones(1,p); end
 if nargin<8 | length(flip_u )~=q, flip_u =ones(1,q); end
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       
 for i=1:m; D(:,i)=M(:,i)/norm(M(:,i)); end
+
+M, D, diag(x), CQ, CP
+
 VP=D*diag(x)*CP % Compute reaction forces
 
 for i=1:q
@@ -17,8 +20,10 @@ for i=1:p
   fprintf('Reaction force at pinned node #%d: %0.5g N\n',i,norm(VP(:,i)))
 end
 for i=1:m
-  if x(i)>0, fprintf('Pure tension     in member #%d = %0.5g N\n',i,x(i))
-  else,      fprintf('Pure compression in member #%d = %0.5g N\n',i,abs(x(i))), end
+  if norm(x(i))<1e-5;
+                 fprintf('Two-force           member #%d nearly slack.\n',i)
+  elseif x(i)>0, fprintf('Pure tension     in member #%d = %0.5g N\n',i,x(i))
+  else,          fprintf('Pure compression in member #%d = %0.5g N\n',i,abs(x(i))), end
 end
 mx=max(x); fprintf('maximum tension (red, bold)      = %0.5g\n',mx)
 mn=min(x); fprintf('maximum compression (blue, bold) = %0.5g\n',abs(mn))
@@ -35,7 +40,7 @@ if d==2 % plot d=2 (2D) case
     [i1,d1]=max(C(i,:)); [i2,d2]=min(C(i,:));  lw=3; 
     if x(i)<-0.01,    sy='b-'; if x(i)<mn*0.9, lw=6; end
     elseif x(i)>0.01, sy='r-'; if x(i)>mx*0.9, lw=6; end
-    else, sy='k-'; end
+    else,             sy='k-'; end
     plot([N(1,d1) N(1,d2)],[N(2,d1) N(2,d2)],sy,"LineWidth",lw)
   end
   for i=1:q
@@ -89,3 +94,4 @@ else % plot d=3 (3D) case
   end
   view(-75.3,6.05)
 end
+disp(' ')
