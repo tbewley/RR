@@ -1,5 +1,6 @@
 % script RR_Frame_4_Bar_Seesaw.m
-% Locations of the fixed nodes of the truss (normalized units) 
+% Locations of the fixed nodes of the truss (normalized units)
+
 lA=0.5; lB=1;   % Locations of the masses
 fyA=-1; fyB=-1; % Values of the externally-applied forces
 phi=10;         % Deflection of the frame, in degrees

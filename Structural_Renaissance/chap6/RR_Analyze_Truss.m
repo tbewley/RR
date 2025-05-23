@@ -1,6 +1,6 @@
 function [A,b]=RR_Analyze_Truss(Structure,Loads ,U,tension); 
-% Sets up an Ax=b problem to calculate the internal forces in a 2D or 3D
-% truss Structure with given Loads.
+% Sets up an Ax=b problem to calculate the internal forces in a 2D or 3D truss,
+% as defined in Structure with given Loads.
 % INPUTS: Structure.Q = free nodes
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
