@@ -1,14 +1,15 @@
-% Definitition of the geometry of the USAFA chapel (measurements in feet - sorry...)
-clear; s=7;        % s=2 to 17: number of sections of design being modelled. 
+% Geometry of USAFA chapel defined by just 5 numbers (measurements in feet - sorry)
+clear; s=3;        % s=2 to 17: number of sections of design being modelled. 
 L=75;              % length of long diagonal of tetrahedron
 d=21;              % depth of tetrahedron
 t=1.5;             % width of strips between tetrahedra (somewhere between 1.5 and 2)
-w=(17.5-2*t)/2;    % half width of tetrahedron
+inc=17.5;          % distance between spires
+%%%%%%%%%%%%%%%%%%%% Now set up 5 additional useful derived numbers
+w=(inc-2*t)/2;     % half width of tetrahedron
 phi=atan(d/L);     % angle of tetrahedron in the y-z plane
 H=sqrt(L^2-d^2);   % vertical height of tetrahedron 
 h2=(L/2)/cos(phi); % height of upper part of tetrahedron (note: h1+h2=H, h2>h1)
 h1=H-h2;           % height of lower part of tetrahedron
-inc=2*w+2*t;       % distance between spires 
 
 for i=1:s, P(:,i)  =[(i-1)*inc; +2*d; 0]; end         % + side supports
 for i=1:s, P(:,i+s)=[(i-1)*inc; -2*d; 0]; end, p=2*s; % - side supports
@@ -51,7 +52,7 @@ C(3,:)=[zeros(1, 7*s-3) ones(1,3*s-2) zeros(1,n-(10*s-5))];      % longitudinal 
 C(4,:)=[zeros(1,10*s-5) ones(1,3*s-1) zeros(1,n-(13*s-6))];      % longitudinal rod #4
 C(5,:)=[zeros(1,13*s-6) ones(1,3*s-1) zeros(1,n-(16*s-7))]; m=5; % longitudinal rod #5
 
-for i=1:s, C(m+1:m+8,:)=zeros(8,n); k=3*(i-1);     % The top double-tetrahedra
+for i=1:s, C(m+1:m+8,:)=zeros(8,n); k=3*(i-1);     % top double-tetrahedra
   C(m+1,i)=1;     C(m+1,4*s  +k)=1;
   C(m+2,i)=1;     C(m+2,7*s-2+k)=1;
   C(m+3,i)=1;     C(m+3,s+1  +k)=1;
@@ -62,7 +63,7 @@ for i=1:s, C(m+1:m+8,:)=zeros(8,n); k=3*(i-1);     % The top double-tetrahedra
   C(m+8,s+2+k)=1; C(m+8,7*s-2+k)=1; m=m+8;
 end
 
-for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % The lower + side tetrahedra
+for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % + side lower tetrahedra
   C(m+1,q+i)=1;      C(m+1,4*s  +k)=1;
   C(m+2,q+i)=1;      C(m+2,10*s-4+k)=1;
   C(m+3,q+i)=1;      C(m+3,10*s-3+k)=1;
@@ -70,7 +71,7 @@ for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % The lower + side tetrahedra
   C(m+5,10*s-3+k)=1; C(m+5,4*s  +k)=1; m=m+5;
 end
 
-for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % The lower - side tetrahedra
+for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % - side lower tetrahedra
   C(m+1,q+s+i)=1;    C(m+1, 7*s-2+k)=1;
   C(m+2,q+s+i)=1;    C(m+2,13*s-5+k)=1;
   C(m+3,q+s+i)=1;    C(m+3,13*s-4+k)=1;
@@ -78,7 +79,7 @@ for i=1:s, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);     % The lower - side tetrahedra
   C(m+5,13*s-4+k)=1; C(m+5, 7*s-2+k)=1; m=m+5;
 end
 
-for i=1:s-1, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % The middle + side inverted tetrahedra
+for i=1:s-1, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % + side inverted tetrahedra
   C(m+1,s+3+k)=1;   C(m+1,10*s-2+k)=1;
   C(m+2,s+3+k)=1;   C(m+2, 4*s+1+k)=1;
   C(m+3,s+3+k)=1;   C(m+3, 4*s+2+k)=1;
@@ -86,7 +87,7 @@ for i=1:s-1, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % The middle + side inverted 
   C(m+5,4*s+2+k)=1; C(m+5,10*s-2+k)=1; m=m+5;
 end
 
-for i=1:s-1, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % The middle - side inverted tetrahedra
+for i=1:s-1, C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % - side inverted tetrahedra
   C(m+1,s+3+k)=1;   C(m+1,13*s-3+k)=1;
   C(m+2,s+3+k)=1;   C(m+2, 7*s-1+k)=1;
   C(m+3,s+3+k)=1;   C(m+3, 7*s  +k)=1;
@@ -100,11 +101,10 @@ U=zeros(3,q); U(2,7*s-2+(3*((round((s+1)/2))-1)))=1;
 x=pinv(A)*b;
 RR_Plot_Frame(Q,C,U,x,P)
 
-% plot patches
-for i=1:s, k=3*(i-1);
+for i=1:s, k=3*(i-1);       % Now, plot the patches between the members
   for j=1:6
     switch j
-      case 1, a=i; b=s+1+k; r=4*s+k;         % top double-tetrahedra
+      case 1, a=i; b=s+1+k; r=4*s+k;            % top double-tetrahedra
       case 2, a=i; b=s+1+k; r=7*s-2+k;
       case 3, a=i; b=s+2+k; r=4*s+k;
       case 4, a=i; b=s+2+k; r=7*s-2+k;
@@ -115,7 +115,7 @@ for i=1:s, k=3*(i-1);
   end
   for j=1:4
     switch j
-      case 1, a=q+i;   b=4*s+k;    c=10*s-4+k;  % lower + side tetrahedra
+      case 1, a=q+i;   b=4*s+k;    c=10*s-4+k;  % + side lower tetrahedra
       case 2, a=q+i;   b=4*s+k;    c=10*s-3+k;  
       case 3, a=q+i;   b=10*s-4+k; c=10*s-3+k;
       case 4, a=4*s+k; b=10*s-4+k; c=10*s-3+k;
@@ -124,7 +124,7 @@ for i=1:s, k=3*(i-1);
   end
   for j=1:4
     switch j
-      case 1, a=q+s+i;   b=7*s-2+k;  c=13*s-5+k;  % lower - side tetrahedra
+      case 1, a=q+s+i;   b=7*s-2+k;  c=13*s-5+k;  % - side lower tetrahedra
       case 2, a=q+s+i;   b=7*s-2+k;  c=13*s-4+k;  
       case 3, a=q+s+i;   b=13*s-5+k; c=13*s-4+k;
       case 4, a=7*s-2+k; b=13*s-5+k; c=13*s-4+k;
@@ -135,7 +135,7 @@ end
 for i=1:s-1, k=3*(i-1);
   for j=1:4
     switch j
-      case 1, a=s+3+k;    b=10*s-2+k; c=4*s+1+k;  % middle + side inverted tetrahedra
+      case 1, a=s+3+k;    b=10*s-2+k; c=4*s+1+k;  % + side inverted tetrahedra
       case 2, a=s+3+k;    b=10*s-2+k; c=4*s+2+k;  
       case 3, a=s+3+k;    b=4*s+1+k;  c=4*s+2+k;
       case 4, a=10*s-2+k; b=4*s+1+k;  c=4*s+2+k;
@@ -144,7 +144,7 @@ for i=1:s-1, k=3*(i-1);
   end
   for j=1:4
     switch j
-      case 1, a=s+3+k;    b=13*s-3+k; c=7*s-1+k;  % middle - side inverted tetrahedra
+      case 1, a=s+3+k;    b=13*s-3+k; c=7*s-1+k;  % - side inverted tetrahedra
       case 2, a=s+3+k;    b=13*s-3+k; c=7*s  +k;  
       case 3, a=s+3+k;    b=7*s-1+k;  c=7*s  +k;
       case 4, a=13*s-3+k; b=7*s-1+k;  c=7*s  +k;
@@ -153,11 +153,11 @@ for i=1:s-1, k=3*(i-1);
   end
   for j=1:8
     switch j
-      case 1, a=s+2+k;    b=s+3+k;    c=4*s+1+k; d=4*s  +k; % slits
+      case 1, a=s+2+k;    b=s+3+k;    c=4*s+1+k; d=4*s  +k; % slits (yellow)
       case 2, a=s+3+k;    b=s+4+k;    c=4*s+3+k; d=4*s+2+k;
       case 3, a=10*s-3+k; b=10*s-2+k; c=4*s+1+k; d=4*s  +k;
       case 4, a=10*s-2+k; b=10*s-1+k; c=4*s+3+k; d=4*s+2+k;
-      case 5, a=s+2+k;    b=s+3+k;    c=7*s-1+k; d=7*s-2+k; % slits
+      case 5, a=s+2+k;    b=s+3+k;    c=7*s-1+k; d=7*s-2+k;
       case 6, a=s+3+k;    b=s+4+k;    c=7*s+1+k; d=7*s  +k;
       case 7, a=13*s-4+k; b=13*s-3+k; c=7*s-1+k; d=7*s-2+k;
       case 8, a=13*s-3+k; b=13*s-2+k; c=7*s+1+k; d=7*s  +k;
