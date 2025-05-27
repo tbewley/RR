@@ -1,6 +1,7 @@
-function [A,b]=RR_Analyze_Truss(Structure,Loads); 
+function [A,b]=RR_Analyze_Truss(Structure,Loads)
 % Sets up an Ax=b problem to calculate the internal forces in a 2D or 3D truss,
-% as defined in Structure with given Loads.
+% as defined in Structure with given Loads.  A truss is defined as a pin-jointed
+% structure with 
 % INPUTS: Structure.Q        = free nodes (must be at least one free node in Q)
 %         Structure.P        = pinned nodes (optional)
 %         Structure.P_angles = normal vector of the pinned nodes (optional)
@@ -9,6 +10,7 @@ function [A,b]=RR_Analyze_Truss(Structure,Loads);
 %         Structure.C        = connectivity matrix of structure
 %         Loads.U            = force applied at each free node of the structure
 %         Loads.tension      = tension (at the applied U) in the specified members
+% OUPUTS: A and b in the corresponding Ax=b problem representing static equilibrium.
 % NOTES:  Q(d,q), P(d,p), R(d,r) where d=2 or 3 is the dimension of the problem, and
 %         {q,p,r} are the number of {free,pinned,roller} nodes, with n=q+p+r total nodes.
 %         C(m,n), where m is the number of members, describes the structure's connectivity,

@@ -1,4 +1,30 @@
-function [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension,R,S,M)
+function [A,b]=RR_Analyze_Frame(Structure,Loads)
+S,M
+% Sets up an Ax=b problem to calculate the internal forces in a 2D or 3D truss,
+% as defined in Structure with given Loads.  A truss is defined as a pin-jointed
+% structure with 
+% INPUTS: Structure.Q        = free nodes (must be at least one free node in Q)
+%         Structure.P        = pinned nodes (optional)
+%         Structure.P_angles = normal vector of the pinned nodes (optional)
+%         Structure.R        = roller nodes (optional)
+%         Structure.R_angles = normal vector of the roller nodes (optional)
+%         Structure.S        = fixed nodes (optional)
+%         Structure.S_angles = normal vector of the fixed nodes (optional)
+%         Structure.C        = connectivity matrix of structure
+%         Loads.U            = force applied at each free node of the structure
+%         Loads.tension      = tension (at the applied U) in the specified members
+% OUPUTS: A and b in the corresponding Ax=b problem representing static equilibrium.
+% NOTES:  Q(d,q), P(d,p), R(d,r) where d=2 or 3 is the dimension of the problem, and
+%         {q,p,r} are the number of {free,pinned,roller} nodes, with n=q+p+r total nodes.
+%         C(m,n), where m is the number of members, describes the structure's connectivity,
+%             with a "0" in most entries, and a "1" in each {i,j} entry where member i
+%             attaches to node j.
+%         U(d,q) is the force applied at each of the q free nodes.
+% IMPORTANT: in RR_Analyze_Truss, each row of C must have EXACTLY TWO "1" entries.
+% RR_Analyze_Frame generalizes, allowing each row of C to have AT LEAST TWO "1" entries.
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+
 % Sets up to calculate the internal forces in a 2D or 3D frame and specified loading
 % INPUTS: Q=matrix with columns defining locations of the FREE nodes 
 %         C=connectivity matrix, with (on each of the m rows defining the m members)
