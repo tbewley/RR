@@ -1,4 +1,4 @@
-% script RR_143a_2024_HW1
+% script RR_143a_2025_HW1
 
 clear; syms L1 L2 L3 L4 L5 L6 L7 L8 L9 x y z u
 eqn1= L1*x+L2*y==0;
