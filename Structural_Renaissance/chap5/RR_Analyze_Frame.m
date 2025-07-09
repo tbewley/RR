@@ -1,5 +1,4 @@
 function [A,b]=RR_Analyze_Frame(Structure,Loads)
-S,M
 % Sets up an Ax=b problem to calculate the internal forces in a 2D or 3D truss,
 % as defined in Structure with given Loads.  A truss is defined as a pin-jointed
 % structure with 

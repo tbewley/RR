@@ -101,7 +101,7 @@ U=zeros(3,q); U(2,7*s-2+(3*((round((s+1)/2))-1)))=1;
 x=pinv(A)*b;
 RR_Plot_Frame(Q,C,U,x,P)
 
-for i=1:s, k=3*(i-1);       % Now, plot the patches between the members
+for i=1:s, k=3*(i-1);       % Now, plot the patches between the members patches
   for j=1:6
     switch j
       case 1, a=i; b=s+1+k; r=4*s+k;            % top double-tetrahedra

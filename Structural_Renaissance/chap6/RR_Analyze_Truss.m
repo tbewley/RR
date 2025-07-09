@@ -12,13 +12,16 @@ function [A,b]=RR_Analyze_Truss(Structure,Loads)
 %         Loads.tension      = tension (at the applied U) in the specified members
 % OUPUTS: A and b in the corresponding Ax=b problem representing static equilibrium.
 % NOTES:  Q(d,q), P(d,p), R(d,r) where d=2 or 3 is the dimension of the problem, and
-%         {q,p,r} are the number of {free,pinned,roller} nodes, with n=q+p+r total nodes.
+%            {q,p,r} are the number of {free,pinned,roller} nodes, with n=q+p+r total nodes.
 %         C(m,n), where m is the number of members, describes the structure's connectivity,
-%             with a "0" in most entries, and a "1" in each {i,j} entry where member i
-%             attaches to node j.
+%            with a "0" in most entries, and a "1" in each {i,j} entry where member i
+%            attaches to node j.
+%         The unknowns in the problem, the m values of the vector x, are just the
+%            tensions (if positive) or compressions (if negative) of the m members.
 %         U(d,q) is the force applied at each of the q free nodes.
 % IMPORTANT: in RR_Analyze_Truss, each row of C must have EXACTLY TWO "1" entries.
 % RR_Analyze_Frame generalizes, allowing each row of C to have AT LEAST TWO "1" entries.
+% Internally, the gonculator ...
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 

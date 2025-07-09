@@ -1,6 +1,7 @@
 function drawcircle(loc,r,w,c)
 
 if nargin<4; c=[0 .7 0]; end
+if nargin<3; w=1; end
 N=40;
 THETA=linspace(0,2*pi,N);
 RHO=ones(1,N)*r/2;

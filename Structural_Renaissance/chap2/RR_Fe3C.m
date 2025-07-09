@@ -57,8 +57,8 @@ for i=1:3; Fe(:,i)=Fe(:,i)*S(i);
 	       C(:,i) =C(:,i) *S(i); end
 
 NFe=size(Fe,1); NC=size(C,1);
-for i=1:NFe, drawsphere(Fe(i,:),0,0.5); end
-for j=1:NC,  drawsphere(C(j,:),0,0.208,50);  end
+for i=1:NFe, RR_drawsphere(Fe(i,:),0,0.5); end
+for j=1:NC,  RR_drawsphere(C(j,:),0,0.208,50);  end
 
 for j=1:NC
   for i=1:NFe

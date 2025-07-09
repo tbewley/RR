@@ -1,6 +1,4 @@
-clear all
-close all
-clc
+clear all; close all; clc
 
 v=[ 0 1 2
     1 0 2

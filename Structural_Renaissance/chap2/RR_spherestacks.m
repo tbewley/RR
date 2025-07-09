@@ -1,9 +1,3 @@
-clear all; close all; clc
-
-ya=sqrt(3)/2*[0 0 0 0 1 1 1 2 2 3]; xa=[0 1 2 3 0.5 1.5 2.5 1 2 1.5];
-figure(1); clf; for i=1:length(ya); RR_drawcircle([xa(i) ya(i)],1,1); hold on; end 
-axis equal; axis off; view(0.5,90); pause
-% print -dpdf circlestacks.pdf;
 
 brightsummer=brighten(summer,0.35)
 % planets1

@@ -44,7 +44,7 @@ for frame=1:N+1
   for i=1:size(p0s,1); drawsphere(p0s(i,:),0,0.2,20); end
   for i=1:size(p1s,1); drawsphere(p1s(i,:),0,0.2,20,0.2); end
   axis([-3 5 -3 5 -1 3]); axis off; axis equal; view(-302,11); colormap(summer); pause(0.01);
-  filename="frame"+frame+".pdf"; if frame<N+1, print(3,'-dpdf','-vector','-fillpage',filename); end
+%  filename="frame"+frame+".pdf"; if frame<N+1, print(3,'-dpdf','-vector','-fillpage',filename); end
 end
 
 figure(3); clf; frame=5
@@ -56,4 +56,4 @@ plot3(l1s(1,:),l1s(2,:),l1s(3,:),'r-','linewidth',3)
 for i=1:size(p2s,1); drawsphere(p2s(i,:),0,0.2,20); end
 for i=1:size(p3s,1); drawsphere(p3s(i,:),0,0.2,20,0.2); end
 axis([-3 5 -3 5 -1 3]); axis off; axis equal; view(-302,11); colormap(summer);
-print(3,'-dpdf','-vector','-fillpage',filename);
+% print(3,'-dpdf','-vector','-fillpage',filename);
