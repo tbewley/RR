@@ -8,8 +8,11 @@ eqn2= L3*x1+L4*x2==0;
 sol=solve(eqn1,eqn2,x1,x2); G=sol.x2/u
 pause;
 
+% Now sub in specific expressions for {L1,L2,L3,L4} and simplify
 syms m1 m2 mu1 mu2 g k1 k2 s
 G=subs(sol.x2/u,{L1,L2,L3,L4},{m1*s^2+mu1*m1*g*s+k1+k2, -k2, -k2, m2*s^2+mu2*m2*g*s+k2})
+
+% the rest of this (below) is unchanged when you generalize to different problems!
 [numG,denG] = numden(G);      % this extracts out the num and den of G
 numG=coeffs(numG,s);          % this extracts the powers of s in the num and den
 denG=coeffs(denG,s);
