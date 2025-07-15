@@ -23,10 +23,24 @@ for i=1:length(y); RR_drawcircle([x(i) y(i)],1,1,[1 .7 .7]); hold on; end
 x=[1 2 3 1.5 2.5 2]+5; y=c*[1 1 1 2 2 3]-d;
 for i=1:length(y); RR_drawcircle([x(i) y(i)],1,1,[1 1 1]); hold on; end 
 
+x=[2]; y=c*[1]+d;
+for i=1:length(y); RR_drawcircle([x(i) y(i)],1,1,[.7 .7 1]); hold on; end 
+
+x=[1.5 2.5 2]+5;
+y=c*[1 1 2];
+for i=1:length(y); RR_drawcircle([x(i) y(i)],1,1,[1 .7 .7]); hold on; end 
+
+x=[2]+5; y=c*[1]+d;
+for i=1:length(y); RR_drawcircle([x(i) y(i)],1,1,[.7 .7 1]); hold on; end 
+
 axis equal; axis off; view(0.5,90);
 
 text(3.9,c*4,'A'),
-text(1.9,c*3+d,'B'), text(1.4,c*1,'A'),  
-text(6.9,c*3+d+.15,'B'), text(5.9,c*1-d,'C'),  
-
+text(1.9,c*3+d,'B'),
+text(1.9,c*2+.15,'A'),
+text(1.9,c*1+d,'B')  
+text(6.9,c*3+d+.15,'B')
+text(6.9,c*3-d+.15,'C'),  
+text(6.9,c*2+.15,'A'),
+text(6.9,c*1+d,'B')  
 print -dpdf circlestacks.pdf;
