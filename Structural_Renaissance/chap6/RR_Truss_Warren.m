@@ -4,8 +4,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is a slight generalization of RR_Truss_Warren4, with 3 parameters
 % For the kitchen-sink generalization, see RR_Truss_GUI.  Easy.  Enjoy!
-s=5;     % number of horizontal sections in the truss (set as parameter!)
-h=0.4;   % height of the truss (set as parameter!)
+s=7;     % number of horizontal sections in the truss (set as parameter!)
+h=0.2;   % height of the truss (set as parameter!)
 parabolic_top_chord=false;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Q P C U, figure(1), clf

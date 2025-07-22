@@ -3,7 +3,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-% First, do 2D version:
+% First, do 2D problem:
 P=[ 0 20;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (SI units)
     0  0];
 Q=[10   5   15  ; % (x,y) locations of each of the n=3 free nodes (SI units)
@@ -20,8 +20,8 @@ CT=[ 1  1  0  0  1  1  0;  % q_1 Connectivity of the truss
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
 % Then, just solve for the tension and compression in the members, and plot.
 x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
-RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
-axis tight, print -dpdf Warren2.pdf
+figure(1), RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
+axis tight, % print -dpdf Warren2.pdf
 pause
 
 % Then, do 3D version:
@@ -131,6 +131,6 @@ CT=abs(CT); C=CT';
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else,
     RR_Plot_Frame(Q,C,U,x,P,[],[],[],[],[],[m m m m m m m m m m])
-end, view(19.23,10.15), print -dpdf Warren2_3D_rigid1.pdf, pause
+end, view(19.23,10.15), % print -dpdf Warren2_3D_rigid1.pdf, pause
 
-view(82.40,5.17), print -dpdf Warren2_3D_rigid2.pdf
+view(82.40,5.17), % print -dpdf Warren2_3D_rigid2.pdf
