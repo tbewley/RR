@@ -22,7 +22,7 @@ CT=[ 1 0 0 1;  % q_1   Each structural member connects several (Q,P,R,S) nodes o
 %   (a) the sum of forces on each pin = zero,
 %   (b) the sum of forces on each structural member = zero, and 
 %   (c) the sum of moments on each structural member = zero.
-C=CT';  [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,R,S); 
+C=CT';  [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,[],P,R,S); 
 % Then, solve for the interior forces in the frame, assuming no pretensioning.
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else, RR_Plot_Frame(Q,C,U,x,P,R,S), end

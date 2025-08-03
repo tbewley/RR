@@ -9,7 +9,7 @@ Q=[ -2  -2   0  2  2  4  6  6  8;    % Locations of each of the n=6 free nodes
      1  -1   0  1 -1  0 -1  1  0];
 U=[-0.4 -0.4 0  0  0  0  0  0  0;    % External forces on the n free nodes
     -1   1   0  0  0  0  0  0  0];  
-   % m=4 members (columns) 
+   % m=6 members (columns) 
 CT=[ 1 0 0 0 0 0;  % q_1   Connectivity of the pin-jointed frame
      0 1 0 0 0 0;  % q_2   Note: members may connect 3 or more nodal points
      1 1 0 0 0 0;  % q_3   (and, thus, may bear internal bending loads!), and 

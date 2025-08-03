@@ -20,7 +20,6 @@ for i=1:s, for k=1:d, VS(k,i)=x(1);       x=x(2:end); end, end
 for i=1:s, if d==2,         MS(i)=x(1);   x=x(2:end);
            else, for k=1:d, MS(k,i)=x(1); x=x(2:end); end
 end, end
-VP
 
 % print out the tension in compression in the 2-force members (only) 
 sc=0;
@@ -67,8 +66,8 @@ end
 fac_b=1*(max(max(N))-min(min(N))); fac_f=0.1/max(max([U VP VR VS]))*fac_b; 
 figure(1), clf, axis equal, axis tight, grid, hold on, h=max(Q(2,:));
 
-for i=1:p, if VP(3,i)<0, hp(i)=-1; else, hp(i)=1; end, end
 if d==2
+  for i=1:p, hp(i)=1; end % ADJUST THIS
   % Plot little triagles below/above the pinned support points in 2D
   for i=1:p,  fill(P(1,i)+fac_b*[-.035 0 .035],P(2,i)+hp(i)*fac_b*[-.05 0 -.05],'k-'), end
   for i=1:r % Plot little triagles with little circles below the roller support points in 2D
@@ -79,6 +78,7 @@ if d==2
   % Plot little rectangles at the fixed support points in 2D
   for i=1:s, fill(S(1,i)+fac_b*[-.1 -.1 .1 .1],S(2,i)+fac_b*[-.05 0 0 -.05],'k-'), end
 else
+  for i=1:p, if VP(3,i)<0, hp(i)=-1; else, hp(i)=1; end, end
   % Plot little pyramids below the pinned support points in 3D
   for i=1:p, RR_Plot_Pyramid(P(:,i),fac_b*.05), end 
   for i=1:r % Plot little pyramids with little spheres below the roller support points in 3D

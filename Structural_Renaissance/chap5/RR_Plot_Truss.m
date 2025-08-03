@@ -9,8 +9,6 @@ if nargin<8 | length(flip_u )~=q, flip_u =ones(1,q); end
 CQ=C(:,1:q); CP=C(:,q+(1:p)); M=N*C';       
 for i=1:m; D(:,i)=M(:,i)/norm(M(:,i)); end
 
-M, D, diag(x), CQ, CP
-
 VP=D*diag(x)*CP % Compute reaction forces
 
 for i=1:q
@@ -28,7 +26,7 @@ end
 mx=max(x); fprintf('maximum tension (red, bold)      = %0.5g\n',mx)
 mn=min(x); fprintf('maximum compression (blue, bold) = %0.5g\n',abs(mn))
 fac_b=1*(max(max(N))-min(min(N))); fac_f=0.1/max(max([U VP]))*fac_b; 
-figure(1), clf, axis equal, axis tight, grid, hold on, h=max(Q(2,:));
+clf, axis equal, axis tight, grid, hold on, h=max(Q(2,:));
 if d==2 % plot d=2 (2D) case
   t1=sum(U,2);  t2=sum(VP,2);
   fprintf('Sum of all applied  forces in (x,y) = (%+0.5g, %+0.5g) N\n',t1(1),t1(2))

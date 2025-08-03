@@ -28,7 +28,9 @@ if n~=q+p+r+s, error('wrong number of nodes in C'), end
 F=sym('f',[d m n]); for i=1:m, for j=1:n, F(:,i,j)=F(:,i,j)*C(i,j); end, end
 % Set up symbolic matrices for the (TBD) reaction forces at the pinned, roller, & fixed supports
 VP=sym('vp%d_%d',[d,p]);
-VR(2,:)=sym('vr',[1,r]); if r>0, VR(1,:)=0; if d==3, VR(3,:)=0; end, end
+if r>0, if d==2, VR(2,:)=sym('vr',[1,r]);  VR(1,:)=0;
+        else,    VR(3,:)=sym('vr',[1,r]);  VR(1,:)=0; VR(2,:)=0; end
+end
 VS=sym('vs%d_%d',[d,s]); W=[U VP VR VS];
 % Set up symbolic matrices for the (TBD) reaction moments at the fixed supports
 if s>0, CT=C';

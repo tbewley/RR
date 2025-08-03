@@ -18,6 +18,5 @@ numG=coeffs(numG,s);          % this extracts the powers of s in the num and den
 denG=coeffs(denG,s);
 numG=simplify(numG/denG(end)); % this makes the den monic
 denG=simplify(denG/denG(end));
-
 numG=numG(end:-1:1)   % this reverses the order of the vector of coefficients.
 denG=denG(end:-1:1)
