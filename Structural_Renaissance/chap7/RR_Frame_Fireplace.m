@@ -1,5 +1,4 @@
 % script RR_Frame_Fireplace.m
-% Locations of the fixed nodes of the truss (normalized units) 
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
