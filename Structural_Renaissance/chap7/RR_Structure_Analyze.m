@@ -69,56 +69,50 @@ S.Ctfm=[]; L.tensiontfm=[]; % initialize scratch matrices to for the two-force  
 S.Cmfm=[]; L.Mmfm=[];       % initialize scratch matrices to for the multi-force members
 for i=1:S.m
     if t1(i)==2 & norm(L.M(:,i))==0, 
-      j=find(S.C(i,:),2);   % check to see if there is a fixed or roller node on either end
-      if      j(1)<=S.q+S.p & j(2)<=S.q+S.p,      tfm=true;
-      elseif (j(1)> S.q+S.p & j(1)<=S.q+S.p+S.r) | ...
-             (j(2)> S.q+S.p & j(2)<=S.q+S.p+S.r), tfm=false; mfm=false;
-      else,                                       tfm=false; mfm=true;
-      end
+      j=find(S.C(i,:),2);   % check to see if there is a fixed support on either end
+      if j(1)<=S.q+S.p+S.r & j(2)<=S.q+S.p+S.r, tfm=true; else, tfm=false; end
     else 
-      tfm=false; mfm=true;
+      tfm=false;
     end
     if L.t>0, k=find(L.tension(:,1)==i); else, k=0; end
     if tfm
       S.tfm=S.tfm+1; j=find(S.C(i,:),1); S.C(i,j)=-1;
       S.Ctfm(S.tfm,:)=S.C(i,:); 
       if k>0, L.tensiontfm=[L.tensiontfm; [S.tfm, L.tension(k,2)]]; end
-    elseif mfm
+    else
       S.mfm=S.mfm+1;
       S.Cmfm(S.mfm,:)=S.C(i,:); 
       L.Mmfm(:,S.mfm)=L.M(:,i);
       if k>0, error('Member %d is a multiforce member; pretensioning not allowed on it!',i), end
-    else
-      error(sprintf('Two-force member %d has a roller support and thus zero force; eliminate it!',i))   
     end 
 end, S.C=[S.Ctfm; S.Cmfm];
-if S.mfm==0, fprintf('All %d members are two-force members; structure S is a truss',S.tfm)
+if S.mfm==0, fprintf('All %d members are two-force members; structure S is a truss\n',S.tfm)
 else, fprintf('Structure S is a frame, with %d two-force member(s) and %d multi-force member(s)\n',S.tfm,S.mfm)
 end
 
-% S.C, tensiontfm=L.tensiontfm, Mmfm=L.Mmfm, error('PREP WORK GOOD!') % this line checks much of the above
-
 % SET UP SYMBOLIC MATRICES FOR THE (TBD) REACTION FORCES AND MOMENTS at the pinned, roller, & fixed supports
-VP=[]; VR=[]; VS=[];
-if S.p>0, VP=sym('vp%d_%d',[S.d,S.p]);                                                       end
-if S.r>0, vr=sym('vr',[1,S.r]);    for i=1:S.r, VR(:,i)=vr(i)*S.R_vec(:,i);                  end, end 
-if S.s>0, VS=sym('vs%d_%d',[d,s]); if S.d==2, MS=sym('ms',[1,s]); else, MS=sym('ms',[3,s]);  end, end
+if S.p>0, VP=sym('vp%d_%d',[S.d,S.p]);                                                           else, VP=[]; end
+if S.r>0, temp=sym('vr',[1,S.r]);  for i=1:S.r, VR(:,i)=temp(i)*S.R_vec(:,i); end,               else, VR=[]; end 
+if S.s>0, VS=sym('vs%d_%d',[d,s]); if S.d==2, MS=sym('ms',[1,s]); else, MS=sym('ms',[3,s]); end, else, VS=[]; end
 
 % SET UP UNKNOWNS X CORRESPONDING TO TENSION/COMPRESSION (+/-) IN THE TWO-FORCE MEMBERS (TFMs), ala Skelton
-M=N*S.Ctfm';                                    % compute matrix of TFM "member" vectors M(:,i)
-for i=1:S.tfm; D(:,i)=M(:,i)/norm(M(:,i)); end  % compute the matrix of "direction" vectors D(:,i)
-x=sym('x',[1 S.tfm]); X=diag(x);                % set up symbolic vector x (tensions) and diagonal X matrix
+M=N*S.Ctfm';                                   % compute matrix of TFM "member" vectors M(:,i)
+for i=1:S.tfm; D(:,i)=M(:,i)/norm(M(:,i)); end % compute the matrix of "direction" vectors D(:,i)
+x=sym('x',[1 S.tfm]); X=diag(x);               % set up symbolic vector x (tensions) and diagonal X matrix
 
 % SET UP UNKNOWNS F CORRESPONDING TO THE FORCES APPLIED BY THE MULTI-FORCE MEMBERS (MFMs),
 % in the direction d on each of the S.mfm members at each of the S.n nodes (zeros in elements implied by C)
-F=sym('f',[S.d S.mfm S.n]); for i=1:S.mfm, for j=1:S.n, F(:,i,j)=F(:,i,j)*S.Cmfm(i,j); end, end
+F=sym('f%d_%d_%d',[S.d S.mfm S.n]); for i=1:S.mfm, for j=1:S.n, F(:,i,j)=F(:,i,j)*S.Cmfm(i,j); end, end
 
 % BELOW IS THE GUTS OF THE CALCULATION.  Will seek the forces {X,F} and reactions {VP,VR,VS,MS} s.t. sys=0.
 
 % We first set up to set the SUM OF FORCES AT EACH NODE, due to both the TFMs and MFMs, equal to zero
 % note: the sum below adds all of the MFM forces acting on each of the nodes, then reshapes appropriately
 %    from TFMs (ala Skelton)                 from MFMs     from reactions
-temp=[D*X*S.Ctfm zeros(S.d,S.r+S.s)]+reshape(sum(F,2),S.d,[])-[L.U VP VR VS];  
+if S.mfm>1;  G=sum(F,2);  else,  G=F;  end
+if S.mfm==0, temp=[D*X*S.Ctfm]                  -[L.U VP VR VS];
+else,        temp=[D*X*S.Ctfm]+reshape(G,S.d,[])-[L.U VP VR VS]; end
+
 sys=reshape(temp,numel(temp),1);
 
 % We then set up to set the SUM OF FORCES ON EACH MFM MEMBER equal to zero
@@ -127,24 +121,24 @@ sys=[sys; reshape(temp,numel(temp),1)];
 
 % We then set up to set the SUM OF MOMENTS ON EACH MFM MEMBER equal to zero
 % note: In 2D, (q x f)_z=q1*f2-q2*f1. In 3D, we just use cross(q,f).
-Mm=[]; for i=1:S.mfm, if S.d==2, t=0; else, t=[0; 0; 0]; end, for j=1:n
+for i=1:S.mfm, if S.d==2, t=0; else, t=[0; 0; 0]; end, for j=1:S.n
   if S.d==2, t=t+N(1,j)*F(2,i,j)-N(2,j)*F(1,i,j);
   else,      t=t+cross(N(:,j),F(:,i,j));          end
-end, Mm(:,i)=t+L.Mmfm(:,i); end               
+end, Mm(:,i)=t+L.Mmfm(:,i); end  
+if ~exist('Mm'), Mm=[]; end            
 % add reaction moment at fixed node j to the moment on the MFM i to which it is connected
 for j=1:S.s, [temp,i]=max(S.Cmfm(:,q+p+r+j)); Mm(:,i)=Mm(:,i)+MS(:,j); end  % (check this?)
 sys=[sys; reshape(Mm,numel(Mm),1)];
 eqns=length(sys);
 
-% uncomment below for some interesting verbose output
 disp('The solver sets up the eqns listed below, with the variables as shown,')
 disp('in the form Ax=b, then looks for a solution such the sys=0.'),
-sys, disp(' '), pause
+sys, disp(' ')
 
 % Now, set up x1 to xm (tensions in S.tfm members) as symbolic variables...
 for i=1:S.tfm; exp="syms x"+i; eval(exp); end
 % ... and set up the nonzero fk_i_j, vpk_i, vri, vsi, and ms as symbolic variables
-for i=1:S.mfm, for j=1:n
+for i=1:S.mfm, for j=1:S.n
   if S.Cmfm(i,j)==1, for k=1:S.d; exp="syms f"+k+"_"+i+"_"+j; eval(exp); end, end
 end, end
 for i=1:S.p,         for k=1:S.d, exp="syms vp"+k+"_"+i;      eval(exp); end, end
