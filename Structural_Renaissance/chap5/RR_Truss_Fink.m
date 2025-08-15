@@ -1,5 +1,5 @@
 % script RR_Truss_Fink.m
-% Set up a Fink structure, solve for its internal forces, and plot
+% Set up a Fink Truss or Frame, solve for its internal forces, and plot
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
@@ -132,5 +132,5 @@ S.C=[1   1   0   0   0    0   0   0   0   0    0   0   0   0   0    0    0    0 
      0   0   0   0   1    0   0   0   0   1    0   0   0   0   0    0    0    0  0  0  0  0  0  0  0  0  0  0;  
      0   0   0   0   0    0   0   0   0   1    0   0   0   0   1    0    0    0  0  0  0  0  0  0  0  0  0  0;  
      0   0   0   0   0    0   0   0   0   0    0   0   0   0   1    0    0    1  0  0  0  0  0  0  0  0  0  0];
-[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b     
+[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
 figure(5); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(15.4, 11.4)

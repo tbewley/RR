@@ -68,6 +68,7 @@ S.tfm=0; S.mfm=0; t1=sum(S.C,2);
 S.Ctfm=[]; L.tensiontfm=[]; % initialize scratch matrices to for the two-force   members
 S.Cmfm=[]; L.Mmfm=[];       % initialize scratch matrices to for the multi-force members
 for i=1:S.m
+    if t1(i)<2, fprintf('warning: member %d has %d connections?\n',i,t1(i)), pause, end
     if t1(i)==2 & norm(L.M(:,i))==0, 
       j=find(S.C(i,:),2);   % check to see if there is a fixed support on either end
       if j(1)<=S.q+S.p+S.r & j(2)<=S.q+S.p+S.r, tfm=true; else, tfm=false; end
@@ -131,9 +132,11 @@ for j=1:S.s, [temp,i]=max(S.Cmfm(:,q+p+r+j)); Mm(:,i)=Mm(:,i)+MS(:,j); end  % (c
 sys=[sys; reshape(Mm,numel(Mm),1)];
 eqns=length(sys);
 
-disp('The solver sets up the eqns listed below, with the variables as shown,')
-disp('in the form Ax=b, then looks for a solution such the sys=0.'),
-sys, disp(' ')
+if S.m<100,
+   disp('The solver sets up the eqns listed below, with the variables as shown,')
+   disp('in the form Ax=b, then looks for a solution such the sys=0.'),
+   sys, disp(' ')
+end
 
 % Now, set up x1 to xm (tensions in S.tfm members) as symbolic variables...
 for i=1:S.tfm; exp="syms x"+i; eval(exp); end
