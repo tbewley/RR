@@ -1,8 +1,8 @@
 function [A,b,S,L]=RR_Structure_Analyze(S,L)
-% This code is used throughout Structural Renaissance text.  One code to rule them all.  In short:
+% This one code is used throughout the Structural Renaissance (SR) text.  In short:
 % it sets up an Ax=b problem to calculate the internal forces in a 2D pin-jointed or 3D ball-jointed
 % structure (truss, tensegrity, or frame), as defined by a structure S with given loads L, where:
-% INPUTS: S.Q     = FREE nodes (required, must be at least one free node in Q)
+% INPUTS: S.Q     = FREE nodes (required, there must be at least one free node in Q)
 %         S.P     = PINNED nodes (optional)
 %         S.P_vec = normal vector of the pinned nodes (optional)
 %         S.R     = ROLLER nodes (optional)
@@ -16,6 +16,7 @@ function [A,b,S,L]=RR_Structure_Analyze(S,L)
 % OUPUTS: A and b in the corresponding Ax=b problem representing static equilibrium.
 %         (The nullspace of A defines in what manner the structure is pretensionable.)
 %         S,L are modified/augmented to a standard form for plotting, with 2-force members listed first.     
+% TEST:   Test with the several example codes discussed throughout the SR text.
 % NOTES:  dimensions: S.Q(S.d,S.q), S.P(S.d,S.p), S.R(S.d,S.r), S.S(S.d,S.s) where S.d=2 or 3 is the
 %             problem dimension, and {S.q,S.p,S.r,S.s} are the number of {free,pinned,roller,fixed}
 %             nodes in N=[S.Q S.P S.R S.S], with S.n=S.q+S.p+S.r+S.s total nodes.

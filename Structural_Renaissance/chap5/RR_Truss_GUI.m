@@ -117,15 +117,15 @@ switch truss                        % free nodes in top row
     case 'Pennsylvania'
         m=8*s-3, if mod(s,2)==1, m=m+5; end, S.C=zeros(m,q+p+r);
         S.C(1,n-1)=1;    S.C(1,1)=1; j=1;                                    % bottom row to left fixed node
-        for i=1:sb-2,     S.C(j+i,i)=1; S.C(j+i,i+1)=1;       end, j=j+sb-2; % bottom row
+        for i=1:sb-2,    S.C(j+i,i)=1; S.C(j+i,i+1)=1;       end, j=j+sb-2; % bottom row
         S.C(j+1,sb-1)=1; S.C(j+1,n)=1; j=j+1;                                % bottom row to right fixed node
-        for i=1:s-2,      S.C(j+i,sb-1+i)=1; S.C(j+i,sb+i)=1; end, j=j+s-2;  % top row
+        for i=1:s-2,     S.C(j+i,sb-1+i)=1; S.C(j+i,sb+i)=1; end, j=j+s-2;  % top row
         k=sb+s-2;
         S.C(j+1,n-1)=1;  S.C(j+1,k+1)=1;  S.C(j+2,n  ) =1;  S.C(j+2,k+s)=1; % left/right diagonals to fixed nodes
         S.C(j+3,1  )=1;  S.C(j+3,k+1)=1;  S.C(j+4,sb-1)=1;  S.C(j+4,k+s)=1;
         S.C(j+5,2)  =1;  S.C(j+5,k+1)=1;  S.C(j+6,sb-2)=1;  S.C(j+6,k+s)=1; 
         S.C(j+7,sb) =1;  S.C(j+7,k+1)=1;  S.C(j+8,k)=1;     S.C(j+8,k+s)=1;  j=j+8; 
-        for i=1:s-1,    S.C(j+i,2*i)=1; S.C(j+i,sb-1+i)=1;  end, j=j+s-1;    % internal verticals
+        for i=1:s-1,     S.C(j+i,2*i)=1; S.C(j+i,sb-1+i)=1;  end, j=j+s-1;    % internal verticals
         num=floor(s/2);
         for i=2:num
             S.C(j+1,2*i-2) =1;  S.C(j+1,k+i)=1; S.C(j+5,sb-2*i+2) =1; S.C(j+5,k+s+1-i)=1; % left/right diagonals
