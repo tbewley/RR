@@ -13,8 +13,8 @@ syms m1 m2 mu1 mu2 g k1 k2 s
 G=subs(sol.x2/u,{L1,L2,L3,L4},{m1*s^2+mu1*m1*g*s+k1+k2, -k2, -k2, m2*s^2+mu2*m2*g*s+k2})
 
 % the rest of this (below) is unchanged when you generalize to different problems!
-[numG,denG] = numden(G);      % this extracts out the num and den of G
-numG=coeffs(numG,s,'All');    % this extracts the powers of s in the num and den
-denG=coeffs(denG,s,'All');    % (do not remove the 'All'!)
-numG=simplify(numG/denG(1))   % this makes the den monic
-denG=simplify(denG/denG(1))
+[num,den] = numden(G);   % this extracts the num and den of G
+num=coeffs(num,s,'All'); % this extracts the coefficients of the powers of s in num and den
+den=coeffs(den,s,'All'); % (do not remove 'All' - if you do, Matlab does some weird stuff!)
+num=simplify(num/den(1)) % this modifies num and den to make den "monic"
+den=simplify(den/den(1)) % (that is, with a leading coefficient of 1)
