@@ -14,9 +14,7 @@ G=subs(sol.x2/u,{L1,L2,L3,L4},{m1*s^2+mu1*m1*g*s+k1+k2, -k2, -k2, m2*s^2+mu2*m2*
 
 % the rest of this (below) is unchanged when you generalize to different problems!
 [numG,denG] = numden(G);      % this extracts out the num and den of G
-numG=coeffs(numG,s);          % this extracts the powers of s in the num and den
-denG=coeffs(denG,s);
-numG=simplify(numG/denG(end)); % this makes the den monic
-denG=simplify(denG/denG(end));
-numG=numG(end:-1:1)   % this reverses the order of the vector of coefficients.
-denG=denG(end:-1:1)
+numG=coeffs(numG,s,'All');    % this extracts the powers of s in the num and den
+denG=coeffs(denG,s,'All');    % (do not remove the 'All'!)
+numG=simplify(numG/denG(1))   % this makes the den monic
+denG=simplify(denG/denG(1))

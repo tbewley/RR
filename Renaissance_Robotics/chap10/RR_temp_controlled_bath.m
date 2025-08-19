@@ -11,11 +11,20 @@ T0=35; T1=45; Tmax=50; Tmin=10; a0=.02, d=12
 disp('first calculate the analysical solution for a simple control rule with')
 disp('u(t)=Tmax if y(t)<T(t), u(t)=T(t) if y(t)=T(t), u(t)=Tmin if y(t)>T(t)')
 t0_=[0 d]; y0_=[T0 T0];
-T=y0_(end); t1=d +(-log((T1-Tmax)/(T-Tmax)))/a0;    t1_=[d:t1/100:t1+d];         y1_=Tmax+(T-Tmax)*exp(-a0*(t1_-d));
-T=y1_(end); t2=t1+d+(-log((T1-Tmin)/(T-Tmin)))/a0;  t2_=[t1+d:(t2-t1)/100:t2+d]; y2_=Tmin+(T-Tmin)*exp(-a0*(t2_-(t1+d)));
-T=y2_(end); t3=t2+d+(-log((T1-Tmax)/(T-Tmax)))/a0;  t3_=[t2+d:(t3-t2)/100:t3+d]; y3_=Tmax+(T-Tmax)*exp(-a0*(t3_-(t2+d)));
-T=y3_(end); t4=t3+d+(-log((T1-Tmin)/(T-Tmin)))/a0;  t4_=[t3+d:(t4-t3)/100:t4+d]; y4_=Tmin+(T-Tmin)*exp(-a0*(t4_-(t3+d)));
-T=y4_(end); t5=t4+d+(-log((T1-Tmax)/(T-Tmax)))/a0;  t5_=[t4+d:(t5-t4)/100:t5+d]; y5_=Tmax+(T-Tmax)*exp(-a0*(t5_-(t4+d)));
-T=y5_(end); t6=t5+d+(-log((T1-Tmin)/(T-Tmin)))/a0;  t6_=[t5+d:(t6-t5)/100:t6+d]; y6_=Tmin+(T-Tmin)*exp(-a0*(t6_-(t5+d)));
-t=[t0_ t1_ t2_ t3_ t4_ t5_ t6_]; y=[y0_ y1_ y2_ y3_ y4_ y5_ y6_];
-figure(1), plot(t,y), axis tight, pause
+T=y0_(end); t(1)=     d+(-log((T1-Tmax)/(T-Tmax)))/a0; t1_=[     d: t(1)      /100:t(1)+d]; y1_=Tmax+(T-Tmax)*exp(-a0*(t1_-      d ));
+T=y1_(end); t(2)=t(1)+d+(-log((T1-Tmin)/(T-Tmin)))/a0; t2_=[t(1)+d:(t(2)-t(1))/100:t(2)+d]; y2_=Tmin+(T-Tmin)*exp(-a0*(t2_-(t(1)+d)));
+T=y2_(end); t(3)=t(2)+d+(-log((T1-Tmax)/(T-Tmax)))/a0; t3_=[t(2)+d:(t(3)-t(2))/100:t(3)+d]; y3_=Tmax+(T-Tmax)*exp(-a0*(t3_-(t(2)+d)));
+T=y3_(end); t(4)=t(3)+d+(-log((T1-Tmin)/(T-Tmin)))/a0; t4_=[t(3)+d:(t(4)-t(3))/100:t(4)+d]; y4_=Tmin+(T-Tmin)*exp(-a0*(t4_-(t(3)+d)));
+T=y4_(end); t(5)=t(4)+d+(-log((T1-Tmax)/(T-Tmax)))/a0; t5_=[t(4)+d:(t(5)-t(4))/100:t(5)+d]; y5_=Tmax+(T-Tmax)*exp(-a0*(t5_-(t(4)+d)));
+T=y5_(end); t(6)=t(5)+d+(-log((T1-Tmin)/(T-Tmin)))/a0; t6_=[t(5)+d:(t(6)-t(5))/100:t(6)+d]; y6_=Tmin+(T-Tmin)*exp(-a0*(t6_-(t(5)+d)));
+t_=[t0_ t1_ t2_ t3_ t4_ t5_ t6_]; y_=[y0_ y1_ y2_ y3_ y4_ y5_ y6_];
+figure(1), plot(t_,y_,'k-','linewidth',2), hold on, axis tight
+T=t_(end); yticks([35:1:46]); xticks([0:10:T]), grid
+for i=1:2:5,
+	plot([t(i  )   t(i  )  ],[35 46.07],'r-');
+	plot([t(i  )+d t(i  )+d],[35 46.07],'r--');
+    plot([t(i+1)   t(i+1)  ],[35 46.07],'b-');
+    plot([t(i+1)+d t(i+1)+d],[35 46.07],'b--');
+end, hold off
+
+
