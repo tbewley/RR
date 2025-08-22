@@ -1,4 +1,7 @@
+% script RR_frame_USAFA_chapel
 % Geometry of USAFA chapel defined by just 5 numbers (measurements in feet - sorry)
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+%% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 clear; s=17;               % s=2 to 17: number of sections of design being modelled. 
 length=75;                % length of long diagonal of tetrahedron
 depth=21;                 % depth of tetrahedron
@@ -11,8 +14,8 @@ H=sqrt(length^2-depth^2); % vertical height of tetrahedron
 h2=(length/2)/cos(phi);   % height of upper part of tetrahedron (note: h1+h2=H, h2>h1)
 h1=H-h2;                  % height of lower part of tetrahedron
 
-for i=1:s, S.P(:,i)  =[(i-1)*inc; +2*depth; 0]; end         % + side supports
-for i=1:s, S.P(:,i+s)=[(i-1)*inc; -2*depth; 0]; end, p=2*s; % - side supports
+for i=1:s, S.P(:,i)  =[(i-1)*inc; +2*depth; 0]; end          % + side supports
+for i=1:s, S.P(:,i+s)=[(i-1)*inc; -2*depth; 0]; end, p=2*s;  % - side supports
 
 for i=1:s, S.Q(:,i      ) =[(i-1)*inc; 0; 2*H]; end, q=s; % peaks of the s spires
 
@@ -22,9 +25,9 @@ for i=1:s, S.Q(:,3*i-2+q)   =[(i-1)*inc-w;   0; H+h1]; % nodes on (longitudinal)
              S.Q(:,3*i+q)   =[(i-1)*inc+w+t; 0; H+h1];
            end, end, q=q+3*s-1;  
 
-for i=1:s, S.Q(:,3*i-2+q)   =[(i-1)*inc;     depth; H];   % nodes on rod #2 (upper, + side)
+for i=1:s, S.Q(:,3*i-2+q)   =[(i-1)*inc;       depth; H];   % nodes on rod #2 (upper, + side)
            if i<s
-              S.Q(:,3*i-1+q)=[(i-1)*inc+t;   depth; H];
+              S.Q(:,3*i-1+q)=[(i-1)*inc+t;     depth; H];
               S.Q(:,3*i  +q)=[(i-1)*inc+t+2*w; depth; H];
            end, end, q=q+3*s-2;
 

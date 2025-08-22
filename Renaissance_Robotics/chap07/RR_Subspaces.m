@@ -75,7 +75,7 @@ else
    if ((m==n) & (n==r))
       Ap=inv(A);  C=eye(r); L=[];     R=eye(r); N=[];
    else
-      Ap=pinv(A); [C,L] = QL(A);  [R,N] = QL(A);
+      Ap=pinv(A); [C,L] = QL(A);  [R,N] = QL(A');
    end
 end
 end

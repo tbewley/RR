@@ -1,4 +1,4 @@
-% script RR_Tensegrity_Prism_3D.m
+% script RR_tensegrity3D_Prism.m
 % Set up a tensegrity prism (Skelton p. 107), solve for internal forces, and plot
 
 clear, P=[];    % Locations of the fixed nodes of the truss (normalized units)

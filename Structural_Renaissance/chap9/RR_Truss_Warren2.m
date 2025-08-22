@@ -115,10 +115,8 @@ CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0;  % q_1 Connectivi
 tension=[1 10 18 19 20 21 22 23 24 25 26 27 28 29; ...
          0  0 10 10 10 10 10 10 10 10 10 10  0  0];
 CT=abs(CT); C=CT';
-% Now, convert the linear eqns for computing the interior forces in the frame
-% into standard A*x=u form
+
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P,tension); 
-% Then, solve for the interior forces in the frame
 x=pinv(A)*b; error=norm(A*x-b)
 if error>1e-8, disp('No equilibrium solution'), else,
     RR_Plot_Frame(Q,C,U,x,P,[],[],[],[],[],[m m m m m m m m m m])

@@ -1,4 +1,4 @@
-% script RR_Truss_Warren4.m
+% script RR_truss_Warren4.m
 % Set up a Warren truss with 4 sections, solve for its internal forces, and plot
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE

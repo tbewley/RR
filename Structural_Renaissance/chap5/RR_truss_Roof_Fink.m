@@ -1,9 +1,9 @@
-% script RR_Truss_Fink.m
-% Set up a Fink Truss or Frame, solve for its internal forces, and plot
-%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
+% script RR_truss_Roof_Fink.m
+% Set up a Fink truss (or, frame...), solve for its internal forces, and plot
+%% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear S L, disp('Analyze/plot a Fink TRUSS, taking both supports as pinned')
+clear S L, disp('Analyze/plot a Fink truss, taking both supports as pinned')
 S.P=[  0  30;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (normalized)
        0   0];
 S.Q=[ 7.5 10  15  20 22.5 ;    % Locations of each of the n=5 free nodes (normalized)
@@ -29,28 +29,28 @@ S.P=[0; 0]; S.R=[30; 0];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;      
 figure(2); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
 
-disp('Repeat, taking connectivity as a FRAME (continuous beam for lower chord)');
+disp('Repeat, taking connectivity as a frame, with a continuous beam for the lower chord');
 S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
       0   1   1   0   0   0   0;
       0   0   1   1   0   0   0; 
       0   0   0   1   1   0   0;
-      1   0   0   0   0   1   0;  % top/left chord part A
-      1   0   1   0   0   0   0;  % top/left chord part B
-      0   0   1   0   1   0   0;  % top/right chord part A 
-      0   0   0   0   1   0   1;  % top/right chord part B
+      1   0   0   0   0   1   0;  % upper-left  chord part A
+      1   0   1   0   0   0   0;  % upper-left  chord part B
+      0   0   1   0   1   0   0;  % upper-right chord part A 
+      0   0   0   0   1   0   1;  % upper-right chord part B
       0   1   0   1   0   1   1]; % bottom chord (connects 4 nodes)
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b     
 figure(3); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
 
-disp('Repeat, taking connectivity as a FRAME (continuous beams for lower and two top chords)');
+disp('Repeat, taking continuous beams for both the lower and the two upper chords)');
 S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
       0   1   1   0   0   0   0;
       0   0   1   1   0   0   0; 
       0   0   0   1   1   0   0;
-      0   1   0   1   0   1   1;  % bottom    chord (connects 4 nodes)
-      1   0   1   0   0   1   0;  % top/left  chord (connects 3 nodes)
-      0   0   1   0   1   0   1]; % top/right chord (connects 3 nodes)
-[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b     
+      0   1   0   1   0   1   1;  % bottom      chord (connects 4 nodes)
+      1   0   1   0   0   1   0;  % upper-left  chord (connects 3 nodes)
+      0   0   1   0   1   0   1]; % upper-right chord (connects 3 nodes)
+[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;  
 figure(4); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
 
 

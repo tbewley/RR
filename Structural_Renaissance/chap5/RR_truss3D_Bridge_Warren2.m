@@ -1,4 +1,4 @@
-% script RR_Truss_Warren2.m
+% script RR_truss3D_Bridge_Warren2.m
 % Set up a Warren truss with 2 sections, solve for its internal forces, and plot
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
@@ -123,7 +123,6 @@ CT=[1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0;  % q_1 Connectivi
     0 0 0 0 0 0 0 0 m 0 m 0 0 0 0 0 0 0 0 0 0 0 0 m 0 0 0 0 m]; % p_4
 CT=abs(CT); C=CT';
 % The following applies some pretension
-% ?
 % Now, convert the linear eqns for computing the interior forces in the frame
 % into standard A*x=u form
 [A,b]=RR_Convert_Frame_to_Ax_eq_b(Q,C,U,P); 

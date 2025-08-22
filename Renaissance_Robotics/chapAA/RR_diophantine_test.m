@@ -10,9 +10,9 @@ disp('A different solution, a*X+b*Y=f (X=x+(b/g)*k, Y=y-(a/g)*k, randomly-genera
 k=randi([-10 10]), X=x+r*k, Y=y-t*k, residual=a*X+b*Y-f, pause
 
 disp('The following case does NOT work, as fbad is not a multiple of the GCF!')
-fbad=RR_int32(25), [x,y,r,t]=RR_diophantine(a,b,fbad), residual=a*x+b*y-fbad, disp('Note nonzero residual!'), pause
+fbad=RR_int32(25), [x,y]=RR_diophantine(a,b,fbad), residual=a*x+b*y-fbad, disp('Note nonzero residual!'), pause
 
-clear, disp(' ') % now switch everything from RR_int types to RR_poly types
+clear, disp(' ') % now switch everything from RR_int32 types to RR_poly types
 
 disp('Set up the Diophantine problem (solve a*x1+b*y1=f1 for x1 and y1) in NR Example 19.9')
 b=RR_poly([-2 2],1), a=RR_poly([-1 1 -3 3],1), f1=RR_poly([-1 -1 -3 -3],1)
