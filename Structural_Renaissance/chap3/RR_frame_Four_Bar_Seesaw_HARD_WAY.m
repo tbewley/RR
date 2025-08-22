@@ -1,4 +1,4 @@
-% script RR_frame_Four_Bar_Seesaw_SLOW_WAY
+% script RR_frame_Four_Bar_Seesaw_HARD_WAY
 % This code sets up and solves the forces in the four-bar seesaw.  The SLOW, BUGGY WAY...
 % Getting the A and b above coded correctly this way is painful indeed.
 % See RR_frame_Four_Bar_Seesaw for a much better way to solve this problem!
