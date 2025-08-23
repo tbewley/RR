@@ -27,4 +27,11 @@ for i=1:2:5,
     plot([t(i+1)+d t(i+1)+d],[35 46.07],'b--');
 end, hold off
 
-
+pause; disp('Now doing feedforward control.')
+figure(2);  T=T0; t(1)=d+(-log((T1-Tmax)/(T-Tmax)))/a0; 
+t1_=[d:(t(1)-d)/100:t(1)]; y1_=Tmax+(T-Tmax)*exp(-a0*(t1_-d));
+t2_f=[t(1) 200]; y2_f=[T1 T1];
+t_=[t0_ t1_ t2_f]; y_=[y0_ y1_ y2_f]; plot(t_,y_,'k-','linewidth',2), hold on, axis tight
+yticks([35:1:46]); xticks([0:10:T]), grid
+plot([t(1)   t(1)  ],[35 45.07],'r-');
+plot([62.1651 62.1651],[35 45.07],'r-'); disp('settling time: 62.1651 sec')
