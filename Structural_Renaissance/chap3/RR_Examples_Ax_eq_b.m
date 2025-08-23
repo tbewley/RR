@@ -13,3 +13,10 @@ clc, A=[1 2 3;4 5 6;7 8 9], b=[11; 29; 47],  x=A\b, error=norm(A*x-b),   pause
      x1=[1 5 0]', error1=norm(A*x1-b), x2=[2 3 1]', error2=norm(A*x2-b), pause
 clc, A=[1 2 3;4 5 6;7 8 9], bbad=[11; 29; 48], xbad=A\bbad, error_bad=norm(A*xbad-b), pause
 clc, A=[1 2 3;4 5 6;7 8 9], [C,L,R,N]=RR_Subspaces(A,false)
+pause; disp('now perform some checks:')
+check_RT_times_N__should_be_zero    =R'*N
+check_CT_times_L__should_be_zero    =C'*L
+check_A_times_N__should_be_zero     =A *N
+check_AT_times_L__should_be_zero    =A'*L
+check_RT_times_R__should_be_diagonal=R'*R
+check_CT_times_C__should_be_diagonal=C'*C
