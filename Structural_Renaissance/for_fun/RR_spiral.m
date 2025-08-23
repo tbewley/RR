@@ -1,5 +1,5 @@
 % script RR_spiral
-% Makes a polygon that successively shifts along its own edges, and spirals in.
+% Draws a polygon that successively shifts along its own edges, and spirals in.
 % Code written by Thomas Bewley, with inspiration from Nadia Bewley, on Aug 23, 2025.
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, for_fun)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
