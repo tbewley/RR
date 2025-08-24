@@ -1,36 +1,30 @@
 % script RR_gasket
+% UNFINISHED
 % Code written by Thomas Bewley, with inspiration from Zacharay Bewley, on Aug 23, 2025.
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, for_fun)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, global depth; depth=3; close all; figure(1), hold on
-Ax=[0 0 1 1];
-Ay=[0 1 1 0]; A=[Ax; Ay] draw_square(A)
-axis equal, axis tight, axis off
+clear, d=0; close all; figure(1), hold on, axis equal, axis tight, axis off
+A=[0 1; 0 1]; draw_square(A), pause, divide_square(A,d)
 
-divide_square(A)
-
-function divide square(A)
-
-for i=0:3; for j=0:3, A(9)
-A_refined=[]
-
-B=[A(1,1)      ;
-     
-
-C
-D
-E
-F
-G
-H
-I
-J
-
+function divide_square(A,d)
+Bx=[A(1,1):(A(1,2)-A(1,1))/3:A(1,2)]; By=[A(2,1):(A(2,2)-A(2,1))/3:A(2,2)];
+draw_square([Bx(2) Bx(3); By(2) By(3)])
+if d<5
+  divide_square([Bx(1) Bx(2); By(1) By(2)],d+1)
+  divide_square([Bx(2) Bx(3); By(1) By(2)],d+1)
+  divide_square([Bx(3) Bx(4); By(1) By(2)],d+1)
+  divide_square([Bx(1) Bx(2); By(2) By(3)],d+1)
+  divide_square([Bx(3) Bx(4); By(2) By(3)],d+1)
+  divide_square([Bx(1) Bx(2); By(3) By(4)],d+1)
+  divide_square([Bx(2) Bx(3); By(3) By(4)],d+1)
+  divide_square([Bx(3) Bx(4); By(3) By(4)],d+1)
+end
 end
 
-
 function draw_square(A)
-for i=1:3, plot([A(1,i) A(1,i+1)],[A(2,i) A(2,i+1)],'k-'), end
-plot([A(1,4) A(1,1)],[A(2,4) A(2,1)],'k-')
+  plot([A(1,1) A(1,2)],[A(2,1) A(2,1)],'k-')
+  plot([A(1,1) A(1,2)],[A(2,2) A(2,2)],'k-')
+  plot([A(1,1) A(1,1)],[A(2,1) A(2,2)],'k-')
+  plot([A(1,2) A(1,2)],[A(2,1) A(2,2)],'k-')
 end

@@ -4,16 +4,16 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, for_fun)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, corners=8; fac=0.15; % change the parameters at left to alter design
+clear, corners=8; fac=0.2; % change the parameters at left to alter design
 
-% A=[0 0 -1 -1 0 0 1 1 2 2 1 1;
-%    0 2  2  3 3 4 4 3 3 2 2 0];
+A=[0 0 -1 -1 0 0 1 1 2 2 1 1;
+   0 2  2  3 3 4 4 3 3 2 2 0];
 
-r=1; phi=360/corners;       % compute the corners of a regular polygon
-for i=1:corners, A(1,i)=r*sind(i*phi); A(2,i)=r*cosd(i*phi); end
+% r=1; phi=360/corners;       % compute the corners of a regular polygon
+% for i=1:corners, A(1,i)=r*sind(i*phi); A(2,i)=r*cosd(i*phi); end
 
 figure(1), clf, hold on, [d,n]=size(A); draw_polygon(A,n)
-for refinements=1:500
+for refinements=1:300
   for i=1:n-1, B(:,i)=fac*A(:,i)+(1-fac)*A(:,i+1); end
   B(:,n)=fac*A(:,n)+(1-fac)*A(:,1); draw_polygon(B,n), A=B;
 end
