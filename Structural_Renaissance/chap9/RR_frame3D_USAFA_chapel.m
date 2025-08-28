@@ -7,6 +7,7 @@ length=75;                % length of long diagonal of tetrahedron
 depth=21;                 % depth of tetrahedron
 t=1.5;                    % width of strips between tetrahedra (somewhere between 1.5 and 2)
 inc=17.5;                 % distance between spires
+global RR_VERBOSE; RR_VERBOSE=1;
 %%%%%%%%%%%%% Now set up 5 additional useful derived numbers
 w=(inc-2*t)/2;            % half width of tetrahedron
 phi=atan(depth/length);   % angle of tetrahedron in the y-z plane

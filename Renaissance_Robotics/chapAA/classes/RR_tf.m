@@ -221,10 +221,11 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             end, end
         end % function RR_partial_fraction_expansion
 
-        function RR_bode(L,g)
-        % function RR_bode(L,g)
+        function [omega,mag,phase]=RR_bode(L,g)
+        % function [omega,mag,phase]=RR_bode(L,g)
         % Plots the continuous-time Bode plot of L(s) if L.h is not defined, with s=(i omega),
         % or    the discrete-time   Bode plot of L(z) if L.h is defined,     with z=e^(i omega h).
+        % Optionally outputs the omega, magnitude, and phase necessary to make the Bode plot.
         % The (optional) derived type g is used to pass in various (optional) plotting parameters:
         %   {g.log_omega_min,g.log_omega_max,G.omega_N} define the set of frequencies used (logarithmically spaced)
         %   g.ls is the linestyle used
@@ -275,6 +276,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                 if exist('omega_g'), plot([omega_g omega_g],[a(3) a(4)],'k:'), end, end
             if ~isempty(L.h),        plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a) 
             if isfield(g,'axis2'),   axis(g.axis2), end
+            if nargout==0, clear, end
         end % function RR_bode
 
         function RR_bode_linear(L,g)

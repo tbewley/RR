@@ -19,7 +19,7 @@ fxA=0; fxB=0; fyB=10; fyA=-fyB;
       0   0  -s  -c   0   0   0   0   0   0   s   c;
       0   0   0   0  -1   0  -1   0   1   0   0   0;
       0   0   0   0   0  -1   0  -1   0   1   0   0;
-      0   0   0   0  -s   c   0   0  -s   c   0   0];
+      0   0   0   0  -s   c   0   0  -s   c   0   0]
   b=[-fxA -fyA s*fxA+c*fyA fxB fyB s*fxB-c*fyB 0 0 0 0 0 0]', pause
 
 x=A\b, error=norm(A*x-b)

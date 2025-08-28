@@ -45,7 +45,7 @@ end
 
 % extract nonzero MFM forces, reaction forces, and reaction moments from y
 F(1:S.mfm,1:S.n,1:S.d)=0;       
-for i=1:S.mfm, sy(S.tfm+i,:)='g-'; sw(S.tfm+i)=6;       % MFMs are magenta
+for i=1:S.mfm, sy(S.tfm+i,:)='g-'; sw(S.tfm+i)=6;       % MFMs are green
   for j=1:S.n, if S.Cmfm(i,j)==1, for k=1:S.d, F(i,j,k)=y(1); y=y(2:end); end,end,end
 end
 VP=[]; VR=[]; VS=[]; % extract nonzero reaction forces at P,R,S support points from y
@@ -108,6 +108,19 @@ if S.d==2               % This handles the rest of the 2D case
   if RR_VERBOSE>0
     fprintf('Sum of all applied  forces in (x,y) = (%+0.5g, %+0.5g)\n',t1(1),t1(2))
     if S.p+S.r+S.s>0, fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g)\n',t2(1),t2(2)), end
+  end
+  if RR_VERBOSE>1
+
+    for i=1:S.mfm
+      i
+      J=size(F(i,:,:),2), pause
+      for i=1:S.mfm,
+        f=quiver(ax,N(1,i)-fac_f*L.U(1,i),N(2,i)-fac_f*L.U(2,i),fac_f*L.U(1,i),fac_f*L.U(2,i),0);
+        if j==1, set(f,'MaxHeadSize',10000,'linewidth',3,'color','b');
+        elseif j==2, set(f,'MaxHeadSize',10000,'linewidth',3,'color','k');
+        else, set(f,'MaxHeadSize',10000,'linewidth',3,'color','r'); end
+      end
+    end
   end
   for i=1:S.q
     if L.U_in(i)

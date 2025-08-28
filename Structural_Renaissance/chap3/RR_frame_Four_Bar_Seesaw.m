@@ -4,8 +4,8 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 3)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-global RR_VERBOSE;
-clear, clc, RR_VERBOSE=0          % This sets up the parameters defining the structure (in SI)
+global RR_VERBOSE
+clear, clc, RR_VERBOSE=2          % This sets up the parameters defining the structure (in SI)
 lA=0.1; lB=0.9;                   % Locations of the masses, in meters
 fyA=-1; fyB=-1;                   % Values of the externally-applied forces, in Newtons
 phi=10; c=cosd(phi); s=sind(phi); % Deflection of the frame, in degrees, and its sin and cos
