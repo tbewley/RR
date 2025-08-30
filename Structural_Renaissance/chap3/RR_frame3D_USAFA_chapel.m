@@ -2,12 +2,12 @@
 % Geometry of USAFA chapel defined by just 5 numbers (measurements in feet - sorry)
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
-clear; s=17;               % s=2 to 17: number of sections of design being modelled. 
-length=75;                % length of long diagonal of tetrahedron
-depth=21;                 % depth of tetrahedron
+clear; s=17;              % number of spires being modelled (s=17 for full chapel)
+length=75;                % length of long diagonal of each tetrahedron
+depth=21;                 % depth of each tetrahedron
 t=1.5;                    % width of strips between tetrahedra (somewhere between 1.5 and 2)
-inc=17.5;                 % distance between spires
-global RR_VERBOSE; RR_VERBOSE=1;
+inc=17.5;                 % distance between spire tips
+global RR_VERBOSE; RR_VERBOSE=1; % This controls the quantity of screen output
 %%%%%%%%%%%%% Now set up 5 additional useful derived numbers
 w=(inc-2*t)/2;            % half width of tetrahedron
 phi=atan(depth/length);   % angle of tetrahedron in the y-z plane
@@ -170,3 +170,5 @@ for i=1:s-1, k=3*(i-1);
           [N(3,a) N(3,b) N(3,c) N(3,d)],'y')
   end
 end
+view(-43.37,18.05), axis off
+print -vector -depsc USAFA_full.eps

@@ -12,19 +12,19 @@ phi=10; c=cosd(phi); s=sind(phi); % Deflection of the frame, in degrees, and its
 h=1; w=2;                         % Parameters defining {height,width} of the physical frame
 
 % x={fCAx fCAy fCGx fCGy fCBx fCBy fDAx fDAy fDGx fDGy fDBx fDBy}
- A=[  1    0    0    0    0    0    1    0    0    0    0    0;
-      0    1    0    0    0    0    0    1    0    0    0    0;
-      0    0    0    0    1    0    0    0    0    0    1    0;
-      0    0    0    0    0    1    0    0    0    0    0    1;
-     -1    0   -1    0   -1    0    0    0    0    0    0    0;
-      0   -1    0   -1    0   -1    0    0    0    0    0    0;
-      0    0    0    0    0    0   -1    0   -1    0   -1    0;
-      0    0    0    0    0    0    0   -1    0   -1    0   -1;
-     -h    0    0    0    0    0    h    0    0    0    0    0;
-      0    0    0    0   -h    0    0    0    0    0    h    0;
-      s    c    0    0   -s   -c    0    0    0    0    0    0;
-      0    0    0    0    0    0    s    c    0    0   -s   -c]
-  b=[ 0  -fyA   0  -fyB   0    0    0    0 lA*fyA -lB*fyB 0  0]', pause
+ A=[  1    0    0    0    0    0     1    0    0    0    0    0;
+      0    1    0    0    0    0     0    1    0    0    0    0;
+     -h    0    0    0    0    0     h    0    0    0    0    0;
+      0    0    0    0    1    0     0    0    0    0    1    0;
+      0    0    0    0    0    1     0    0    0    0    0    1;
+      0    0    0    0   -h    0     0    0    0    0    h    0;
+     -1    0   -1    0   -1    0     0    0    0    0    0    0;
+      0   -1    0   -1    0   -1     0    0    0    0    0    0;
+      s    c    0    0   -s   -c     0    0    0    0    0    0;
+      0    0    0    0    0    0    -1    0   -1    0   -1    0;
+      0    0    0    0    0    0     0   -1    0   -1    0   -1;
+      0    0    0    0    0    0     s    c    0    0   -s   -c]
+  b=[ 0  -fyA lA*fyA 0  -fyB -lB*fyB 0    0    0    0    0    0]', pause
 
 x=A\b,      disp('The A\b approach fails, because A is singular.  Dude.'), pause
 
