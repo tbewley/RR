@@ -110,15 +110,10 @@ if S.d==2               % This handles the rest of the 2D case
     if S.p+S.r+S.s>0, fprintf('Sum of all reaction forces in (x,y) = (%+0.5g, %+0.5g)\n',t2(1),t2(2)), end
   end
   if RR_VERBOSE>1
-
     for i=1:S.mfm
-      i
-      J=size(F(i,:,:),2), pause
-      for i=1:S.mfm,
-        f=quiver(ax,N(1,i)-fac_f*L.U(1,i),N(2,i)-fac_f*L.U(2,i),fac_f*L.U(1,i),fac_f*L.U(2,i),0);
-        if j==1, set(f,'MaxHeadSize',10000,'linewidth',3,'color','b');
-        elseif j==2, set(f,'MaxHeadSize',10000,'linewidth',3,'color','k');
-        else, set(f,'MaxHeadSize',10000,'linewidth',3,'color','r'); end
+      for j=1:S.n
+        f=quiver(ax,N(1,j)-fac_f*F(i,j,1),N(2,j)-fac_f*F(i,j,2),fac_f*F(i,j,1),fac_f*F(i,j,2),0);
+        set(f,'MaxHeadSize',10000,'linewidth',3,'color','b');
       end
     end
   end

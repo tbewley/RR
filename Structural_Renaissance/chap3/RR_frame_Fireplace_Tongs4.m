@@ -3,7 +3,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 3)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, global RR_VERBOSE, RR_VERBOSE=true; % This turns on or off some nice screen printout
+clear, global RR_VERBOSE, RR_VERBOSE=2; % {0,2} for {less,more} screen output
 
 % All we do below is set up the geometry, the connectivity, and the applied loads.
 S.P=[ 6  6;  % Columns of {P,Q} denote x,y locations of each of the {pinned,free} supports
@@ -20,4 +20,5 @@ S.C=[ 1  0  1  0  1  0  0  0;  % Connectivity of the pin-jointed frame
 
 % Convert the eqns for computing the interior forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;    
-figure(2); RR_Structure_Plot(S,L,x); error=norm(A*x-b)
+figure(1); RR_Structure_Plot(S,L,x); error=norm(A*x-b)
+% print -vector -dpdf Fireplace_Tongs4_sol.pdf
