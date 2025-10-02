@@ -12,7 +12,10 @@ function RR_Structure_Plot(S,L,x,ax)
 %         S.S     = FIXED  support nodes (optional)
 %         S.S_vec = normal vector of the fixed nodes (optional)
 %         S.C     = matrix of 0's and 1's defining the connectivity of the structure
-%         L.U     = force applied at all of the q free nodes of the structure (required)
+%         L.U     = pointwise force applied at all of the q free nodes of the structure (optional)
+%         L.w0    = distributed force coefficient w0 at all q nodes and j members (optional)
+%         L.w1    = distributed force coefficient w1 at all q nodes and j members (optional)
+%         L.w2    = distributed force coefficient w2 at all q nodes and j members (optional)
 %         L.M     = moments applied to all of the m members of the structure (optional)
 %         L.tension = preset tension in specified members (optional)
 %         ax is an optional field (as opposed to S,L,x) that contains the figure axes

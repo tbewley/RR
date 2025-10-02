@@ -62,7 +62,11 @@ if ~isfield(S,'S_vec')
   if S.d==2, for i=1:S.s, S.S_vec(:,i)=[0;1];   end 
   else,      for i=1:S.s, S.S_vec(:,i)=[0;0;1]; end, end 
 end                 % note: t is a temp variable
-t=size(L.U,2);      if t~=S.q, error('U has the wrong number of nodes'),  end 
+if ~isfield(L,'U'), if S.d==2, L.M=zeros(2,S.q); else, L.M=zeros(3,S.q);  end
+else,      if size(L.U,2)~=S.q, error('U has the wrong number of nodes'), end, end
+if ~isfield(L,'w0'), L.w0=zeros(S.n,S.m); end
+if ~isfield(L,'w1'), L.w1=zeros(S.n,S.m); end
+if ~isfield(L,'w2'), L.w2=zeros(S.n,S.m); end
 if ~isfield(L,'M'), if S.d==2, L.M=zeros(1,S.m); else, L.M=zeros(3,S.m);  end, end
 if ~isfield(L,'tension'), L.tension=[]; L.t=0;   else, L.t=size(L.tension,1);  end
 
@@ -74,7 +78,7 @@ S.Ctfm=[]; L.tensiontfm=[]; % initialize scratch matrices to for the two-force  
 S.Cmfm=[]; L.Mmfm=[];       % initialize scratch matrices to for the multi-force members
 for i=1:S.m
     if t1(i)<2, fprintf('warning: member %d has %d connections?\n',i,t1(i)), pause, end
-    if t1(i)==2 & norm(L.M(:,i))==0, 
+    if t1(i)==2 & norm(L.M(:,i))==0 & norm(L.w0(:,i))=0 & norm(L.w1(:,i))=0 & norm(L.w2(:,i))=0
       j=find(S.C(i,:),2);   % check to see if there is a fixed support on either end
       if j(1)<=S.q+S.p+S.r & j(2)<=S.q+S.p+S.r, tfm=true; else, tfm=false; end
     else 
