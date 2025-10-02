@@ -1,5 +1,5 @@
-% script RR_beam_simply_supported_a_shear_moment.m
-% This code sets up and solves the four-bar seesaw.
+% script RR_beam_simply_supported_a.m
+% This code ?
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 3)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
