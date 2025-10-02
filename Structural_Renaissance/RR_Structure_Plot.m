@@ -80,7 +80,12 @@ if RR_VERBOSE>0
 end
 N=[S.Q S.P S.R S.S];
 fac_b=1*(max(max(N))-min(min(N))); fac_f=0.1/max(max(abs([L.U VP VR VS])))*fac_b; 
-if nargin<4, clf, ax=axes; end, axes(ax), hold(ax,'on')
+
+if (S.tfm==0 & S.mfm==1), 
+   figure(10), clf, ax=subplot(4,1,1); axes(ax), hold(ax,'on'), axis(ax,'off')
+else
+   if nargin<4, clf, ax=axes; end, axes(ax), hold(ax,'on')
+end
 
 if S.d==2 % Draw little 2D triagles/squares below the {pinned,roller,fixed} support points
   for i=1:S.p, drawtriangle(ax,S.P(:,i),S.P_vec(:,i),fac_b,'k-'), end
@@ -160,6 +165,41 @@ if S.d==2               % This handles the rest of the 2D case
       plot(ax,[x x+r/4],[y y+r/2], 'r','LineWidth',3)
     end
   end
+
+  if (S.tfm==0 & S.mfm==1) % plot shear, moment, and axial force diagrams of a single MFM
+    A=[S.Q(1,:); L.U(2,:); zeros(1,S.q); L.U(1,:)];
+    if S.p>0, A=[A [S.P(1,:); VP(2,:); zeros(1,S.p); VP(1,:)]]; end
+    if S.r>0, A=[A [S.R(1,:); VR(2,:); zeros(1,S.r); VR(1,:)]]; end
+    if S.s>0, A=[A [S.S(1,:); VS(2,:); MS(:); VS(1,:)]]; end
+    A=sortrows(A')' % this sorts by the first element in each column (horizontal position)
+    size(A,2)
+
+    ax1=subplot(4,1,2); axes(ax1), hold(ax1,'on'), axis(ax1,'off') % shear diagram
+    for i=1:S.p, drawtriangle(ax1,S.P(:,i),S.P_vec(:,i),fac_b,'k-'), end
+    plot(ax1,[min(N(1,:)) max(N(1,:))],[min(N(2,:)) max(N(2,:))],'g-',"LineWidth",2);
+    plot(ax1,[A(1,1) A(1,1)],fac_f*[0 A(2,1)],'m-',"LineWidth",3)
+    for i=2:S.n, plot(ax1,[A(1,i-1) A(1,i)],fac_f*[sum(A(2,1:i-1)) sum(A(2,1:i-1))],'k-',"LineWidth",3)
+                 plot(ax1,[A(1,i  ) A(1,i)],fac_f*[sum(A(2,1:i-1)) sum(A(2,1:i  ))],'m-',"LineWidth",3), end
+    axis(ax1,'equal'), axis(ax1,'tight'), grid(ax1,'on')
+    
+    ax2=subplot(4,1,3); axes(ax2), hold(ax2,'on'), axis(ax2,'off') % moment diagram
+    for i=1:S.p, drawtriangle(ax2,S.P(:,i),S.P_vec(:,i),fac_b,'k-'), end
+    plot(ax2,[min(N(1,:)) max(N(1,:))],[min(N(2,:)) max(N(2,:))],'g-',"LineWidth",2);
+    last_m=0; for i=2:S.n, 
+      new_m=last_m+sum(A(2,1:i-1))*(A(1,i)-A(1,i-1));
+      plot(ax2,[A(1,i-1) A(1,i)],fac_f*[last_m new_m],'k-',"LineWidth",3); last_m=new_m;
+    end
+    axis(ax2,'equal'), axis(ax2,'tight'), grid(ax2,'on')
+    
+    ax3=subplot(4,1,4); axes(ax3), hold(ax3,'on'), axis(ax3,'off') % axial force diagram
+    for i=1:S.p, drawtriangle(ax3,S.P(:,i),S.P_vec(:,i),fac_b,'k-'), end
+    plot(ax3,[min(N(1,:)) max(N(1,:))],[min(N(2,:)) max(N(2,:))],'g-',"LineWidth",2);
+    plot(ax3,[A(1,1) A(1,1)],fac_f*[0 A(4,1)],'m-',"LineWidth",3)
+    for i=2:S.n, plot(ax3,[A(1,i-1) A(1,i)],fac_f*[sum(A(4,1:i-1)) sum(A(4,1:i-1))],'k-',"LineWidth",3)
+                 plot(ax3,[A(1,i  ) A(1,i)],fac_f*[sum(A(4,1:i-1)) sum(A(4,1:i  ))],'m-',"LineWidth",3), end
+    axis(ax3,'equal'), axis(ax3,'tight'), grid(ax3,'on')
+  end
+
 else              % this handles the rest of the 3D case
   t1=sum(L.U,2);  t2=sum([VP VR VS],2);
   if RR_VERBOSE>0
@@ -262,3 +302,7 @@ ind=[1 2 3 4]; patch(ax,P(1,ind)+p(1), P(2,ind)+p(2), P(3,ind)+p(3), col)
 ind=[5 6 7 8]; patch(ax,P(1,ind)+p(1), P(2,ind)+p(2), P(3,ind)+p(3), col)
 alpha(0.2)
 end % function drawcube
+
+function Beam_Analysis
+disp('blah')
+end % function Beam_Analysis
