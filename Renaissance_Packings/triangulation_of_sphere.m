@@ -15,7 +15,6 @@
 % "pretty close" to a solution of Tammes problem for the number of points it uses.
 % Note #2: Icosahedral symmetry doesn’t achieve overall red/black ordering, so
 % it is not nearly as good for multigrid!
-Did you disappear into the land of administration?
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 % Related preliminary work in collaboration with Joe Cessna (see his thesis).
