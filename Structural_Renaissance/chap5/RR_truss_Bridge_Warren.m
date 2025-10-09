@@ -33,9 +33,8 @@ for i=1:s-1,   C(j+2*i-1,s+i-1)=-1; C(j+2*i-1,i)=1;         % internal diagonals
                C(j+2*i,i)=1;        C(j+2*i,s+i)=-1; end, j=j+2*s-2;  
 C(j+1,n-2)=-1; C(j+1,n)=1; j=j+1;                             % right diagonal to fixed node
 
-% Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
-% Then, just solve for the tension and compression in the members, and plot.
-x=pinv(A)*b, error=norm(A*x-b) % This just implements (6.4b),  Assumes zero pretension!
+x=pinv(A)*b, error=norm(A*x-b) % Assumes zero pretension!
 if error>1e-8, disp('No equilibrium solution'), beep, end
 RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)

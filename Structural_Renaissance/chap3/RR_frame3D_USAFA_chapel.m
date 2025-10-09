@@ -101,6 +101,7 @@ end, m
 
 L.U=zeros(3,q); L.U(2,7*s-2+(3*((round((s+1)/2))-1)))=1;
 
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 tic, [A,b,S,L]=RR_Structure_Analyze(S,L); toc, disp('Set up complete')
 tic, x=pinv(A)*b; toc, disp('Forces and moments solved')    
 figure(1); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(15.4, 11.4)

@@ -17,8 +17,12 @@ S.C=[ 1  0  1  0  1  0  0  0;  % Connectivity of the pin-jointed frame
       0  1  1  1  0  0  0  0;  % Note: members may connect 3 or more nodal points,
       0  0  0  1  0  1  0  1;  % and nodes may have 3 or more members attached,
       0  0  0  0  1  1  1  0]; % in addition to having an applied external load
+S.mu=[1  0  1  0  1  0  0  0;  % Connectivity of the pin-jointed frame
+      0  1  1  1  0  0  0  0;  % Note: members may connect 3 or more nodal points,
+      0  0  0  1  0  1  0  1;  % and nodes may have 3 or more members attached,
+      0  0  0  0  1  1  1  0];
 
-% Convert the eqns for computing the interior forces to Ax=b, solve, and plot.
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;    
 figure(1); RR_Structure_Plot(S,L,x); error=norm(A*x-b)
 % print -vector -dpdf Fireplace_Tongs4_sol.pdf

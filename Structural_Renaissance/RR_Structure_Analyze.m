@@ -10,6 +10,8 @@ function [A,b,S,L]=RR_Structure_Analyze(S,L)
 %         S.S     = FIXED nodes (optional)
 %         S.S_vec = normal vector of the fixed nodes (optional)
 %         S.C     = matrix of 0's and 1's defining the connectivity of the structure
+%         S.mu    = mass per unit length of beams, assumed linear between nodes (optional)
+%         S.g     = -9.81 m/s^2 (if using SI) or -32.2 ft/s^2 (if using feet - not recommended!)
 %         L.U     = force applied at all of the q free nodes of the structure (required)
 %         L.M     = moments applied to all of the m members of the structure (optional)
 %         L.tension = preset tension in specified members (optional)
@@ -62,23 +64,22 @@ if ~isfield(S,'S_vec')
   if S.d==2, for i=1:S.s, S.S_vec(:,i)=[0;1];   end 
   else,      for i=1:S.s, S.S_vec(:,i)=[0;0;1]; end, end 
 end                 % note: t is a temp variable
-if ~isfield(L,'U'), if S.d==2, L.M=zeros(2,S.q); else, L.M=zeros(3,S.q);  end
+if ~isfield(S,'mu'), S.mu=zeros(S.m,S.n); end
+if ~isfield(S,'g'),  S.g=-9.81; end
+if ~isfield(L,'U'), if S.d==2, L.U=zeros(2,S.q); else, L.U=zeros(3,S.q);  end
 else,      if size(L.U,2)~=S.q, error('U has the wrong number of nodes'), end, end
-if ~isfield(L,'w0'), L.w0=zeros(S.n,S.m); end
-if ~isfield(L,'w1'), L.w1=zeros(S.n,S.m); end
-if ~isfield(L,'w2'), L.w2=zeros(S.n,S.m); end
 if ~isfield(L,'M'), if S.d==2, L.M=zeros(1,S.m); else, L.M=zeros(3,S.m);  end, end
 if ~isfield(L,'tension'), L.tension=[]; L.t=0;   else, L.t=size(L.tension,1);  end
 
 % MOVE TWO-FORCE MEMBERS TO TOP OF C, with one positive and one negative entry per row
 % (ala Skelton), making certain to move L.M and L.tension with S.C as members are rearranged.
 S.C=abs(S.C);               % first, strip off any stray negative signs in C
-S.tfm=0; S.mfm=0; t1=sum(S.C,2);
+S.tfm=0; S.mfm=0; t1=sum(boolean(S.C),2);
 S.Ctfm=[]; L.tensiontfm=[]; % initialize scratch matrices to for the two-force   members
 S.Cmfm=[]; L.Mmfm=[];       % initialize scratch matrices to for the multi-force members
 for i=1:S.m
     if t1(i)<2, fprintf('warning: member %d has %d connections?\n',i,t1(i)), pause, end
-    if t1(i)==2 & norm(L.M(:,i))==0 & norm(L.w0(:,i))=0 & norm(L.w1(:,i))=0 & norm(L.w2(:,i))=0
+    if t1(i)==2 & norm(L.M(:,i))==0 & norm(S.mu(:,i))==0
       j=find(S.C(i,:),2);   % check to see if there is a fixed support on either end
       if j(1)<=S.q+S.p+S.r & j(2)<=S.q+S.p+S.r, tfm=true; else, tfm=false; end
     else 
@@ -91,11 +92,22 @@ for i=1:S.m
       if k>0, L.tensiontfm=[L.tensiontfm; [S.tfm, L.tension(k,2)]]; end
     else
       S.mfm=S.mfm+1;
-      S.Cmfm(S.mfm,:)=S.C(i,:); 
+      % We now sort the nodes of each MFM from C=1 (start) to C=last (end)
+      %   (we can later use boolean(C) to convert any C>0 to C=1)
+      i_nodes=find(S.C(i,:));                            % look just at the nonzero nodes in row i of S.C
+                 dx=max(N(1,i_nodes))-min(N(1,i_nodes))  % compute extent of this beam 
+                 dy=max(N(2,i_nodes))-min(N(2,i_nodes))  % in the x, y, and z directions
+      if S.d==3, dz=max(N(3,i_nodes))-min(N(3,i_nodes)), else, dz=0; end
+      if dx>0.9*dy & dx>0.9*dz, [B,i_sorted]= sort(N(1,i_nodes));       % sort by x
+      elseif dy>0.9*dz,         [B,i_sorted]= sort(N(2,i_nodes));       % sort by y
+      else,                     [B,i_sorted]= sort(N(3,i_nodes)); end   % sort by z
+      i_nodes_sorted=i_nodes(i_sorted);
+      S.Cmfm(S.mfm,:)=zeros(1,S.n); for t=1:length(i_nodes), S.Cmfm(S.mfm,i_nodes_sorted(t))=t; end
+      S.C(i,:)=S.Cmfm(S.mfm,:);
       L.Mmfm(:,S.mfm)=L.M(:,i);
       if k>0, error('Member %d is a multiforce member; pretensioning not allowed on it!',i), end
     end 
-end, S.C=[S.Ctfm; S.Cmfm];
+end, S.C=[S.Ctfm; S.Cmfm]; S.C
 if RR_VERBOSE>0,
   if S.mfm==0, fprintf('All %d members are two-force members; structure S is a truss\n',S.tfm)
   else, fprintf('Structure S is a frame, with %d two-force member(s) and %d multi-force member(s)\n',S.tfm,S.mfm), end
@@ -113,9 +125,10 @@ if S.tfm>0,
   x=sym('x',[1 S.tfm]); X=diag(x);               % set up symbolic vector x (tensions) and diagonal X matrix
 end
 
-% SET UP UNKNOWNS F CORRESPONDING TO THE FORCES APPLIED BY THE MULTI-FORCE MEMBERS (MFMs),
+% SET UP UNKNOWNS F CORRESPONDING TO THE FORCES APPLIED ON THE MULTI-FORCE MEMBERS (MFMs),
 % in the direction d on each of the S.mfm members at each of the S.n nodes (zeros in elements implied by C)
-F=sym('f%d_%d_%d',[S.d S.mfm S.n]); for i=1:S.mfm, for j=1:S.n, F(:,i,j)=F(:,i,j)*S.Cmfm(i,j); end, end
+F=sym('f%d_%d_%d',[S.d S.mfm S.n]);
+for i=1:S.mfm, for j=1:S.n, F(:,i,j)=F(:,i,j)*boolean(S.Cmfm(i,j)); end, end
 
 % BELOW IS THE GUTS OF THE CALCULATION.  Will seek the forces {X,F} and reactions {VP,VR,VS,MS} s.t. sys=0.
 
@@ -124,32 +137,48 @@ F=sym('f%d_%d_%d',[S.d S.mfm S.n]); for i=1:S.mfm, for j=1:S.n, F(:,i,j)=F(:,i,j
 %    from TFMs (ala Skelton)                 from MFMs     from reactions
 if S.mfm>1;  G=sum(F,2);  else,  G=F;  end
 
-%% Logic needed here: skip TFM stuff if none?
 if S.mfm==0,      temp=[D*X*S.Ctfm]                  -[L.U VP VR VS];
 elseif S.tfm==0,  temp=             reshape(G,S.d,[])-[L.U VP VR VS];
 else,             temp=[D*X*S.Ctfm]+reshape(G,S.d,[])-[L.U VP VR VS]; end
 
 sys=reshape(temp,numel(temp),1);
 
-% We then set up to set the SUM OF FORCES ON EACH MFM MEMBER equal to zero
-temp=sum(F,3);
+% We then set up to set the SUM OF FORCES (POINTWISE + DISTRIBUTED) ON EACH MFM MEMBER equal to zero
+temp=sum(F,3)
 sys=[sys; reshape(temp,numel(temp),1)];
+for i=1:S.mfm;
+  for j=1:sum(boolean(S.Cmfm(i,:)),2)-1;    % compute DISTRIBUTED WEIGHT of each MFM segment
+    [t,j1]=find(S.Cmfm(i,:)==j); [t,j2]=find(S.Cmfm(i,:)==j+1);
+    segL(i,j)=norm(N(:,j2)-N(:,j1));
+    segW(i,j)=S.g*segL(i,j)*(S.mu(i,j1)+S.mu(i,j2))/2;
+    sys(end-S.mfm*S.d+2*i)=sys(end-S.mfm*S.d+2*i)+segW(i,j);       % account for this weight
+  end
+end
 
-% We then set up to set the SUM OF MOMENTS ON EACH MFM MEMBER equal to zero
+% We then set up to set the SUM OF MOMENTS ON EACH MFM MEMBER i equal to zero
 % note: In 2D, (q x f)_z=q1*f2-q2*f1. In 3D, we just use cross(q,f).
 for i=1:S.mfm, if S.d==2, t=0; else, t=[0; 0; 0]; end
-  for j=1:S.n  % Pick up here contributions from all MFMs (correct)
+  for j=1:S.n  % Pick up here contributions from all MFMs
     if S.d==2, t=t+N(1,j)*F(2,i,j)-N(2,j)*F(1,i,j);
     else,      t=t+cross(N(:,j),F(:,i,j));          end
-  %% now calculate contributions here from all TFMs???
-  %% but... they should be here already, as the nonzero F(k,i,j) are all the forces
-  %% ON a given member...
   end
   Mm(:,i)=t+L.Mmfm(:,i);
-end  
+  for j=1:sum(boolean(S.Cmfm(i,:)),2)-1 % compute DISTRIBUTED MOMENTS of each MFM segment
+    [t,j1]=find(S.Cmfm(i,:)==j); [t,j2]=find(S.Cmfm(i,:)==j+1);
+    mu1=S.mu(i,j1); mu2=S.mu(i,j2); Len=norm(N(:,j2)-N(:,j1));
+    if S.d==2,   % account for this moment (see Example 4.2b, and footnote 5)
+      s1=N(1,j1); s2=N(1,j2); 
+      Mm(1,i)=Mm(1,i)+S.g*Len*(mu1*(2*s1+s2)+mu2*(s1+2*s2))/6;
+    else
+      s1x=N(1,j1); s2x=N(1,j2); s1z=N(3,j1); s2z=N(3,j2);   
+      Mm(1,i)=Mm(1,i)+S.g*Len*(mu1*(2*s1z+s2z)+mu2*(s1z+2*s2z))/6; % <--- check this
+      Mm(3,i)=Mm(3,i)+S.g*Len*(mu1*(2*s1x+s2x)+mu2*(s1x+2*s2x))/6;
+    end
+  end
+end
 if ~exist('Mm'), Mm=[]; end            
 % add reaction moment at fixed node j to the moment on the MFM i to which it is connected
-for j=1:S.s, [temp,i]=max(S.Cmfm(:,S.q+S.p+S.r+j)); Mm(:,i)=Mm(:,i)+MS(:,j); end  % (check this?)
+for j=1:S.s, [temp,i]=max(boolean(S.Cmfm(:,S.q+S.p+S.r+j))); Mm(:,i)=Mm(:,i)+MS(:,j); end  % (check this?)
 sys=[sys; reshape(Mm,numel(Mm),1)];
 eqns=length(sys);
 
@@ -163,7 +192,7 @@ end
 for i=1:S.tfm; exp="syms x"+i; eval(exp); end
 % ... and set up the nonzero fk_i_j, vpk_i, vri, vsi, and ms as symbolic variables
 for i=1:S.mfm, for j=1:S.n
-  if S.Cmfm(i,j)==1, for k=1:S.d; exp="syms f"+k+"_"+i+"_"+j; eval(exp); end, end
+  if S.Cmfm(i,j)>0, for k=1:S.d; exp="syms f"+k+"_"+i+"_"+j; eval(exp); end, end
 end, end
 for i=1:S.p,         for k=1:S.d, exp="syms vp"+k+"_"+i;      eval(exp); end, end
 for i=1:S.r,                      exp="syms vr"+i;            eval(exp); end 
@@ -185,7 +214,7 @@ first=true; for i=1:S.tfm,
   else,     SYS=SYS+",x"+i; end
 end
 
-for i=1:S.mfm, for j=1:S.n, if S.Cmfm(i,j)==1, for k=1:S.d; 
+for i=1:S.mfm, for j=1:S.n, if S.Cmfm(i,j)>0, for k=1:S.d; 
   if first, SYS=SYS+"f"+k+"_"+i+"_"+j; first=false;
   else,     SYS=SYS+",f"+k+"_"+i+"_"+j; end
 end, end, end, end

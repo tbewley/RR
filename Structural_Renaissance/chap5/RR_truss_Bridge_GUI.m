@@ -193,7 +193,8 @@ end
 
 if height>0, L.U_in=false(q,1), else, L.U_in=true(q,1), end
 
-% THE FOLLOWING IS WHERE THE MAGIC HAPPENS!  :)
+% THE FOLLOWING IS WHERE THE MAGIC HAPPENS!
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;
 RR_Structure_Plot(S,L,x,ax); error=norm(A*x-b)
 end % function update_truss

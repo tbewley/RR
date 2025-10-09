@@ -59,6 +59,8 @@ S.C=[1 1 1 1 1 1 0 0 0 0 0 0 0 0 1 0 0;
      0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0];
 
 L.U=zeros(3,q); L.U(:,1)=[0;0;-1];
+
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
 figure(2); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(104.7,27.4)
 % print -vector -fillpage -dpdf USAFA_sub_load0.eps

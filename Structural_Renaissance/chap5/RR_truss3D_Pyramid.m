@@ -63,7 +63,8 @@ for i=1:3
         0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_3
         0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];   % p_4
   end
-  % Now, convert the D*X*CQ=U problem in (16.3a) to the standard A*x=u form in (16.3b)
+ 
+  % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
   S.C=CT'; [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
   % Finally, plot the truss (blue = tension, red = compression)
   figure(1), clf, RR_Structure_Plot(S,L,x); error=norm(A*x-b), if i<3, pause, end

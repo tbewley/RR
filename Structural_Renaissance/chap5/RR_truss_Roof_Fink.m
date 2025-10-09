@@ -53,7 +53,6 @@ S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;  
 figure(4); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
 
-
 clear S L, disp('Now consider a 3D Fink structure (as a TRUSS, taking several support points as pinned)')
 S.P=[  0   0   0   0;   
        0   6  12  18;

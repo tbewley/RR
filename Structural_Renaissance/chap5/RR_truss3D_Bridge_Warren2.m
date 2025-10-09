@@ -18,7 +18,8 @@ CT=[ 1  1  0  0  1  1  0;  % q_1 Connectivity of the truss
      0 -1  0  0  0  0 -1]; % p_2
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
-% Then, just solve for the tension and compression in the members, and plot.
+
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
 figure(1), RR_Plot_Truss(Q,P,C,U,x);  % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, % print -dpdf Warren2.pdf
@@ -46,7 +47,8 @@ CT=[ 1  1  0  0  1  1  0  0  0  0  0  0  0  0  1  0  0;  % q_1 Connectivity
      0  0  0  0  0  0  0  0 -1  0  0  0  0 -1  0  0  0]; % p_4
 % Now, convert the D*X*CQ=U problem in (6.3a) to the standard A*x=u form in (6.3b)
 C=CT'; [A,b]=RR_Convert_DXCQ_eq_U_to_Ax_eq_b(Q,P,C,U); 
-% Then, just solve for the tension and compression in the members, and plot.
+
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 x=pinv(A)*b;                % This just implements (6.4b),  Assumes zero pretension!
 RR_Plot_Truss(Q,P,C,U,x,[],[],[m m m m m m]);  % Plot truss (red=positive=tension, blue=negative=compression)
 axis tight, view(19.23,10.15), print -dpdf Warren2_3D.pdf

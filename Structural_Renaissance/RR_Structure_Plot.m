@@ -49,7 +49,7 @@ end
 % extract nonzero MFM forces, reaction forces, and reaction moments from y
 F(1:S.mfm,1:S.n,1:S.d)=0;       
 for i=1:S.mfm, sy(S.tfm+i,:)='g-'; sw(S.tfm+i)=6;       % MFMs are green
-  for j=1:S.n, if S.Cmfm(i,j)==1, for k=1:S.d, F(i,j,k)=y(1); y=y(2:end); end,end,end
+  for j=1:S.n, if S.Cmfm(i,j)>0, for k=1:S.d, F(i,j,k)=y(1); y=y(2:end); end,end,end
 end
 VP=[]; VR=[]; VS=[]; % extract nonzero reaction forces at P,R,S support points from y
 for i=1:S.p, for k=1:S.d, VP(k,i)=y(1);   y=y(2:end); end, end
@@ -170,12 +170,22 @@ if S.d==2               % This handles the rest of the 2D case
   end
 
   if (S.tfm==0 & S.mfm==1) % plot shear, moment, and axial force diagrams of a single MFM
-    A=[S.Q(1,:); L.U(2,:); zeros(1,S.q); L.U(1,:)];
+    % use sum(bool) to count how many entries, and locate to find each entry in order
+
+    % ????
+
+
+    A=[S.Q(1,:); L.U(2,:); zeros(1,S.q); L.U(1,:)];  % put mu in the bottom of this
     if S.p>0, A=[A [S.P(1,:); VP(2,:); zeros(1,S.p); VP(1,:)]]; end
     if S.r>0, A=[A [S.R(1,:); VR(2,:); zeros(1,S.r); VR(1,:)]]; end
     if S.s>0, A=[A [S.S(1,:); VS(2,:); MS(:); VS(1,:)]]; end
-    A=sortrows(A')' % this sorts by the first element in each column (horizontal position)
-    size(A,2)
+      
+    A
+    size(A)
+    S.C
+    for i=1:length(A)  % but only keep rows with nonzero C entry!  Then reorder it one end to other.
+    % A=A(:,[S.C]) % this is backwards of what I need, and doesn't clear out empty rows.
+    % A=sortrows(A')' % this sorts by the first element in each column (horizontal position)
 
     ax1=subplot(4,1,2); axes(ax1), hold(ax1,'on'), axis(ax1,'off') % shear diagram
     for i=1:S.p, drawtriangle(ax1,S.P(:,i),S.P_vec(:,i),fac_b,'k-'), end

@@ -39,6 +39,7 @@ for i=1:3
           0 0 1 1 0 0 0 0 0];
   end
   S.C=CT';
+  % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
   [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
   % Finally, plot the truss (blue = tension, red = compression)
   figure(1), clf, RR_Structure_Plot(S,L,x); error=norm(A*x-b),
