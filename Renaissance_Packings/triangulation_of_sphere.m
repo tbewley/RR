@@ -2,9 +2,8 @@
 % This code develops a grid over the sphere that has overall red/black
 % ordering and octahedral symmetry.  It starts by developing a triangular
 % grid in lat/lon coordinates over each octant of the sphere, then shifts
-% and reflects it around.  Related preliminary work in collaboration with
-% Joe Cessna.  Note that six (triangular) voronoi cells meet up at
-% their vertices almost everywhere, except at the six vertices of an
+% and reflects it around.  Note that six (triangular) voronoi cells meet
+% up at their vertices almost everywhere, except at the six vertices of an
 % octahedron, where four (triangular) voronoi cells meet up.
 % The symbols that are boldfaced are those that are kept when you do a 2x
 % coarsening of the grid (for multigrid acceleration when solving elliptic
@@ -13,6 +12,7 @@
 % grid a bit, making it slightly more regular while retaining its connectivity.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
+% Related preliminary work in collaboration with Joe Cessna (see his thesis).
 
 clear; figure(1); clf; N=16; R=1;
 
