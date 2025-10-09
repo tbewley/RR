@@ -8,13 +8,19 @@
 % The symbols that are boldfaced are those that are kept when you do a 2x
 % coarsening of the grid (for multigrid acceleration when solving elliptic
 % eqns on this grid), which of course retains the overall red/black ordering.
-% Note: applying some "numerical Tammes problem" regularization would nudge this
-% grid a bit, making it slightly more regular while retaining its connectivity.
+% Note #1: applying some "numerical Tammes problem" regularization would nudge
+% this grid a bit, making it slightly more regular while retaining its
+% connectivity, but it’s already pretty uniform, given that there is no
+% getting around Euler’s formula V-E+F=2.  This construction should already be
+% "pretty close" to a solution of Tammes problem for the number of points it uses.
+% Note #2: Icosahedral symmetry doesn’t achieve overall red/black ordering, so
+% it is not nearly as good for multigrid!
+Did you disappear into the land of administration?
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 % Related preliminary work in collaboration with Joe Cessna (see his thesis).
 
-clear; figure(1); clf; N=16; R=1;
+clear; figure(1); clf; R=1; N=2^4; % Try 2^2, 2^3, or 2^4...
 
 % uncomment one of the following three lines for plot of interest.
 % for oct=1:1   % uncomment for first octant only
