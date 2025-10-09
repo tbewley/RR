@@ -1,6 +1,14 @@
 % RR_triangulation_of_sphere
-% This code develops a grid over the sphere that has red/black ordering and
-% octahedral symmetry.  It's 
+% This code develops a grid over the sphere that has overall red/black
+% ordering, and octahedral symmetry.  It starts by developing a triangular
+% grid in lat/lon coordinates over each octant of the sphere, then shifts
+% and reflects it around.  Related preliminary work in collaboration with
+% Joe Cessna.  Note that six (triangular) voronoi cells meet up at
+% their vertices almost everywhere, except at the six vertices of the
+% octahedron, where four (triangular) voronoi cells meet up.
+% The symbols that are boldfaced are those that are kept when you do a 2x
+% coarsening of the grid (for multigrid acceleration when solving elliptic
+% equations on this grid), which retains overall red/black ordering.
 
 
 clear; figure(1); clf; N=16; R=1;

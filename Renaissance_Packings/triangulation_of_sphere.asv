@@ -1,18 +1,32 @@
 % RR_triangulation_of_sphere
+% This code develops a grid over the sphere that has overall red/black
+% ordering, and octahedral symmetry.  It starts by developing a triangular
+% grid in lat/lon coordinates over each octant of the sphere, then shifts
+% and reflects it around.  Related preliminary work in collaboration with
+% Joe Cessna.  Note that six (triangular) voronoi cells meet up at
+% their vertices almost everywhere, except at the six vertices of the
+% octahedron, where four (triangular) voronoi cells meet up.
+% The symbols that are boldfaced are those that are kept when you do a 2x
+% coarsening of the grid (for multigrid acceleration when solving elliptic
+% equations on this grid).
+
 
 clear; figure(1); clf; N=16; R=1;
 
+% uncomment one of the following three lines for plot of interest.
+% for oct=1:1   % uncomment for first octant only
+for oct=1:2:7   % uncomment for western  hemisphere only
+% for oct=1:4   % uncomment for northern hemisphere only
 
-% for oct=1:4 % uncomm
 switch oct
     case 1, hem=+1; marker1='r*'; marker2='k*'; offset=0;
-    case 3, hem=+1; marker1='k*'; marker2='r*';  offset=90;
     case 2, hem=+1; marker1='r*'; marker2='k*';  offset=180;
+    case 3, hem=+1; marker1='k*'; marker2='r*';  offset=90;
     case 4, hem=+1; marker1='k*'; marker2='r*';  offset=270;
-    case 5, hem=-1; marker1='r*'; marker2='k*';  offset=0;
-    case 6, hem=-1; marker1='k*'; marker2='r*';  offset=90;
-    case 7, hem=-1; marker1='r*'; marker2='k*';  offset=180;
-    case 8, hem=-1; marker1='k*'; marker2='r*';  offset=270;
+    case 5, hem=-1; marker1='k*'; marker2='r*';  offset=0;
+    case 6, hem=-1; marker1='k*'; marker2='r*';  offset=180;
+    case 7, hem=-1; marker1='r*'; marker2='k*';  offset=90;
+    case 8, hem=-1; marker1='r*'; marker2='k*';  offset=270;
 end        
 
 for i=1:N+1
