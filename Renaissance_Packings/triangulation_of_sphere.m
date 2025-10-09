@@ -1,20 +1,25 @@
 % RR_triangulation_of_sphere
-% This code develops a grid over the sphere that has overall red/black
-% ordering and octahedral symmetry.  It starts by developing a triangular
-% grid in lat/lon coordinates over each octant of the sphere, then shifts
-% and reflects it around.  Note that six (triangular) voronoi cells meet
-% up at their vertices almost everywhere, except at the six vertices of an
-% octahedron, where four (triangular) voronoi cells meet up.
+%
+% This (stand-alone) code develops a grid over the sphere that has overall
+% red/black ordering and octahedral symmetry.  It starts by developing a
+% triangular grid in lat/lon coordinates over each octant of the sphere,
+% then shifts and reflects it around.  Note that six (triangular) voronoi
+% cells meet up at their vertices almost everywhere, except at the six
+% vertices of an octahedron, where four (triangular) voronoi cells meet up.
+%
 % The symbols that are boldfaced are those that are kept when you do a 2x
 % coarsening of the grid (for multigrid acceleration when solving elliptic
 % eqns on this grid), which of course retains the overall red/black ordering.
+%
 % Note #1: applying some "numerical Tammes problem" regularization would nudge
 % this grid a bit, making it slightly more regular while retaining its
 % connectivity, but it’s already pretty uniform, given that there is no
 % getting around Euler’s formula V-E+F=2.  This construction should already be
 % "pretty close" to a solution of Tammes problem for the number of points it uses.
+%
 % Note #2: Icosahedral symmetry doesn’t achieve overall red/black ordering, so
 % it is not nearly as good for multigrid!
+%
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 % Related preliminary work in collaboration with Joe Cessna (see his thesis).
