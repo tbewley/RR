@@ -15,16 +15,18 @@
 % this grid a bit, making it slightly more regular while retaining its
 % connectivity, but it’s already pretty uniform, given that there is no
 % getting around Euler’s formula V-E+F=2.  This construction should already be
-% "pretty close" to a solution of Tammes problem for the number of points it uses.
+% "pretty close" to a solution of Tammes problem for the number of 8*n^2 points
+% that it uses,
 %
-% Note #2: Icosahedral symmetry doesn’t achieve overall red/black ordering, so
-% it is not nearly as good for multigrid!
+% Note #2: Icosahedral, dodecahedral, cubic, and tetrahedral  symmetry do not
+% achieve overall red/black ordering, so are not nearly as good for multigrid!
 %
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 % Related preliminary work in collaboration with Joe Cessna (see his thesis).
 
-clear; figure(1); clf; R=1; N=2^4; % Try 2^2, 2^3, or 2^4...
+clear; figure(1); clf; R=1; n=4; N=2^3; % Try n=2,3,4,...
+total_gridpoints=8*N^2
 
 % uncomment one of the following three lines for plot of interest.
 % for oct=1:1   % uncomment for first octant only
@@ -32,7 +34,7 @@ for oct=1:2:7   % uncomment for western  hemisphere only
 % for oct=1:4   % uncomment for northern hemisphere only
 
 switch oct
-    case 1, hem=+1; marker1='r*'; marker2='k*'; offset=0;
+    case 1, hem=+1; marker1='r*'; marker2='k*';  offset=0;
     case 2, hem=+1; marker1='r*'; marker2='k*';  offset=180;
     case 3, hem=+1; marker1='k*'; marker2='r*';  offset=90;
     case 4, hem=+1; marker1='k*'; marker2='r*';  offset=270;
