@@ -1,4 +1,4 @@
-% RR_triangulation_of_sphere
+% RR_sphere_grid_octahedral
 %
 % This (stand-alone) code develops a grid over the sphere that has overall
 % red/black ordering and octahedral symmetry.  It starts by developing a
