@@ -24,7 +24,7 @@ S.C=[1  1  0  0  1  1  1  0  0  0  0  0;  % m x n connectivity of the pin-jointe
      0  1  0  1  0  0  0  0  0  0  0  1;  % and nodes may have 3 or more members attached, 
      1  0  1  0  0  0  0  0  0  0  1  0]; % in addition to having an applied external load
 
-% Convert the eqns for computing the interior forces to Ax=b, solve, and plot
+% Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;    
 figure(2); RR_Structure_Plot(S,L,x); x_error=norm(A*x-b)
 print -vector -dpdf Four_Bar_Seesaw_sol.pdf
