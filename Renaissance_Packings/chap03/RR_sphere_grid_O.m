@@ -8,34 +8,14 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, omega=1   % 0=no stretching, 1=regular stretching, 1.1=overstretching
-n=3              % n=2,3,4,... 
-viz='all';       % 'single', 'west', 'north', or 'all'
+clear, n=2  % n=2,3,4,... degree of refinement of each edge (N=2^n intervals)
+omega=1     % amount of stretching (0=none, 1=regular stretching, 1.1=overstretching)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 N=2^n, global RR_VERBOSE; figure(1), clf, figure(2), clf
 fprintf('total gridpoints in spherical grid = %d\n',8*N^2)
-switch viz
-  case 'single', orthants=1;       v=[135 25]; RR_VERBOSE=1; % first octant only
-  case 'west',   orthants=[1:2:7]; v=[-65 -7]; RR_VERBOSE=0;  % western  hemisphere
-  case 'north',  orthants=[1:4];   v=[45 64];  RR_VERBOSE=0;  % northern hemisphere
-  case 'all',    orthants=[1:8];   v=[0 0];    RR_VERBOSE=0;  % all octants
-end
-a=[0;0;1]; b=[0;0;-1]; c=[0;1;0]; d=[1;0;0]; e=[0;-1;0]; f=[-1;0;0];
-for orthant=1:length(orthants)
-  switch orthants(orthant)  % use three points (all on unit circle) to start the triangle from
-    case 1, x(:,1,1)=a; x(:,N+1,1)=c; x(:,1,N+1)=d; m1='r*'; m2='k*';
-    case 2, x(:,1,1)=a; x(:,N+1,1)=e; x(:,1,N+1)=f; m1='r*'; m2='k*';
-    case 3, x(:,1,1)=a; x(:,N+1,1)=d; x(:,1,N+1)=e; m1='k*'; m2='r*';
-    case 4, x(:,1,1)=a; x(:,N+1,1)=f; x(:,1,N+1)=c; m1='k*'; m2='r*';
-    case 5, x(:,1,1)=b; x(:,N+1,1)=c; x(:,1,N+1)=d; m1='k*'; m2='r*';
-    case 6, x(:,1,1)=b; x(:,N+1,1)=e; x(:,1,N+1)=f; m1='k*'; m2='r*';
-    case 7, x(:,1,1)=b; x(:,N+1,1)=d; x(:,1,N+1)=e; m1='r*'; m2='k*';
-    case 8, x(:,1,1)=b; x(:,N+1,1)=f; x(:,1,N+1)=c; m1='r*'; m2='k*';
-  end    
-  [x,xR,xB]=RR_sphere_tri_grid_compute(x,N,omega,v);
-  RR_sphere_tri_grid_plot(x,xR,xB,N,m1,m2)
-  [areaR,areaB]=RR_sphere_tri_grid_characterize(x,xR,xB,N);
-end
-RR_draw_tri3(a,c,d), RR_draw_tri3(a,e,f), RR_draw_tri3(a,d,e), RR_draw_tri3(a,f,c)
-RR_draw_tri3(b,c,d), RR_draw_tri3(b,e,f), RR_draw_tri3(b,d,e), RR_draw_tri3(b,f,c)
-view(v(1),v(2))
+A=[0;0;1]; B=[0;0;-1]; C=[0;1;0]; D=[1;0;0]; E=[0;-1;0]; F=[-1;0;0];
+[x,xR]=RR_sphere_gen_orthant(N,omega,0,A,C,D); [x,xR]=RR_sphere_gen_orthant(N,omega,0,A,E,F);
+[x,xR]=RR_sphere_gen_orthant(N,omega,0,A,D,E); [x,xR]=RR_sphere_gen_orthant(N,omega,0,A,F,C);
+[x,xR]=RR_sphere_gen_orthant(N,omega,0,B,C,D); [x,xR]=RR_sphere_gen_orthant(N,omega,0,B,E,F);
+[x,xR]=RR_sphere_gen_orthant(N,omega,0,B,D,E); [x,xR]=RR_sphere_gen_orthant(N,omega,0,B,F,C);
+view(57,19)
