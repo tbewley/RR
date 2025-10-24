@@ -1,6 +1,6 @@
 function [x,xR]=RR_sphere_gen_orthant(N,omega,z,A,B,C,D)
 % Generate and plot a quadrilateral or triangular orthant of a spherical grid.
-% This routine, and its several subroutines, do all the heavy lifting for
+% This routine, and its several subroutines, do most of the heavy lifting for
 % all of the RR_sphere_grid_* codes.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
