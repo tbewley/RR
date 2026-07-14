@@ -11,34 +11,33 @@ for i=1:3
          0 .866 .433 .433 .289];
    L.U=[ 0  0    0    0    0;    % External forces on the free nodes of the truss (normalized)
         -1  0    0    0    0];
-   L.U_in=false(q,1)  
+   L.U_in=false(q,1); 
   switch i
     case 1
-      CT=[1 1 0 0 0 0 0 0 1;     % This one does not have solution...
-          0 0 0 1 1 0 0 0 0;
-          0 0 1 1 0 0 1 0 0;
-          0 0 0 0 1 1 0 1 0;
-          0 0 0 0 0 0 1 1 1;
-          1 0 1 0 0 0 0 0 0;
-          0 1 0 0 0 1 0 0 0];
+      S.C=[1 1 0 0 0 0 0 0 1;     % This one does not have solution...
+           0 0 0 1 1 0 0 0 0;
+           0 0 1 1 0 0 1 0 0;
+           0 0 0 0 1 1 0 1 0;
+           0 0 0 0 0 0 1 1 1;
+           1 0 1 0 0 0 0 0 0;
+           0 1 0 0 0 1 0 0 0]';
     case 2
-      CT=[1 1 0 0 0 0 0 0 1 0 0 0; % This adds three more members to above truss.
-          0 0 0 1 1 0 0 0 0 0 0 1;
-          0 0 1 1 0 0 1 0 0 0 0 0;
-          0 0 0 0 1 1 0 1 0 0 0 0;
-          0 0 0 0 0 0 1 1 1 1 1 1;
-          1 0 1 0 0 0 0 0 0 1 0 0;
-          0 1 0 0 0 1 0 0 0 0 1 0];
+      S.C=[1 1 0 0 0 0 0 0 1 0 0 0; % This adds three more members to above truss.
+           0 0 0 1 1 0 0 0 0 0 0 1;
+           0 0 1 1 0 0 1 0 0 0 0 0;
+           0 0 0 0 1 1 0 1 0 0 0 0;
+           0 0 0 0 0 0 1 1 1 1 1 1;
+           1 0 1 0 0 0 0 0 0 1 0 0;
+           0 1 0 0 0 1 0 0 0 0 1 0]';
     case 3
-      CT=[1 0 1 0 0 0 0 1 1;       % This reconnects truss as some triangles.
-          0 0 0 0 1 1 0 0 0;
-          0 1 0 0 1 0 1 0 1;
-          0 0 0 1 0 1 1 1 0;
-          0 0 0 0 0 0 0 0 0;
-          1 1 0 0 0 0 0 0 0;
-          0 0 1 1 0 0 0 0 0];
+      S.C=[1 0 1 0 0 0 0 1 1;       % This reconnects truss as some triangles.
+           0 0 0 0 1 1 0 0 0;
+           0 1 0 0 1 0 1 0 1;
+           0 0 0 1 0 1 1 1 0;
+           0 0 0 0 0 0 0 0 0;
+           1 1 0 0 0 0 0 0 0;
+           0 0 1 1 0 0 0 0 0]';
   end
-  S.C=CT';
   % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
   [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
   % Finally, plot the truss (blue = tension, red = compression)

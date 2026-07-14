@@ -182,8 +182,8 @@ else
   % find two-force member that connects s1 and s2.
   % make that member also connect to this new nodal location (turns truss into a frame!!)
   for i=1:m
-      S.C(i,:)
-      j=find(S.C(i,:),2)   % check to see if this member should include the applied force
+%      S.C(i,:)
+      j=find(S.C(i,:),2);   % check to see if this member should include the applied force
       if ((j(1)==s1 & j(2)==s2) | (j(2)==s1 & j(1)==s2))
          S.C(i,q)=1; break,
       end
@@ -191,7 +191,7 @@ else
   end
 end
 
-if height>0, L.U_in=false(q,1), else, L.U_in=true(q,1), end
+if height>0, L.U_in=false(q,1); else, L.U_in=true(q,1); end
 
 % THE FOLLOWING IS WHERE THE MAGIC HAPPENS!
 % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.

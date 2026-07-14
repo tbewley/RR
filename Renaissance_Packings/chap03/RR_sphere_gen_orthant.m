@@ -18,6 +18,8 @@ else         % triangular case (nargin==6)
     x(:,1,1)=A; x(:,N+1,1)=B; x(:,1,N+1)=C; 
     [x,xR,xB]=tri_orthant_compute(x,N,omega);
     tri_orthant_plot(x,xR,xB,N,m1,m2)
+    % The following command fits xB nicely into the strictly lower triangular part of xR.
+    for j=1:N-1; for i=2:N+1-j; xR(:,N+2-i,N+1-j)=xB(:,i,j); end, end
     draw_tri(A,B,C)
 end
 end % function RR_sphere_gen_orthant

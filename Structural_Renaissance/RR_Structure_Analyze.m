@@ -77,14 +77,19 @@ S.C=abs(S.C);               % first, strip off any stray negative signs in C
 S.tfm=0; S.mfm=0; t1=sum(boolean(S.C),2);
 S.Ctfm=[]; L.tensiontfm=[]; % initialize scratch matrices to for the two-force   members
 S.Cmfm=[]; L.Mmfm=[];       % initialize scratch matrices to for the multi-force members
+% t1
+% L
+% S
+% S.m
 for i=1:S.m
     if t1(i)<2, fprintf('warning: member %d has %d connections?\n',i,t1(i)), pause, end
-    if t1(i)==2 & norm(L.M(:,i))==0 & norm(S.mu(:,i))==0
+    if t1(i)==2 & norm(L.M(:,i))==0 & norm(S.mu(i,:))==0
       j=find(S.C(i,:),2);   % check to see if there is a fixed support on either end
       if j(1)<=S.q+S.p+S.r & j(2)<=S.q+S.p+S.r, tfm=true; else, tfm=false; end
     else 
       tfm=false;
     end
+%    tfm
     if L.t>0, k=find(L.tension(:,1)==i); else, k=0; end
     if tfm
       S.tfm=S.tfm+1; j=find(S.C(i,:),1); S.C(i,j)=-1;
@@ -94,10 +99,10 @@ for i=1:S.m
       S.mfm=S.mfm+1;
       % We now sort the nodes of each MFM from C=1 (start) to C=last (end)
       %   (we can later use boolean(C) to convert any C>0 to C=1)
-      i_nodes=find(S.C(i,:));                            % look just at the nonzero nodes in row i of S.C
-                 dx=max(N(1,i_nodes))-min(N(1,i_nodes))  % compute extent of this beam 
-                 dy=max(N(2,i_nodes))-min(N(2,i_nodes))  % in the x, y, and z directions
-      if S.d==3, dz=max(N(3,i_nodes))-min(N(3,i_nodes)), else, dz=0; end
+      i_nodes=find(S.C(i,:));                             % look just at the nonzero nodes in row i of S.C
+                 dx=max(N(1,i_nodes))-min(N(1,i_nodes));  % compute extent of this beam 
+                 dy=max(N(2,i_nodes))-min(N(2,i_nodes));  % in the x, y, and z directions
+      if S.d==3, dz=max(N(3,i_nodes))-min(N(3,i_nodes)); else, dz=0; end
       if dx>0.9*dy & dx>0.9*dz, [B,i_sorted]= sort(N(1,i_nodes));       % sort by x
       elseif dy>0.9*dz,         [B,i_sorted]= sort(N(2,i_nodes));       % sort by y
       else,                     [B,i_sorted]= sort(N(3,i_nodes)); end   % sort by z
@@ -107,7 +112,7 @@ for i=1:S.m
       L.Mmfm(:,S.mfm)=L.M(:,i);
       if k>0, error('Member %d is a multiforce member; pretensioning not allowed on it!',i), end
     end 
-end, S.C=[S.Ctfm; S.Cmfm]; S.C
+end, S.C=[S.Ctfm; S.Cmfm]; % S.C
 if RR_VERBOSE>0,
   if S.mfm==0, fprintf('All %d members are two-force members; structure S is a truss\n',S.tfm)
   else, fprintf('Structure S is a frame, with %d two-force member(s) and %d multi-force member(s)\n',S.tfm,S.mfm), end
@@ -144,7 +149,7 @@ else,             temp=[D*X*S.Ctfm]+reshape(G,S.d,[])-[L.U VP VR VS]; end
 sys=reshape(temp,numel(temp),1);
 
 % We then set up to set the SUM OF FORCES (POINTWISE + DISTRIBUTED) ON EACH MFM MEMBER equal to zero
-temp=sum(F,3)
+temp=sum(F,3);
 sys=[sys; reshape(temp,numel(temp),1)];
 for i=1:S.mfm;
   for j=1:sum(boolean(S.Cmfm(i,:)),2)-1;    % compute DISTRIBUTED WEIGHT of each MFM segment

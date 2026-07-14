@@ -49,7 +49,7 @@ end
 % extract nonzero MFM forces, reaction forces, and reaction moments from y
 F(1:S.mfm,1:S.n,1:S.d)=0;       
 for i=1:S.mfm, sy(S.tfm+i,:)='g-'; sw(S.tfm+i)=6;       % MFMs are green
-  for j=1:S.n, if S.Cmfm(i,j)>0, for k=1:S.d, F(i,j,k)=y(1); y=y(2:end); end,end,end
+  for j=1:S.n, if S.Cmfm(i,j)>0, for k=1:S.d, F(i,j,k)=y(1); y=y(2:end); end, end, end
 end
 VP=[]; VR=[]; VS=[]; % extract nonzero reaction forces at P,R,S support points from y
 for i=1:S.p, for k=1:S.d, VP(k,i)=y(1);   y=y(2:end); end, end
@@ -183,7 +183,7 @@ if S.d==2               % This handles the rest of the 2D case
     A
     size(A)
     S.C
-    for i=1:length(A)  % but only keep rows with nonzero C entry!  Then reorder it one end to other.
+    % for i=1:length(A)  % but only keep rows with nonzero C entry!  Then reorder it one end to other.
     % A=A(:,[S.C]) % this is backwards of what I need, and doesn't clear out empty rows.
     % A=sortrows(A')' % this sorts by the first element in each column (horizontal position)
 
@@ -316,6 +316,6 @@ ind=[5 6 7 8]; patch(ax,P(1,ind)+p(1), P(2,ind)+p(2), P(3,ind)+p(3), col)
 alpha(0.2)
 end % function drawcube
 
-function Beam_Analysis
-disp('blah')
-end % function Beam_Analysis
+% function Beam_Analysis
+% disp('blah')
+% end % function Beam_Analysis

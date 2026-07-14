@@ -3,11 +3,11 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
-clear; termination=true      % try both termination=true and termination=false
-% R=10; G=0.002;               % Try R=0 and G=0.  Also try R=10 and/or G=0.001.
-R=0, G=0
-% t1=1e-8, N=200,  Nt=1000;  % Try either these three values...
-t1=1e-9, N=2000, Nt=10000;   % ... or (if you are patient) these three values.
+clear; termination=false      % try both termination=true and termination=false
+R=10; G=0.002;                % Try R=0 and G=0.  Also try R=10 and/or G=0.001.
+% R=0, G=0
+t1=1e-8, N=200,  Nt=1000;     % Try either these three values...
+% t1=1e-9, N=2000, Nt=10000;  % ... or (if you are patient) these three values.
 L=525e-9; C=52e-12;
 Z0=sqrt(L/C), c=1/sqrt(L*C), X=10; T=X/c; h=T/Nt
 Delta_x=X/(N+0.5); d=1/Delta_x; A=zeros(2*N,2*N);

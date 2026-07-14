@@ -151,5 +151,3 @@ end
 function [g]=gcd_vec(u)
 g=gcd(u(1),u(2)); for i=3:length(u), g=gcd(g,u(i)); end
 end
-
-

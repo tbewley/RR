@@ -27,7 +27,7 @@ S.C=[1  1  0  0  1  1  1  0  0  0  0  0;  % m x n connectivity of the pin-jointe
 % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;    
 figure(2); RR_Structure_Plot(S,L,x); x_error=norm(A*x-b)
-print -vector -dpdf Four_Bar_Seesaw_sol.pdf
+% print -vector -dpdf Four_Bar_Seesaw_sol.pdf
 
 % Also plot the direction of the nullspace vector
 L.U=zeros(2,10); xn=null(A); figure(3); RR_Structure_Plot(S,L,xn); xn_error=norm(A*xn)

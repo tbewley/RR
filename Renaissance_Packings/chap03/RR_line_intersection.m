@@ -7,7 +7,7 @@ function sol=RR_line_intersection(a1,b1,a2,b2,a3,b3)
 %         a3,b3 = column vectors on line #3 (OPTIONAL)
 % OUTPUT: c     = point of (potentially, approximate) intersection of the lines
 % NOTE:   makes some nice plots if you first execute
-%             global RR_VERBOSE; RR_VERBOSE=1
+%             global RR_VERBOSE; RR_VERBOSE=2
 %         (rotate the plot around a bit to get perspective on where things lie!)
 % TEST:   RR_line_intersection(rand(2,1),rand(2,1),rand(2,1),rand(2,1))
 %         RR_line_intersection(rand(3,1),rand(3,1),rand(3,1),rand(3,1))

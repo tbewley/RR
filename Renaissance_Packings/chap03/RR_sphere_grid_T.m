@@ -8,9 +8,8 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Packings)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, omega=1   % 0=no stretching, 1=regular stretching, 1.1 overstretching
-n=3              % n=2,3,4,... 
-viz='all';       % 'single', 'west', 'north', or 'all'
+clear, n=2  % n=2,3,4,... degree of refinement of each edge (N=2^n intervals)
+omega=1     % amount of stretching (0=none, 1=regular stretching, 1.1=overstretching)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 N=2^n, global RR_VERBOSE; figure(1), clf, figure(2), clf
 fprintf('total gridpoints in spherical grid = %d\n',4*N^2)

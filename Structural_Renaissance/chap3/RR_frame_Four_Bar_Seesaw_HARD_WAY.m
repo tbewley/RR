@@ -30,9 +30,9 @@ x=A\b,      disp('The A\b approach fails, because A is singular.  Dude.'), pause
 
 x=inv(A)*b, disp('The inv(A)*b approach also fails, because A is singular.  Dude...'), pause
 
-x=pinv(A)*b, error=norm(A*x-b), b_dot_null_AT=b'*null(A')
+x=pinv(A)*b, error=norm(A*x-b), leftnullspace_A_transpose_times_b=null(A')'*b
 disp('Taking x=pinv(A)*b gives a valid answer, of many, IF AND ONLY IF fyA=fyB, because')
-disp('A is potentially inconsistent.  To get a valid answer, b*null(A'') must be zero.  Dude!'), pause
+disp('A is potentially inconsistent.  To get a valid answer, null(A'')''*b must be zero.  Dude!'), pause
 
 c=randn, x1=x+c*null(A), error=norm(A*x1-b)
 disp('If x is valid, taking x1=x+c*null(A) gives another valid answer, for any c.  Dude!!!');

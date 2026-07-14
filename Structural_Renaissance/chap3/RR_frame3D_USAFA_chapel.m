@@ -100,7 +100,9 @@ for i=1:s-1, S.C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % - side inverted tetrahedr
 end, m
 
 L.U=zeros(3,q); L.U(2,7*s-2+(3*((round((s+1)/2))-1)))=1;
-
+whos
+L
+S
 % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
 tic, [A,b,S,L]=RR_Structure_Analyze(S,L); toc, disp('Set up complete')
 tic, x=pinv(A)*b; toc, disp('Forces and moments solved')    

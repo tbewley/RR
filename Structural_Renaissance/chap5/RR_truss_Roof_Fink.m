@@ -22,12 +22,12 @@ S.C=[  1   1   0   0   0   0   0;  % Connectivity as a TRUSS
        0   0   1   0   1   0   0;   
        0   0   0   0   1   0   1]; 
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
-figure(1); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
+figure(1); RR_Structure_Plot(S,L,x); error_norm=norm(A*x-b), pause
 
 disp('Repeat, taking right support as a roller');
 S.P=[0; 0]; S.R=[30; 0];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;      
-figure(2); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
+figure(2); RR_Structure_Plot(S,L,x); error_norm=norm(A*x-b), pause
 
 disp('Repeat, taking connectivity as a frame, with a continuous beam for the lower chord');
 S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
@@ -39,8 +39,8 @@ S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
       0   0   1   0   1   0   0;  % upper-right chord part A 
       0   0   0   0   1   0   1;  % upper-right chord part B
       0   1   0   1   0   1   1]; % bottom chord (connects 4 nodes)
-[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b     
-figure(3); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
+[A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;    
+figure(3); RR_Structure_Plot(S,L,x); error_norm=norm(A*x-b), pause
 
 disp('Repeat, taking continuous beams for both the lower and the two upper chords)');
 S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
@@ -51,7 +51,7 @@ S.C=[ 1   1   0   0   0   0   0;  % Connectivity as a FRAME
       1   0   1   0   0   1   0;  % upper-left  chord (connects 3 nodes)
       0   0   1   0   1   0   1]; % upper-right chord (connects 3 nodes)
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;  
-figure(4); RR_Structure_Plot(S,L,x); error=norm(A*x-b), pause
+figure(4); RR_Structure_Plot(S,L,x); error_norm=norm(A*x-b), pause
 
 clear S L, disp('Now consider a 3D Fink structure (as a TRUSS, taking several support points as pinned)')
 S.P=[  0   0   0   0;   
@@ -132,4 +132,4 @@ S.C=[1   1   0   0   0    0   0   0   0   0    0   0   0   0   0    0    0    0 
      0   0   0   0   0    0   0   0   0   1    0   0   0   0   1    0    0    0  0  0  0  0  0  0  0  0  0  0;  
      0   0   0   0   0    0   0   0   0   0    0   0   0   0   1    0    0    1  0  0  0  0  0  0  0  0  0  0];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
-figure(5); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(15.4, 11.4)
+figure(5); RR_Structure_Plot(S,L,x); error_norm=norm(A*x-b), view(15.4, 11.4)
