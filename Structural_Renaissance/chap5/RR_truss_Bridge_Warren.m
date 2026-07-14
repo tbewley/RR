@@ -2,13 +2,13 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is a slight generalization of RR_Truss_Warren4, with 3 parameters
-% For the kitchen-sink generalization, see RR_Truss_GUI.  Easy.  Enjoy!
+% This is a slight generalization of RR_truss_Warren4, with 4 parameters
+% For the kitchen-sink generalization, see RR_truss_Bridge_GUI.  Easy.  Enjoy!
 clear;
-s=7      % number of horizontal sections in the truss (set as parameter!)
-h=0.2    % height of the truss (set as parameter!)
-parabolic_top_chord=false
-roller_support=false
+s=8      % number of horizontal sections in the truss (set as parameter!)
+h=0.1    % height of the truss (set as parameter!)
+parabolic_top_chord=true
+roller_support=true
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure(1), clf
 % Locations of the fixed nodes of the truss (normalized units)
