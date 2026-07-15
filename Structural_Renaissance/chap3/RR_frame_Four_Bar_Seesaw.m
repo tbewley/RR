@@ -4,7 +4,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 3)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
-clear, clc, global RR_VERBOSE, RR_VERBOSE=2; % {0,2} for {less,more} screen output
+clear, clc, global RR_VERBOSE, RR_VERBOSE=0; % {0,2} for {less,more} screen output
 
 % This sets up the parameters defining the structure (in SI)
 lA=0.5; lB=0.95;                   % Locations of the masses, in meters
