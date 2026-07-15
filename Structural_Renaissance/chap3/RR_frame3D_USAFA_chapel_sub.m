@@ -64,9 +64,9 @@ L.U=zeros(3,q); L.U(:,1)=[0;0;-1];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
 figure(2); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(104.7,27.4)
 % print -vector -fillpage -dpdf USAFA_sub_load0.eps
+fprintf('Program paused, press any key to continue\n\n'); pause
 
 clear S L
-
 S.P(:,1)=[ 0; 2*depth; 0]; S.P_vec(:,1)=[0;0;1];
 S.R(:,1)=[+w;  depth; h1]; S.R_vec(:,1)=[0;1;0]; 
 S.R(:,2)=[-w;  depth; h1]; S.R_vec(:,2)=[0;1;0];
@@ -125,10 +125,11 @@ S.R_in(1)=false; S.R_in(2)=false;
 L.U=zeros(3,q); L.U(:,1)=[0;.6;-1];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
 figure(3); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(104.7,27.4), axis off
-print -vector -depsc USAFA_sub_load2.eps
+% print -vector -depsc USAFA_sub_load2.eps
+fprintf('Program paused, press any key to continue\n\n'); pause
 
 S.R_in(1)=true; S.R_in(2)=true;
 L.U=zeros(3,q); L.U(:,1)=[0;0;-1];
 [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
 figure(4); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(104.7,27.4), axis off
-print -vector -depsc USAFA_sub_load1.eps
+% print -vector -depsc USAFA_sub_load1.eps

@@ -97,16 +97,18 @@ for i=1:s-1, S.C(m+1:m+5,:)=zeros(5,n); k=3*(i-1);   % - side inverted tetrahedr
   S.C(m+3,s+3+k)=1;   S.C(m+3, 7*s  +k)=1;
   S.C(m+4,7*s-1+k)=1; S.C(m+4,13*s-3+k)=1;
   S.C(m+5,7*s  +k)=1; S.C(m+5,13*s-3+k)=1; m=m+5;
-end, m
+end
 
-L.U=zeros(3,q); L.U(2,7*s-2+(3*((round((s+1)/2))-1)))=1;
-whos
-L
-S
+L.U=zeros(3,q); L.U(2,7*s-2+(3*((round((s+1)/2))-1)))=1; disp(' ')
+disp('Variables used in problem setup: the structs S (the structure) and L (the loads), the matrix N')
+disp('(nodes, for plotting), and some minor other variables used to define and calculate S, L, and N.')
+disp(' '), whos, S, L
+
 % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
-tic, [A,b,S,L]=RR_Structure_Analyze(S,L); toc, disp('Set up complete')
-tic, x=pinv(A)*b; toc, disp('Forces and moments solved')    
-figure(1); RR_Structure_Plot(S,L,x); error=norm(A*x-b), view(15.4, 11.4)
+tic, [A,b,S,L]=RR_Structure_Analyze(S,L); fprintf('\nSet up of A and b complete:   '), toc
+tic, x=pinv(A)*b; fprintf('Force and moment eqns solved: '), toc, disp(' '), error_norm=norm(A*x-b),
+disp('Program paused, press any key to continue'); pause
+figure(1); RR_Structure_Plot(S,L,x);  view(15.4, 11.4)
 
 for i=1:s, k=3*(i-1);       % Now, plot the patches between the members patches
   for j=1:6
@@ -173,5 +175,4 @@ for i=1:s-1, k=3*(i-1);
           [N(3,a) N(3,b) N(3,c) N(3,d)],'y')
   end
 end
-view(-43.37,18.05), axis off
-print -vector -depsc USAFA_full.eps
+view(-43.37,18.05), axis off, % print -vector -depsc USAFA_full.eps

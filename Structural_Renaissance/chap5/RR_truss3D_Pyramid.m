@@ -3,6 +3,7 @@
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 5)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
+clear
 h=0.707; % Data from https://www.lmgt.com/?q=height+of+an+equilateral+square+pyramid
 cg=h/4;  % Data from https://www.lmgt.com/?q=center+of+mass+of+a+square+pyramid
 for i=1:3
@@ -19,7 +20,7 @@ for i=1:3
         0 -0.2  0   0   0   0   0   0   0   0];
   if i==1
       % 1 2 3 4 5 ... member number         % comments below corresponds to node number     
-    CT=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0;  % q_1
+   S.C=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0;  % q_1
         0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0;  % q_2
         0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0;  % q_3
         0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0;  % q_4
@@ -32,9 +33,9 @@ for i=1:3
         1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0;  % p_1
         0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0;  % p_2
         0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0;  % p_3
-        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]; % p_4
+        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]'; % p_4
   elseif i==2
-    CT=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1;    % q_1  
+   S.C=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1;    % q_1  
         0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0;    % q_2
         0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 1 1 0;    % q_3
         0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 0 1 1 1 0 0 0 0;    % q_4
@@ -47,9 +48,9 @@ for i=1:3
         1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_1
         0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_2
         0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_3
-        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];   % p_4
+        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]';   % p_4
   else
-    CT=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1 0 0 0 0;    % q_1  
+   S.C=[1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1 0 0 0 0;    % q_1  
         0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0;    % q_2
         0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0;    % q_3
         0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0;    % q_4
@@ -62,11 +63,11 @@ for i=1:3
         1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_1
         0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_2
         0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;    % p_3
-        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0];   % p_4
+        0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]';   % p_4
   end
  
   % Convert the eqns for computing the interior & reaction forces to Ax=b, solve, and plot.
-  S.C=CT'; [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b;     
+  [A,b,S,L]=RR_Structure_Analyze(S,L); x=pinv(A)*b; error_norm=norm(A*x-b)   
   % Finally, plot the truss (blue = tension, red = compression)
   figure(1), clf, RR_Structure_Plot(S,L,x); error=norm(A*x-b), if i<3, pause, end
 end
