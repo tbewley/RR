@@ -1,4 +1,4 @@
-% script RR_frame_USAFA_chapel
+% script RR_frame3D_USAFA_chapel
 % Geometry of USAFA chapel defined by just 5 numbers (measurements in feet - sorry)
 %% Renaissance Repository, https://github.com/tbewley/RR (Structural Renaissance, Chapter 6)
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE

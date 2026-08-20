@@ -4,7 +4,7 @@
 %% Copyright 2025 by Thomas Bewley, and published under the BSD 3-Clause LICENSE
 
 clear S L, disp('Analyze/plot a Fink truss, taking both supports as pinned')
-S.P=[  0  30;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (normalized)
+S.R=[  0  30;   % Columns denote (x,y) locations of each of the p=2 fixed nodes (normalized)
        0   0];
 S.Q=[ 7.5 10  15  20 22.5 ;    % Locations of each of the n=5 free nodes (normalized)
       2.5  0   5   0  2.5];

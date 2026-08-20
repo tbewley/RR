@@ -1,0 +1,24 @@
+clear; close all 
+% lead compensator
+omega_g=10, alpha=13.93
+z_lead=omega_g/sqrt(alpha), p_lead=omega_g*sqrt(alpha)
+D_lead=RR_tf([-z_lead],[-p_lead],1), figure(1), RR_bode(D_lead), pause
+
+% double lag compensator
+omega_dlag=0.16, alpha_dlag=1/10
+z_dlag=omega_dlag/sqrt(alpha_dlag), p_dlag=omega_dlag*sqrt(alpha_dlag),
+g.log_omega_min=-3; g.ls='r-'
+D_dlag=RR_tf([-z_dlag -z_dlag],[-p_dlag -p_dlag],1), figure(2), RR_bode(D_dlag,g)
+
+% lag compensator
+omega_lag=0.088, alpha_lag=1/100
+z_lag=omega_lag/sqrt(alpha_lag), p_lag=omega_lag*sqrt(alpha_lag)
+D_lag=RR_tf([-z_lag],[-p_lag],1), RR_bode(D_lag), pause
+
+% 4-th order butterworth LPF
+n_LPF=4, omegac_b=299, D_LPF4_b=RR_LPF_butterworth(n_LPF,omegac_b)
+figure(3), RR_bode(D_LPF4_b)
+
+% 4-th order butterworth LPF
+omegac_b=299, D_LPF4_b=RR_LPF_butterworth(n_b,omegac_b)
+figure(3), RR_bode(D_LPF4_ic)
