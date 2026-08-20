@@ -3,6 +3,7 @@ The codes in this consolidated repository are associated with three forthcoming 
 <a href="http://robotics.ucsd.edu/SR.pdf">Structural Renaissance</a> (SR),
 <a href="http://robotics.ucsd.edu/RR.pdf">Renaissance Robotics</a> (RR), and
 <a href="http://robotics.ucsd.edu/NR.pdf">Numerical Renaissance</a> (NR),
+and a (eventually) a new book entitled Renaissance Packings,
 in addition to various research papers, by Thomas Bewley.<BR>
 
 SR, a <q cite="http://robotics.ucsd.edu/SR.pdf">modern first course in engineering analysis and design</q>,
