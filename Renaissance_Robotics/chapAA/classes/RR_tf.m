@@ -25,7 +25,7 @@
 %   RR_bode: Plots the CT Bode plot of G(s) if G.h is not defined, with s=(i omega),
 %            or    the DT Bode plot of G(z) if G.h is defined, with z=e^(i omega h).
 %   RR_bode_linear: Plots a modified Bode plot with linear axes (frequency and amplitude)
-%   RR_nyquist: Draws a Nyquist plot (NOT YET IMPLEMENTED)
+%   RR_nyquist: Draws a Nyquist plot
 %   RR_rlocus: Plot the root locus of K*G(s)*D(s) w.r.t. a range of K
 %   Yz=RR_Z(Ys,h): Compute the Z transform Yz(z) of the DT signal y_k given by sampling (at t_k = h k)
 %                  the CT signal y(t) with a strictly proper Laplace transform Ys(s).
@@ -82,7 +82,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
      	    if G.num.poly==0, G.den=RR_poly(1); end  % Simplify the zero transfer function 
             if G.num.n>0 & G.den.n>0
                 for i=1:G.num.n        % Perform pole/zero cancellations!
-                    TF=RR_eq(G.z(i),G.p,1e-3); modified=false;
+                    TF=RR_eq(G.z(i),G.p,1e-4); modified=false;
                     for j=1:G.den.n, if TF(j)              % perform pole/zero cancellation.
                         G.z=G.z([1:i-1,i+1:G.num.n]);
                         G.p=G.p([1:j-1,j+1:G.den.n]); modified=true; break
@@ -171,8 +171,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %          F=RR_tf([1 z],[1 p]); phi(k)=phase(RR_evaluate(F,omegac*i))*180/pi; 
         %       end, semilogx(beta,phi), grid, axis([beta(1) beta(end) -90 90])
         %       title('Phase lead (if beta>1) or lag (if beta<1) of F(s)=(s+z)/(s+p) for beta=p/z')     
-        % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
-        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
+        %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
+        %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             for i=1:length(s)
                 n=0; for k=1:G.num.n+1; n=n+G.num.poly(k)*s(i)^(G.num.n+1-k); end
                 d=0; for k=1:G.den.n+1; d=d+G.den.poly(k)*s(i)^(G.den.n+1-k); end, z(i)=n/d;
@@ -198,8 +198,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %          G=RR_tf([1 2 2 3 5],[1 7 7],1), [p,d,k,n]=RR_partial_fraction_expansion(G)
         %          G1=RR_tf(0); for i=1:n, if k(i)>0, G1=G1+RR_tf( d(i), RR_poly([1 -p(i)])^k(i) ); ...
         %             else, G1=G1+RR_tf([d(i) zeros(1,abs(k(i)))]); end, end, G1
-        % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
-        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
+        %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
+        %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             m=G.num.n; n=G.den.n; flag=0; if m>=n, [div,rem]=G.num/G.den; flag=1; m=rem.n; else, rem=G.num; end
             k=ones(1,n); p=G.p; if nargin<2, tol=1e-3; end
             for i=1:n-1, if RR_eq(p(i+1),p(i),tol), k(i+1)=k(i)+1; end, end, k(n+1)=0;
@@ -234,8 +234,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
         % Convenient defaults are defined for each of these fields of g if not provided.
         % TEST: omegac=1; F=RR_tf([omegac^2],[1 2*0.707*omegac omegac^2]); close all, RR_bode(F)
-        % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
-        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
+        %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
+        %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if nargin==1, g=[]; end,     % Convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
@@ -289,8 +289,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   g.Hz is a logical that, if true, handles all frequencies (inputs and plotted) in Hz
         % Convenient defaults are defined for each of these fields of g if not provided.
         % TEST: F=RR_LPF_elliptic(4,0.3,0.04,10), close all, RR_bode_linear(F)
-        % Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
-        % Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
+        %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 9)
+        %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License. 
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
             c=1; if ~isfield(g,'Hz'  ),  g.Hz=false;                       
                  elseif g.Hz==true,      c=2*pi;      end
@@ -310,6 +310,51 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             subplot(2,1,2),        plot(omega,phase,g.ls), hold on, axis tight; a=axis;
             if ~isempty(L.h),      plot([Nyquist Nyquist],[a(3) a(4)],'k:'), end, axis(a), grid
         end % function RR_bode_linear
+
+        function RR_nyquist(L,g)
+        % function RR_nyquist(L,g)
+        % Draw the Nyquist plot (i.e., a Bode plot in polar coordinates) of L(s)=G(s)*D(s), of type RR_tf.
+        % The (optional) derived type g is used to pass in various (optional) plotting parameters:
+        %   {g.figs,g.figL} define the figure numbers. DEFAULT: {2,3}
+        %   g.R is radius of the large D contour in the s plane.  DEFAULT 4
+        %   g.eps is radius of the small half-circles to the right of each pole on the imag axis in s. DEFAULT .2
+        % Practical recommendation: do not make g.eps too small, or g.R too big, until
+        % you see where the corresponding curves are in both the s plane and the L plane!
+        % TEST: global RR_VERBOSE, RR_VERBOSE=0
+        %       L1=RR_tf([-.3],[-10 -2 0  0],15), figure(1), clf, RR_bode(L1), RR_Nyquist(L1), pause
+        %       L2=RR_tf([-.3],[-10 -2 i -i],15), figure(1), clf, RR_bode(L2), RR_Nyquist(L2)
+        %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
+        %% Copyright 2026 by Thomas Bewley, published under BSD 3-Clause License.
+            if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
+            if ~isfield(g,'figs'), g.figs=2; end       
+            if ~isfield(g,'figL'), g.figL=3; end       
+            if ~isfield(g,'R'),    g.R=4; end       
+            if ~isfield(g,'eps'),  g.eps=.2; end       
+            L0=RR_evaluate(L,0); P=RR_roots(L.den); Z=RR_roots(L.num); tol=.0001;  
+            figure(g.figs), clf, plot(real(P),imag(P),'kx'), hold on, plot(real(Z),imag(Z),'ko'),   axis equal, grid
+            figure(g.figL), clf, plot(-1,0,'k+'),            hold on, plot(real(L0),imag(L0),'bd'), axis equal, grid
+            % First, find and sort the poles of L(s) on the imaginary axis.
+            k=0; for j=1:length(P); if abs(real(P(j)))<tol, k=k+1; iP(k,1)=imag(P(j)); end, end
+            iP=RR_QuickSort(iP,0,k); iPu(1)=iP(1); k=1;   
+            for j=2:length(iP); if abs(iP(j)-iPu(k))>tol, k=k+1; iPu(k)=iP(j); end, end
+            % Draw small half circles in the s-plane to the right of each pole on the imaginary axis. 
+            for j=1:k, w=i*iPu(j)+g.eps*exp(-i*[-pi/2:pi/50:pi/2]);
+              if sign(iPu(j))<0, sym='r--'; else, sym='r-'; end, Lw=RR_evaluate(L,w);
+              figure(g.figs), plot(real(w),imag(w),sym), figure(g.figL), plot(real(Lw),imag(Lw),sym)
+            end
+            % Next, draw the (large) D contour in the s-plane.
+            w=g.R*exp(-i*[-pi/2:pi/50:pi/2]); Lw=RR_evaluate(L,w); sym='k-.';
+            figure(g.figs), plot(real(w),imag(w),sym), figure(g.figL), plot(real(Lw),imag(Lw),sym)
+            % Finally, draw the line going up the imaginary axis in the s-plane (in several segments)
+            a(1)=-g.R; b=[];          % [note: segment j goes from a(j) to b(j)] 
+            for j=1:ceil(k/2),        b=[b iPu(j)-g.eps]; a=[a iPu(j)+g.eps]; end
+            if floor(k/2)==ceil(k/2), b=[b -1e-12];       a=[a 1e-12];        end
+            for j=ceil(k/2)+1:k,      b=[b iPu(j)-g.eps]; a=[a iPu(j)+g.eps]; end, b=[b g.R];
+            for j=1:length(a), w=i*logspace(log10(abs(a(j))),log10(abs(b(j))),1000);
+              if sign(b(j))<1, w=-w; sym='b--'; else, sym='b-'; end, Lw=RR_evaluate(L,w);
+              figure(g.figs), plot(real(w),imag(w),sym), figure(g.figL), plot(real(Lw),imag(Lw),sym)
+            end
+        end % function RR_nyquist
 
         function RR_rlocus(G,D,g)
         % function RR_rlocus(G,D,g)
