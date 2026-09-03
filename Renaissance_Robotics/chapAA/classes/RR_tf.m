@@ -320,9 +320,15 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %   g.eps is radius of the small half-circles to the right of each pole on the imag axis in s. DEFAULT .2
         % Practical recommendation: do not make g.eps too small, or g.R too big, until
         % you see where the corresponding curves are in both the s plane and the L plane!
-        % TEST: global RR_VERBOSE, RR_VERBOSE=0
-        %       L1=RR_tf([-.3],[-10 -2 0  0],15), figure(1), clf, RR_bode(L1), RR_Nyquist(L1), pause
-        %       L2=RR_tf([-.3],[-10 -2 i -i],15), figure(1), clf, RR_bode(L2), RR_Nyquist(L2)
+        % TEST: global RR_VERBOSE, RR_VERBOSE=0; clear g, clc
+        %       disp('The following generates Figs 10.5, 10.7, 10.8 in the RR text')
+        %       L1=RR_tf([-.3],[-10 -2 0  0],15), figure(1), clf, RR_bode(L1), RR_nyquist(L1), pause, clc
+        %       L2=RR_tf([-.3],[-10 -2 i -i],15), figure(1), clf, RR_bode(L2), RR_nyquist(L2), pause, clc
+        %       disp('The following generates Fig 10.5, 10.10 in the RR text, for K=20')
+        %       L3=RR_tf([],[1 -10],20), figure(1), clf, RR_bode(L3), g.R=20; RR_nyquist(L3,g), pause, clc
+        %       disp('The following generates Nyquist plot for 2026 143b hw3 q6, for D=10')
+        %       d=0.1; a=1; G=RR_pade(d,2,2)*RR_tf(1,[1 a]); D=10;
+        %       L4=G*D; figure(1), clf, RR_bode(L4), g.R=50; RR_nyquist(L4,g)
         %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
         %% Copyright 2026 by Thomas Bewley, published under BSD 3-Clause License.
             if nargin==1, g=[]; end,   % Set up some convenient defaults for the plotting parameters
@@ -334,8 +340,8 @@ classdef RR_tf < matlab.mixin.CustomDisplay
             figure(g.figs), clf, plot(real(P),imag(P),'kx'), hold on, plot(real(Z),imag(Z),'ko'),   axis equal, grid
             figure(g.figL), clf, plot(-1,0,'k+'),            hold on, plot(real(L0),imag(L0),'bd'), axis equal, grid
             % First, find and sort the poles of L(s) on the imaginary axis.
-            k=0; for j=1:length(P); if abs(real(P(j)))<tol, k=k+1; iP(k,1)=imag(P(j)); end, end
-            iP=RR_QuickSort(iP,0,k); iPu(1)=iP(1); k=1;   
+            k=0; iP=[]; for j=1:length(P); if abs(real(P(j)))<tol, k=k+1; iP(k,1)=imag(P(j)); end, end
+            if length(iP)>0, iP=RR_QuickSort(iP,0,k); iPu(1)=iP(1); k=1; end
             for j=2:length(iP); if abs(iP(j)-iPu(k))>tol, k=k+1; iPu(k)=iP(j); end, end
             % Draw small half circles in the s-plane to the right of each pole on the imaginary axis. 
             for j=1:k, w=i*iPu(j)+g.eps*exp(-i*[-pi/2:pi/50:pi/2]);
