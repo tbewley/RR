@@ -324,7 +324,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
         %       disp('The following generates Figs 10.5, 10.7, 10.8 in the RR text')
         %       L1=RR_tf([-.3],[-10 -2 0  0],15), figure(1), clf, RR_bode(L1), RR_nyquist(L1), pause, clc
         %       L2=RR_tf([-.3],[-10 -2 i -i],15), figure(1), clf, RR_bode(L2), RR_nyquist(L2), pause, clc
-        %       disp('The following generates Fig 10.5, 10.10 in the RR text, for K=20')
+        %       disp('The following generates Fig 10.10 in the RR text, for K=20')
         %       L3=RR_tf([],[1 -10],20), figure(1), clf, RR_bode(L3), g.R=20; RR_nyquist(L3,g), pause, clc
         %       disp('The following generates Nyquist plot for 2026 143b hw3 q6, for D=10')
         %       d=0.1; a=1; G=RR_pade(d,2,2)*RR_tf(1,[1 a]); D=10;
