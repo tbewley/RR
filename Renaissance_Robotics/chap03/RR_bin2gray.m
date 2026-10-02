@@ -1,9 +1,9 @@
 function g=RR_bin2gray(b)
 % function g=RR_bin2gray(b)
 % Converts from binry to Gray code
-% INPUT:  in=binary number [generate, e.g., via dec2bin(int)]
-% OUTPUT: g=corresponding Gray form
-% EXAMPLE CALL: for d=0:31, b=dec2bin(d); g=RR_bin2gray(b); disp({d b g}), end
+% INPUT:   b=binary number [generate, e.g., via dec2bin(int)]
+% OUTPUT:  g=corresponding Gray form
+% EXAMPLE: for d=0:31, b=dec2bin(d); g=RR_bin2gray(b); disp({d b g}), end
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 3)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
