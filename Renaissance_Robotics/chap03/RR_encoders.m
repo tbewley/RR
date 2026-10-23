@@ -15,12 +15,12 @@ DeltaR=Rmax-Rmin; dr=DeltaR/(m+1);
 % Standard ABZ (incremental+reset) encoder, 2^m slots
 figure(1), circ(Rmax)  
 plot_slots(2^m,Rmax-dr,Rmax-Rgap), plot_slots(2^m,Rmax-2*dr,Rmax-dr-Rgap,0,1)
-print -deps ABZ.eps
+% print -deps ABZ.eps
 
 % Binary encoder with i=0:m rows, each with 2^i slots
 figure(2), circ(Rmax) 
 for i=0:m, plot_slots(2^i,Rmin+dr*i,Rmin+dr*(i+1)-Rgap), end
-print -deps binary.eps
+% print -deps binary.eps
 
 % Gray code encoder with i=0:m rows
 figure(3), circ(Rmax)  
@@ -28,7 +28,7 @@ for i=0:m
   if i==0, N=1; off=0; else, N=2^(i-1); off=-pi/2^i; end   
   plot_slots(N,Rmin+dr*i,Rmin+dr*(i+1)-Rgap,off)
 end
-print -deps Gray.eps
+% print -deps Gray.eps
 end
 
 function circ(Rmax)
