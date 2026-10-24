@@ -1,5 +1,5 @@
 function [count,basis]=RR_nearest_neighbors(d,lattice)
-count=0; [basis,sq_dist_to_neighbor,checkpoints]=build_basis(d,lattice)
+count=0; [basis,sq_dist_to_neighbor,checkpoints]=RR_build_lattice_basis(d,lattice)
 for i=1:checkpoints^d-1
    str = dec2base(i,checkpoints);
    while length(str)<d; str=['0',str]; end
