@@ -19,7 +19,7 @@ for i=1:checkpoints^d-1
    latticepoint=basis*w;
    sq_dist(i)=abs(latticepoint'*latticepoint);
    if abs(sq_dist_to_neighbor-sq_dist(i))<1e-3, 
-       count=count+1; latticepoint'
+       count=count+1, latticepoint'
    end
 end
 sq_dist_to_neighbor
