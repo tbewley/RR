@@ -79,7 +79,7 @@ classdef RR_tf < matlab.mixin.CustomDisplay
                     G.z=num; G.p=den; G.K=K; G.num=RR_poly(num,K); G.den=RR_poly(den,1);
     	    end
             G.h=[];
-     	    if G.num.poly==0, G.den=RR_poly(1); end  % Simplify the zero transfer function 
+            if G.num.poly==[0], G.den=RR_poly(1); end  % Simplify the zero transfer function 
             if G.num.n>0 & G.den.n>0
                 for i=1:G.num.n        % Perform pole/zero cancellations!
                     TF=RR_eq(G.z(i),G.p,1e-4); modified=false;
