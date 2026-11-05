@@ -1,4 +1,4 @@
-% Example_10_14
+% RR_Ex10_14
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2024 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -23,13 +23,13 @@ h=.02; % Now transform to discrete time
 g.K=logspace(-1.5,3,400); g.axes=[-1.5 1.5 -1.5 1.5];
 figure(4); RLocus(numGz,denGz,numDz,denDz,g); hold on; % zgrid;
 r=1; c=0; w=c+r*exp(i*[0:pi/50:2*pi]); plot(real(w),imag(w),'b--') % Draw a simple circle
-print -depsc example_18_14b.eps
+% print -depsc example_18_14b.eps
 
 d=h/2; numDelay=[d^2/12 -d/2 1]; denDelay=[d^2/12 d/2 1];
 numGd=PolyConv(numG,numDelay); denGd=PolyConv(denG,denDelay);
 
 figure(5); g.K=logspace(-1.5,4.5,300); g.axes=[-400 400 -400 400];
-RLocus(numGd,denGd,numD,denD,g); print -depsc example_18_14c.eps
+RLocus(numGd,denGd,numD,denD,g); % print -depsc example_18_14c.eps
 
 figure(6); g.K=logspace(-1.5,3,300); g.axes=[-40 40 -40 40];
-RLocus(numGd,denGd,numD,denD,g); print -depsc example_18_14d.eps
+RLocus(numGd,denGd,numD,denD,g); % print -depsc example_18_14d.eps

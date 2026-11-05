@@ -93,6 +93,7 @@ switch lattice
             case 5,  [basis]=RR_build_lattice_basis(24,lattice); basis=basis(1:d,1:d);
             case 4,  [basis]=RR_build_lattice_basis(24,lattice); basis=basis(1:d,1:d);
             case 3,  [basis]=RR_build_lattice_basis(24,lattice); basis=basis(1:4,2:4);
+            case 2,  [basis]=RR_build_lattice_basis(3,lattice);  basis=basis(1:4,2:4);
             otherwise, error('case not yet implemented');
 end % switch lattice
 end % function RR_build_lattice_basis
