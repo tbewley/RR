@@ -1,7 +1,7 @@
 function [basis,sq_dist_to_neighbor,checkpoints]=RR_build_lattice_basis(d,lattice)
 % build basis for a lattice
 switch lattice
-    case('Z')
+     case('Z')
         checkpoints=3;
         basis=eye(d); sq_dist_to_neighbor=1;
     case('D')
