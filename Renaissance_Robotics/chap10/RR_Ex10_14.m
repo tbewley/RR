@@ -1,5 +1,6 @@
 % script RR_Ex10_14
-% CT to DT example, illustrating instability at high gain due to the delay h/2 from zoh
+% CT to DT example, illustrating instability at high gain due to the delay h/2 from zoh,
+% and explaining the instability in CT using a Pade approximation of the delay.
 %% Renaissance Repository, https://github.com/tbewley/RR (Renaissance Robotics, Chapter 10)
 %% Copyright 2026 by Thomas Bewley, published under BSD 3-Clause License.
 
@@ -19,19 +20,18 @@ g_s.T=1.5; g_s.h=.01; g_s.styleu='r--'; g_s.styley='k-'; RR_step(P*T,g_s);
 pause, disp(' ')
 
 disp('now transforming to discrete time')
-h=.02; omega_bar=13; % 
+h=.02; omega_bar=13;
 [Gz]=RR_C2D_zoh(G,h), [Dz]=RR_C2D_tustin(D,h,omega_bar)
-g_r_d.K=logspace(-1.5,3,400); g_r_d.axes=[-1.5 1.5 -1.5 1.5];
 disp(' ')
 
 disp('corresponding DT rlocus')
-figure(4); RR_rlocus(Gz,Dz,g_r_d); hold on;
-% r=1; c=0; w=c+r*exp(i*[0:pi/50:2*pi]); plot(real(w),imag(w),'b--') % Draws a simple circle
+g_r_d.K=logspace(-1.5,3,400); g_r_d.axes=[-1.5 1.5 -1.5 1.5];
+figure(4); RR_rlocus(Gz,Dz,g_r_d)
 pause, disp(' ')
 
 disp('CT rlocus with a delay')
-d=h/2; TF_pade_delay=RR_pade(d,2,2); Gd=G*TF_pade_delay
-figure(5); g.K=logspace(-1.5,4.5,300); g.axes=[-400 400 -400 400];
+d=h/2; TF_pade_delay=RR_pade(d,8,6); Gd=G*TF_pade_delay
+figure(5); g.K=logspace(-1,8,900); g.axes=[-3000 3000 -3000 3000];
 RR_rlocus(Gd,D,g); pause, disp(' ')
 
 disp('CT rlocus with a delay, zoomed in')
