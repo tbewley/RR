@@ -29,16 +29,11 @@ g_r_d.K=logspace(-1.5,3,400); g_r_d.axes=[-1.5 1.5 -1.5 1.5];
 figure(4); RR_rlocus(Gz,Dz,g_r_d)
 pause, disp(' ')
 
-disp('CT rlocus with a delay')
-d=h/2; TF_pade_delay=RR_pade(d,8,6); Gd=G*TF_pade_delay
+disp('CT rlocus with a delay (try fiddling with the second 2 arguments of RR_pade...')
+d=h/2; TF_pade_delay=RR_pade(d,6,6); Gd=G*TF_pade_delay
 figure(5); g.K=logspace(-1,8,900); g.axes=[-3000 3000 -3000 3000];
 RR_rlocus(Gd,D,g); pause, disp(' ')
 
 disp('CT rlocus with a delay, zoomed in')
 figure(6); g.K=logspace(-1.5,3,300); g.axes=[-40 40 -40 40];
 RR_rlocus(Gd,D,g)
-
-
-
-
-
